@@ -1,18 +1,13 @@
 'use client'
 import { useState } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
-import { GlassCard } from '@/components/ui/GlassCard'
-import { Badge } from '@/components/ui/Badge'
-import { Button } from '@/components/ui/Button'
-import { formatCurrency } from '@/lib/utils'
 
 interface Producto {
   id: string
   nombre: string
-  ref: string
-  precio: number
+  sku: string
+  precioUSD: number
   stock: number
-  imagen?: string
   categoria: string
 }
 
@@ -21,33 +16,36 @@ interface ItemCarrito {
   cantidad: number
 }
 
-const CATEGORIAS = ['Todos', 'Electrónica', 'Bebidas', 'Cuidado Personal', 'Oficina', 'Snacks']
+const TASA_BCV = 46.82
+const CATEGORIAS = ['Todas', 'Bebidas', 'Alimentos', 'Snacks', 'Postres', 'Otros']
 
 const PRODUCTOS: Producto[] = [
-  { id: '1', nombre: 'Zenith Chrono Black', ref: 'ZNT-7742', precio: 149.99, stock: 24, categoria: 'Electrónica' },
-  { id: '2', nombre: 'Obsidian Audio Pods', ref: 'OBS-9912', precio: 89.00, stock: 12, categoria: 'Electrónica' },
-  { id: '3', nombre: 'Zenith Lens Pro', ref: 'ZNT-0021', precio: 520.00, stock: 3, categoria: 'Electrónica' },
-  { id: '4', nombre: 'Prism Vision Shades', ref: 'PRM-4423', precio: 125.50, stock: 42, categoria: 'Cuidado Personal' },
-  { id: '5', nombre: 'Velocity Sport Red', ref: 'VEL-8821', precio: 210.00, stock: 8, categoria: 'Oficina' },
-  { id: '6', nombre: 'Echo Wood Studio', ref: 'ECH-3310', precio: 75.00, stock: 15, categoria: 'Electrónica' },
-  { id: '7', nombre: 'Hydro Boost 500ml', ref: 'HYD-1122', precio: 4.50, stock: 200, categoria: 'Bebidas' },
-  { id: '8', nombre: 'Zenith Notebook Pro', ref: 'ZNB-4411', precio: 18.00, stock: 60, categoria: 'Oficina' },
+  { id: '1', nombre: 'Café Americano', sku: 'BEB-CAF-AM', precioUSD: 2.50, stock: 50, categoria: 'Bebidas' },
+  { id: '2', nombre: 'Sandwich de Pollo', sku: 'ALI-SAN-PO', precioUSD: 5.00, stock: 20, categoria: 'Alimentos' },
+  { id: '3', nombre: 'Refresco Cola', sku: 'BEB-COL-2L', precioUSD: 1.50, stock: 180, categoria: 'Bebidas' },
+  { id: '4', nombre: 'Pastel de Chocolate', sku: 'POS-PAS-CH', precioUSD: 3.50, stock: 15, categoria: 'Postres' },
+  { id: '5', nombre: 'Jugo de Naranja', sku: 'BEB-JUG-NA', precioUSD: 2.00, stock: 40, categoria: 'Bebidas' },
+  { id: '6', nombre: 'Ensalada César', sku: 'ALI-ENS-CE', precioUSD: 6.00, stock: 12, categoria: 'Alimentos' },
+  { id: '7', nombre: 'Papas Fritas', sku: 'SNA-PAP-FR', precioUSD: 2.80, stock: 60, categoria: 'Snacks' },
+  { id: '8', nombre: 'Pizza Pepperoni', sku: 'ALI-PIZ-PE', precioUSD: 3.00, stock: 8, categoria: 'Alimentos' },
+  { id: '9', nombre: 'Agua Mineral 1.5L', sku: 'BEB-AGU-15', precioUSD: 0.85, stock: 240, categoria: 'Bebidas' },
+  { id: '10', nombre: 'Arroz Cristal 1kg', sku: 'ALI-ARR-1K', precioUSD: 1.50, stock: 320, categoria: 'Alimentos' },
+  { id: '11', nombre: 'Detergente Ariel 1kg', sku: 'LIM-ARI-1K', precioUSD: 3.20, stock: 95, categoria: 'Otros' },
+  { id: '12', nombre: 'Resma Papel Carta', sku: 'PAP-RES-CA', precioUSD: 6.50, stock: 42, categoria: 'Otros' },
 ]
-
-const TASA_BCV = 36.42
-const IVA = 0.16
 
 type MetodoPago = 'efectivo' | 'transferencia' | 'punto'
 
 export default function POSPage() {
-  const [categoriaActiva, setCategoriaActiva] = useState('Todos')
+  const [categoriaActiva, setCategoriaActiva] = useState('Todas')
   const [carrito, setCarrito] = useState<ItemCarrito[]>([])
   const [metodoPago, setMetodoPago] = useState<MetodoPago>('efectivo')
   const [search, setSearch] = useState('')
+  const [cobrado, setCobrado] = useState(false)
 
   const productosFiltrados = PRODUCTOS.filter((p) => {
-    const matchCat = categoriaActiva === 'Todos' || p.categoria === categoriaActiva
-    const matchSearch = p.nombre.toLowerCase().includes(search.toLowerCase()) || p.ref.toLowerCase().includes(search.toLowerCase())
+    const matchCat = categoriaActiva === 'Todas' || p.categoria === categoriaActiva
+    const matchSearch = p.nombre.toLowerCase().includes(search.toLowerCase()) || p.sku.toLowerCase().includes(search.toLowerCase())
     return matchCat && matchSearch
   })
 
@@ -66,10 +64,10 @@ export default function POSPage() {
     )
   }
 
-  const subtotal = carrito.reduce((acc, i) => acc + i.producto.precio * i.cantidad, 0)
-  const iva = subtotal * IVA
-  const total = subtotal + iva
-  const totalVES = total * TASA_BCV
+  const subtotalUSD = carrito.reduce((acc, i) => acc + i.producto.precioUSD * i.cantidad, 0)
+  const ivaUSD = subtotalUSD * 0.16
+  const totalUSD = subtotalUSD + ivaUSD
+  const totalVES = totalUSD * TASA_BCV
 
   const metodos: { key: MetodoPago; icon: string; label: string }[] = [
     { key: 'efectivo', icon: 'payments', label: 'Efectivo' },
@@ -77,210 +75,206 @@ export default function POSPage() {
     { key: 'punto', icon: 'credit_card', label: 'Punto' },
   ]
 
-  return (
-    <div className="flex min-h-screen">
-      {/* Main area */}
-      <div className="flex-1 flex flex-col mr-[400px]">
-        <TopBar title="Punto de Venta" />
-        <div className="flex-1 p-8 space-y-6">
+  const handleCobrar = () => {
+    if (carrito.length === 0) return
+    setCobrado(true)
+    setTimeout(() => { setCarrito([]); setCobrado(false) }, 2000)
+  }
 
-          {/* Search + BCV */}
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1 max-w-md">
-              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+  return (
+    <div className="flex h-screen overflow-hidden bg-slate-50">
+      {/* LEFT: Catálogo */}
+      <div className="flex-1 flex flex-col overflow-hidden border-r border-slate-200">
+        {/* Header */}
+        <header className="flex items-center justify-between bg-white px-6 py-3 border-b border-slate-200 h-16 shadow-sm z-20 shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="size-8 bg-primary rounded-lg flex items-center justify-center text-on-primary">
+              <span className="material-symbols-outlined text-[18px]">storefront</span>
+            </div>
+            <h1 className="text-lg font-bold tracking-tight text-slate-900">Punto de Venta</h1>
+          </div>
+          <div className="flex flex-1 max-w-lg mx-6">
+            <label className="relative flex-1">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <span className="material-symbols-outlined text-[20px]">search</span>
+              </div>
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar productos, SKUs o categorías..."
-                className="w-full bg-surface-container-highest/50 border-none rounded-full py-3 pl-12 pr-6 text-sm focus:ring-2 focus:ring-primary/50 text-on-surface placeholder:text-outline/50"
+                className="block w-full rounded-lg border border-slate-200 bg-slate-50 pl-10 pr-4 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary"
+                placeholder="Buscar productos (Ctrl+K)..."
               />
-            </div>
-            <div className="flex items-center gap-2 bg-surface-container-highest px-4 py-2 rounded-full border border-outline-variant/20">
-              <span className="text-tertiary font-bold font-spartan text-sm tracking-widest uppercase">BCV: {TASA_BCV} VES</span>
-            </div>
+            </label>
           </div>
+          <div className="flex items-center gap-2 bg-surface-container-highest px-4 py-2 rounded-full border border-outline-variant/20">
+            <span className="material-symbols-outlined text-tertiary text-[16px]">currency_exchange</span>
+            <span className="text-tertiary font-bold text-sm tracking-widest uppercase">BCV: {TASA_BCV} Bs.</span>
+          </div>
+        </header>
 
-          {/* Categorías */}
-          <div className="flex gap-3 overflow-x-auto pb-2">
+        {/* Categorías */}
+        <div className="px-6 py-3 bg-white/50 border-b border-slate-200/60 shrink-0">
+          <div className="flex gap-3 overflow-x-auto pb-1">
             {CATEGORIAS.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCategoriaActiva(cat)}
-                className={`px-6 py-2.5 rounded-full font-medium text-sm whitespace-nowrap transition-all ${
+              <button key={cat} onClick={() => setCategoriaActiva(cat)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                   categoriaActiva === cat
-                    ? 'bg-primary text-on-primary shadow-lg shadow-primary/20'
-                    : 'bg-surface-container-high text-on-surface/70 hover:bg-surface-container-highest'
-                }`}
-              >
+                    ? 'bg-slate-900 text-white shadow-sm'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:border-primary hover:text-primary shadow-sm'
+                }`}>
                 {cat}
               </button>
             ))}
           </div>
+        </div>
 
-          {/* Grid de productos */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        {/* Grid de productos */}
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {productosFiltrados.map((p) => (
-              <div
-                key={p.id}
-                className="group bg-surface-container rounded-2xl overflow-hidden hover:ring-2 hover:ring-primary/40 transition-all duration-300 cursor-pointer"
-                onClick={() => agregarAlCarrito(p)}
-              >
-                <div className="aspect-square relative bg-surface-container-high flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[64px] text-outline/30">inventory_2</span>
-                  <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md ${
-                    p.stock <= 5 ? 'bg-error/20 text-error' : 'bg-surface/80 text-tertiary'
-                  }`}>
-                    {p.stock <= 5 ? `Stock Bajo: ${p.stock}` : `En Stock: ${p.stock}`}
+              <div key={p.id}
+                className="group bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-primary/50 transition-all cursor-pointer flex flex-col overflow-hidden"
+                onClick={() => agregarAlCarrito(p)}>
+                <div className="aspect-[4/3] w-full bg-slate-100 relative overflow-hidden flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[48px] text-slate-300">inventory_2</span>
+                  <div className={`absolute top-2 right-2 bg-white/90 backdrop-blur rounded-full px-2 py-0.5 text-xs font-bold text-slate-900 shadow-sm`}>
+                    ${p.precioUSD.toFixed(2)}
                   </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-headline font-semibold text-on-surface group-hover:text-primary transition-colors text-sm">{p.nombre}</h3>
-                  <p className="text-xs text-on-surface/40 mb-3">Ref: {p.ref}</p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="block text-lg font-headline font-bold text-on-surface">{formatCurrency(p.precio)}</span>
-                      <span className="block text-[10px] text-on-surface/40">{formatCurrency(p.precio * TASA_BCV, 'VES')}</span>
+                  {p.stock <= 5 && (
+                    <div className="absolute top-2 left-2 bg-red-100 text-red-700 rounded-full px-2 py-0.5 text-[10px] font-bold">
+                      ¡Bajo: {p.stock}!
                     </div>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); agregarAlCarrito(p) }}
-                      className="w-9 h-9 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90"
-                    >
-                      <span className="material-symbols-outlined text-[20px]">add</span>
-                    </button>
-                  </div>
+                  )}
+                </div>
+                <div className="p-3 flex flex-col flex-1">
+                  <h3 className="text-sm font-semibold text-slate-800 line-clamp-2 leading-tight mb-1 group-hover:text-primary transition-colors">{p.nombre}</h3>
+                  <p className="text-xs text-slate-500 mt-auto">SKU: {p.sku}</p>
+                  <p className="text-[10px] text-slate-400">Bs. {(p.precioUSD * TASA_BCV).toFixed(2)}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Daily goal floating */}
-        <div className="fixed bottom-8 left-72 z-30">
-          <GlassCard className="p-5 flex items-center gap-5 shadow-2xl">
-            <span className="material-symbols-outlined text-primary text-4xl">monitoring</span>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-outline">Meta Diaria</p>
-              <h4 className="font-headline text-xl font-bold text-on-surface">$ 4,200.00</h4>
-              <div className="w-28 h-1 bg-surface-container-highest rounded-full mt-2 overflow-hidden">
-                <div className="h-full bg-tertiary rounded-full" style={{ width: '65%' }} />
-              </div>
-            </div>
-            <div className="text-right">
-              <span className="text-tertiary text-xs font-bold">+12%</span>
-              <p className="text-[10px] text-outline uppercase">vs ayer</p>
-            </div>
-          </GlassCard>
-        </div>
       </div>
 
-      {/* Right sidebar — carrito */}
-      <aside className="fixed right-0 top-0 h-full w-[400px] glass-panel border-l border-outline-variant/10 flex flex-col z-40">
-        <div className="p-6 border-b border-outline-variant/10">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-headline font-bold text-xl text-on-surface">Orden Actual</h2>
-            <button
-              onClick={() => setCarrito([])}
-              className="text-error/70 hover:text-error flex items-center gap-1 text-xs uppercase tracking-widest font-bold transition-colors"
-            >
-              <span className="material-symbols-outlined text-sm">delete_sweep</span>
-              Limpiar
+      {/* RIGHT: Carrito */}
+      <aside className="w-[380px] bg-white flex flex-col shadow-xl z-10 shrink-0">
+        {/* Cliente */}
+        <div className="p-4 border-b border-slate-200 bg-slate-50 shrink-0">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Cliente</span>
+            <button className="text-primary text-xs font-medium hover:underline flex items-center gap-1">
+              <span className="material-symbols-outlined text-[14px]">edit</span> Cambiar (F2)
             </button>
           </div>
-          <div className="flex items-center gap-3 bg-surface-container-highest/40 p-3 rounded-xl">
-            <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-              <span className="material-symbols-outlined text-[20px]">person</span>
+          <div className="flex items-start gap-3 p-3 bg-white border border-primary/20 rounded-lg shadow-sm">
+            <div className="size-10 bg-primary/10 text-primary rounded-full flex items-center justify-center shrink-0">
+              <span className="material-symbols-outlined">person</span>
             </div>
-            <div className="flex-1">
-              <p className="text-xs text-outline">Cliente</p>
-              <p className="text-sm font-semibold text-on-surface">Cliente General</p>
+            <div>
+              <h3 className="font-bold text-slate-800 leading-none mb-1">Cliente General</h3>
+              <p className="text-[10px] text-slate-400">Consumidor Final</p>
             </div>
-            <button className="text-primary">
-              <span className="material-symbols-outlined text-[20px]">edit</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2 mt-3">
+            <button className="flex items-center justify-center gap-2 py-2 px-3 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 hover:border-primary/50 transition-all">
+              <span className="material-symbols-outlined text-primary text-[18px]">receipt_long</span>
+              Factura Elec.
+            </button>
+            <button className="flex items-center justify-center gap-2 py-2 px-3 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 hover:border-primary/50 transition-all">
+              <span className="material-symbols-outlined text-amber-500 text-[18px]">barcode_reader</span>
+              Escanear (F4)
             </button>
           </div>
         </div>
 
         {/* Items */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 bg-white">
           {carrito.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-outline">
+            <div className="flex flex-col items-center justify-center h-full text-slate-400">
               <span className="material-symbols-outlined text-[48px] mb-3">shopping_cart</span>
-              <p className="text-sm font-spartan uppercase tracking-widest">Carrito vacío</p>
+              <p className="text-sm font-medium">Carrito vacío</p>
               <p className="text-xs mt-1">Agrega productos para comenzar</p>
             </div>
           ) : (
-            carrito.map((item) => (
-              <div key={item.producto.id} className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary flex-shrink-0">
-                  <span className="material-symbols-outlined text-[20px]">inventory_2</span>
+            <div className="flex flex-col gap-3">
+              {carrito.map((item) => (
+                <div key={item.producto.id} className="flex gap-3 items-center group">
+                  <div className="flex flex-col items-center gap-1 bg-slate-50 p-1 rounded-lg border border-slate-100">
+                    <button onClick={() => cambiarCantidad(item.producto.id, 1)}
+                      className="size-6 flex items-center justify-center bg-white rounded shadow-sm border border-slate-200 text-slate-600 hover:text-primary hover:border-primary active:scale-95 transition-all">
+                      <span className="material-symbols-outlined text-[16px]">add</span>
+                    </button>
+                    <span className="font-bold text-sm w-6 text-center">{item.cantidad}</span>
+                    <button onClick={() => cambiarCantidad(item.producto.id, -1)}
+                      className="size-6 flex items-center justify-center bg-white rounded shadow-sm border border-slate-200 text-slate-600 hover:text-red-500 hover:border-red-500 active:scale-95 transition-all">
+                      <span className="material-symbols-outlined text-[16px]">remove</span>
+                    </button>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start mb-0.5">
+                      <h4 className="font-medium text-slate-800 text-sm truncate pr-2">{item.producto.nombre}</h4>
+                      <span className="font-bold text-slate-900 text-sm">${(item.producto.precioUSD * item.cantidad).toFixed(2)}</span>
+                    </div>
+                    <p className="text-xs text-slate-500">${item.producto.precioUSD.toFixed(2)} c/u</p>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-medium text-on-surface truncate">{item.producto.nombre}</h4>
-                  <p className="text-[10px] text-outline">{formatCurrency(item.producto.precio)} x {item.cantidad}</p>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <button onClick={() => cambiarCantidad(item.producto.id, -1)} className="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center hover:bg-primary/20 transition-colors">
-                    <span className="material-symbols-outlined text-sm">remove</span>
-                  </button>
-                  <span className="text-sm font-bold w-5 text-center text-on-surface">{item.cantidad}</span>
-                  <button onClick={() => cambiarCantidad(item.producto.id, 1)} className="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center hover:bg-primary/20 transition-colors">
-                    <span className="material-symbols-outlined text-sm">add</span>
-                  </button>
-                </div>
-                <p className="text-sm font-bold text-on-surface ml-1 w-16 text-right">{formatCurrency(item.producto.precio * item.cantidad)}</p>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
 
-        {/* Payment */}
-        <div className="p-6 bg-surface-container-low/80 space-y-5">
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-outline">Subtotal</span>
-              <span className="font-medium text-on-surface">{formatCurrency(subtotal)}</span>
+        {/* Totales y pago */}
+        <div className="bg-slate-50 border-t border-slate-200 p-4 pb-6 space-y-4 shrink-0">
+          <div className="flex gap-2">
+            <button className="flex-1 flex items-center justify-center gap-1 py-2 px-3 bg-white border border-dashed border-slate-300 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-all">
+              <span className="material-symbols-outlined text-[18px]">percent</span>
+              Descuento
+            </button>
+            <button className="flex-1 flex items-center justify-center gap-1 py-2 px-3 bg-white border border-dashed border-slate-300 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-all">
+              <span className="material-symbols-outlined text-[18px]">description</span>
+              Nota Crédito
+            </button>
+          </div>
+          <div className="space-y-2 py-2">
+            <div className="flex justify-between text-sm text-slate-500">
+              <span>Subtotal</span><span>${subtotalUSD.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-outline">IVA (16%)</span>
-              <span className="font-medium text-on-surface">{formatCurrency(iva)}</span>
+            <div className="flex justify-between text-sm text-slate-500">
+              <span>IVA (16%)</span><span>${ivaUSD.toFixed(2)}</span>
             </div>
-            <div className="pt-3 flex justify-between items-end border-t border-white/5">
-              <div>
-                <span className="block text-[10px] text-outline font-bold uppercase tracking-widest">Total</span>
-                <span className="block text-3xl font-headline font-bold text-primary">{formatCurrency(total)}</span>
-              </div>
+            <div className="h-px bg-slate-200 my-1" />
+            <div className="flex justify-between items-baseline">
+              <span className="text-base font-bold text-slate-700">Total a Pagar</span>
               <div className="text-right">
-                <span className="block text-[10px] text-outline">Total VES</span>
-                <span className="block text-sm font-bold text-tertiary">{formatCurrency(totalVES, 'VES')}</span>
+                <span className="text-2xl font-bold text-slate-900">${totalUSD.toFixed(2)}</span>
+                <p className="text-[10px] text-slate-400">Bs. {totalVES.toFixed(2)}</p>
               </div>
             </div>
           </div>
-
-          {/* Métodos de pago */}
           <div className="grid grid-cols-3 gap-2">
             {metodos.map((m) => (
-              <button
-                key={m.key}
-                onClick={() => setMetodoPago(m.key)}
-                className={`flex flex-col items-center gap-1.5 p-3 rounded-xl transition-all ${
+              <button key={m.key} onClick={() => setMetodoPago(m.key)}
+                className={`flex flex-col items-center gap-1 p-3 rounded-xl transition-all ${
                   metodoPago === m.key
-                    ? 'bg-surface-container-highest border-2 border-primary text-primary'
-                    : 'bg-surface-container hover:bg-surface-container-highest text-outline hover:text-on-surface'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[22px]">{m.icon}</span>
+                    ? 'bg-white border-2 border-primary text-primary shadow-sm'
+                    : 'bg-white border border-slate-200 text-slate-500 hover:border-primary/50'
+                }`}>
+                <span className="material-symbols-outlined text-[20px]">{m.icon}</span>
                 <span className="text-[10px] font-bold uppercase tracking-tighter">{m.label}</span>
               </button>
             ))}
           </div>
-
-          <Button
-            className="w-full py-4 text-base"
+          <button
+            onClick={handleCobrar}
             disabled={carrito.length === 0}
-          >
-            Completar Pago
-            <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
-          </Button>
+            className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 text-on-primary font-bold text-lg py-4 rounded-xl shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+            {cobrado ? (
+              <><span className="material-symbols-outlined text-[20px]">check_circle</span>¡Cobrado!</>
+            ) : (
+              <><span>Cobrar</span><span className="bg-white/20 px-2 py-0.5 rounded text-sm font-semibold">${totalUSD.toFixed(2)}</span></>
+            )}
+          </button>
         </div>
       </aside>
     </div>
