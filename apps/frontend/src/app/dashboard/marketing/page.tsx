@@ -3,35 +3,43 @@ import { TopBar } from '@/components/layout/TopBar'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
-const campanas = [
-  { nombre: 'Lanzamiento Q4 2024', canal: 'Email + Social', presupuesto: '$2,400', alcance: '12,400', estado: 'Activa' },
-  { nombre: 'Black Friday Venezuela', canal: 'Instagram + TikTok', presupuesto: '$1,800', alcance: '8,200', estado: 'Planificada' },
-  { nombre: 'Campaña Fidelización', canal: 'WhatsApp + Email', presupuesto: '$600', alcance: '3,100', estado: 'Completada' },
-  { nombre: 'Reactivación Clientes', canal: 'Email', presupuesto: '$400', alcance: '1,850', estado: 'Pausada' },
+const metricas = [
+  { label: 'Open Rate', valor: '42.8%', trend: '+2.4%', up: true, color: 'bg-primary', pct: 42.8 },
+  { label: 'Avg. CTR', valor: '12.1%', trend: '-0.8%', up: false, color: 'bg-tertiary', pct: 12.1 },
+  { label: 'Conversion Rate', valor: '8.4%', trend: '+5.2%', up: true, color: 'bg-secondary', pct: 8.4 },
+  { label: 'ROAS / ROI', valor: '4.2x', trend: '+18%', up: true, color: 'bg-primary-container', pct: 70 },
 ]
 
-const estadoVariant: Record<string, 'success' | 'warning' | 'error'> = {
-  Activa: 'success', Planificada: 'warning', Completada: 'success', Pausada: 'error',
-}
+const campanas = [
+  { nombre: 'Summer Retention Blast', canal: 'Email • 4,200 leads', performance: '84% Engagement', estado: 'RUNNING', estadoColor: 'text-tertiary bg-tertiary/10', icon: 'mail', iconBg: 'bg-indigo-500/20 border-indigo-500/10', iconColor: 'text-indigo-400' },
+  { nombre: 'Enterprise Social Outreach', canal: 'LinkedIn • Ad Groups 4/12', performance: '--', estado: 'SCHEDULED', estadoColor: 'text-outline bg-surface-container-highest', icon: 'public', iconBg: 'bg-emerald-500/20 border-emerald-500/10', iconColor: 'text-emerald-400' },
+  { nombre: 'A/B Testing: Pricing Page V2', canal: 'Web • 50/50 Split', performance: 'Variant B +12%', estado: 'RUNNING', estadoColor: 'text-tertiary bg-tertiary/10', icon: 'splitscreen', iconBg: 'bg-violet-500/20 border-violet-500/10', iconColor: 'text-violet-400' },
+]
 
-const conversionData = [
-  { mes: 'Jul', leads: 320, conversiones: 48 },
-  { mes: 'Ago', leads: 410, conversiones: 72 },
-  { mes: 'Sep', leads: 380, conversiones: 65 },
-  { mes: 'Oct', leads: 520, conversiones: 98 },
+const segmentos = [
+  { nombre: 'Platinum High-Value', clientes: '1,240', pct: '24%', color: 'bg-primary' },
+  { nombre: 'Gold Growing Tier', clientes: '3,892', pct: '42%', color: 'bg-tertiary' },
+  { nombre: 'Silver Prospects', clientes: '8,102', pct: '34%', color: 'bg-outline/40' },
+]
+
+const funnel = [
+  { label: 'VISITORS (12.4k)', h: '90%', color: 'bg-primary/20 hover:bg-primary/40' },
+  { label: 'MQL (8.1k)', h: '65%', color: 'bg-primary-container/30 hover:bg-primary-container/50' },
+  { label: 'SQL (2.4k)', h: '40%', color: 'bg-tertiary/20 hover:bg-tertiary/40' },
+  { label: 'WON (412)', h: '25%', color: 'bg-secondary/20 hover:bg-secondary/40' },
 ]
 
 export default function MarketingPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <TopBar title="Marketing" />
+      <TopBar title="Marketing Hub" />
       <div className="flex-1 p-8 space-y-8 max-w-[1600px] mx-auto w-full">
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-4xl font-headline font-bold tracking-tight text-on-surface">Marketing & Campañas</h2>
-            <p className="text-on-surface-variant mt-1">Gestión de campañas, leads y análisis de conversión.</p>
+            <h2 className="text-4xl font-headline font-bold tracking-tight text-on-surface">Marketing Hub</h2>
+            <p className="text-on-surface-variant mt-1">Gestión de campañas, leads y análisis de conversión en tiempo real.</p>
           </div>
           <Button>
             <span className="material-symbols-outlined text-[18px]">add_circle</span>
@@ -39,109 +47,162 @@ export default function MarketingPage() {
           </Button>
         </div>
 
-        {/* KPIs */}
+        {/* Métricas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { label: 'Leads del Mes', valor: '520', icon: 'person_add', color: 'bg-primary/10 text-primary', trend: '+28% vs mes ant.' },
-            { label: 'Tasa Conversión', valor: '18.8%', icon: 'trending_up', color: 'bg-emerald-500/10 text-emerald-400', trend: '↑ 2.1%' },
-            { label: 'Campañas Activas', valor: '4', icon: 'campaign', color: 'bg-tertiary/10 text-tertiary', trend: '2 en planificación' },
-            { label: 'ROI Campañas', valor: '3.4x', icon: 'monetization_on', color: 'bg-amber-500/10 text-amber-400', trend: 'Objetivo: 3.0x' },
-          ].map((kpi) => (
-            <GlassCard key={kpi.label} className="p-6">
-              <div className={`p-2 rounded-xl w-fit mb-4 ${kpi.color}`}>
-                <span className="material-symbols-outlined">{kpi.icon}</span>
+          {metricas.map((m) => (
+            <GlassCard key={m.label} className="p-6 relative overflow-hidden">
+              <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-3xl" />
+              <div className="flex justify-between items-start mb-4">
+                <span className="text-[10px] uppercase tracking-widest text-outline font-spartan">{m.label}</span>
+                <span className={`text-xs font-medium flex items-center gap-0.5 ${m.up ? 'text-tertiary' : 'text-error'}`}>
+                  {m.trend}
+                  <span className="material-symbols-outlined text-xs">{m.up ? 'trending_up' : 'trending_down'}</span>
+                </span>
               </div>
-              <p className="text-xs text-outline uppercase tracking-widest font-spartan">{kpi.label}</p>
-              <p className="text-3xl font-headline font-bold text-on-surface mt-1">{kpi.valor}</p>
-              <p className="text-xs text-on-surface-variant mt-2">{kpi.trend}</p>
+              <div className="font-headline text-4xl font-bold text-on-surface mb-2">{m.valor}</div>
+              <div className="w-full h-1 bg-surface-container rounded-full overflow-hidden">
+                <div className={`${m.color} h-full`} style={{ width: `${m.pct}%` }} />
+              </div>
             </GlassCard>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Gráfico Conversión */}
-          <GlassCard className="lg:col-span-2 p-6">
-            <div className="mb-6">
-              <h3 className="text-lg font-bold text-on-surface font-headline">Leads vs Conversiones</h3>
-              <p className="text-sm text-outline">Últimos 4 meses</p>
-            </div>
-            <ResponsiveContainer width="100%" height={250}>
-              <AreaChart data={conversionData}>
-                <defs>
-                  <linearGradient id="leadsGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#c0c1ff" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#c0c1ff" stopOpacity={0.05} />
-                  </linearGradient>
-                  <linearGradient id="convGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#4cd7f6" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#4cd7f6" stopOpacity={0.05} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="4 4" stroke="#2d3449" />
-                <XAxis dataKey="mes" tick={{ fill: '#908fa0', fontSize: 12 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: '#908fa0', fontSize: 12 }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ background: '#171f33', border: '1px solid #464554', borderRadius: '12px', color: '#dae2fd' }} />
-                <Area type="monotone" dataKey="leads" stroke="#c0c1ff" strokeWidth={2} fill="url(#leadsGrad)" name="Leads" />
-                <Area type="monotone" dataKey="conversiones" stroke="#4cd7f6" strokeWidth={2} fill="url(#convGrad)" name="Conversiones" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </GlassCard>
-
-          {/* Canales */}
-          <GlassCard className="p-6">
-            <h3 className="text-lg font-bold text-on-surface font-headline mb-6">Canales Activos</h3>
-            <div className="space-y-4">
-              {[
-                { canal: 'Email Marketing', leads: 210, pct: 40, color: 'bg-primary' },
-                { canal: 'Instagram', leads: 156, pct: 30, color: 'bg-tertiary' },
-                { canal: 'WhatsApp', leads: 98, pct: 19, color: 'bg-emerald-500' },
-                { canal: 'TikTok', leads: 56, pct: 11, color: 'bg-amber-500' },
-              ].map((c) => (
-                <div key={c.canal}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-on-surface-variant">{c.canal}</span>
-                    <span className="text-on-surface font-medium">{c.leads} leads</span>
+        <div className="grid grid-cols-12 gap-6">
+          {/* Funnel + Campañas */}
+          <div className="col-span-12 lg:col-span-8 space-y-6">
+            <GlassCard className="p-8">
+              <div className="flex justify-between items-center mb-10">
+                <div>
+                  <h3 className="font-headline text-xl font-semibold text-on-surface">Lead Acquisition Funnel</h3>
+                  <p className="text-sm text-outline">AI-tracked transition from visitor to MQL/SQL</p>
+                </div>
+                <span className="px-3 py-1 bg-surface-container-high rounded-full text-[10px] text-primary border border-primary/20">LIVE DATA</span>
+              </div>
+              <div className="relative h-64 flex items-end gap-2">
+                {funnel.map((f, i) => (
+                  <div key={i} className="flex-1 flex flex-col justify-end group">
+                    <div className={`${f.color} transition-all rounded-t-xl w-full relative`} style={{ height: f.h }}>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary whitespace-nowrap">{f.label}</span>
+                    </div>
+                    <div className="text-[10px] mt-4 text-center text-outline">Semana {i + 1}</div>
                   </div>
-                  <div className="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
-                    <div className={`h-full ${c.color} rounded-full`} style={{ width: `${c.pct}%` }} />
+                ))}
+              </div>
+            </GlassCard>
+
+            <GlassCard className="p-8">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="font-headline text-xl font-semibold text-on-surface">Campañas Activas</h3>
+                <button className="text-sm text-primary hover:underline">Ver Todo</button>
+              </div>
+              <div className="space-y-4">
+                {campanas.map((c) => (
+                  <div key={c.nombre} className="flex items-center justify-between p-4 bg-surface-container-low/50 rounded-2xl hover:bg-surface-container-low transition-all">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${c.iconBg}`}>
+                        <span className={`material-symbols-outlined ${c.iconColor}`}>{c.icon}</span>
+                      </div>
+                      <div>
+                        <div className="font-medium text-sm text-on-surface">{c.nombre}</div>
+                        <div className="text-xs text-outline">{c.canal}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-6">
+                      <div className="hidden md:block">
+                        <div className="text-xs text-outline mb-1">Performance</div>
+                        <div className="text-sm font-semibold text-tertiary">{c.performance}</div>
+                      </div>
+                      <span className={`px-3 py-1 text-[10px] font-bold rounded-full ${c.estadoColor}`}>{c.estado}</span>
+                      <button className="p-2 text-outline hover:text-on-surface">
+                        <span className="material-symbols-outlined">more_vert</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </GlassCard>
+          </div>
+
+          {/* AI Widget + Segmentos */}
+          <div className="col-span-12 lg:col-span-4 space-y-6">
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-tertiary rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000" />
+              <GlassCard className="relative p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-tertiary flex items-center justify-center">
+                    <span className="material-symbols-outlined text-on-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
+                  </div>
+                  <h3 className="font-headline font-semibold text-on-surface">Marketing Strategy Insights</h3>
+                </div>
+                <div className="space-y-4">
+                  <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                    <p className="text-xs text-primary font-bold mb-1">SEGMENT OPTIMIZATION</p>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">
+                      Tu segmento "Platinum" muestra 40% mayor churn en EMEA. Se sugiere redirigir presupuesto a campañas de prueba social regional.
+                    </p>
+                  </div>
+                  <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                    <p className="text-xs text-tertiary font-bold mb-1">CAMPAIGN TIMING</p>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">
+                      Pico de engagement para Email Hub: <span className="text-on-surface font-semibold">Martes 10:15 AM</span>. ¿Ajustar scheduler?
+                    </p>
+                    <button className="mt-3 text-[10px] bg-tertiary text-on-tertiary font-bold px-3 py-1 rounded-full uppercase">
+                      Aplicar Sugerencia
+                    </button>
                   </div>
                 </div>
-              ))}
+              </GlassCard>
             </div>
-          </GlassCard>
-        </div>
 
-        {/* Tabla Campañas */}
-        <GlassCard className="overflow-hidden">
-          <div className="px-6 py-5 border-b border-white/5 flex items-center justify-between">
-            <h3 className="text-lg font-bold text-on-surface font-headline">Campañas</h3>
-            <button className="text-sm text-primary font-medium hover:underline">Ver Todo</button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-white/5 text-[10px] uppercase font-spartan font-bold text-outline">
-                <tr>
-                  {['Campaña', 'Canal', 'Presupuesto', 'Alcance', 'Estado'].map((h) => (
-                    <th key={h} className="px-6 py-4">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {campanas.map((c) => (
-                  <tr key={c.nombre} className="hover:bg-white/5 transition-colors">
-                    <td className="px-6 py-4 font-medium text-on-surface">{c.nombre}</td>
-                    <td className="px-6 py-4 text-on-surface-variant">{c.canal}</td>
-                    <td className="px-6 py-4 text-on-surface">{c.presupuesto}</td>
-                    <td className="px-6 py-4 text-on-surface-variant">{c.alcance}</td>
-                    <td className="px-6 py-4">
-                      <Badge variant={estadoVariant[c.estado]}>{c.estado}</Badge>
-                    </td>
-                  </tr>
+            <GlassCard className="p-6">
+              <h3 className="font-headline font-semibold mb-6 text-on-surface">Segmentos de Audiencia</h3>
+              <div className="space-y-5">
+                {segmentos.map((s) => (
+                  <div key={s.nombre} className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-2 h-8 ${s.color} rounded-full`} />
+                      <div>
+                        <div className="text-sm font-medium text-on-surface">{s.nombre}</div>
+                        <div className="text-[10px] text-outline">{s.clientes} Clientes</div>
+                      </div>
+                    </div>
+                    <div className="text-sm font-bold text-on-surface">{s.pct}</div>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+              <div className="mt-8 p-4 bg-surface-container-highest/30 rounded-2xl border border-outline-variant/10">
+                <div className="text-[10px] text-outline uppercase tracking-widest mb-2 text-center">AI Lead Score Distribution</div>
+                <div className="flex items-center gap-1 h-3">
+                  <div className="bg-primary h-full w-[15%] rounded-l-full" />
+                  <div className="bg-primary/60 h-full w-[25%]" />
+                  <div className="bg-primary/30 h-full w-[40%]" />
+                  <div className="bg-surface-container-highest h-full w-[20%] rounded-r-full" />
+                </div>
+                <div className="flex justify-between text-[8px] text-outline mt-2">
+                  <span>High Intent</span><span>Low Intent</span>
+                </div>
+              </div>
+            </GlassCard>
+
+            <GlassCard className="p-6 relative overflow-hidden bg-gradient-to-br from-primary/10 to-transparent">
+              <h3 className="font-headline font-semibold mb-4 text-on-surface">Último Experimento A/B</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex-1 text-center">
+                  <div className="text-[10px] text-outline uppercase mb-1">Variant A</div>
+                  <div className="text-lg font-bold text-on-surface">3.2%</div>
+                </div>
+                <div className="text-primary font-bold">VS</div>
+                <div className="flex-1 text-center">
+                  <div className="text-[10px] text-tertiary uppercase mb-1">Variant B</div>
+                  <div className="text-lg font-bold text-tertiary">4.8%</div>
+                </div>
+              </div>
+              <p className="text-[11px] text-on-surface-variant text-center border-t border-white/5 pt-4">
+                <span className="text-tertiary font-bold">Variant B</span> ganando con 98.4% de significancia estadística.
+              </p>
+            </GlassCard>
           </div>
-        </GlassCard>
+        </div>
       </div>
     </div>
   )

@@ -23,7 +23,6 @@ export default function VentasPage() {
   const [rif, setRif] = useState('J-30459201-0')
   const [cliente, setCliente] = useState('')
   const bcv = 36.50
-
   const base = 15000
   const iva = base * 0.16
   const total = base + iva
@@ -34,38 +33,39 @@ export default function VentasPage() {
       <TopBar title="Ventas y Facturación" />
       <div className="flex-1 p-8 space-y-8 max-w-[1600px] mx-auto w-full">
 
-        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <h2 className="text-4xl font-bold text-on-surface font-headline tracking-tight">Ventas y Facturación</h2>
             <p className="text-on-surface-variant mt-1">Gestiona tus ingresos y comprobantes fiscales con precisión.</p>
           </div>
-          <div className="flex items-center gap-2 bg-surface-container p-1 rounded-xl border border-white/5">
-            {(['VES', 'USD'] as const).map((m) => (
-              <button
-                key={m}
-                onClick={() => setMoneda(m)}
-                className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${moneda === m ? 'bg-primary/20 text-primary' : 'text-outline hover:bg-white/5'}`}
-              >
-                {m}
-              </button>
-            ))}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center bg-surface-container-highest/50 px-4 py-2 rounded-full border border-white/5">
+              <span className="material-symbols-outlined text-tertiary text-sm mr-2">monetization_on</span>
+              <span className="text-on-surface font-medium text-sm">BCV: {bcv} VES</span>
+            </div>
+            <div className="flex items-center gap-2 bg-surface-container p-1 rounded-xl border border-white/5">
+              {(['VES', 'USD'] as const).map((m) => (
+                <button key={m} onClick={() => setMoneda(m)}
+                  className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${moneda === m ? 'bg-primary/20 text-primary' : 'text-outline hover:bg-white/5'}`}>
+                  {m}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Main: Facturas + Métricas */}
           <div className="lg:col-span-8 space-y-6">
-            <GlassCard className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold font-headline">Facturas Recientes</h3>
+            <GlassCard className="p-6 rounded-3xl">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-xl font-headline font-bold">Facturas Recientes</h3>
                 <Button size="sm">
                   <span className="material-symbols-outlined text-[16px]">add_circle</span>
                   Nueva Factura
                 </Button>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full border-separate border-spacing-y-2">
+                <table className="w-full border-separate border-spacing-y-3">
                   <thead>
                     <tr className="text-left">
                       {['Número', 'Cliente', 'Fecha', `Total ${moneda}`, 'Estado'].map((h) => (
@@ -90,7 +90,6 @@ export default function VentasPage() {
               </div>
             </GlassCard>
 
-            {/* Métricas */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <GlassCard className="p-6 relative overflow-hidden group">
                 <div className="absolute -right-4 -top-4 w-32 h-32 bg-primary/10 blur-[60px] group-hover:bg-primary/20 transition-all" />
@@ -115,9 +114,8 @@ export default function VentasPage() {
             </div>
           </div>
 
-          {/* Editor de Factura */}
           <div className="lg:col-span-4">
-            <GlassCard className="sticky top-24 overflow-hidden">
+            <GlassCard className="sticky top-24 overflow-hidden rounded-3xl border border-white/10">
               <div className="bg-primary/10 p-6 border-b border-white/5">
                 <h3 className="font-headline font-bold text-lg flex items-center gap-2">
                   <span className="material-symbols-outlined text-primary">description</span>
@@ -128,23 +126,16 @@ export default function VentasPage() {
                 <div className="space-y-4">
                   <div className="space-y-1">
                     <label className="text-[10px] font-spartan uppercase tracking-widest text-outline">RIF / Cédula</label>
-                    <input
-                      value={rif}
-                      onChange={(e) => setRif(e.target.value)}
-                      className="w-full bg-surface-container-highest/50 border border-white/10 rounded-xl px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    />
+                    <input value={rif} onChange={(e) => setRif(e.target.value)}
+                      className="w-full bg-surface-container-highest/50 border border-white/10 rounded-xl px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-spartan uppercase tracking-widest text-outline">Cliente</label>
-                    <input
-                      value={cliente}
-                      onChange={(e) => setCliente(e.target.value)}
+                    <input value={cliente} onChange={(e) => setCliente(e.target.value)}
                       placeholder="Razón Social"
-                      className="w-full bg-surface-container-highest/50 border border-white/10 rounded-xl px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-outline"
-                    />
+                      className="w-full bg-surface-container-highest/50 border border-white/10 rounded-xl px-4 py-2.5 text-on-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-outline" />
                   </div>
                 </div>
-
                 <div className="space-y-2">
                   <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block">Artículos</label>
                   {items.map((item, i) => (
@@ -162,7 +153,6 @@ export default function VentasPage() {
                     + Agregar Item
                   </button>
                 </div>
-
                 <div className="pt-4 border-t border-white/5 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-outline">Base Imponible</span>
@@ -180,10 +170,7 @@ export default function VentasPage() {
                     </div>
                   </div>
                 </div>
-
-                <Button className="w-full justify-center py-4">
-                  PROCESAR FACTURA
-                </Button>
+                <Button className="w-full justify-center py-4">PROCESAR FACTURA</Button>
               </div>
             </GlassCard>
           </div>

@@ -7,21 +7,133 @@ import { useAuthStore } from '@/stores/authStore'
 import { useNotificationStore } from '@/stores/notificationStore'
 import { api } from '@/lib/api'
 
-const NAV_ITEMS = [
+type NavItem = { href: string; icon: string; label: string; children?: { href: string; label: string }[] }
+
+const NAV_ITEMS: NavItem[] = [
   { href: '/dashboard', icon: 'dashboard', label: 'Dashboard' },
-  { href: '/dashboard/inventario', icon: 'inventory_2', label: 'Inventario' },
-  { href: '/dashboard/compras', icon: 'shopping_cart', label: 'Compras' },
-  { href: '/dashboard/produccion', icon: 'factory', label: 'Producción' },
+  { href: '/dashboard/ejecutivo', icon: 'leaderboard', label: 'Ejecutivo' },
+  {
+    href: '/dashboard/inventario', icon: 'inventory_2', label: 'Inventario',
+    children: [
+      { href: '/dashboard/inventario/productos', label: 'Productos' },
+      { href: '/dashboard/inventario/movimientos', label: 'Movimientos' },
+      { href: '/dashboard/inventario/almacenes', label: 'Almacenes' },
+      { href: '/dashboard/inventario/trazabilidad', label: 'Trazabilidad' },
+      { href: '/dashboard/inventario/multialmacenes', label: 'Multialmacenes' },
+      { href: '/dashboard/inventario/smart-control', label: 'Smart Control' },
+      { href: '/dashboard/inventario/reabastecimiento', label: 'Reabastecimiento' },
+      { href: '/dashboard/inventario/ajustes', label: 'Ajustes' },
+    ],
+  },
+  {
+    href: '/dashboard/compras', icon: 'shopping_cart', label: 'Compras',
+    children: [
+      { href: '/dashboard/compras/ordenes', label: 'Órdenes' },
+      { href: '/dashboard/compras/proveedores', label: 'Proveedores' },
+      { href: '/dashboard/compras/recepcion', label: 'Recepción' },
+    ],
+  },
+  { href: '/dashboard/produccion', icon: 'factory', label: 'Producción',
+    children: [
+      { href: '/dashboard/produccion/ordenes', label: 'Órdenes' },
+      { href: '/dashboard/produccion/bom', label: 'BOM' },
+    ],
+  },
   { href: '/dashboard/mantenimiento', icon: 'build', label: 'Mantenimiento' },
-  { href: '/dashboard/calidad', icon: 'verified', label: 'Calidad' },
+  {
+    href: '/dashboard/calidad', icon: 'verified', label: 'Calidad',
+    children: [
+      { href: '/dashboard/calidad/inspecciones', label: 'Inspecciones' },
+      { href: '/dashboard/calidad/auditoria', label: 'Auditoría' },
+    ],
+  },
   { href: '/dashboard/flota', icon: 'local_shipping', label: 'Flota' },
-  { href: '/dashboard/ventas', icon: 'point_of_sale', label: 'Ventas' },
-  { href: '/dashboard/pos', icon: 'storefront', label: 'POS' },
-  { href: '/dashboard/marketing', icon: 'campaign', label: 'Marketing' },
-  { href: '/dashboard/rrhh', icon: 'group', label: 'RRHH' },
-  { href: '/dashboard/nomina', icon: 'payments', label: 'Nómina' },
-  { href: '/dashboard/reportes', icon: 'analytics', label: 'Reportes' },
-  { href: '/dashboard/configuracion', icon: 'settings', label: 'Configuración' },
+  { href: '/dashboard/ventas', icon: 'point_of_sale', label: 'Ventas',
+    children: [
+      { href: '/dashboard/ventas/cotizaciones', label: 'Cotizaciones' },
+      { href: '/dashboard/ventas/facturas', label: 'Facturas' },
+      { href: '/dashboard/ventas/nueva-factura', label: 'Nueva Factura' },
+      { href: '/dashboard/ventas/clientes', label: 'Clientes' },
+      { href: '/dashboard/ventas/vendedores', label: 'Vendedores' },
+      { href: '/dashboard/ventas/comisiones', label: 'Comisiones' },
+      { href: '/dashboard/ventas/portal-b2b', label: 'Portal B2B' },
+      { href: '/dashboard/ventas/timeline', label: 'Timeline Clientes' },
+    ],
+  },
+  { href: '/dashboard/pos', icon: 'storefront', label: 'POS',
+    children: [
+      { href: '/dashboard/pos/terminal', label: 'Terminal' },
+      { href: '/dashboard/pos/historial', label: 'Historial' },
+    ],
+  },
+  { href: '/dashboard/marketing', icon: 'campaign', label: 'Marketing',
+    children: [
+      { href: '/dashboard/marketing/campanas', label: 'Campañas' },
+      { href: '/dashboard/marketing/segmentacion', label: 'Segmentación' },
+    ],
+  },
+  { href: '/dashboard/proyectos', icon: 'folder_open', label: 'Proyectos' },
+  { href: '/dashboard/documentos', icon: 'description', label: 'Documentos' },
+  { href: '/dashboard/rrhh', icon: 'group', label: 'RRHH',
+    children: [
+      { href: '/dashboard/rrhh/empleados', label: 'Empleados' },
+      { href: '/dashboard/rrhh/asistencia', label: 'Asistencia' },
+      { href: '/dashboard/rrhh/asistencia-calendario', label: 'Expediente' },
+    ],
+  },
+  { href: '/dashboard/nomina', icon: 'payments', label: 'Nómina',
+    children: [
+      { href: '/dashboard/nomina/calculo', label: 'Cálculo' },
+      { href: '/dashboard/nomina/historial', label: 'Historial' },
+    ],
+  },
+  {
+    href: '/dashboard/reportes', icon: 'analytics', label: 'Reportes',
+    children: [
+      { href: '/dashboard/reportes/ventas', label: 'Ventas' },
+      { href: '/dashboard/reportes/ventas-bi', label: 'Ventas BI' },
+      { href: '/dashboard/reportes/ventas-realtime', label: 'Ventas Realtime' },
+      { href: '/dashboard/reportes/compras-bi', label: 'Compras BI' },
+      { href: '/dashboard/reportes/inventario', label: 'Inventario' },
+      { href: '/dashboard/reportes/generador', label: 'Generador' },
+    ],
+  },
+  {
+    href: '/dashboard/contabilidad', icon: 'account_balance', label: 'Contabilidad',
+    children: [
+      { href: '/dashboard/contabilidad/balance', label: 'Balance General' },
+      { href: '/dashboard/contabilidad/libro-diario', label: 'Libro Diario' },
+      { href: '/dashboard/contabilidad/asientos', label: 'Asientos' },
+      { href: '/dashboard/contabilidad/estado-resultados', label: 'Estado de Resultados' },
+      { href: '/dashboard/contabilidad/fiscal', label: 'Fiscal' },
+      { href: '/dashboard/contabilidad/conciliacion', label: 'Conciliación' },
+    ],
+  },
+  { href: '/dashboard/tesoreria', icon: 'account_balance_wallet', label: 'Tesorería' },
+  { href: '/dashboard/activos', icon: 'domain', label: 'Activos Fijos' },
+  { href: '/dashboard/ai-chat', icon: 'smart_toy', label: 'IA Analista' },
+  { href: '/dashboard/buscador', icon: 'search', label: 'Buscador Global' },
+  { href: '/dashboard/notificaciones', icon: 'notifications', label: 'Notificaciones' },
+  { href: '/dashboard/soporte', icon: 'support_agent', label: 'Soporte' },
+  {
+    href: '/dashboard/configuracion', icon: 'settings', label: 'Configuración',
+    children: [
+      { href: '/dashboard/configuracion/roles-permisos', label: 'Roles y Permisos' },
+      { href: '/dashboard/configuracion/auditoria', label: 'Auditoría' },
+      { href: '/dashboard/configuracion/localizacion', label: 'Localización' },
+      { href: '/dashboard/configuracion/backups', label: 'Backups' },
+      { href: '/dashboard/configuracion/reset-requests', label: 'Reset Requests' },
+      { href: '/dashboard/configuracion/seguridad', label: 'Seguridad' },
+      { href: '/dashboard/configuracion/automatizaciones', label: 'Automatizaciones' },
+      { href: '/dashboard/configuracion/activos-digitales', label: 'Activos Digitales' },
+      { href: '/dashboard/configuracion/api', label: 'API & Webhooks' },
+      { href: '/dashboard/configuracion/base-datos', label: 'Base de Datos' },
+      { href: '/dashboard/configuracion/suscripcion', label: 'Suscripción' },
+      { href: '/dashboard/configuracion/super-admin', label: 'Super Admin' },
+      { href: '/dashboard/configuracion/tenant', label: 'Identidad Tenant' },
+      { href: '/dashboard/configuracion/arquitectura', label: 'Arquitectura' },
+    ],
+  },
 ]
 
 export function Sidebar() {
@@ -30,8 +142,15 @@ export function Sidebar() {
   const { user, logout, accessToken } = useAuthStore()
   const { add: addNotification } = useNotificationStore()
   const [pendingResets, setPendingResets] = useState(0)
+  const [expanded, setExpanded] = useState<string[]>([])
 
   const isAdmin = user?.role === 'SUPERDEV' || user?.role === 'ADMIN'
+
+  const toggleExpand = (href: string) => {
+    setExpanded(prev => prev.includes(href) ? prev.filter(h => h !== href) : [...prev, href])
+  }
+
+  const isExpanded = (href: string) => expanded.includes(href) || pathname.startsWith(href + '/')
 
   useEffect(() => {
     if (!isAdmin || !accessToken) return
@@ -85,28 +204,54 @@ export function Sidebar() {
       <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))
+          const hasChildren = item.children && item.children.length > 0
+          const open = hasChildren && isExpanded(item.href)
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'flex items-center gap-3 px-4 py-2.5 rounded-xl font-spartan text-[0.6875rem] uppercase tracking-widest transition-all',
-                isActive
-                  ? 'bg-white/10 text-primary border-l-4 border-primary rounded-l-none'
-                  : 'text-outline hover:text-on-surface hover:bg-white/5'
-              )}
-            >
-              <span className="material-symbols-outlined text-[20px]" style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}>
-                {item.icon}
-              </span>
-              <span className="flex-1">{item.label}</span>
-              {/* Badge de solicitudes pendientes en Configuración */}
-              {item.href === '/dashboard/configuracion' && isAdmin && pendingResets > 0 && (
-                <span className="w-5 h-5 rounded-full bg-error text-white text-[10px] font-bold flex items-center justify-center">
-                  {pendingResets}
+            <div key={item.href}>
+              <div
+                className={cn(
+                  'flex items-center gap-3 px-4 py-2.5 rounded-xl font-spartan text-[0.6875rem] uppercase tracking-widest transition-all cursor-pointer',
+                  isActive && !hasChildren
+                    ? 'bg-white/10 text-primary border-l-4 border-primary rounded-l-none'
+                    : isActive && hasChildren
+                    ? 'text-primary'
+                    : 'text-outline hover:text-on-surface hover:bg-white/5'
+                )}
+                onClick={() => hasChildren ? toggleExpand(item.href) : router.push(item.href)}
+              >
+                <span className="material-symbols-outlined text-[20px]" style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}>
+                  {item.icon}
                 </span>
+                <span className="flex-1">{item.label}</span>
+                {item.href === '/dashboard/configuracion' && isAdmin && pendingResets > 0 && (
+                  <span className="w-5 h-5 rounded-full bg-error text-white text-[10px] font-bold flex items-center justify-center">
+                    {pendingResets}
+                  </span>
+                )}
+                {hasChildren && (
+                  <span className="material-symbols-outlined text-[16px] transition-transform" style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                    expand_more
+                  </span>
+                )}
+              </div>
+              {hasChildren && open && (
+                <div className="ml-4 mt-1 space-y-0.5 border-l border-white/10 pl-3">
+                  {item.children!.map((child) => {
+                    const childActive = pathname === child.href
+                    return (
+                      <Link key={child.href} href={child.href}
+                        className={cn(
+                          'flex items-center gap-2 px-3 py-2 rounded-lg font-spartan text-[0.625rem] uppercase tracking-widest transition-all',
+                          childActive ? 'text-primary bg-primary/10' : 'text-outline hover:text-on-surface hover:bg-white/5'
+                        )}>
+                        <span className="w-1 h-1 rounded-full bg-current" />
+                        {child.label}
+                      </Link>
+                    )
+                  })}
+                </div>
               )}
-            </Link>
+            </div>
           )
         })}
       </nav>
