@@ -1,8 +1,11 @@
 'use client'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/authStore'
+import { useNotificationStore } from '@/stores/notificationStore'
+import { api } from '@/lib/api'
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: 'dashboard', label: 'Dashboard' },
@@ -23,7 +26,43 @@ const NAV_ITEMS = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const { user, logout } = useAuthStore()
+  const router = useRouter()
+  const { user, logout, accessToken } = useAuthStore()
+  const { add: addNotification } = useNotificationStore()
+  const [pendingResets, setPendingResets] = useState(0)
+
+  const isAdmin = user?.role === 'SUPERDEV' || user?.role === 'ADMIN'
+
+  useEffect(() => {
+    if (!isAdmin || !accessToken) return
+    let prev = 0
+    const fetchResets = async () => {
+      try {
+        const { data } = await api.get('/auth/reset-requests', {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+        const count = data.length
+        setPendingResets(count)
+        if (count > prev) {
+          addNotification({
+            type: 'warning',
+            title: 'Nueva solicitud de contraseña',
+            message: `Hay ${count} solicitud${count > 1 ? 'es' : ''} pendiente${count > 1 ? 's' : ''} de aprobación.`,
+            module: 'configuracion',
+          })
+        }
+        prev = count
+      } catch { /* silencioso */ }
+    }
+    fetchResets()
+    const interval = setInterval(fetchResets, 30000)
+    return () => clearInterval(interval)
+  }, [isAdmin, accessToken])
+
+  const handleLogout = () => {
+    logout()
+    router.push('/login')
+  }
 
   return (
     <aside className="h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col py-6 z-50 shadow-[20px_0_40px_rgba(0,0,0,0.4)]">
@@ -60,7 +99,13 @@ export function Sidebar() {
               <span className="material-symbols-outlined text-[20px]" style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}>
                 {item.icon}
               </span>
-              {item.label}
+              <span className="flex-1">{item.label}</span>
+              {/* Badge de solicitudes pendientes en Configuración */}
+              {item.href === '/dashboard/configuracion' && isAdmin && pendingResets > 0 && (
+                <span className="w-5 h-5 rounded-full bg-error text-white text-[10px] font-bold flex items-center justify-center">
+                  {pendingResets}
+                </span>
+              )}
             </Link>
           )
         })}
@@ -78,7 +123,7 @@ export function Sidebar() {
           </div>
         </div>
         <button
-          onClick={logout}
+          onClick={handleLogout}
           className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-error/70 hover:text-error hover:bg-error/5 transition-all font-spartan text-[0.6875rem] uppercase tracking-widest"
         >
           <span className="material-symbols-outlined text-[20px]">logout</span>

@@ -2,10 +2,15 @@
   "name": "@erpzenith/backend",
   "version": "1.0.0",
   "private": true,
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
+    "setup": "npx prisma migrate deploy && npx prisma generate && npx prisma db seed",
     "dev": "nest start --watch",
+    "dev:only": "nest start --watch",
     "build": "nest build",
-    "start:prod": "node dist/main",
+    "start:prod": "npx prisma migrate deploy && npx prisma generate && node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "dependencies": {
