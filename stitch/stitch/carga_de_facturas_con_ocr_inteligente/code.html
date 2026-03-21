@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carga de Facturas con OCR Inteligente - ERP</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "primary-light": "#e3f2fd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "surface": "#ffffff",
+                        "border": "#e5e7eb",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    boxShadow: {
+                        "card": "0 2px 4px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1)",
+                        "floating": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom scrollbar for tables/panels */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* OCR Bounding Box Animation */
+        @keyframes pulse-border {
+            0% { border-color: rgba(32, 127, 223, 0.4); background-color: rgba(32, 127, 223, 0.05); }
+            50% { border-color: rgba(32, 127, 223, 1); background-color: rgba(32, 127, 223, 0.15); }
+            100% { border-color: rgba(32, 127, 223, 0.4); background-color: rgba(32, 127, 223, 0.05); }
+        }
+        
+        .ocr-highlight {
+            position: absolute;
+            border: 2px solid #207fdf;
+            background-color: rgba(32, 127, 223, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .ocr-highlight:hover {
+            background-color: rgba(32, 127, 223, 0.25);
+            z-index: 10;
+        }
+
+        .ocr-highlight.active {
+            border-width: 2px;
+            border-color: #207fdf;
+            background-color: rgba(32, 127, 223, 0.3);
+            box-shadow: 0 0 0 4px rgba(32, 127, 223, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark h-screen flex flex-col overflow-hidden text-slate-800">
+<!-- Header Section -->
+<header class="flex-none h-16 bg-white dark:bg-[#1a202c] border-b border-border flex items-center justify-between px-6 z-20">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-2xl">receipt_long</span>
+</div>
+<div>
+<h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">Carga Inteligente de Facturas</h1>
+<p class="text-xs text-slate-500 font-medium flex items-center gap-1">
+<span class="size-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+                    Motor OCR Activo v2.4
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center px-4 h-9 rounded-lg border border-slate-200 hover:bg-slate-50 text-sm font-medium text-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[18px] mr-2">history</span>
+                Historial
+            </button>
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors" title="Cerrar">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex overflow-hidden">
+<!-- LEFT PANEL: Upload & Preview -->
+<div class="flex-1 flex flex-col border-r border-border bg-slate-50/50 relative overflow-hidden group/dropzone">
+<!-- Toolbar for viewer -->
+<div class="h-12 border-b border-border bg-white flex items-center justify-between px-4">
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded hover:bg-slate-100 text-slate-500" title="Alejar">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<span class="text-xs font-medium text-slate-600 min-w-[3rem] text-center">100%</span>
+<button class="p-1.5 rounded hover:bg-slate-100 text-slate-500" title="Acercar">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-medium text-slate-500">factura_techsolutions_00142.pdf</span>
+<button class="text-xs text-primary font-medium hover:underline">Cambiar archivo</button>
+</div>
+</div>
+<!-- Document Viewer Canvas -->
+<div class="flex-1 overflow-auto p-8 flex justify-center bg-slate-100 relative custom-scrollbar">
+<!-- The Invoice Image Container -->
+<div class="relative shadow-xl bg-white w-[595px] min-h-[842px] transition-transform origin-top">
+<!-- Invoice visual representation (Abstract but structured to look like a document) -->
+<img alt="Documento de factura escaneada mostrando detalles de compra" class="w-full h-full object-cover opacity-10 absolute inset-0 pointer-events-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0F3pvrmrWVDe9r3V_geyTzG5OiiqRuO-uEI6eo9Bja1_gW__3ZbawE7diOAcV5-SRmGdMhFLk5VAEoIAcZ5GM6gqhYamquKzY_kwHbVe8lPFWcZheRV4FXGlZA8jGxc0YDKeNE9XSWoI8tIUxhketMIazWWdC5jGPHnNcTBqy0swH-5NfMDqQbZ76rGATOTt7wU4F2zSuHa5BrwzkTEG7mekhFbbHQQeu3gxqd6I4WEbRnU8K75HVfayFT4aLMe5TdRZSjO1_PwIF"/>
+<div class="p-12 flex flex-col gap-8 h-full relative z-0 text-xs text-slate-400 select-none">
+<!-- Simulated Invoice Content -->
+<div class="flex justify-between items-start">
+<div class="w-32 h-10 bg-slate-200 rounded"></div> <!-- Logo -->
+<div class="text-right space-y-2">
+<div class="w-40 h-6 bg-slate-200 rounded ml-auto"></div> <!-- Title -->
+<div class="w-24 h-4 bg-slate-100 rounded ml-auto"></div> <!-- Date -->
+</div>
+</div>
+<div class="h-px bg-slate-200 w-full my-4"></div>
+<div class="grid grid-cols-2 gap-12">
+<div class="space-y-2">
+<div class="w-20 h-4 bg-slate-200 rounded"></div>
+<div class="w-full h-16 bg-slate-100 rounded"></div>
+</div>
+<div class="space-y-2">
+<div class="w-20 h-4 bg-slate-200 rounded"></div>
+<div class="w-full h-16 bg-slate-100 rounded"></div>
+</div>
+</div>
+<div class="mt-8">
+<div class="w-full h-8 bg-slate-200 rounded mb-2"></div>
+<div class="w-full h-4 bg-slate-100 rounded mb-2"></div>
+<div class="w-full h-4 bg-slate-100 rounded mb-2"></div>
+<div class="w-full h-4 bg-slate-100 rounded mb-2"></div>
+<div class="w-full h-4 bg-slate-100 rounded mb-2"></div>
+</div>
+<div class="mt-auto ml-auto w-64 space-y-2">
+<div class="flex justify-between"><div class="w-20 h-4 bg-slate-100"></div><div class="w-20 h-4 bg-slate-200"></div></div>
+<div class="flex justify-between"><div class="w-20 h-4 bg-slate-100"></div><div class="w-20 h-4 bg-slate-200"></div></div>
+<div class="h-px bg-slate-300 w-full"></div>
+<div class="flex justify-between"><div class="w-24 h-6 bg-slate-200"></div><div class="w-24 h-6 bg-slate-300"></div></div>
+</div>
+</div>
+<!-- OCR Overlays (Bounding Boxes) -->
+<!-- Header Info -->
+<div class="ocr-highlight" style="top: 55px; right: 48px; width: 160px; height: 26px;" title="Título Factura"></div>
+<div class="ocr-highlight" style="top: 140px; left: 48px; width: 200px; height: 70px;" title="Datos Proveedor"></div>
+<div class="ocr-highlight active" style="top: 85px; right: 48px; width: 100px; height: 20px;" title="Fecha"></div>
+<!-- Totals Info -->
+<div class="ocr-highlight" style="bottom: 50px; right: 48px; width: 100px; height: 28px;" title="Total"></div>
+</div>
+</div>
+<!-- Floating Upload Zone (Shows on Drag Over) -->
+<div class="absolute inset-0 bg-primary/90 z-50 flex flex-col items-center justify-center text-white opacity-0 pointer-events-none group-hover/dropzone:opacity-100 transition-opacity duration-300 backdrop-blur-sm">
+<span class="material-symbols-outlined text-6xl mb-4">cloud_upload</span>
+<p class="text-2xl font-bold">Suelta el archivo aquí</p>
+<p class="text-primary-light">Procesaremos los datos automáticamente</p>
+</div>
+</div>
+<!-- RIGHT PANEL: Data Extraction & Validation -->
+<div class="w-[500px] flex flex-col bg-white shadow-xl z-10">
+<div class="p-6 overflow-y-auto flex-1 custom-scrollbar">
+<!-- Alert Section -->
+<div class="mb-6 bg-blue-50 border border-blue-100 rounded-lg p-3 flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary text-xl mt-0.5">auto_awesome</span>
+<div>
+<h4 class="text-sm font-semibold text-primary">Extracción Exitosa</h4>
+<p class="text-xs text-slate-600">La IA ha identificado los datos principales con un 98% de confianza. Por favor, verifica antes de guardar.</p>
+</div>
+</div>
+<!-- Form Section -->
+<form class="space-y-6">
+<!-- Document Info Group -->
+<div class="space-y-4">
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide border-b border-slate-100 pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg">description</span>
+                            Datos del Encabezado
+                        </h3>
+<div class="grid grid-cols-2 gap-4">
+<!-- Proveedor -->
+<div class="col-span-2">
+<label class="block text-xs font-semibold text-slate-500 mb-1.5">Proveedor Detectado</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-lg">storefront</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border-slate-200 rounded-lg text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white" placeholder="Nombre del proveedor" type="text" value="TechSolutions S.A."/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-green-500 text-lg" title="Confianza Alta">check_circle</span>
+</div>
+</div>
+</div>
+<!-- RIF/NIT -->
+<div>
+<label class="block text-xs font-semibold text-slate-500 mb-1.5">RIF / NIT</label>
+<input class="block w-full px-3 py-2 border-slate-200 rounded-lg text-sm font-mono focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white" type="text" value="J-12345678-9"/>
+</div>
+<!-- Nº Factura -->
+<div>
+<label class="block text-xs font-semibold text-slate-500 mb-1.5">Nº Factura</label>
+<input class="block w-full px-3 py-2 border-slate-200 rounded-lg text-sm font-mono focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white" type="text" value="000142"/>
+</div>
+<!-- Fecha Emisión -->
+<div>
+<label class="block text-xs font-semibold text-slate-500 mb-1.5">Fecha Emisión</label>
+<div class="relative">
+<input class="block w-full px-3 py-2 border-primary ring-2 ring-primary/10 rounded-lg text-sm font-medium bg-blue-50/30" type="text" value="12/10/2023"/>
+<div class="absolute inset-y-0 right-2 flex items-center">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+</div>
+</div>
+<p class="text-[10px] text-primary mt-1 font-medium">Campo activo en vista previa</p>
+</div>
+<!-- Fecha Vencimiento -->
+<div>
+<label class="block text-xs font-semibold text-slate-500 mb-1.5">Fecha Vencimiento</label>
+<input class="block w-full px-3 py-2 border-slate-200 rounded-lg text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white" type="text" value="30/10/2023"/>
+</div>
+</div>
+</div>
+<!-- Financials Group -->
+<div class="space-y-4">
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide border-b border-slate-100 pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg">payments</span>
+                            Montos Totales
+                        </h3>
+<div class="grid grid-cols-3 gap-3">
+<div>
+<label class="block text-xs font-semibold text-slate-500 mb-1.5">Subtotal</label>
+<input class="block w-full px-2 py-2 border-slate-200 rounded-lg text-sm font-mono text-right focus:ring-primary focus:border-primary bg-slate-50" type="text" value="$ 1,250.00"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 mb-1.5">Impuestos (16%)</label>
+<input class="block w-full px-2 py-2 border-slate-200 rounded-lg text-sm font-mono text-right focus:ring-primary focus:border-primary bg-slate-50" type="text" value="$ 200.00"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-800 mb-1.5">Total General</label>
+<input class="block w-full px-2 py-2 border-primary bg-blue-50/50 rounded-lg text-sm font-mono font-bold text-primary text-right focus:ring-primary focus:border-primary" type="text" value="$ 1,450.00"/>
+</div>
+</div>
+</div>
+<!-- Items Table Preview -->
+<div class="space-y-3">
+<div class="flex items-center justify-between border-b border-slate-100 pb-2">
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg">list_alt</span>
+                                Ítems Extraídos (3)
+                            </h3>
+<button class="text-xs font-medium text-primary hover:text-primary/80 flex items-center" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span> Añadir
+                            </button>
+</div>
+<div class="border border-slate-200 rounded-lg overflow-hidden text-sm">
+<table class="w-full text-left">
+<thead class="bg-slate-50 text-xs font-semibold text-slate-500">
+<tr>
+<th class="px-3 py-2 w-12">Cant.</th>
+<th class="px-3 py-2">Descripción</th>
+<th class="px-3 py-2 text-right">Total</th>
+<th class="w-8"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-3 py-2 font-mono text-slate-600">2</td>
+<td class="px-3 py-2">Monitor 24" Dell P2419H</td>
+<td class="px-3 py-2 text-right font-mono">$ 400.00</td>
+<td class="px-1 text-center">
+<button class="text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-3 py-2 font-mono text-slate-600">5</td>
+<td class="px-3 py-2">Teclado Mecánico Keychron</td>
+<td class="px-3 py-2 text-right font-mono">$ 450.00</td>
+<td class="px-1 text-center">
+<button class="text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Low confidence row example -->
+<tr class="bg-yellow-50/50 group hover:bg-yellow-50 transition-colors">
+<td class="px-3 py-2 font-mono text-slate-600 border-l-2 border-yellow-400">1</td>
+<td class="px-3 py-2 text-slate-700">Licencia Software Anual...</td>
+<td class="px-3 py-2 text-right font-mono">$ 400.00</td>
+<td class="px-1 text-center">
+<button class="text-yellow-600 hover:text-yellow-700 opacity-100" title="Revisar dato">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</form>
+</div>
+<!-- Bottom Action Bar -->
+<div class="p-4 border-t border-slate-200 bg-slate-50 flex gap-3 flex-none">
+<button class="flex-1 bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-bold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    Descartar
+                </button>
+<button class="flex-[2] bg-primary hover:bg-blue-600 text-white font-bold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+                    Confirmar y Registrar
+                </button>
+</div>
+</div>
+</main>
+<!-- Modal Overlay (Hidden by default, shown for structure completeness) -->
+<!-- Not visible in initial render -->
+</body></html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ZENITH ERP - Módulo de Compras</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=League+Spartan:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant": "#464554",
+                        "inverse-primary": "#494bd6",
+                        "tertiary-container": "#009eb9",
+                        "surface-container": "#171f33",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "inverse-on-surface": "#283044",
+                        "surface-variant": "#2d3449",
+                        "on-tertiary-container": "#002f38",
+                        "surface-container-highest": "#2d3449",
+                        "on-tertiary": "#003640",
+                        "on-surface-variant": "#c7c4d7",
+                        "primary": "#c0c1ff",
+                        "background": "#0b1326",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#23005c",
+                        "surface-tint": "#c0c1ff",
+                        "outline": "#908fa0",
+                        "surface-container-high": "#222a3d",
+                        "surface": "#0b1326",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "on-tertiary-fixed": "#001f26",
+                        "secondary-container": "#571bc1",
+                        "tertiary-fixed": "#acedff",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "primary-container": "#8083ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "on-surface": "#dae2fd",
+                        "secondary": "#d0bcff",
+                        "surface-bright": "#31394d",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "secondary-fixed": "#e9ddff",
+                        "on-primary-fixed": "#07006c",
+                        "primary-fixed": "#e1e0ff",
+                        "inverse-surface": "#dae2fd",
+                        "on-secondary": "#3c0091",
+                        "on-primary": "#1000a9",
+                        "on-secondary-container": "#c4abff",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "on-background": "#dae2fd",
+                        "surface-container-lowest": "#060e20",
+                        "surface-container-low": "#131b2e",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#0b1326",
+                        "on-primary-container": "#0d0096",
+                        "tertiary": "#4cd7f6"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .orb-glow {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: #c0c1ff;
+            filter: blur(100px);
+            opacity: 0.05;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-slate-900/40 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-indigo-400 font-['League_Spartan']">ZENITH ERP</span>
+<nav class="hidden md:flex gap-6 items-center">
+<span class="text-indigo-400 font-bold font-['League_Spartan'] font-medium tracking-tight">Tasa BCV: 36.50 VES</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-white/5 transition-colors rounded-xl active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-400">notifications</span>
+</button>
+<button class="p-2 hover:bg-white/5 transition-colors rounded-xl active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-400">settings</span>
+</button>
+<button class="p-2 hover:bg-white/5 transition-colors rounded-xl active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-400">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center overflow-hidden">
+<img alt="User Profile Avatar" data-alt="User profile photo avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyKaIwnxCU90LLjJHbGVTd4gwVKzuFh-5PYx7OXlx7XL2Y0SDqJV1ZQQp5JGBs1trGL5CBBFWf8VHYHvaG7A8b1VQ_sfuutxx2s19O4QzYGo8JTSCx_t0_pnpVNTK3DzteFkAtTZ0Iv9qwQiNPocBlnkfH8tEi1pD2qgW_aAsPNCAxmNWD9IICq13g7dMrJpYMCpqdGP2QBWnbDtrUhxy8D4abK6fzcKSfp3NsPxiAqs9O4hsgbH5xBc1QX_Aj2wvVQODMxG7Ft4w"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 z-40 bg-slate-900/60 backdrop-blur-2xl w-64 shadow-2xl border-r border-white/5">
+<div class="px-6 mb-10 flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-indigo-500/20 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-indigo-400">layers</span>
+</div>
+<div>
+<h2 class="text-indigo-400 font-black font-['League_Spartan'] text-sm tracking-widest uppercase">Módulo Compras</h2>
+<p class="text-[10px] text-slate-500 tracking-widest uppercase font-['League_Spartan']">Ethereal Command</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl bg-indigo-500/10 text-indigo-400 border-l-2 border-indigo-400 transition-all font-['League_Spartan'] uppercase tracking-widest text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span>Compras</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all font-['League_Spartan'] uppercase tracking-widest text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Proveedores</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all font-['League_Spartan'] uppercase tracking-widest text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined">warehouse</span>
+<span>Inventario</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all font-['League_Spartan'] uppercase tracking-widest text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Pagos</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all font-['League_Spartan'] uppercase tracking-widest text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Reportes</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all font-['League_Spartan'] uppercase tracking-widest text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Configuración</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all font-['League_Spartan'] uppercase tracking-widest text-[11px] font-medium" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-16 min-h-screen">
+<div class="p-8 max-w-[1600px] mx-auto">
+<!-- Header & Action -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<h1 class="font-headline text-display-lg text-4xl font-bold tracking-tight text-on-surface mb-2">Órdenes de Compra</h1>
+<p class="text-on-surface-variant font-body">Gestión centralizada de abastecimiento y solicitudes corporativas.</p>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl font-bold flex items-center gap-3 shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add_circle</span>
+                    Nueva Solicitud de Compra
+                </button>
+</div>
+<!-- Zenith Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<!-- KPI 1 -->
+<div class="relative glass-panel rounded-xl p-8 overflow-hidden border border-outline-variant/10">
+<div class="orb-glow top-0 right-0"></div>
+<div class="relative z-10">
+<p class="text-label-sm uppercase tracking-widest text-slate-400 mb-4 font-bold">Total Compras del Mes</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-headline text-3xl font-bold text-primary">$42,850.22</h3>
+<span class="text-tertiary-fixed-dim text-xs font-bold">+12.5%</span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[70%]"></div>
+</div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="relative glass-panel rounded-xl p-8 overflow-hidden border border-outline-variant/10">
+<div class="orb-glow bottom-0 left-0"></div>
+<div class="relative z-10">
+<p class="text-label-sm uppercase tracking-widest text-slate-400 mb-4 font-bold">OC por Recibir</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-headline text-3xl font-bold text-on-surface">14</h3>
+<span class="text-slate-500 text-xs">Unidades en tránsito</span>
+</div>
+<div class="mt-6 flex gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary/40"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary/10"></span>
+</div>
+</div>
+</div>
+<!-- KPI 3 (Ahorro IA) -->
+<div class="relative glass-panel rounded-xl p-8 overflow-hidden border border-outline-variant/10">
+<div class="absolute inset-0 bg-gradient-to-tr from-tertiary/5 to-transparent opacity-50"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<p class="text-label-sm uppercase tracking-widest text-tertiary font-bold">Ahorro Estimado por IA</p>
+<span class="material-symbols-outlined text-tertiary animate-pulse">auto_awesome</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="font-headline text-3xl font-bold text-tertiary">$3,240.00</h3>
+</div>
+<p class="text-xs text-slate-500 mt-4 leading-relaxed">Basado en optimización de proveedores y consolidación de fletes.</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col xl:flex-row gap-8 items-start">
+<!-- Smart Table Section -->
+<div class="flex-1 w-full overflow-hidden">
+<div class="bg-surface-container rounded-xl border border-outline-variant/10">
+<div class="p-6 border-b border-outline-variant/5 flex items-center justify-between">
+<h2 class="font-headline text-xl font-medium">Órdenes Recientes</h2>
+<div class="flex gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
+<input class="bg-surface-container-highest border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-64" placeholder="Buscar orden..." type="text"/>
+</div>
+<button class="p-2 bg-surface-container-highest rounded-lg text-slate-400">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-6 py-4 text-label-sm uppercase tracking-widest text-slate-500 font-bold">Referencia</th>
+<th class="px-6 py-4 text-label-sm uppercase tracking-widest text-slate-500 font-bold">Proveedor</th>
+<th class="px-6 py-4 text-label-sm uppercase tracking-widest text-slate-500 font-bold">Fecha</th>
+<th class="px-6 py-4 text-label-sm uppercase tracking-widest text-slate-500 font-bold">Total</th>
+<th class="px-6 py-4 text-label-sm uppercase tracking-widest text-slate-500 font-bold">Estado</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-bright/50 transition-colors cursor-pointer">
+<td class="px-6 py-5 font-medium text-primary">OC-2024-0082</td>
+<td class="px-6 py-5 text-on-surface">TechSolutions C.A.</td>
+<td class="px-6 py-5 text-on-surface-variant">12 Oct 2024</td>
+<td class="px-6 py-5 font-bold">$1,250.00</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold border border-tertiary/20">
+                                                Emitida
+                                            </span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-slate-600">chevron_right</span>
+</td>
+</tr>
+<tr class="bg-surface-container-low/30 hover:bg-surface-bright/50 transition-colors cursor-pointer border-l-2 border-primary">
+<td class="px-6 py-5 font-medium text-primary">OC-2024-0081</td>
+<td class="px-6 py-5 text-on-surface">Global Logistics S.A.</td>
+<td class="px-6 py-5 text-on-surface-variant">10 Oct 2024</td>
+<td class="px-6 py-5 font-bold">$4,890.50</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
+                                                Pendiente por Aprobar
+                                            </span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright/50 transition-colors cursor-pointer">
+<td class="px-6 py-5 font-medium text-primary">OC-2024-0080</td>
+<td class="px-6 py-5 text-on-surface">Papelería El Norte</td>
+<td class="px-6 py-5 text-on-surface-variant">09 Oct 2024</td>
+<td class="px-6 py-5 font-bold">$210.00</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-500/10 text-slate-400 text-xs font-bold border border-slate-500/20">
+                                                Borrador
+                                            </span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-slate-600">chevron_right</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright/50 transition-colors cursor-pointer">
+<td class="px-6 py-5 font-medium text-primary">OC-2024-0079</td>
+<td class="px-6 py-5 text-on-surface">Energía Total Corp.</td>
+<td class="px-6 py-5 text-on-surface-variant">05 Oct 2024</td>
+<td class="px-6 py-5 font-bold">$12,400.00</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">
+                                                Recibida
+                                            </span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-slate-600">chevron_right</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 border-t border-outline-variant/5 text-center">
+<button class="text-sm text-primary font-bold hover:underline">Ver todas las órdenes</button>
+</div>
+</div>
+</div>
+<!-- Quick View Panel -->
+<aside class="w-full xl:w-[400px]">
+<div class="glass-panel border border-outline-variant/10 rounded-xl overflow-hidden sticky top-24">
+<div class="p-6 bg-surface-container-highest/30 border-b border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline text-xl font-bold">Vista Rápida</h3>
+<p class="text-xs text-primary font-medium">OC-2024-0081</p>
+</div>
+<button class="p-1 hover:bg-white/10 rounded-full">
+<span class="material-symbols-outlined text-slate-400">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<img alt="Provider logo" class="w-10 h-10 rounded-lg" data-alt="Corporate logo for global logistics provider" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTcGRdX5iAKx4FOrZnhuVOx-ghEWoxMgQcVFqhmyp8reYwEzKpZbwBuGM8U5mLI5zjDYIIR-rP2ubc0o5p5DHnhM5IduTlceRqJPhGw6VuDEQH3bSQeKoGoFAmqh-Pd9YWDjhImq717g7wfFuLbe7yxsKV4vYCozKcLrwV4Bh7cYHD7cfCZE5OdLAHwzzmuBFQi-sSV1ytyT6y8CaVD5vJFpNktp9A1pLY_1cV2QFbzHa_grZASfKGLwSfP1ZsFUaxAZSI4J_42vo"/>
+<div>
+<p class="text-sm font-bold">Global Logistics S.A.</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">RIF: J-30495822-1</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6">
+<p class="text-label-sm uppercase tracking-widest text-slate-500 font-bold mb-4">Ítems de la Orden</p>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between items-center text-sm">
+<div>
+<p class="font-medium">Servicio de Flete Internacional</p>
+<p class="text-xs text-slate-500">Cantidad: 1.00</p>
+</div>
+<p class="font-bold">$3,500.00</p>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div>
+<p class="font-medium">Gestión Aduanera Premium</p>
+<p class="text-xs text-slate-500">Cantidad: 1.00</p>
+</div>
+<p class="font-bold">$715.95</p>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/10 space-y-3">
+<div class="flex justify-between text-sm text-slate-400">
+<span>Subtotal</span>
+<span>$4,215.95</span>
+</div>
+<div class="flex justify-between text-sm text-slate-400">
+<span>IVA (16%)</span>
+<span>$674.55</span>
+</div>
+<div class="flex justify-between items-end pt-4 border-t border-outline-variant/5">
+<span class="font-bold text-on-surface">TOTAL USD</span>
+<span class="text-2xl font-headline font-bold text-primary">$4,890.50</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-low p-3 rounded-lg border border-primary/10 mt-4">
+<span class="text-xs font-bold text-indigo-300">Equivalente VES</span>
+<span class="font-bold text-indigo-300">178,503.25 VES</span>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-2 gap-4">
+<button class="py-3 px-4 bg-surface-container-highest text-on-surface rounded-xl text-sm font-bold border border-outline-variant/20 hover:bg-surface-bright transition-colors">
+                                    Rechazar
+                                </button>
+<button class="py-3 px-4 bg-primary text-on-primary rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:brightness-110 transition-all">
+                                    Aprobar Orden
+                                </button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+</body></html>

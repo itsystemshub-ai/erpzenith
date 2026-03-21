@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Soporte y Base de Conocimientos AI - ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#207fdf",
+                        "primary-content": "#ffffff",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a242d",
+                        "text-main": "#111417",
+                        "text-secondary": "#647587",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for chat */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="bg-surface-light dark:bg-surface-dark border-b border-[#f0f2f4] dark:border-gray-800 px-6 py-4 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3 text-text-main dark:text-white">
+<div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Centro de Ayuda ERP</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-text-main dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-text-secondary dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Mis Tickets</a>
+<a class="text-text-secondary dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Base de Conocimientos</a>
+<a class="text-text-secondary dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Estado del Sistema</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Nuevo Ticket</span>
+</button>
+<div class="size-10 rounded-full bg-cover bg-center border-2 border-white dark:border-gray-700 shadow-sm cursor-pointer" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDrrqdqPY7sdvs8qC9zlvmnJgUB3GXA8Q8YkuBytCYg6KNEzWHrmBAZ0dtXUVJEUI4K3U4SKZ02Rx3ihQhmfDVYZUnl6DIOs4IzttE4Dh3Mj7MRJXEX60hA3_eDVE5bozFJmRsDrH_eIseh13AkLlkbxL4lfuIjzS21xm7CIqpn-U9m5tvcu7B8LmGWDKZQjM-zW7ujGgmwm9gL0mGnHfIWfEPSbOZAF_H2AT2G7FjK1HOT9SpZ7F5y2qfyFQyYZYZa2MZxyNKI4lj-");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center w-full">
+<!-- Hero Search Section -->
+<div class="w-full bg-surface-light dark:bg-surface-dark border-b border-[#f0f2f4] dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-6 py-12 md:py-16 flex flex-col items-center text-center">
+<h1 class="text-4xl md:text-5xl font-black tracking-tight text-text-main dark:text-white mb-4">
+                    ¿Cómo podemos ayudarte hoy?
+                </h1>
+<p class="text-text-secondary dark:text-gray-400 max-w-2xl text-lg mb-8">
+                    Busca en nuestra documentación o pregunta a nuestro asistente virtual inteligente sobre cualquier proceso del ERP.
+                </p>
+<!-- Search Input -->
+<div class="w-full max-w-2xl relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-text-secondary">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full h-14 pl-12 pr-32 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-text-main dark:text-white shadow-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-base placeholder:text-gray-400" placeholder="Describe tu problema o busca un tema..." type="text"/>
+<div class="absolute inset-y-1 right-1">
+<button class="h-full px-6 bg-primary hover:bg-primary/90 text-white rounded-lg font-medium transition-colors">
+                            Buscar
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<div class="max-w-7xl w-full px-6 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Knowledge Base & Recent Tickets -->
+<div class="lg:col-span-8 flex flex-col gap-10">
+<!-- Quick Categories -->
+<section>
+<h3 class="text-lg font-bold text-text-main dark:text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">category</span>
+                        Explorar por Módulo
+                    </h3>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+<!-- Category Item -->
+<a class="group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-700 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer" href="#">
+<div class="p-3 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform mb-3">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<span class="text-sm font-semibold text-text-main dark:text-white">Facturación</span>
+</a>
+<a class="group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-700 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer" href="#">
+<div class="p-3 rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform mb-3">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<span class="text-sm font-semibold text-text-main dark:text-white">Inventario</span>
+</a>
+<a class="group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-700 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer" href="#">
+<div class="p-3 rounded-full bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform mb-3">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<span class="text-sm font-semibold text-text-main dark:text-white">Recursos Humanos</span>
+</a>
+<a class="group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-700 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer" href="#">
+<div class="p-3 rounded-full bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform mb-3">
+<span class="material-symbols-outlined">calculate</span>
+</div>
+<span class="text-sm font-semibold text-text-main dark:text-white">Contabilidad</span>
+</a>
+<a class="group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-700 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer" href="#">
+<div class="p-3 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform mb-3">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<span class="text-sm font-semibold text-text-main dark:text-white">Reportes</span>
+</a>
+<a class="group flex flex-col items-center justify-center p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-700 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer" href="#">
+<div class="p-3 rounded-full bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 group-hover:scale-110 transition-transform mb-3">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<span class="text-sm font-semibold text-text-main dark:text-white">Configuración</span>
+</a>
+</div>
+</section>
+<!-- Recent Tickets -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-text-main dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">confirmation_number</span>
+                            Mis Tickets Recientes
+                        </h3>
+<a class="text-sm font-medium text-primary hover:text-primary/80" href="#">Ver todos</a>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50 dark:bg-gray-800/50 text-text-secondary dark:text-gray-400 uppercase font-semibold text-xs border-b border-gray-100 dark:border-gray-700">
+<tr>
+<th class="px-6 py-4">ID Ticket</th>
+<th class="px-6 py-4">Asunto</th>
+<th class="px-6 py-4">Estado</th>
+<th class="px-6 py-4 text-right">Última act.</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main dark:text-white">#4829</td>
+<td class="px-6 py-4 text-text-main dark:text-gray-300">Error al sincronizar inventario</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800">
+<span class="size-1.5 rounded-full bg-yellow-500"></span>
+                                                En Proceso
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right text-text-secondary dark:text-gray-500">Hace 2h</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main dark:text-white">#4821</td>
+<td class="px-6 py-4 text-text-main dark:text-gray-300">Duda sobre facturación electrónica</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                                Resuelto
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right text-text-secondary dark:text-gray-500">Ayer</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main dark:text-white">#4805</td>
+<td class="px-6 py-4 text-text-main dark:text-gray-300">Solicitud de nuevo usuario</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
+<span class="size-1.5 rounded-full bg-gray-500"></span>
+                                                Cerrado
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right text-text-secondary dark:text-gray-500">03 Oct</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: AI Chatbot Widget -->
+<div class="lg:col-span-4">
+<div class="sticky top-24 bg-white dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg flex flex-col h-[600px] overflow-hidden">
+<!-- Chat Header -->
+<div class="p-4 bg-gradient-to-r from-primary to-blue-600 text-white flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+<span class="material-symbols-outlined text-white">smart_toy</span>
+</div>
+<div>
+<h3 class="font-bold text-sm">Asistente Virtual IA</h3>
+<div class="flex items-center gap-1.5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+</span>
+<p class="text-xs text-blue-100">En línea • Responde al instante</p>
+</div>
+</div>
+</div>
+<button class="text-white/80 hover:text-white">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Chat Messages Area -->
+<div class="flex-1 p-4 overflow-y-auto bg-gray-50 dark:bg-gray-900/50 space-y-4">
+<!-- Bot Message -->
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">smart_toy</span>
+</div>
+<div class="bg-white dark:bg-gray-800 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-text-main dark:text-gray-200 max-w-[85%] border border-gray-100 dark:border-gray-700">
+<p>Hola 👋 Soy tu experto en el ERP. Puedo ayudarte a resolver dudas operativas sin esperar un ticket.</p>
+<p class="mt-2 text-gray-500 text-xs">Intenta preguntar: "¿Cómo anulo una factura?" o "¿Cómo creo un nuevo almacén?"</p>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-3 flex-row-reverse">
+<div class="size-8 rounded-full bg-gray-200 dark:bg-gray-700 flex-shrink-0 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDv9oCZ19HbVZIYh6_A8l5nn8NW1GPW4wKN17FpS3uRXNH4dXuCA1lYkQLBYD1Gs5s93h-_kBLGTNh2HCgraYDRmSd0hEJZiYGr4CnF0PFJdR5EA-GNsoxrffCpThad0M3PiqVHO3nqDZ1v6GzrN_VpNBo56locdbjTvghI8Ss93HnVyoVEHIeOyCN0Jg_zk974tcogzSH_LcBq_RWu8PZbamWBpuEqXnPSn_Jy3I6Ile-mYTF730QYpzZHH8-_10RGuOWIGZXlq9cT");'></div>
+<div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-sm max-w-[85%]">
+<p>Necesito corregir el stock de un producto dañado.</p>
+</div>
+</div>
+<!-- Bot Response (Simulating typing or response) -->
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">smart_toy</span>
+</div>
+<div class="bg-white dark:bg-gray-800 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-text-main dark:text-gray-200 max-w-[85%] border border-gray-100 dark:border-gray-700 space-y-2">
+<p>Para ajustar el stock por daño, sigue estos pasos:</p>
+<ol class="list-decimal pl-4 space-y-1">
+<li>Ve al módulo de <b>Inventario</b>.</li>
+<li>Selecciona <b>Ajustes de Inventario</b>.</li>
+<li>Crea un nuevo ajuste con el motivo "Mermas o Daños".</li>
+</ol>
+<div class="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
+<p class="text-xs font-medium text-gray-500 mb-2">Artículos relacionados:</p>
+<a class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-primary text-sm">article</span>
+<span class="text-xs text-primary group-hover:underline">Manual de Ajustes de Stock</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Input Area -->
+<div class="p-3 bg-white dark:bg-surface-dark border-t border-gray-200 dark:border-gray-700">
+<div class="relative">
+<textarea class="w-full pl-4 pr-12 py-3 bg-gray-50 dark:bg-gray-900 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary/20 resize-none overflow-hidden placeholder:text-gray-400 text-text-main dark:text-white" placeholder="Escribe tu consulta..." rows="1"></textarea>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-primary hover:bg-primary/10 rounded-lg transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2 px-1">
+<div class="flex gap-1">
+<button class="p-1.5 text-text-secondary hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" title="Adjuntar captura">
+<span class="material-symbols-outlined text-[20px]">add_photo_alternate</span>
+</button>
+<button class="p-1.5 text-text-secondary hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" title="Adjuntar archivo">
+<span class="material-symbols-outlined text-[20px]">attach_file</span>
+</button>
+</div>
+<span class="text-[10px] text-gray-400">IA entrenada con v2.4 Docs</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Create Ticket Modal Trigger (Visible only on small screens usually, but kept here for demo) -->
+<div class="fixed bottom-6 right-6 md:hidden">
+<button class="bg-primary hover:bg-primary/90 text-white p-4 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</main>
+<footer class="bg-white dark:bg-surface-dark border-t border-[#f0f2f4] dark:border-gray-800 py-8 mt-auto">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-sm text-text-secondary dark:text-gray-500">
+                © 2023 ERP System. Todos los derechos reservados.
+            </div>
+<div class="flex gap-6">
+<a class="text-sm text-text-secondary hover:text-primary dark:text-gray-500 dark:hover:text-primary transition-colors" href="#">Política de Privacidad</a>
+<a class="text-sm text-text-secondary hover:text-primary dark:text-gray-500 dark:hover:text-primary transition-colors" href="#">Términos de Servicio</a>
+</div>
+</div>
+</footer>
+</body></html>

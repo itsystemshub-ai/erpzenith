@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Emisión de Factura Electrónica - ERP SaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for the log area */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .invoice-paper {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display text-slate-900 dark:text-white overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1a2632] px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">ERP SaaS</h2>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px]">domain</span>
+<span>Empresa Demo S.A.</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="hidden sm:flex h-9 items-center justify-center rounded-lg px-4 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="truncate">Guardar Borrador</span>
+</button>
+<button class="flex h-9 items-center justify-center rounded-lg px-4 border border-slate-200 dark:border-slate-700 text-red-600 dark:text-red-400 text-sm font-semibold hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="truncate">Cancelar</span>
+</button>
+</div>
+</header>
+<!-- Main Layout -->
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Panel: Process & Logs -->
+<div class="w-full lg:w-[450px] xl:w-[500px] flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1a2632] overflow-y-auto shrink-0 z-10 shadow-xl shadow-slate-200/50 dark:shadow-none">
+<!-- Breadcrumbs & Header -->
+<div class="p-6 pb-2">
+<div class="flex flex-wrap gap-2 text-sm text-slate-500 dark:text-slate-400 mb-4">
+<a class="hover:text-primary transition-colors" href="#">Facturación</a>
+<span>/</span>
+<span class="font-medium text-slate-900 dark:text-white">Nueva Factura #F-00123</span>
+</div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Emisión de Factura</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                    Flujo de validación fiscal en tiempo real.
+                </p>
+</div>
+<!-- Stepper / Process Flow -->
+<div class="px-6 py-6">
+<div class="relative">
+<!-- Vertical Line -->
+<div class="absolute left-[19px] top-2 h-[calc(100%-24px)] w-[2px] bg-slate-200 dark:bg-slate-700"></div>
+<!-- Step 1: Generación JSON -->
+<div class="relative flex gap-4 pb-8 group">
+<div class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400 ring-4 ring-white dark:ring-[#1a2632]">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<div class="flex flex-col pt-1">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white">Generación de Estructura (JSON)</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Estructura UBL 2.1 generada correctamente (24KB)</p>
+<span class="inline-flex mt-2 w-fit items-center rounded bg-green-50 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-300 ring-1 ring-inset ring-green-600/20">
+                                Completado
+                            </span>
+</div>
+</div>
+<!-- Step 2: Firma Digital -->
+<div class="relative flex gap-4 pb-8 group">
+<div class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary ring-4 ring-white dark:ring-[#1a2632]">
+<span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+</div>
+<div class="flex flex-col pt-1">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white">Firma Digital</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Aplicando certificado digital [Cert-2024]...</p>
+<span class="inline-flex mt-2 w-fit items-center rounded bg-blue-50 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-blue-700/10">
+                                En Proceso
+                            </span>
+</div>
+</div>
+<!-- Step 3: Validación Fiscal -->
+<div class="relative flex gap-4">
+<div class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 ring-4 ring-white dark:ring-[#1a2632]">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+</div>
+<div class="flex flex-col pt-1">
+<h3 class="text-sm font-bold text-slate-400 dark:text-slate-500">Validación Fiscal (DIAN/SAT)</h3>
+<p class="text-xs text-slate-400 dark:text-slate-600 mt-1">Esperando firma digital para enviar.</p>
+<span class="inline-flex mt-2 w-fit items-center rounded bg-slate-50 dark:bg-slate-800/50 px-2 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 ring-1 ring-inset ring-slate-600/10">
+                                Pendiente
+                            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px w-full bg-slate-200 dark:bg-slate-800"></div>
+<!-- Console / Logs -->
+<div class="flex flex-1 flex-col overflow-hidden">
+<div class="flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-[#15202b]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500 text-[18px]">terminal</span>
+<h3 class="text-sm font-bold text-slate-900 dark:text-white">Historial de Estados</h3>
+</div>
+<button class="text-xs font-medium text-primary hover:text-blue-600">Exportar Log</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-4 bg-slate-50 dark:bg-[#15202b]">
+<!-- Log Entry -->
+<div class="flex gap-3 text-xs">
+<span class="text-slate-400 font-mono shrink-0">10:42:05</span>
+<div>
+<span class="font-bold text-slate-700 dark:text-slate-300">Iniciado</span>
+<p class="text-slate-500 dark:text-slate-400">Proceso de emisión iniciado por usuario: admin@empresa.com</p>
+</div>
+</div>
+<!-- Log Entry -->
+<div class="flex gap-3 text-xs">
+<span class="text-slate-400 font-mono shrink-0">10:42:08</span>
+<div>
+<span class="font-bold text-green-600 dark:text-green-400">Validación Local</span>
+<p class="text-slate-500 dark:text-slate-400">Cálculos aritméticos y validación de esquema completados.</p>
+</div>
+</div>
+<!-- Log Entry (Warning/Info) -->
+<div class="flex gap-3 text-xs p-2 rounded bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-100 dark:border-yellow-800/30">
+<span class="text-yellow-600 dark:text-yellow-500 font-mono shrink-0 mt-0.5">10:42:15</span>
+<div>
+<div class="flex items-center gap-1 text-yellow-700 dark:text-yellow-400 font-bold mb-1">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+                                AI Insight
+                            </div>
+<p class="text-yellow-800 dark:text-yellow-300">Se detectó un cliente frecuente. La probabilidad de pago temprano es del 85%.</p>
+</div>
+</div>
+<!-- Log Entry (Current Action) -->
+<div class="flex gap-3 text-xs animate-pulse">
+<span class="text-primary font-mono shrink-0">10:42:30</span>
+<div>
+<span class="font-bold text-primary">Firmando XML...</span>
+<p class="text-slate-500 dark:text-slate-400">Solicitando timestamp al servidor de certificación.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1a2632]">
+<div class="grid grid-cols-2 gap-3 mb-3">
+<button class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-transparent px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                        Enviar Email
+                    </button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-transparent px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined text-[18px]">code</span>
+                        XML
+                    </button>
+</div>
+<button class="w-full flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                    Emitir Factura Ahora
+                </button>
+</div>
+</div>
+<!-- Right Panel: Preview -->
+<div class="hidden lg:flex flex-1 flex-col bg-slate-100 dark:bg-[#0d131a] relative overflow-hidden">
+<!-- Toolbar Overlay -->
+<div class="absolute top-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 rounded-full bg-slate-900/80 dark:bg-white/10 px-2 py-1.5 text-white backdrop-blur-md shadow-lg border border-white/10">
+<button class="p-1.5 hover:bg-white/20 rounded-full transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<span class="text-xs font-medium px-2 min-w-[3rem] text-center">100%</span>
+<button class="p-1.5 hover:bg-white/20 rounded-full transition-colors" title="Zoom In">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<div class="w-px h-4 bg-white/20 mx-1"></div>
+<button class="p-1.5 hover:bg-white/20 rounded-full transition-colors" title="Download PDF">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+<!-- Scrollable Preview Area -->
+<div class="flex-1 overflow-y-auto p-8 flex justify-center items-start custom-scrollbar">
+<!-- The Invoice Document (A4 Ratio approx) -->
+<div class="w-[794px] min-h-[1123px] bg-white text-slate-900 shadow-2xl relative flex flex-col p-12 invoice-paper">
+<!-- Document Header -->
+<div class="flex justify-between items-start mb-12">
+<div class="flex flex-col gap-4">
+<!-- Logo Placeholder -->
+<div class="h-16 w-48 bg-slate-100 rounded flex items-center justify-center border border-dashed border-slate-300">
+<span class="text-xs text-slate-400 font-medium tracking-wide uppercase">Logo Cliente</span>
+</div>
+<div class="text-sm text-slate-600 leading-relaxed">
+<p class="font-bold text-slate-900">Empresa Demo S.A.</p>
+<p>NIT: 900.123.456-7</p>
+<p>Calle 100 # 15-20, Bogotá DC</p>
+<p>PBX: (601) 555-0199</p>
+<p>facturacion@empresa.com</p>
+</div>
+</div>
+<div class="text-right">
+<h1 class="text-3xl font-black text-slate-800 tracking-tight mb-2">FACTURA DE VENTA</h1>
+<p class="text-xl font-medium text-slate-500 mb-6"># F-00123</p>
+<div class="bg-slate-50 rounded-lg p-4 border border-slate-100 text-sm text-left inline-block min-w-[240px]">
+<div class="flex justify-between mb-2">
+<span class="text-slate-500">Fecha Emisión:</span>
+<span class="font-semibold">Oct 24, 2023</span>
+</div>
+<div class="flex justify-between mb-2">
+<span class="text-slate-500">Fecha Venc.:</span>
+<span class="font-semibold">Nov 24, 2023</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-500">Moneda:</span>
+<span class="font-semibold">COP / USD</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Client Info -->
+<div class="mb-12 border-b border-slate-200 pb-8">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Cliente</h3>
+<div class="text-base text-slate-800">
+<p class="font-bold text-lg mb-1">Tech Solutions International Inc.</p>
+<p>NIT: 800.999.888-1</p>
+<p>Carrera 7 # 72-10, Oficina 404</p>
+<p>contacto@techsolutions.com</p>
+</div>
+</div>
+<!-- Items Table -->
+<div class="mb-8">
+<table class="w-full">
+<thead>
+<tr class="border-b-2 border-slate-900 text-left">
+<th class="py-3 text-xs font-bold text-slate-900 uppercase tracking-wider w-12">#</th>
+<th class="py-3 text-xs font-bold text-slate-900 uppercase tracking-wider">Descripción</th>
+<th class="py-3 text-xs font-bold text-slate-900 uppercase tracking-wider w-24 text-right">Cant.</th>
+<th class="py-3 text-xs font-bold text-slate-900 uppercase tracking-wider w-32 text-right">Precio Unit.</th>
+<th class="py-3 text-xs font-bold text-slate-900 uppercase tracking-wider w-32 text-right">Total</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-slate-100">
+<td class="py-4 text-slate-500">01</td>
+<td class="py-4 font-medium text-slate-800">
+                                        Licencia Software ERP - Plan Anual (Enterprise)
+                                        <p class="text-xs text-slate-500 mt-1">Suscripción válida del 01/11/2023 al 31/10/2024</p>
+</td>
+<td class="py-4 text-right text-slate-600">1</td>
+<td class="py-4 text-right text-slate-600">$ 4,500,000</td>
+<td class="py-4 text-right font-semibold text-slate-900">$ 4,500,000</td>
+</tr>
+<tr class="border-b border-slate-100">
+<td class="py-4 text-slate-500">02</td>
+<td class="py-4 font-medium text-slate-800">
+                                        Implementación y Capacitación
+                                        <p class="text-xs text-slate-500 mt-1">Servicios profesionales (Horas)</p>
+</td>
+<td class="py-4 text-right text-slate-600">20</td>
+<td class="py-4 text-right text-slate-600">$ 150,000</td>
+<td class="py-4 text-right font-semibold text-slate-900">$ 3,000,000</td>
+</tr>
+<tr class="border-b border-slate-100">
+<td class="py-4 text-slate-500">03</td>
+<td class="py-4 font-medium text-slate-800">
+                                        Soporte Premium 24/7
+                                        <p class="text-xs text-slate-500 mt-1">Módulo adicional mensual</p>
+</td>
+<td class="py-4 text-right text-slate-600">12</td>
+<td class="py-4 text-right text-slate-600">$ 200,000</td>
+<td class="py-4 text-right font-semibold text-slate-900">$ 2,400,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Totals Section -->
+<div class="flex justify-end mb-12">
+<div class="w-80">
+<div class="flex justify-between py-2 text-sm text-slate-600">
+<span>Subtotal</span>
+<span>$ 9,900,000</span>
+</div>
+<div class="flex justify-between py-2 text-sm text-slate-600">
+<span>Descuento (5%)</span>
+<span class="text-red-500">- $ 495,000</span>
+</div>
+<div class="flex justify-between py-2 text-sm text-slate-600 border-b border-slate-200">
+<span>IVA (19%)</span>
+<span>$ 1,786,950</span>
+</div>
+<div class="flex justify-between py-4 text-lg font-bold text-slate-900">
+<span>Total a Pagar</span>
+<span>$ 11,191,950</span>
+</div>
+</div>
+</div>
+<!-- Fiscal & QR Footer -->
+<div class="mt-auto pt-8 border-t border-slate-200">
+<div class="flex items-end justify-between gap-6">
+<div class="flex-1">
+<p class="text-[10px] text-slate-400 uppercase tracking-wider mb-2 font-bold">Información Fiscal</p>
+<div class="text-[10px] text-slate-500 space-y-1 font-mono break-all">
+<p><span class="font-semibold text-slate-700">CUFE:</span> 8a3f92d409e5b8c7a6d2f1e0b3c4a5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2</p>
+<p><span class="font-semibold text-slate-700">Resolución DIAN:</span> 18760000001 de 2023-01-01. Rango del F-00001 al F-99999.</p>
+<p>Esta factura de venta se asimila en todos sus efectos a una letra de cambio (Art. 774 del Código de Comercio).</p>
+</div>
+</div>
+<div class="shrink-0">
+<div class="bg-white p-2 border border-slate-200 rounded">
+<!-- Using a gradient to simulate a QR code pattern -->
+<div class="w-24 h-24 bg-[url('https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=ExampleData')] bg-cover bg-center" data-alt="QR code for fiscal validation"></div>
+</div>
+<p class="text-[9px] text-center text-slate-400 mt-1">Escanea para validar</p>
+</div>
+</div>
+<div class="mt-8 text-center">
+<p class="text-[10px] text-slate-400">Software ERP SaaS - Proveedor Tecnológico Autorizado</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

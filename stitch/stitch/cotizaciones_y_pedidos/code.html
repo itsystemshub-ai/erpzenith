@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cotizaciones y Pedidos | ERP Zenith</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=League+Spartan:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#93000a",
+              "tertiary-fixed": "#acedff",
+              "outline": "#908fa0",
+              "on-error": "#690005",
+              "primary-fixed-dim": "#c0c1ff",
+              "tertiary-container": "#009eb9",
+              "on-secondary": "#3c0091",
+              "surface": "#0b1326",
+              "surface-container-highest": "#2d3449",
+              "on-secondary-fixed-variant": "#5516be",
+              "secondary-container": "#571bc1",
+              "on-tertiary": "#003640",
+              "surface-variant": "#2d3449",
+              "outline-variant": "#464554",
+              "secondary-fixed": "#e9ddff",
+              "on-primary-container": "#0d0096",
+              "surface-container-low": "#131b2e",
+              "on-surface-variant": "#c7c4d7",
+              "secondary-fixed-dim": "#d0bcff",
+              "inverse-primary": "#494bd6",
+              "inverse-surface": "#dae2fd",
+              "on-primary-fixed-variant": "#2f2ebe",
+              "on-primary": "#1000a9",
+              "primary-fixed": "#e1e0ff",
+              "surface-bright": "#31394d",
+              "secondary": "#d0bcff",
+              "surface-container-lowest": "#060e20",
+              "surface-tint": "#c0c1ff",
+              "on-tertiary-container": "#002f38",
+              "on-primary-fixed": "#07006c",
+              "primary": "#c0c1ff",
+              "inverse-on-surface": "#283044",
+              "on-surface": "#dae2fd",
+              "on-error-container": "#ffdad6",
+              "primary-container": "#8083ff",
+              "surface-container": "#171f33",
+              "surface-container-high": "#222a3d",
+              "on-background": "#dae2fd",
+              "tertiary-fixed-dim": "#4cd7f6",
+              "on-secondary-fixed": "#23005c",
+              "background": "#0b1326",
+              "on-tertiary-fixed-variant": "#004e5c",
+              "error": "#ffb4ab",
+              "surface-dim": "#0b1326",
+              "tertiary": "#4cd7f6",
+              "on-tertiary-fixed": "#001f26",
+              "on-secondary-container": "#c4abff"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "brand": ["League Spartan"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(70, 69, 84, 0.2);
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .active-glow {
+        box-shadow: 0 0 15px rgba(192, 193, 255, 0.1);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen selection:bg-primary/30 selection:text-primary">
+<!-- SideNavBar (Shared Component) -->
+<nav class="fixed left-0 top-0 h-full flex flex-col py-6 bg-[#131b2e] w-64 z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed text-lg" style="font-variation-settings: 'FILL' 1;">deployed_code</span>
+</div>
+<div>
+<h1 class="text-xl font-brand font-bold text-indigo-100 leading-none">Zenith ERP</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-brand">The Ethereal Command</p>
+</div>
+</div>
+<div class="flex-1 space-y-2 px-3">
+<a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-brand text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 bg-white/5 text-indigo-300 rounded-xl px-4 py-3 border-l-4 border-indigo-500 font-brand text-sm uppercase tracking-widest active:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Ventas</span>
+</a>
+<a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-brand text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Inventario</span>
+</a>
+<a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-brand text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>RRHH</span>
+</a>
+</div>
+<div class="px-3 border-t border-white/5 pt-6 space-y-2">
+<a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-brand text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Soporte</span>
+</a>
+<a class="flex items-center gap-3 text-slate-500 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-brand text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar (Shared Component) -->
+<header class="fixed top-0 w-full flex justify-between items-center px-8 h-16 ml-64 bg-white/5 backdrop-blur-xl z-40 pr-72">
+<div class="flex items-center gap-6">
+<span class="font-brand font-bold tracking-tight text-indigo-400">BCV: 36.50 VES</span>
+<div class="h-4 w-px bg-white/10"></div>
+<div class="flex items-center gap-2 text-slate-400">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="text-xs font-medium">12 Oct, 2023</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined text-slate-400 hover:text-indigo-400 cursor-pointer transition-colors">notifications</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-indigo-500 rounded-full"></span>
+</div>
+<span class="material-symbols-outlined text-slate-400 hover:text-indigo-400 cursor-pointer transition-colors">settings</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-indigo-400/20 active:scale-95 transition-transform cursor-pointer">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="User profile photo avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEaBKhwX3XmDsYMQFZ3UznjfdX0dFRSIcAj2yCG5qyoxHtaCfmT28H8eVzID5Y3bwoY065SQnGl1IXiRarM4Yq1ppBXlWKCQ20xIFaW1zOQBSrbAifenNsSn23qKv_3exoYRcRka-b3SpVTGZqQkwCEIYwFBybx2FFEDcfIl08KpoPLUhkRw-CTz2YQkvnMA5l7Kz5L3-GbCPif3SevXy_fro_13-AqEDqbVDkeZ1_w4jA7gcQsyU4noYX_a0mK2y52PZHkD5mzuk"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 pt-24 px-8 pb-12 min-h-screen">
+<!-- Header & Action Row -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="text-5xl font-headline font-bold text-on-surface tracking-tighter mb-2">Cotizaciones</h2>
+<p class="text-on-surface-variant font-body">Gestión de propuestas comerciales y conversión a ventas.</p>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed px-6 py-3 rounded-xl font-headline font-bold flex items-center gap-2 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add_circle</span>
+                Nueva Cotización
+            </button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Filter Bar & Main List (8 Cols) -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<!-- Filters -->
+<div class="glass-card rounded-xl p-4 flex flex-wrap gap-4 items-center">
+<div class="flex-1 min-w-[200px] relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary placeholder:text-slate-500" placeholder="Buscar por cliente o folio..." type="text"/>
+</div>
+<select class="bg-surface-container-highest border-none rounded-lg px-4 py-2 text-sm text-slate-300 focus:ring-1 focus:ring-primary">
+<option>Todos los Vendedores</option>
+<option>Alejandro R.</option>
+<option>Sofia M.</option>
+</select>
+<div class="flex gap-2">
+<button class="p-2 glass-card rounded-lg text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<button class="p-2 glass-card rounded-lg text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+</div>
+</div>
+<!-- Active Quotes List -->
+<div class="space-y-4">
+<!-- List Header -->
+<div class="grid grid-cols-6 px-6 text-[10px] uppercase tracking-widest text-slate-500 font-label">
+<div class="col-span-2">Cliente / Folio</div>
+<div class="text-center">Estado</div>
+<div class="text-right">Fecha</div>
+<div class="text-right">Total (USD)</div>
+<div class="text-right">Acciones</div>
+</div>
+<!-- Row 1: Approved -->
+<div class="glass-card rounded-xl p-4 grid grid-cols-6 items-center hover:bg-white/[0.06] transition-all cursor-pointer border-l-4 border-indigo-400">
+<div class="col-span-2 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+<span class="material-symbols-outlined">corporate_fare</span>
+</div>
+<div>
+<p class="font-headline font-bold text-on-surface">Corporación Nova S.A.</p>
+<p class="text-xs text-slate-500">#COT-2023-0842</p>
+</div>
+</div>
+<div class="flex justify-center">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider border border-primary/20">Aprobada</span>
+</div>
+<div class="text-right text-sm text-slate-300">12 Oct 2023</div>
+<div class="text-right font-headline font-bold text-on-surface">$ 4,250.00</div>
+<div class="flex justify-end gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400"><span class="material-symbols-outlined text-lg">more_vert</span></button>
+</div>
+</div>
+<!-- Row 2: Sent -->
+<div class="glass-card rounded-xl p-4 grid grid-cols-6 items-center hover:bg-white/[0.06] transition-all cursor-pointer border-l-4 border-tertiary">
+<div class="col-span-2 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="font-headline font-bold text-on-surface">Elena Rodriguez</p>
+<p class="text-xs text-slate-500">#COT-2023-0845</p>
+</div>
+</div>
+<div class="flex justify-center">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase tracking-wider border border-tertiary/20">Enviada</span>
+</div>
+<div class="text-right text-sm text-slate-300">11 Oct 2023</div>
+<div class="text-right font-headline font-bold text-on-surface">$ 890.00</div>
+<div class="flex justify-end gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400"><span class="material-symbols-outlined text-lg">more_vert</span></button>
+</div>
+</div>
+<!-- Row 3: Expired -->
+<div class="glass-card rounded-xl p-4 grid grid-cols-6 items-center hover:bg-white/[0.06] transition-all cursor-pointer border-l-4 border-error">
+<div class="col-span-2 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">store</span>
+</div>
+<div>
+<p class="font-headline font-bold text-on-surface">Minimarket El Faro</p>
+<p class="text-xs text-slate-500">#COT-2023-0820</p>
+</div>
+</div>
+<div class="flex justify-center">
+<span class="px-3 py-1 rounded-full bg-error/10 text-error text-[10px] font-bold uppercase tracking-wider border border-error/20">Vencida</span>
+</div>
+<div class="text-right text-sm text-slate-300">01 Oct 2023</div>
+<div class="text-right font-headline font-bold text-on-surface">$ 1,420.00</div>
+<div class="flex justify-end gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400"><span class="material-symbols-outlined text-lg">more_vert</span></button>
+</div>
+</div>
+<!-- Row 4: Draft -->
+<div class="glass-card rounded-xl p-4 grid grid-cols-6 items-center hover:bg-white/[0.06] transition-all cursor-pointer border-l-4 border-slate-600">
+<div class="col-span-2 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-500/10 flex items-center justify-center text-slate-500">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+<div>
+<p class="font-headline font-bold text-on-surface">TechSolutions C.A.</p>
+<p class="text-xs text-slate-500">#COT-2023-0850</p>
+</div>
+</div>
+<div class="flex justify-center">
+<span class="px-3 py-1 rounded-full bg-slate-500/10 text-slate-400 text-[10px] font-bold uppercase tracking-wider border border-slate-500/20">Borrador</span>
+</div>
+<div class="text-right text-sm text-slate-300">Hoy</div>
+<div class="text-right font-headline font-bold text-on-surface">$ 12,500.00</div>
+<div class="flex justify-end gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-slate-400"><span class="material-symbols-outlined text-lg">more_vert</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Detail Panel & IA Widgets (4 Cols) -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Quick View Card -->
+<div class="glass-card rounded-2xl overflow-hidden flex flex-col h-fit sticky top-24">
+<div class="bg-gradient-to-r from-indigo-500/20 to-secondary/20 p-6 border-b border-white/5">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Vista Rápida</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">close</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-surface leading-tight">Corporación Nova S.A.</h3>
+<p class="text-sm text-indigo-300">#COT-2023-0842 • Vendedor: Alejandro R.</p>
+</div>
+<div class="p-6 space-y-6">
+<!-- Items Table -->
+<div class="space-y-3">
+<p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Partidas</p>
+<div class="space-y-2">
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-300">Servidor Enterprise X1</span>
+<span class="font-medium text-on-surface">$ 3,500.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-300">Instalación &amp; Config.</span>
+<span class="font-medium text-on-surface">$ 750.00</span>
+</div>
+</div>
+</div>
+<!-- Financial Summary -->
+<div class="bg-surface-container-low rounded-xl p-4 space-y-3">
+<div class="flex justify-between text-xs text-slate-400">
+<span>Subtotal</span>
+<span>$ 4,250.00</span>
+</div>
+<div class="flex justify-between text-xs text-slate-400">
+<span>IVA (16%)</span>
+<span>$ 680.00</span>
+</div>
+<div class="pt-2 border-t border-white/5 flex justify-between items-end">
+<div>
+<p class="text-[10px] font-bold uppercase text-primary">Total Estimado</p>
+<p class="text-2xl font-headline font-bold text-on-surface">$ 4,930.00</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold uppercase text-slate-500">Tasa BCV</p>
+<p class="text-sm font-medium text-indigo-300">179,945.00 VES</p>
+</div>
+</div>
+</div>
+<!-- Info Pills -->
+<div class="grid grid-cols-2 gap-3">
+<div class="glass-card rounded-lg p-3 text-center">
+<p class="text-[10px] text-slate-500 uppercase tracking-widest">Validez</p>
+<p class="text-sm font-bold text-on-surface">15 Días</p>
+</div>
+<div class="glass-card rounded-lg p-3 text-center">
+<p class="text-[10px] text-slate-500 uppercase tracking-widest">Tasa Ref.</p>
+<p class="text-sm font-bold text-on-surface">36.50</p>
+</div>
+</div>
+<!-- Actions -->
+<button class="w-full bg-surface-bright border border-primary/30 text-primary py-3 rounded-xl font-headline font-bold flex items-center justify-center gap-2 hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined">receipt_long</span>
+                            Convertir a Factura
+                        </button>
+</div>
+</div>
+<!-- AI Widgets (Groq) -->
+<div class="space-y-4">
+<!-- Suggestion Card -->
+<div class="relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-50"></div>
+<div class="glass-card rounded-2xl p-5 relative z-10 border-l-4 border-tertiary">
+<div class="flex items-center gap-3 mb-3">
+<div class="p-2 bg-tertiary/20 rounded-lg">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h4 class="text-sm font-headline font-bold text-on-surface">Sugerencia de Cierre (IA)</h4>
+</div>
+<p class="text-xs text-slate-400 leading-relaxed">
+                                Este cliente suele cerrar ventas cuando se ofrece un <span class="text-tertiary font-bold">descuento del 5%</span> en servicios. Considera aplicarlo para esta cotización.
+                            </p>
+</div>
+</div>
+<!-- Recurring Alert Card -->
+<div class="glass-card rounded-2xl p-5 border-l-4 border-primary/50">
+<div class="flex items-center gap-3 mb-3">
+<div class="p-2 bg-primary/20 rounded-lg">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<h4 class="text-sm font-headline font-bold text-on-surface">Cliente Recurrente</h4>
+</div>
+<p class="text-xs text-slate-400 leading-relaxed">
+                            Nova S.A. ha aprobado 4 cotizaciones en los últimos 3 meses. <span class="text-primary font-bold">Prioridad Alta</span> en el seguimiento.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (Contextual) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 bg-primary text-on-primary-fixed rounded-full shadow-2xl flex items-center justify-center hover:rotate-90 transition-transform active:scale-90 shadow-primary/40">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+</div>
+</body></html>

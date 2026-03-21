@@ -2,17 +2,10 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'pub-*.r2.dev',
-      },
+      { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
+      { protocol: 'https', hostname: '**' },
     ],
   },
-  env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-    NEXT_PUBLIC_R2_PUBLIC_URL: process.env.NEXT_PUBLIC_R2_PUBLIC_URL,
-    NEXT_PUBLIC_APP_NAME: 'ERP ZENITH',
-  },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

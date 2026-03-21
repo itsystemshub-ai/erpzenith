@@ -1,77 +1,53 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { api } from '@/lib/api';
+'use client'
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 interface User {
-  id: string;
-  email: string;
-  username: string;
-  name: string;
-  role: {
-    id: string;
-    name: string;
-    color: string;
-    icon: string;
-  };
-  modules: Array<{
-    group: string;
-    name: string;
-    canView: boolean;
-    canEdit: boolean;
-    canDelete: boolean;
-    canExport: boolean;
-    canReport: boolean;
-  }>;
+  id: string
+  name: string
+  email: string
+  role: string
+  permissions: string[]
+  avatar?: string
 }
 
 interface AuthState {
-  user: User | null;
-  token: string | null;
-  refreshToken: string | null;
-  login: (email: string, password: string, mfaToken?: string) => Promise<void>;
-  logout: () => void;
-  isLoading: boolean;
-  error: string | null;
+  user: User | null
+  accessToken: string | null
+  isAuthenticated: boolean
+  login: (token: string, user: User) => void
+  logout: () => void
+  hasPermission: (permission: string) => boolean
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       user: null,
-      token: null,
-      refreshToken: null,
-      isLoading: false,
-      error: null,
-
-      login: async (email: string, password: string, mfaToken?: string) => {
-        set({ isLoading: true, error: null });
-        try {
-          const res = await api.post('/auth/login', { email, password, mfaToken });
-          const { accessToken, refreshToken, user } = res.data;
-          
-          set({
-            user,
-            token: accessToken,
-            refreshToken,
-            isLoading: false,
-          });
-        } catch (error: any) {
-          set({
-            isLoading: false,
-            error: error.message,
-          });
-          throw error;
-        }
+      accessToken: null,
+      isAuthenticated: false,
+      login: (accessToken, user) => {
+        localStorage.setItem('accessToken', accessToken)
+        set({ accessToken, user, isAuthenticated: true })
       },
-
       logout: () => {
-        api.post('/auth/logout');
-        set({ user: null, token: null, refreshToken: null });
+        localStorage.removeItem('accessToken')
+        set({ accessToken: null, user: null, isAuthenticated: false })
+      },
+      hasPermission: (permission) => {
+        const { user } = get()
+        if (!user) return false
+        if (user.role === 'ADMIN') return true
+        if (permission.endsWith(':*')) {
+          const mod = permission.split(':')[0]
+          return user.permissions?.some((p) => p.startsWith(`${mod}:`)) ?? false
+        }
+        return user.permissions?.includes(permission) ?? false
       },
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ user: state.user, token: state.token, refreshToken: state.refreshToken }),
+      partialize: (s) => ({ user: s.user, accessToken: s.accessToken, isAuthenticated: s.isAuthenticated }),
     }
   )
-);
+)

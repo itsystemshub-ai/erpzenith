@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tesorería y Flujo de Caja Optimizado - ERP Financiero</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header / Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 bg-white dark:bg-[#1a2633] dark:border-slate-800 px-6 py-3 shadow-sm">
+<div class="flex items-center gap-4 text-[#111417] dark:text-white">
+<div class="flex items-center justify-center size-10 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+</div>
+<div>
+<h2 class="text-[#111417] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">ERP Financiero</h2>
+<div class="flex items-center gap-1 text-xs text-slate-500 font-medium">
+<span>Empresa Global S.A.</span>
+<span class="material-symbols-outlined text-[14px]">expand_more</span>
+</div>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-1">
+<a class="text-slate-600 hover:text-primary hover:bg-slate-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-primary bg-primary/5 px-3 py-2 rounded-lg text-sm font-bold transition-colors" href="#">Tesorería</a>
+<a class="text-slate-600 hover:text-primary hover:bg-slate-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors" href="#">Cuentas por Pagar</a>
+<a class="text-slate-600 hover:text-primary hover:bg-slate-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors" href="#">Cuentas por Cobrar</a>
+<a class="text-slate-600 hover:text-primary hover:bg-slate-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors" href="#">Reportes</a>
+</nav>
+<div class="flex items-center gap-3">
+<div class="hidden lg:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-3 py-1.5 border border-transparent focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+<input class="bg-transparent border-none text-sm w-40 focus:ring-0 text-slate-700 dark:text-slate-200 placeholder-slate-400" placeholder="Buscar transacción..." type="text"/>
+</div>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 text-slate-600 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 text-slate-600 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="size-9 rounded-full bg-cover bg-center border border-slate-200" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7jRC4IdZLH_EPWjHA3f0r5TyVBP6YgH3nx4mMulDrHAPkl_xPGciaerXcgFeAhjciBy28Iq2bElfu2ApILES5ET98N6hbk54UVlIFj0X7mwecD0FU5F0tVdvRswa11Yej8IjPb4hnboEPT2e2aQIQ-SKIzUdvlohZnqAeH8bTR6DgY6diQ09a2oeSDhPEkA_QB6Xub9wa5dTdQbBR3xiI37NzwzV9RRDuxho4NK2jEQngHE46WQPl7VUgkEpTJpvy0Xf4xWn1EeUf');" title="Perfil de usuario"></div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col max-w-[1600px] w-full mx-auto p-6 gap-6">
+<!-- Page Title & Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Tesorería y Flujo de Caja</h1>
+<p class="text-slate-500 text-sm mt-1">Gestión centralizada de liquidez, inversiones y obligaciones financieras.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg shadow-sm hover:bg-slate-50 text-sm font-medium text-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Exportar Informe
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-600 text-white rounded-lg shadow-sm shadow-blue-200 text-sm font-bold transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Nueva Operación
+                        </button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Total Balance -->
+<div class="bg-white dark:bg-[#1a2633] p-5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">account_balance</span>
+</div>
+<div class="flex justify-between items-start">
+<p class="text-slate-500 text-sm font-medium">Saldo Global Disponible</p>
+<span class="bg-green-50 text-green-700 text-xs px-2 py-0.5 rounded-full font-bold">+5.2% vs mes ant.</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">$1,250,430.00</p>
+<p class="text-xs text-slate-400 mt-1">Actualizado hace 5 min</p>
+</div>
+</div>
+<!-- Projected Inflow -->
+<div class="bg-white dark:bg-[#1a2633] p-5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-green-600">trending_up</span>
+</div>
+<div class="flex justify-between items-start">
+<p class="text-slate-500 text-sm font-medium">Entradas Proyectadas (30d)</p>
+<span class="bg-green-50 text-green-700 text-xs px-2 py-0.5 rounded-full font-bold">+12%</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight text-green-600">$450,200.00</p>
+<p class="text-xs text-slate-400 mt-1">Próximo cobro mayor: 15 Oct</p>
+</div>
+</div>
+<!-- Projected Outflow -->
+<div class="bg-white dark:bg-[#1a2633] p-5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-red-600">trending_down</span>
+</div>
+<div class="flex justify-between items-start">
+<p class="text-slate-500 text-sm font-medium">Salidas Proyectadas (30d)</p>
+<span class="bg-red-50 text-red-700 text-xs px-2 py-0.5 rounded-full font-bold">+8%</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight text-red-600">$320,150.00</p>
+<p class="text-xs text-slate-400 mt-1">Nómina pendiente: 28 Oct</p>
+</div>
+</div>
+<!-- Working Capital -->
+<div class="bg-white dark:bg-[#1a2633] p-5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-orange-600">savings</span>
+</div>
+<div class="flex justify-between items-start">
+<p class="text-slate-500 text-sm font-medium">Capital de Trabajo</p>
+<span class="bg-orange-50 text-orange-700 text-xs px-2 py-0.5 rounded-full font-bold">-2%</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">$130,050.00</p>
+<p class="text-xs text-slate-400 mt-1">Ratio actual: 1.4</p>
+</div>
+</div>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<!-- Left Column: Calendar & Timeline (2/3 width on large screens) -->
+<div class="xl:col-span-2 flex flex-col gap-6">
+<!-- Financial Calendar -->
+<div class="bg-white dark:bg-[#1a2633] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+<div class="flex flex-wrap items-center justify-between mb-6 gap-4">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Calendario de Liquidez</h3>
+<p class="text-sm text-slate-500">Vista consolidada de cobros y pagos.</p>
+</div>
+<div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+<button class="px-3 py-1.5 text-xs font-medium rounded-md text-slate-500 hover:text-slate-900">Diario</button>
+<button class="px-3 py-1.5 text-xs font-bold rounded-md bg-white text-primary shadow-sm">Semanal</button>
+<button class="px-3 py-1.5 text-xs font-medium rounded-md text-slate-500 hover:text-slate-900">Mensual</button>
+</div>
+</div>
+<!-- Calendar Graphic Placeholder -->
+<div class="w-full h-64 bg-slate-50 dark:bg-slate-900/50 rounded-lg relative overflow-hidden border border-slate-100 flex items-end px-4 pb-0 gap-2">
+<!-- Bars for chart simulation -->
+<div class="flex-1 flex flex-col justify-end gap-1 h-full items-center group cursor-pointer">
+<div class="w-full max-w-[40px] bg-red-400/80 h-[30%] rounded-t-sm group-hover:bg-red-500 transition-colors relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-10">-$12k</div>
+</div>
+<div class="w-full max-w-[40px] bg-green-400/80 h-[50%] rounded-b-sm group-hover:bg-green-500 transition-colors relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-10">+$25k</div>
+</div>
+<span class="text-[10px] text-slate-400 mt-2">Lun</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full items-center group cursor-pointer">
+<div class="w-full max-w-[40px] bg-red-400/80 h-[60%] rounded-t-sm group-hover:bg-red-500 transition-colors relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-10">-$45k</div>
+</div>
+<div class="w-full max-w-[40px] bg-green-400/80 h-[20%] rounded-b-sm group-hover:bg-green-500 transition-colors relative"></div>
+<span class="text-[10px] text-slate-400 mt-2">Mar</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full items-center group cursor-pointer">
+<div class="w-full max-w-[40px] bg-red-400/80 h-[15%] rounded-t-sm group-hover:bg-red-500 transition-colors relative"></div>
+<div class="w-full max-w-[40px] bg-green-400/80 h-[70%] rounded-b-sm group-hover:bg-green-500 transition-colors relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded whitespace-nowrap z-10">+$80k</div>
+</div>
+<span class="text-[10px] text-slate-400 mt-2">Mié</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full items-center group cursor-pointer relative">
+<!-- Current Day Indicator -->
+<div class="absolute -top-4 bg-primary text-white text-[9px] font-bold px-2 py-0.5 rounded-full">HOY</div>
+<div class="w-full h-full absolute border-x border-dashed border-primary/30 pointer-events-none"></div>
+<div class="w-full max-w-[40px] bg-red-400/80 h-[40%] rounded-t-sm group-hover:bg-red-500 transition-colors relative"></div>
+<div class="w-full max-w-[40px] bg-green-400/80 h-[45%] rounded-b-sm group-hover:bg-green-500 transition-colors relative"></div>
+<span class="text-[10px] font-bold text-primary mt-2">Jue</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full items-center group cursor-pointer">
+<div class="w-full max-w-[40px] bg-slate-200 h-[10%] rounded-t-sm relative"></div>
+<div class="w-full max-w-[40px] bg-slate-200 h-[10%] rounded-b-sm relative"></div>
+<span class="text-[10px] text-slate-400 mt-2">Vie</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full items-center group cursor-pointer opacity-50">
+<div class="w-full max-w-[40px] bg-slate-200 h-[5%] rounded-t-sm relative"></div>
+<div class="w-full max-w-[40px] bg-slate-200 h-[5%] rounded-b-sm relative"></div>
+<span class="text-[10px] text-slate-400 mt-2">Sáb</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full items-center group cursor-pointer opacity-50">
+<div class="w-full max-w-[40px] bg-slate-200 h-[5%] rounded-t-sm relative"></div>
+<div class="w-full max-w-[40px] bg-slate-200 h-[5%] rounded-b-sm relative"></div>
+<span class="text-[10px] text-slate-400 mt-2">Dom</span>
+</div>
+</div>
+<div class="flex justify-center gap-6 mt-4">
+<div class="flex items-center gap-2">
+<span class="size-3 rounded-full bg-green-400"></span>
+<span class="text-xs text-slate-600">Cobros Estimados</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="size-3 rounded-full bg-red-400"></span>
+<span class="text-xs text-slate-600">Pagos Comprometidos</span>
+</div>
+</div>
+</div>
+<!-- Investments Table -->
+<div class="bg-white dark:bg-[#1a2633] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Inversiones Activas</h3>
+<button class="text-primary text-sm font-semibold hover:underline">Ver todas</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-slate-50 dark:bg-slate-800 text-slate-500 font-medium">
+<tr>
+<th class="px-6 py-3">Instrumento</th>
+<th class="px-6 py-3">Institución</th>
+<th class="px-6 py-3">Monto</th>
+<th class="px-6 py-3">Rendimiento</th>
+<th class="px-6 py-3">Vencimiento</th>
+<th class="px-6 py-3 text-right">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Plazo Fijo 90d</td>
+<td class="px-6 py-4 text-slate-600">Banco Santander</td>
+<td class="px-6 py-4 text-slate-900 font-semibold">$150,000</td>
+<td class="px-6 py-4 text-green-600 font-medium">4.5%</td>
+<td class="px-6 py-4 text-slate-500">15 Nov 2024</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Fondo Liquidez</td>
+<td class="px-6 py-4 text-slate-600">BBVA Asset Mgmt</td>
+<td class="px-6 py-4 text-slate-900 font-semibold">$85,500</td>
+<td class="px-6 py-4 text-green-600 font-medium">3.2%</td>
+<td class="px-6 py-4 text-slate-500">Diario</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column: AI Assistant & Bank Status (1/3 width) -->
+<div class="xl:col-span-1 flex flex-col gap-6">
+<!-- AI Assistant Widget -->
+<div class="bg-gradient-to-br from-indigo-50 to-white dark:from-slate-800 dark:to-[#1a2633] rounded-xl border border-indigo-100 dark:border-slate-700 shadow-sm overflow-hidden ring-1 ring-indigo-500/10">
+<div class="px-6 pt-6 pb-2">
+<div class="flex items-center gap-2 mb-2">
+<div class="p-1.5 bg-indigo-600 rounded-lg shadow-sm shadow-indigo-200">
+<span class="material-symbols-outlined text-white text-[20px] block">auto_awesome</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Optimizador IA</h3>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Sugerencias para maximizar capital de trabajo basadas en vencimientos.</p>
+<div class="space-y-3">
+<!-- Suggestion Item 1 -->
+<div class="bg-white dark:bg-slate-900 p-3 rounded-lg border border-indigo-100 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Oportunidad</span>
+<span class="text-xs text-slate-400">Vence en 2 días</span>
+</div>
+<p class="text-sm font-medium text-slate-900 dark:text-white mb-1">Pagar Factura #4092 - Proveedor X</p>
+<div class="flex justify-between items-end">
+<p class="text-xs text-slate-500">Descuento pronto pago: <span class="text-green-600 font-bold">2.5%</span></p>
+<button class="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded font-medium hover:bg-indigo-100">Ejecutar</button>
+</div>
+</div>
+<!-- Suggestion Item 2 -->
+<div class="bg-white dark:bg-slate-900 p-3 rounded-lg border border-red-100 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold bg-red-50 text-red-600 px-2 py-0.5 rounded-full">Crítico</span>
+<span class="text-xs text-slate-400">Vence Hoy</span>
+</div>
+<p class="text-sm font-medium text-slate-900 dark:text-white mb-1">Préstamo Bancario - Cuota 12</p>
+<div class="flex justify-between items-end">
+<p class="text-xs text-slate-500">Evitar mora de $450</p>
+<button class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-medium hover:bg-slate-200">Ejecutar</button>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-3 bg-indigo-50/50 dark:bg-slate-800/50 border-t border-indigo-100 dark:border-slate-700 mt-2">
+<button class="w-full text-center text-xs font-bold text-indigo-600 uppercase tracking-wide">Ver todas las sugerencias</button>
+</div>
+</div>
+<!-- Banking & Loans -->
+<div class="bg-white dark:bg-[#1a2633] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Líneas de Crédito</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-slate-700 dark:text-slate-300">Línea Revolvente Citi</span>
+<span class="font-bold text-slate-900 dark:text-white">65% Usado</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2.5 dark:bg-slate-700">
+<div class="bg-primary h-2.5 rounded-full" style="width: 65%"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-500 mt-1">
+<span>Disp: $35,000</span>
+<span>Total: $100,000</span>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-slate-700 dark:text-slate-300">Crédito Pyme Santander</span>
+<span class="font-bold text-slate-900 dark:text-white">30% Usado</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2.5 dark:bg-slate-700">
+<div class="bg-green-500 h-2.5 rounded-full" style="width: 30%"></div>
+</div>
+<div class="flex justify-between text-xs text-slate-500 mt-1">
+<span>Disp: $350,000</span>
+<span>Total: $500,000</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-dashed border-slate-300 rounded-lg text-sm text-slate-500 font-medium hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                                Solicitar Ampliación
+                            </button>
+</div>
+<!-- Mini Map of Operations (Decorative/Contextual) -->
+<div class="bg-white dark:bg-[#1a2633] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 relative overflow-hidden h-40">
+<div class="absolute inset-0 bg-cover bg-center opacity-40" data-alt="Abstract map showing global financial connections" data-location="Mapa de operaciones global" style="background-image: url('https://placeholder.pics/svg/300');"></div>
+<div class="relative z-10 flex flex-col justify-end h-full">
+<h4 class="font-bold text-slate-900 dark:text-white">Operaciones Internacionales</h4>
+<p class="text-xs text-slate-600 font-medium">3 transferencias SWIFT en proceso</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

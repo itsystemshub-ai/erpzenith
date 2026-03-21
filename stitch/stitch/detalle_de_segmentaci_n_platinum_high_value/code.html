@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERPX-COMMAND | Platinum High-Value Segment</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#07006c",
+                        "secondary-container": "#571bc1",
+                        "inverse-on-surface": "#283044",
+                        "tertiary-container": "#009eb9",
+                        "on-error": "#690005",
+                        "on-surface": "#dae2fd",
+                        "surface-container-lowest": "#060e20",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "secondary": "#d0bcff",
+                        "outline-variant": "#464554",
+                        "on-secondary": "#3c0091",
+                        "on-primary": "#1000a9",
+                        "surface-container": "#171f33",
+                        "outline": "#908fa0",
+                        "on-secondary-fixed": "#23005c",
+                        "on-error-container": "#ffdad6",
+                        "on-background": "#dae2fd",
+                        "primary": "#c0c1ff",
+                        "on-tertiary-fixed": "#001f26",
+                        "surface-container-high": "#222a3d",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "tertiary": "#4cd7f6",
+                        "surface-container-highest": "#2d3449",
+                        "surface": "#0b1326",
+                        "on-primary-container": "#0d0096",
+                        "on-tertiary": "#003640",
+                        "inverse-surface": "#dae2fd",
+                        "on-tertiary-container": "#002f38",
+                        "on-surface-variant": "#c7c4d7",
+                        "surface-container-low": "#131b2e",
+                        "primary-container": "#8083ff",
+                        "tertiary-fixed": "#acedff",
+                        "background": "#0b1326",
+                        "surface-tint": "#c0c1ff",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-dim": "#0b1326",
+                        "on-secondary-container": "#c4abff",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "secondary-fixed": "#e9ddff",
+                        "surface-bright": "#31394d",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#2d3449",
+                        "inverse-primary": "#494bd6",
+                        "primary-fixed": "#e1e0ff"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(144, 143, 160, 0.15);
+        }
+        .zenith-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(192, 193, 255, 0.08) 0%, rgba(192, 193, 255, 0) 70%);
+            filter: blur(60px);
+            z-index: -1;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="bg-slate-950/50 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-[0_20px_40px_rgba(0,0,0,0.4)] flex justify-between items-center w-full px-8 py-4">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold bg-gradient-to-br from-indigo-300 to-indigo-500 bg-clip-text text-transparent font-headline tracking-tight">ERPX-COMMAND</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-indigo-400 border-b-2 border-indigo-500 pb-1 font-['Space_Grotesk'] tracking-tight" href="#">Systems</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Security</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Audits</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors font-['Space_Grotesk'] tracking-tight" href="#">Insights</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
+<input class="bg-slate-900/40 border-none rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-indigo-500 w-64" placeholder="Global Search..." type="text"/>
+</div>
+<button class="p-2 hover:bg-white/5 transition-all duration-300 rounded-full">
+<span class="material-symbols-outlined text-indigo-400">notifications</span>
+</button>
+<button class="p-2 hover:bg-white/5 transition-all duration-300 rounded-full">
+<span class="material-symbols-outlined text-indigo-400">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest border border-outline-variant/20 overflow-hidden">
+<img alt="User Profile Avatar" data-alt="User profile avatar with professional tech look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDS9qoIfoFT1ozXNpgzF1tCb30VFDCuEX4m2IP3WBpkXQEp-XrP3J3h3pe2G1BdYKVhtmBkIIKfwGqiu7-wTqNu9XHJQJToiBuVSTqgEqxpR_ap_W6rGE3YqAOJKEdC7aUM5gOcgoeA5ircWt4UVvuadotn30Yax8vFlsm-zZb4w82s4KI_-cwEAkeAVkUzQHCk6VqijZxpOE4j6zwE63MLllWB6TDSPmzur6F_QIIzJ5Kjz6L0CEjg8fbCiZb9eIvxBH_OCS4_Yk"/>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col pt-20 bg-slate-900/80 backdrop-blur-2xl h-screen w-64 border-r border-white/5 shadow-2xl z-40 hidden lg:flex">
+<div class="px-6 py-8">
+<div class="flex items-center gap-3 mb-10">
+<div class="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+</div>
+<div>
+<div class="text-indigo-400 font-bold font-headline">Admin Console</div>
+<div class="text-[10px] text-slate-500 font-label tracking-widest uppercase">Super User Access</div>
+</div>
+</div>
+<nav class="space-y-2">
+<a class="text-slate-400 flex items-center gap-3 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                    </a>
+<a class="bg-indigo-500/10 text-indigo-300 border-l-4 border-indigo-500 flex items-center gap-3 px-4 py-3 active:translate-x-1 transition-transform font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span> Segments
+                    </a>
+<a class="text-slate-400 flex items-center gap-3 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">security</span> Security
+                    </a>
+<a class="text-slate-400 flex items-center gap-3 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span> Roles
+                    </a>
+<a class="text-slate-400 flex items-center gap-3 px-4 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all font-['Inter'] text-sm font-medium" href="#">
+<span class="material-symbols-outlined">receipt_long</span> Logs
+                    </a>
+</nav>
+</div>
+<div class="mt-auto px-6 pb-8 space-y-4">
+<button class="w-full py-3 bg-gradient-to-r from-indigo-500 to-primary-container text-on-primary font-bold rounded-xl shadow-lg shadow-indigo-500/20 active:scale-95 transition-all text-xs uppercase tracking-widest">
+                    Generate Report
+                </button>
+<div class="space-y-1">
+<a class="text-slate-500 flex items-center gap-3 px-4 py-2 hover:text-slate-300 text-xs transition-all" href="#">
+<span class="material-symbols-outlined text-sm">help</span> Support
+                    </a>
+<a class="text-slate-500 flex items-center gap-3 px-4 py-2 hover:text-error text-xs transition-all" href="#">
+<span class="material-symbols-outlined text-sm">logout</span> Logout
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-64 p-8 min-h-screen">
+<!-- Header Section -->
+<div class="mb-12">
+<div class="flex items-center gap-2 text-tertiary text-xs font-label tracking-widest uppercase mb-2">
+<span class="material-symbols-outlined text-sm">analytics</span> Customer Intelligence
+                </div>
+<h1 class="font-headline text-5xl font-bold tracking-tight text-on-surface mb-4">Platinum <span class="text-primary">High-Value</span></h1>
+<p class="text-on-surface-variant max-w-2xl font-light">Detailed tactical analysis and behavioral mapping for the top 2.5% of your customer base. High retention priority recommended.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Zenith Metrics: Segment Summary -->
+<div class="col-span-12 lg:col-span-8 grid grid-cols-2 gap-6">
+<div class="glass-panel p-8 rounded-full relative overflow-hidden group">
+<div class="zenith-orb top-[-50%] left-[-20%]"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">groups</span>
+<span class="text-tertiary font-bold text-xs bg-tertiary/10 px-2 py-1 rounded">+12% YoY</span>
+</div>
+<div class="font-headline text-5xl font-bold text-on-surface mb-1">1,284</div>
+<div class="text-xs uppercase tracking-[0.2em] text-outline font-label">Total Active Clients</div>
+</div>
+<div class="glass-panel p-8 rounded-full relative overflow-hidden group">
+<div class="zenith-orb bottom-[-50%] right-[-20%]"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-tertiary text-3xl">payments</span>
+<span class="text-primary font-bold text-xs bg-primary/10 px-2 py-1 rounded">High Growth</span>
+</div>
+<div class="font-headline text-5xl font-bold text-on-surface mb-1">$42.8k</div>
+<div class="text-xs uppercase tracking-[0.2em] text-outline font-label">Average LTV</div>
+</div>
+</div>
+<!-- IA Insights Panel (Gemini Style) -->
+<div class="col-span-12 lg:col-span-4 glass-panel p-8 rounded-xl border-l-4 border-primary">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="font-headline text-xl font-bold">IA Insights</h3>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="text-primary font-bold text-sm">Retención Prioritaria</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">El 15% del segmento muestra una disminución en la frecuencia de login. Se recomienda activar el protocolo de 'White-Glove Success' inmediatamente.</p>
+</div>
+<div class="space-y-2">
+<div class="text-tertiary font-bold text-sm">Oportunidad Upsell</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Alta correlación entre el uso de 'Analytics Advanced' y la suscripción Enterprise. Ofrecer trial de 30 días a cuentas Platinum Tier-2.</p>
+</div>
+<button class="w-full py-2 bg-surface-container-highest border border-outline-variant/30 text-on-surface text-xs font-bold rounded-lg hover:bg-surface-bright transition-all">Ver Informe Completo</button>
+</div>
+</div>
+<!-- Behavior Chart Section -->
+<div class="col-span-12 lg:col-span-7 glass-panel p-8 rounded-xl">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="font-headline text-xl font-bold mb-1">Comportamiento de Compra</h3>
+<p class="text-xs text-outline">Volumen de transacciones mensuales vs. Valor proyectado</p>
+</div>
+<div class="flex gap-2">
+<div class="h-2 w-8 bg-primary rounded-full"></div>
+<div class="h-2 w-8 bg-tertiary rounded-full"></div>
+</div>
+</div>
+<!-- Chart Placeholder with visual representation -->
+<div class="h-64 w-full flex items-end gap-4 px-4">
+<div class="flex-1 bg-surface-container-highest/50 rounded-t-lg relative group h-[40%]">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 h-[60%] rounded-t-lg transition-all group-hover:bg-primary/60"></div>
+</div>
+<div class="flex-1 bg-surface-container-highest/50 rounded-t-lg relative group h-[65%]">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 h-[75%] rounded-t-lg transition-all group-hover:bg-primary/60"></div>
+</div>
+<div class="flex-1 bg-surface-container-highest/50 rounded-t-lg relative group h-[55%]">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 h-[45%] rounded-t-lg transition-all group-hover:bg-primary/60"></div>
+</div>
+<div class="flex-1 bg-surface-container-highest/50 rounded-t-lg relative group h-[85%]">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 h-[90%] rounded-t-lg transition-all group-hover:bg-primary/60"></div>
+</div>
+<div class="flex-1 bg-surface-container-highest/50 rounded-t-lg relative group h-[70%]">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 h-[65%] rounded-t-lg transition-all group-hover:bg-primary/60"></div>
+</div>
+<div class="flex-1 bg-surface-container-highest/50 rounded-t-lg relative group h-[95%]">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 h-[85%] rounded-t-lg transition-all group-hover:bg-primary/60"></div>
+</div>
+<div class="flex-1 bg-surface-container-highest/50 rounded-t-lg relative group h-[80%]">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 h-[70%] rounded-t-lg transition-all group-hover:bg-primary/60"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] text-outline font-label px-2">
+<span>ENE</span><span>FEB</span><span>MAR</span><span>ABR</span><span>MAY</span><span>JUN</span><span>JUL</span>
+</div>
+</div>
+<!-- Demographics & Channels -->
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-6">
+<div class="glass-panel p-6 rounded-xl flex-1">
+<h4 class="text-xs font-label tracking-[0.2em] text-outline uppercase mb-6">Demografía Predominante</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm">Sector Tech / SaaS</span>
+<span class="text-sm font-bold text-primary">42%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[42%]"></div>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="text-sm">Finanzas Enterprise</span>
+<span class="text-sm font-bold text-tertiary">28%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[28%]"></div>
+</div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl flex-1">
+<h4 class="text-xs font-label tracking-[0.2em] text-outline uppercase mb-6">Canales Preferidos</h4>
+<div class="flex justify-around items-center">
+<div class="text-center group">
+<div class="h-12 w-12 rounded-full bg-surface-container-highest flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary">mail</span>
+</div>
+<div class="text-[10px] font-bold">Email Direct</div>
+</div>
+<div class="text-center group">
+<div class="h-12 w-12 rounded-full bg-surface-container-highest flex items-center justify-center mb-2 group-hover:bg-tertiary/20 transition-all">
+<span class="material-symbols-outlined text-tertiary">call</span>
+</div>
+<div class="text-[10px] font-bold">Direct Account</div>
+</div>
+<div class="text-center group">
+<div class="h-12 w-12 rounded-full bg-surface-container-highest flex items-center justify-center mb-2 group-hover:bg-on-surface/20 transition-all">
+<span class="material-symbols-outlined text-on-surface">hub</span>
+</div>
+<div class="text-[10px] font-bold">Portal API</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Clients List -->
+<div class="col-span-12 glass-panel rounded-xl overflow-hidden">
+<div class="p-8 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-headline text-xl font-bold">Top Clients en Segmento</h3>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-container-highest text-xs rounded-lg hover:bg-surface-bright transition-all">Exportar CSV</button>
+<button class="px-4 py-2 bg-primary text-on-primary text-xs font-bold rounded-lg hover:opacity-90 transition-all">Ver Todos</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low/30 border-b border-outline-variant/10 text-xs font-label tracking-widest uppercase text-outline">
+<tr>
+<th class="px-8 py-4">Cliente</th>
+<th class="px-8 py-4">Status</th>
+<th class="px-8 py-4">Valor Anual</th>
+<th class="px-8 py-4">Última Interacción</th>
+<th class="px-8 py-4 text-right">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img alt="Company Logo" class="h-full w-full object-cover" data-alt="Corporate abstract logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5Jus8FigyhGVYmR3qCXN8tPpwQgqQ1cK2zfsEmne8rkKOZY2hBCcYF9SdhXeD2tpmgBQuBvNvVXcxLhgAdU41GUKAU-0p3orSTSxieP9Up4Gxp_XstfVM7JZXBvi6lb6eWVt6HyrgcMU7Ssp0fBqaUx70I-Zd94gTU_H4nCILoZr1_xyiK4qFJu9xCevYqesZIlLCh0TyFdFCgC00SQdbyBxOwlPmdnyPCEmvQQxTsc6T55cUOT9K4VOngzJqDm46vXwI8FvtSo8"/>
+</div>
+<div>
+<div class="font-bold text-sm">Luminal Dynamics</div>
+<div class="text-xs text-outline">luminal.io</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full uppercase tracking-tighter">Diamond Active</span>
+</td>
+<td class="px-8 py-5 text-sm font-medium font-headline">$142,500</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-tertiary">check_circle</span>
+<span class="text-sm">Hace 2 horas</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img alt="Company Logo" class="h-full w-full object-cover" data-alt="Modern tech corporate logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjxffZjQMdtjev3EO7dOq7ydjXF7FfbuqhpvRMEkstZG3JesGFxdrGa76jG5G5AZYQmjfqmy44SBJWeWH3g-1iReSNb3rNB0rux71keZ52CI7GfgvlC2CuV2Tpl2UIangJgqnb8XluheXzRiGBcaBJEzJX1V-h46RGxe79mUE5ziEX3nPv-eNCrtwUCt8hOk9S6EArFaGpIyz2buqHdiPX9OeQ2u6uzNtG8ZPS_9rw4mFBj91ejx_Yd3L7KYhNNlP10XzRKqC9LA0"/>
+</div>
+<div>
+<div class="font-bold text-sm">Aether Systems</div>
+<div class="text-xs text-outline">aether.sys</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 bg-tertiary/10 text-tertiary text-[10px] font-bold rounded-full uppercase tracking-tighter">Strategic Growth</span>
+</td>
+<td class="px-8 py-5 text-sm font-medium font-headline">$89,200</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-outline">schedule</span>
+<span class="text-sm">Ayer, 14:30</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img alt="Company Logo" class="h-full w-full object-cover" data-alt="Vortex shape corporate logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6z_AVBsMfpv04G0a4mZifJqJ9JWaqvQFQK8HlS_bfEB2P0kQLLIg7nz61d6j7F3ajpgWxQNdlDrtYFcKBYkmJDVWAWuknm-0fMApUeB2eiSW0zdybbRUpbUwxGLJVPmn_2_ZTiL44DyaFhUlPZ6erx0UqsirdSLf7RHKMC3cNRsn5nz-J7x8c1eudaAHgvu3HNoqrmwnwVDAI6drC1uOp12luKz2jWNb5QhV0Ddg-JOjYDeA2vn3WuRrvCb9SXi_jctz5WuxGrRo"/>
+</div>
+<div>
+<div class="font-bold text-sm">Vortex Cloud</div>
+<div class="text-xs text-outline">vortex.cloud</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 bg-error/10 text-error text-[10px] font-bold rounded-full uppercase tracking-tighter">At Risk</span>
+</td>
+<td class="px-8 py-5 text-sm font-medium font-headline">$76,000</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span class="text-sm">Hace 8 días</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Shell -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/90 backdrop-blur-2xl px-6 py-4 flex justify-around items-center z-50 border-t border-white/5">
+<button class="flex flex-col items-center gap-1 text-indigo-400">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-label">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-label">Segments</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-label">Insights</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label">Profile</span>
+</button>
+</nav>
+</body></html>

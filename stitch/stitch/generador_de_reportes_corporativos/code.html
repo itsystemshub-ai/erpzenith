@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Generador de Reportes Corporativos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "primary-50": "#eaf5ff",
+                        "primary-100": "#d5eaff",
+                        "primary-600": "#1060b0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "paper": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Custom scrollbar for panels */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 shrink-0 z-20 shadow-sm">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2 text-slate-900 dark:text-white group" href="#">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">dataset</span>
+</div>
+<span class="text-lg font-bold tracking-tight hidden md:block">ERP Corporativo</span>
+</a>
+<div class="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-2 hidden md:block"></div>
+<nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Inicio</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Reportes</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Nuevo Reporte Personalizado</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="hidden sm:flex items-center justify-center gap-2 h-9 px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Programar Envío</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-9 px-4 rounded-lg bg-primary hover:bg-primary-600 text-white text-sm font-medium shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Descargar PDF</span>
+</button>
+</div>
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden cursor-pointer ring-2 ring-transparent hover:ring-primary transition-all">
+<img alt="Profile" class="h-full w-full object-cover" data-alt="Portrait of a user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi5HBOQqehmIWvSSP5tpvOlIM9ySh7inNTo0GdMCJ4eeyxT09FigC_vyhbH1QjwHDV8nLVURK4Q_WclAPuxzcCMu_6lnzkdGYHOAVp6taPIlMxTnWQj1PNcufl2oFRxaQNCkpU4n93B7WEwTl9md8hvXyTrPYl4BoXxU2-z4YHDjbG8wH5aa9N3OwkVFZ-q9wlTGS1WABk7S3UlwCane7AhMrAwvaUkNueM1YD3oyIf8IaG_0RRtNS5RQ9-z188V8VNvDCbDZwwidQ"/>
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Report Builder -->
+<aside class="w-80 lg:w-96 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 z-10">
+<div class="p-5 border-b border-slate-100 dark:border-slate-800">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">tune</span>
+                    Configuración
+                </h2>
+<p class="text-xs text-slate-500 mt-1">Personaliza las dimensiones y métricas.</p>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-6">
+<!-- Period Section -->
+<div class="space-y-3">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300 flex justify-between">
+                        Periodo de Análisis
+                        <span class="text-primary text-xs cursor-pointer hover:underline">Personalizado</span>
+</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px]">calendar_month</span>
+<select class="w-full h-10 pl-10 pr-4 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none">
+<option>Último Trimestre (Q3 2023)</option>
+<option>Año hasta la fecha (YTD)</option>
+<option>Mes Pasado</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Dimensions Section -->
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Dimensiones</label>
+<button class="text-xs text-primary font-medium hover:text-primary-600 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">add</span> Agregar
+                        </button>
+</div>
+<div class="space-y-2">
+<!-- Draggable item -->
+<div class="group flex items-center gap-2 p-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors">
+<span class="material-symbols-outlined text-slate-400 text-[20px] cursor-grab">drag_indicator</span>
+<div class="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 p-1.5 rounded-md">
+<span class="material-symbols-outlined text-[18px]">domain</span>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Departamentos</span>
+<button class="ml-auto text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="group flex items-center gap-2 p-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors">
+<span class="material-symbols-outlined text-slate-400 text-[20px] cursor-grab">drag_indicator</span>
+<div class="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 p-1.5 rounded-md">
+<span class="material-symbols-outlined text-[18px]">public</span>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Región Geográfica</span>
+<button class="ml-auto text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Metrics Section -->
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Métricas Clave</label>
+<button class="text-xs text-primary font-medium hover:text-primary-600 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">add</span> Agregar
+                        </button>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-colors">
+<div class="flex items-center gap-2">
+<input checked="" class="w-4 h-4 text-primary bg-white border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Ingresos Totales</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-colors">
+<div class="flex items-center gap-2">
+<input checked="" class="w-4 h-4 text-primary bg-white border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Margen Bruto (%)</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-colors">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 text-primary bg-white border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Gastos Operativos</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-colors">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 text-primary bg-white border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">ROI Marketing</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Theme/Branding Toggle -->
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 block">Estilo del Reporte</label>
+<div class="grid grid-cols-4 gap-2">
+<button class="aspect-square rounded-full bg-[#111921] ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-slate-900"></button>
+<button class="aspect-square rounded-full bg-[#207fdf] hover:ring-2 hover:ring-slate-300 ring-offset-2 ring-offset-white dark:ring-offset-slate-900"></button>
+<button class="aspect-square rounded-full bg-[#dc2626] hover:ring-2 hover:ring-slate-300 ring-offset-2 ring-offset-white dark:ring-offset-slate-900"></button>
+<button class="aspect-square rounded-full bg-[#16a34a] hover:ring-2 hover:ring-slate-300 ring-offset-2 ring-offset-white dark:ring-offset-slate-900"></button>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+<button class="w-full h-10 flex items-center justify-center gap-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary-600 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">autorenew</span>
+                    Actualizar Vista Previa
+                </button>
+</div>
+</aside>
+<!-- Center: Preview Canvas -->
+<section class="flex-1 bg-background-light dark:bg-background-dark relative overflow-y-auto custom-scrollbar flex justify-center p-8 lg:p-12">
+<!-- Floating AI Assistant Button (Bottom Right) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="group flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-primary text-white pl-4 pr-2 py-2 rounded-full shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/40 hover:-translate-y-1 transition-all">
+<span class="font-medium text-sm">Maestro de Reportes</span>
+<div class="bg-white/20 p-1.5 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined text-[20px] animate-pulse">auto_awesome</span>
+</div>
+</button>
+<!-- AI Suggestion Bubble -->
+<div class="absolute bottom-full right-0 mb-4 w-72 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-indigo-100 dark:border-slate-700 p-4 transform transition-all scale-100 origin-bottom-right">
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">smart_toy</span>
+</div>
+<div class="space-y-2">
+<p class="text-sm text-slate-700 dark:text-slate-300 leading-snug">
+                                He detectado un aumento del <strong>15%</strong> en ventas online. ¿Quieres agregar un desglose comparativo vs Q2?
+                            </p>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 text-xs font-semibold rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors">Sí, agregar</button>
+<button class="px-3 py-1.5 text-slate-500 dark:text-slate-400 text-xs font-medium hover:text-slate-700 dark:hover:text-slate-200 transition-colors">No, gracias</button>
+</div>
+</div>
+</div>
+<!-- Triangle pointer -->
+<div class="absolute -bottom-2 right-8 w-4 h-4 bg-white dark:bg-slate-800 border-b border-r border-indigo-100 dark:border-slate-700 transform rotate-45"></div>
+</div>
+</div>
+<!-- A4 Paper Preview -->
+<div class="w-full max-w-[800px] bg-white text-slate-900 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 min-h-[1100px] p-12 relative flex flex-col">
+<!-- White Label Header -->
+<div class="flex items-center justify-between pb-8 border-b-2 border-slate-100 mb-8">
+<div class="flex items-center gap-3">
+<!-- Company Logo Placeholder -->
+<div class="h-10 w-10 bg-slate-900 rounded flex items-center justify-center text-white">
+<span class="font-bold text-lg">C</span>
+</div>
+<div>
+<h1 class="text-xl font-bold text-slate-900">CorpVision Inc.</h1>
+<p class="text-xs text-slate-500 uppercase tracking-wider font-medium">Informe Ejecutivo Q3 2023</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-semibold text-slate-900">Confidencial</p>
+<p class="text-sm text-slate-500">Generado: 12 Oct, 2023</p>
+</div>
+</div>
+<!-- AI Generated Summary Block -->
+<div class="bg-indigo-50/50 border border-indigo-100 rounded-lg p-5 mb-8 relative">
+<div class="absolute -top-3 left-4 bg-white px-2 py-0.5 border border-indigo-100 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-indigo-500 text-[14px]">auto_awesome</span>
+<span class="text-[10px] font-bold text-indigo-800 uppercase tracking-wide">Resumen IA</span>
+</div>
+<p class="text-sm text-slate-700 leading-relaxed">
+                        Durante el tercer trimestre, la compañía experimentó un crecimiento sostenido del <strong>12.5%</strong> en ingresos totales, impulsado principalmente por la expansión en la región Norte. El margen EBITDA se mantuvo saludable en un <strong>24%</strong>, a pesar del incremento en los costos de adquisición de clientes. Se recomienda enfocar los recursos de Q4 en la retención de clientes Enterprise.
+                    </p>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-2 gap-8 mb-8">
+<!-- Chart 1 -->
+<div class="col-span-2 sm:col-span-1">
+<h3 class="text-sm font-bold text-slate-800 mb-4">Ingresos vs. Metas</h3>
+<div class="h-48 bg-slate-50 rounded-lg border border-slate-100 flex items-end justify-between px-4 pb-4 gap-2">
+<!-- Bars simulating chart -->
+<div class="w-full bg-primary/20 hover:bg-primary/30 h-[40%] rounded-t-sm relative group cursor-pointer">
+<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded shadow-lg">Jul</div>
+</div>
+<div class="w-full bg-primary/40 hover:bg-primary/50 h-[65%] rounded-t-sm relative group cursor-pointer">
+<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded shadow-lg">Ago</div>
+</div>
+<div class="w-full bg-primary hover:bg-primary-600 h-[85%] rounded-t-sm relative group cursor-pointer">
+<div class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded shadow-lg">Sep</div>
+</div>
+</div>
+<div class="flex justify-between mt-2 text-xs text-slate-500">
+<span>Julio</span>
+<span>Agosto</span>
+<span>Septiembre</span>
+</div>
+</div>
+<!-- Chart 2 -->
+<div class="col-span-2 sm:col-span-1">
+<h3 class="text-sm font-bold text-slate-800 mb-4">Distribución por Canal</h3>
+<div class="h-48 flex items-center justify-center relative">
+<!-- Donut Chart Simulation with CSS Conic Gradient -->
+<div class="w-32 h-32 rounded-full" style="background: conic-gradient(#207fdf 0% 60%, #93c5fd 60% 85%, #e2e8f0 85% 100%);"></div>
+<div class="absolute w-20 h-20 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
+<span class="text-xs text-slate-400">Total</span>
+<span class="text-sm font-bold text-slate-800">$1.2M</span>
+</div>
+<!-- Legend -->
+<div class="absolute -right-4 top-1/2 -translate-y-1/2 space-y-2">
+<div class="flex items-center gap-2 text-xs text-slate-600">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Directo
+                                 </div>
+<div class="flex items-center gap-2 text-xs text-slate-600">
+<span class="w-2 h-2 rounded-full bg-blue-300"></span> Referidos
+                                 </div>
+<div class="flex items-center gap-2 text-xs text-slate-600">
+<span class="w-2 h-2 rounded-full bg-slate-200"></span> Otros
+                                 </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="mb-8">
+<h3 class="text-sm font-bold text-slate-800 mb-3">Rendimiento por Departamento</h3>
+<div class="overflow-hidden rounded-lg border border-slate-200">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 text-slate-500 border-b border-slate-200">
+<tr>
+<th class="px-4 py-3 font-semibold">Departamento</th>
+<th class="px-4 py-3 font-semibold">Responsable</th>
+<th class="px-4 py-3 font-semibold text-right">Ingresos</th>
+<th class="px-4 py-3 font-semibold text-right">Var %</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 font-medium text-slate-900">Ventas Enterprise</td>
+<td class="px-4 py-3 text-slate-600">Ana García</td>
+<td class="px-4 py-3 text-right text-slate-900 font-mono">$450,200</td>
+<td class="px-4 py-3 text-right text-green-600 font-medium bg-green-50/50">+12%</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 font-medium text-slate-900">Marketing</td>
+<td class="px-4 py-3 text-slate-600">Carlos Ruiz</td>
+<td class="px-4 py-3 text-right text-slate-900 font-mono">$120,500</td>
+<td class="px-4 py-3 text-right text-green-600 font-medium bg-green-50/50">+5%</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 font-medium text-slate-900">Soporte Técnico</td>
+<td class="px-4 py-3 text-slate-600">Maria Lopez</td>
+<td class="px-4 py-3 text-right text-slate-900 font-mono">$85,000</td>
+<td class="px-4 py-3 text-right text-red-500 font-medium bg-red-50/50">-2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto pt-8 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+<span>Página 1 de 5</span>
+<span>ERP Corporativo v4.2</span>
+</div>
+</div>
+</section>
+</main>
+</body></html>

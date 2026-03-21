@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Proyectos y Tiempos - ERP SaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for Gantt chart area */
+        .gantt-scroll::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .gantt-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .gantt-scroll::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        .gantt-scroll::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111417] font-display antialiased min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e5e7eb] bg-white px-6 py-3 sticky top-0 z-50 shadow-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-[#111417]">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</div>
+<h2 class="text-[#111417] text-lg font-bold leading-tight tracking-[-0.015em]">ERP SaaS</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-[#e5e7eb] overflow-hidden focus-within:ring-2 ring-primary/20 transition-all">
+<div class="text-[#647587] flex border-none bg-[#f9fafb] items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-[#111417] focus:outline-0 focus:ring-0 border-none bg-[#f9fafb] focus:border-none h-full placeholder:text-[#647587] px-3 text-sm font-normal leading-normal" placeholder="Buscar proyecto, tarea..."/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-[#111417] text-sm font-semibold leading-normal hover:text-primary transition-colors" href="#">Proyectos</a>
+<a class="text-[#647587] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Ventas</a>
+<a class="text-[#647587] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Contabilidad</a>
+<a class="text-[#647587] text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reportes</a>
+</nav>
+<div class="h-6 w-px bg-[#e5e7eb] hidden lg:block"></div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-medium shadow-sm gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span class="truncate">Nuevo Proyecto</span>
+</button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg h-9 px-3 bg-white border border-[#e5e7eb] hover:bg-[#f9fafb] transition-colors text-[#111417] text-sm font-medium gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">auto_awesome</span>
+<span class="truncate hidden sm:inline">Copiloto IA</span>
+</button>
+</div>
+<div class="flex items-center gap-2 cursor-pointer">
+<img alt="Avatar del usuario" class="size-9 rounded-full border border-[#e5e7eb] object-cover" data-alt="User profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDof--EbrcchoIsvY0kEq1eUMRtWlwGX5b5bJakYXpeCamZuXeQKWsG2_591AQYCt7fzTvn4YdDvEH7RtIzT2wTX0h_AAcSjhohHaYN2CvBZEVYShWi57pXz_TteQj8vPuWapRfDOqrIJXYN-zwkZDZmymQBFnw7dsdiG35jax7bxLcV6FqEGvLACkv3dJRz470HhqJsO0pO6_InjHM08yCsii73l3DbJ5dGK_Y1uLHrEELMLOYtCHPOtKaqi_qdsZcR7_CKb80ipBR"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-6 py-6 max-w-[1440px] mx-auto w-full">
+<!-- Breadcrumbs & Title -->
+<div class="flex flex-col gap-4 mb-6">
+<div class="flex items-center gap-2 text-sm text-[#647587]">
+<a class="hover:text-primary transition-colors" href="#">Inicio</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Gestión de Proyectos</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-medium text-[#111417]">Implementación ERP Cliente A</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="text-3xl font-bold text-[#111417] tracking-tight">Tablero de Proyecto: Implementación ERP</h1>
+<p class="text-[#647587] text-sm mt-1">Gestión de hitos, recursos y facturación vinculada</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<img alt="Team member" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Team member 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4VV39PuZeL4LQ46lFVkcTxgp27fos74InQW_ShSbVqb-TYbbdS2pJkohSeRACbxImqMBXf70jw98MlrH-bsBOyrKR8oTeZa-z6Z_duu9RjkJlwPwHqBKAjWkWb6T2nEdQayhLe4GHFylE__s4HEdNoSN-Yh8sEYsdIIdZfLii4gLWoDvB7wF6BfMvmnDpFP7LBFZ0KjX4FjBFWUXzb5ZgrhFhYGkKju-EapI6AtfWStM2a9Q5X9meYMHFYvL1tz5bRgf4jlmuv84J"/>
+<img alt="Team member" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Team member 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTR9pV2TPFHfNiCmUyjgVRCbnm1y_6iUShtdcePG5m16R_G5r953TToPf7IYb_5XPidGJ3U4bP5ugAbA-kD_2CTJCsaxE1t_VAaI8avVEw3U8D4q3Wbtf_S7vE64jG83AhYXyKbEzFkNqGNxtquMO5h5BA8EGHFDANaCg5VTv_GEnBx8NGjhxs5mO-Ucvnajmvu8JV77nzx4Ww-2yz-oDzc9NsHCuU2AeuflLlE7V7sjicUyWSnklIq6g04SNe8hM6EvgzAe-6nfOL"/>
+<img alt="Team member" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" data-alt="Team member 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYkIfOewb7alzb68Z8eATs5L9H6WIDjkWJWMj7CeeZZi8rrYhnCeibMmaHig3I-DNuqVg-nAE8ML-I76eRsAl4_QLXbPXLUaRNplhvN5IkQOoW5O_3D9qbbLYj4qUk2nRKlDI9J8v1QPlO-jr4tyFOtF4jqecFtxb4r4AORu9ixZR4UoFuYkMATx11yQcHG_CoE4Za9yf6Ior6sKaKPaumoRlZmHCXsCaqOBRchVLlyitCHaQC_YIaYXJpOVTyaPoDw6s_Bzx_O25A"/>
+<div class="h-8 w-8 rounded-full ring-2 ring-white bg-[#f0f2f4] flex items-center justify-center text-xs font-medium text-[#647587]">+4</div>
+</div>
+<button class="text-primary text-sm font-medium hover:underline">Gestionar equipo</button>
+</div>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="bg-white p-5 rounded-xl border border-[#e5e7eb] shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex justify-between items-start">
+<p class="text-[#647587] text-sm font-medium">Progreso General</p>
+<span class="material-symbols-outlined text-primary text-[20px]">timelapse</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-[#111417] text-2xl font-bold">65%</p>
+<span class="text-[#078838] text-xs font-medium bg-[#ecfdf3] px-1.5 py-0.5 rounded">+5% esta semana</span>
+</div>
+<div class="w-full bg-[#f0f2f4] rounded-full h-1.5 mt-1">
+<div class="bg-primary h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="bg-white p-5 rounded-xl border border-[#e5e7eb] shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex justify-between items-start">
+<p class="text-[#647587] text-sm font-medium">Presupuesto Consumido</p>
+<span class="material-symbols-outlined text-[#647587] text-[20px]">attach_money</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-[#111417] text-2xl font-bold">72%</p>
+<span class="text-[#647587] text-xs font-medium">Dentro del margen</span>
+</div>
+<div class="flex items-center justify-between text-xs text-[#647587] mt-1">
+<span>$124k gastados</span>
+<span>$172k total</span>
+</div>
+</div>
+<div class="bg-white p-5 rounded-xl border border-[#e5e7eb] shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex justify-between items-start">
+<p class="text-[#647587] text-sm font-medium">Horas Registradas</p>
+<span class="material-symbols-outlined text-[#647587] text-[20px]">schedule</span>
+</div>
+<div class="flex items-baseline gap-2">
+<p class="text-[#111417] text-2xl font-bold">1,240h</p>
+<span class="text-[#078838] text-xs font-medium bg-[#ecfdf3] px-1.5 py-0.5 rounded">+12h hoy</span>
+</div>
+<p class="text-xs text-[#647587] mt-1">Facturable: 1,100h (88%)</p>
+</div>
+<div class="bg-white p-5 rounded-xl border border-[#e5e7eb] shadow-sm flex flex-col gap-3 group hover:border-primary/50 transition-colors cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-yellow-50 to-transparent rounded-bl-full opacity-50"></div>
+<div class="flex justify-between items-start relative z-10">
+<p class="text-[#647587] text-sm font-medium">Próx. Hito Facturación</p>
+<span class="material-symbols-outlined text-[#d97706] text-[20px]">receipt_long</span>
+</div>
+<div class="flex items-baseline gap-2 relative z-10">
+<p class="text-[#111417] text-2xl font-bold">15 Oct</p>
+<span class="text-[#d97706] text-xs font-medium bg-[#fffbeb] px-1.5 py-0.5 rounded border border-[#fcd34d]">Pendiente</span>
+</div>
+<p class="text-xs text-[#647587] mt-1 relative z-10">Hito: Entrega Fase 2 - $45,000</p>
+</div>
+</div>
+<!-- Tabs -->
+<div class="border-b border-[#e5e7eb] mb-6">
+<div class="flex gap-8 overflow-x-auto">
+<button class="group flex items-center gap-2 border-b-[3px] border-primary pb-3 px-1">
+<span class="material-symbols-outlined text-primary text-[20px]">view_kanban</span>
+<span class="text-primary text-sm font-bold">Planificación (Gantt/Kanban)</span>
+</button>
+<button class="group flex items-center gap-2 border-b-[3px] border-transparent hover:border-[#d1d5db] pb-3 px-1 transition-colors">
+<span class="material-symbols-outlined text-[#647587] group-hover:text-[#374151] text-[20px]">account_balance_wallet</span>
+<span class="text-[#647587] group-hover:text-[#374151] text-sm font-medium">Presupuestos &amp; Costos</span>
+</button>
+<button class="group flex items-center gap-2 border-b-[3px] border-transparent hover:border-[#d1d5db] pb-3 px-1 transition-colors">
+<span class="material-symbols-outlined text-[#647587] group-hover:text-[#374151] text-[20px]">timer</span>
+<span class="text-[#647587] group-hover:text-[#374151] text-sm font-medium">Tiempos (Timesheets)</span>
+</button>
+<button class="group flex items-center gap-2 border-b-[3px] border-transparent hover:border-[#d1d5db] pb-3 px-1 transition-colors relative">
+<span class="material-symbols-outlined text-[#647587] group-hover:text-[#374151] text-[20px]">payments</span>
+<span class="text-[#647587] group-hover:text-[#374151] text-sm font-medium">Facturación e Hitos</span>
+<span class="absolute top-0 right-[-6px] flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+</span>
+</button>
+</div>
+</div>
+<!-- Kanban / Gantt Hybrid View -->
+<div class="bg-white rounded-xl border border-[#e5e7eb] shadow-sm flex flex-col h-[600px]">
+<!-- Toolbar -->
+<div class="p-4 border-b border-[#e5e7eb] flex flex-wrap gap-4 items-center justify-between bg-[#f9fafb] rounded-t-xl">
+<div class="flex items-center gap-2 bg-white rounded-lg p-1 border border-[#e5e7eb] shadow-sm">
+<button class="px-3 py-1.5 rounded text-sm font-medium bg-[#f0f2f4] text-[#111417] shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">view_week</span> Kanban
+                    </button>
+<button class="px-3 py-1.5 rounded text-sm font-medium text-[#647587] hover:bg-[#f9fafb] flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span> Gantt
+                    </button>
+<button class="px-3 py-1.5 rounded text-sm font-medium text-[#647587] hover:bg-[#f9fafb] flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">list</span> Lista
+                    </button>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[#9ca3af] text-[18px]">filter_list</span>
+<select class="pl-9 pr-4 py-1.5 rounded-lg border border-[#d1d5db] text-sm bg-white focus:ring-primary focus:border-primary text-[#374151]">
+<option>Todas las tareas</option>
+<option>Mis tareas</option>
+<option>Urgentes</option>
+</select>
+</div>
+<button class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-primary bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add_circle</span> Añadir Tarea
+                    </button>
+</div>
+</div>
+<!-- Kanban Board Content -->
+<div class="flex-1 overflow-x-auto p-4 bg-[#f6f8fa] gantt-scroll">
+<div class="flex gap-6 min-w-full h-full">
+<!-- Column 1: Por Hacer -->
+<div class="flex-col w-80 min-w-80 flex gap-3 h-full">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-semibold text-[#111417] flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+                                Por Hacer
+                                <span class="bg-slate-200 text-slate-600 text-xs px-2 py-0.5 rounded-full">4</span>
+</h3>
+<button class="text-[#9ca3af] hover:text-[#111417]"><span class="material-symbols-outlined text-[20px]">add</span></button>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 flex flex-col gap-3">
+<!-- Card -->
+<div class="bg-white p-4 rounded-lg border border-[#e5e7eb] shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing border-l-4 border-l-slate-400 group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded">Diseño</span>
+<button class="opacity-0 group-hover:opacity-100 text-[#9ca3af]"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<h4 class="font-medium text-[#111417] mb-2 text-sm leading-snug">Wireframes Sección Finanzas</h4>
+<div class="flex items-center justify-between mt-3">
+<div class="flex -space-x-2">
+<img alt="User" class="w-6 h-6 rounded-full border-2 border-white" data-alt="User Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGp2q84WNxKac4Yx1lsdo4GYW6SQIctMOGtmmYqloSCbnXVU-8LKnQ7EVtfZO7PaywG-9Ke33YQfgNP82BfF0Isae54agGlps_CAhqlneALEGpuf0gaI2jnUNGUU4RGs1AbjBgEQkrtdDd24AzxaTkdhpy7oRibWNq__34ujYH4uU1q1geUZ1P0ItDeOC8i2gFPdpOHsU9xxiyHP8gyC_AmCfYbcLPJDVtDtmAa7GYkDT7H4aM4pyQKe3X2USYahKxWteVjT3Beo2N"/>
+</div>
+<div class="flex items-center gap-1 text-[#647587] text-xs">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>20 Oct</span>
+</div>
+</div>
+<div class="mt-3 pt-2 border-t border-dashed border-[#e5e7eb] flex items-center justify-between text-xs text-[#647587]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">attach_file</span> 2</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-orange-400">warning</span> Media</span>
+</div>
+</div>
+<!-- Card -->
+<div class="bg-white p-4 rounded-lg border border-[#e5e7eb] shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing border-l-4 border-l-slate-400 group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-semibold text-purple-600 bg-purple-100 px-2 py-0.5 rounded">Backend</span>
+<button class="opacity-0 group-hover:opacity-100 text-[#9ca3af]"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<h4 class="font-medium text-[#111417] mb-2 text-sm leading-snug">Definir estructura de BD Clientes</h4>
+<div class="flex items-center justify-between mt-3">
+<div class="w-6 h-6 rounded-full bg-slate-200 text-xs flex items-center justify-center text-slate-500 font-bold border-2 border-white">LM</div>
+<div class="flex items-center gap-1 text-[#647587] text-xs">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>22 Oct</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: En Progreso -->
+<div class="flex-col w-80 min-w-80 flex gap-3 h-full">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-semibold text-[#111417] flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                                En Progreso
+                                <span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full">3</span>
+</h3>
+<button class="text-[#9ca3af] hover:text-[#111417]"><span class="material-symbols-outlined text-[20px]">add</span></button>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 flex flex-col gap-3">
+<!-- Card -->
+<div class="bg-white p-4 rounded-lg border border-[#e5e7eb] shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing border-l-4 border-l-blue-500 group relative">
+<!-- AI Suggestion Badge -->
+<div class="absolute -top-2 -right-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">auto_awesome</span> Sugerencia IA
+                                </div>
+<div class="flex justify-between items-start mb-2 mt-1">
+<span class="text-xs font-semibold text-green-600 bg-green-100 px-2 py-0.5 rounded">Frontend</span>
+<button class="opacity-0 group-hover:opacity-100 text-[#9ca3af]"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<h4 class="font-medium text-[#111417] mb-2 text-sm leading-snug">Implementar Dashboard Principal</h4>
+<div class="w-full bg-gray-100 rounded-full h-1.5 mb-2">
+<div class="bg-blue-500 h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex -space-x-2">
+<img alt="User" class="w-6 h-6 rounded-full border-2 border-white" data-alt="User Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU1NBbRBZXPVYNN-uHl-epvzWAUbI4-kpnbzTXCjETbJbfeZD51Fg60XDMc5F79R1z9xnldEJUP5-tEdLXtv2jy_iZrgalmCCwaTCA51mQkjpwXRUYn567Rte0R5vuVWLDCFcMUHLs-hh4D49J0OXU-phTZtRbLJqk640Q8ECHBXtVO7zSov996VmP9BQ4jrpRGslE3r_NMFC6UK_3WH4Jp9FYoMkVyBm2dfeVos8ZODlgm42Y11kBjsjbkVINJEQ86aam_WckMODu"/>
+<img alt="User" class="w-6 h-6 rounded-full border-2 border-white" data-alt="User Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwIhm_TF5AlZJdz5KVEyHRHKLRScBd5DdFzIh5aSXDLyEIEQ3_1008ZnaP8UfijxWalHq_RZ-NC4BbjanTliJu8YPulhjQc7Bxfx0P6tbtePhoq7HF441br0f8QFpvYOjRassyCr5KRzUZPnvC8gTqMiZi5tQKMIRsdwBP7rTLEUWbG2pHFSPifuuCnSi-W5L0SOcELBvTnRCgq59lHJ4iJ7F6rzAx-D2c0KheuRqWbK63sYEmvJndkNW9br1MGaEQ9MDwJ5EPkloW"/>
+</div>
+<div class="flex items-center gap-1 text-red-600 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">alarm</span>
+<span>Hoy</span>
+</div>
+</div>
+<div class="mt-2 bg-blue-50 p-2 rounded text-xs text-blue-700 border border-blue-100">
+<span class="font-semibold">Presupuesto:</span> Vinculado a "Fase 1 - Desarrollo"
+                                </div>
+</div>
+<!-- Card -->
+<div class="bg-white p-4 rounded-lg border border-[#e5e7eb] shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing border-l-4 border-l-blue-500 group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-semibold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">QA</span>
+<button class="opacity-0 group-hover:opacity-100 text-[#9ca3af]"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<h4 class="font-medium text-[#111417] mb-2 text-sm leading-snug">Pruebas unitarias módulo ventas</h4>
+<div class="flex items-center justify-between mt-3">
+<div class="w-6 h-6 rounded-full bg-orange-200 text-xs flex items-center justify-center text-orange-700 font-bold border-2 border-white">JP</div>
+<div class="flex items-center gap-1 text-[#647587] text-xs">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>18 Oct</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Bloqueado -->
+<div class="flex-col w-80 min-w-80 flex gap-3 h-full">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-semibold text-[#111417] flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                                Bloqueado
+                                <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded-full">1</span>
+</h3>
+<button class="text-[#9ca3af] hover:text-[#111417]"><span class="material-symbols-outlined text-[20px]">add</span></button>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 flex flex-col gap-3">
+<!-- Card -->
+<div class="bg-red-50 p-4 rounded-lg border border-red-200 shadow-sm cursor-grab active:cursor-grabbing border-l-4 border-l-red-500 group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-semibold text-red-600 bg-white border border-red-100 px-2 py-0.5 rounded">Infraestructura</span>
+<button class="opacity-0 group-hover:opacity-100 text-red-400"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<h4 class="font-medium text-[#111417] mb-2 text-sm leading-snug">Configuración Servidor Staging</h4>
+<p class="text-xs text-red-700 mb-2 font-medium flex items-start gap-1">
+<span class="material-symbols-outlined text-[14px] mt-0.5">block</span>
+                                    Esperando accesos del cliente
+                                </p>
+<div class="flex items-center justify-between mt-3">
+<div class="w-6 h-6 rounded-full bg-slate-300 border-2 border-white"></div>
+<div class="flex items-center gap-1 text-red-600 text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">priority_high</span>
+<span>Alta</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 4: Completado -->
+<div class="flex-col w-80 min-w-80 flex gap-3 h-full">
+<div class="flex items-center justify-between px-2">
+<h3 class="font-semibold text-[#111417] flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                                Completado
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">12</span>
+</h3>
+<button class="text-[#9ca3af] hover:text-[#111417]"><span class="material-symbols-outlined text-[20px]">add</span></button>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 flex flex-col gap-3">
+<!-- Card -->
+<div class="bg-white p-4 rounded-lg border border-[#e5e7eb] shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing border-l-4 border-l-green-500 group opacity-75 hover:opacity-100">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded">Gestión</span>
+<button class="opacity-0 group-hover:opacity-100 text-[#9ca3af]"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<h4 class="font-medium text-[#111417] mb-2 text-sm leading-snug line-through text-gray-500">Kick-off Meeting</h4>
+<div class="flex items-center justify-between mt-3">
+<div class="w-6 h-6 rounded-full bg-gray-200 border-2 border-white"></div>
+<div class="flex items-center gap-1 text-green-600 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Hecho</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Billing Milestones Section (Brief View) -->
+<div class="mt-8">
+<h3 class="text-lg font-bold text-[#111417] mb-4 flex items-center gap-2">
+                Hitos de Facturación
+                <span class="text-xs font-normal text-[#647587] bg-[#f0f2f4] px-2 py-1 rounded-full">2 Pendientes</span>
+</h3>
+<div class="bg-white rounded-xl border border-[#e5e7eb] overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#f9fafb] border-b border-[#e5e7eb] text-xs font-semibold text-[#647587] uppercase tracking-wider">
+<th class="px-6 py-3">Hito</th>
+<th class="px-6 py-3">Fecha Estimada</th>
+<th class="px-6 py-3">Importe</th>
+<th class="px-6 py-3">Estado</th>
+<th class="px-6 py-3 text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="border-b border-[#e5e7eb] hover:bg-[#f9fafb]">
+<td class="px-6 py-4 font-medium text-[#111417]">Anticipo Inicial (30%)</td>
+<td class="px-6 py-4 text-[#647587]">01 Sep 2023</td>
+<td class="px-6 py-4 font-mono text-[#111417]">$34,400.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    Facturado
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary/80 font-medium text-xs">Ver Factura</button>
+</td>
+</tr>
+<tr class="border-b border-[#e5e7eb] bg-orange-50/30 hover:bg-orange-50/50">
+<td class="px-6 py-4 font-medium text-[#111417]">Entrega Fase 1 (40%)</td>
+<td class="px-6 py-4 text-[#647587]">15 Oct 2023</td>
+<td class="px-6 py-4 font-mono text-[#111417]">$45,800.00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
+                                        Borrador Generado
+                                    </span>
+<span class="material-symbols-outlined text-[16px] text-yellow-600 animate-pulse" title="Acción requerida">priority_high</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right flex justify-end gap-3">
+<button class="text-[#647587] hover:text-[#111417] font-medium text-xs">Editar</button>
+<button class="bg-primary text-white px-3 py-1.5 rounded-md text-xs font-bold shadow-sm hover:bg-primary/90 transition-colors">Emitir Factura</button>
+</td>
+</tr>
+<tr class="hover:bg-[#f9fafb]">
+<td class="px-6 py-4 font-medium text-[#111417]">Entrega Final (30%)</td>
+<td class="px-6 py-4 text-[#647587]">01 Dic 2023</td>
+<td class="px-6 py-4 font-mono text-[#111417]">$34,400.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                    Pendiente
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#647587] cursor-not-allowed opacity-50 font-medium text-xs">Emitir Factura</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</body></html>

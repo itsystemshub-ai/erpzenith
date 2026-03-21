@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=League+Spartan:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#464554",
+              "inverse-primary": "#494bd6",
+              "tertiary-container": "#009eb9",
+              "surface-container": "#171f33",
+              "error-container": "#93000a",
+              "on-primary-fixed-variant": "#2f2ebe",
+              "inverse-on-surface": "#283044",
+              "surface-variant": "#2d3449",
+              "on-tertiary-container": "#002f38",
+              "surface-container-highest": "#2d3449",
+              "on-tertiary": "#003640",
+              "on-surface-variant": "#c7c4d7",
+              "primary": "#c0c1ff",
+              "background": "#0b1326",
+              "error": "#ffb4ab",
+              "on-secondary-fixed": "#23005c",
+              "surface-tint": "#c0c1ff",
+              "outline": "#908fa0",
+              "surface-container-high": "#222a3d",
+              "surface": "#0b1326",
+              "on-tertiary-fixed-variant": "#004e5c",
+              "on-tertiary-fixed": "#001f26",
+              "secondary-container": "#571bc1",
+              "tertiary-fixed": "#acedff",
+              "secondary-fixed-dim": "#d0bcff",
+              "primary-container": "#8083ff",
+              "on-secondary-fixed-variant": "#5516be",
+              "on-surface": "#dae2fd",
+              "secondary": "#d0bcff",
+              "surface-bright": "#31394d",
+              "primary-fixed-dim": "#c0c1ff",
+              "secondary-fixed": "#e9ddff",
+              "on-primary-fixed": "#07006c",
+              "primary-fixed": "#e1e0ff",
+              "inverse-surface": "#dae2fd",
+              "on-secondary": "#3c0091",
+              "on-primary": "#1000a9",
+              "on-secondary-container": "#c4abff",
+              "on-error": "#690005",
+              "tertiary-fixed-dim": "#4cd7f6",
+              "on-background": "#dae2fd",
+              "surface-container-lowest": "#060e20",
+              "surface-container-low": "#131b2e",
+              "on-error-container": "#ffdad6",
+              "surface-dim": "#0b1326",
+              "on-primary-container": "#0d0096",
+              "tertiary": "#4cd7f6"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "spartan": ["League Spartan"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(192, 193, 255, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-slate-900/40 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-indigo-400 font-spartan">ZENITH ERP</span>
+<div class="hidden md:flex items-center bg-surface-container-highest/50 px-4 py-1.5 rounded-full border border-white/5">
+<span class="material-symbols-outlined text-indigo-400 text-sm mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-64 text-on-surface-variant placeholder:text-slate-500" placeholder="Buscar proveedores..." type="text"/>
+</div>
+</div>
+<nav class="flex items-center gap-6">
+<span class="text-indigo-400 font-bold font-spartan tracking-tight">Tasa BCV: 36.50 VES</span>
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-white/5 transition-colors rounded-xl group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-indigo-400">notifications</span>
+</button>
+<button class="p-2 hover:bg-white/5 transition-colors rounded-xl group">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-indigo-400">settings</span>
+</button>
+<button class="p-2 hover:bg-white/5 transition-colors rounded-xl group mr-2">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-indigo-400">help</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-secondary p-0.5">
+<img alt="User Profile Avatar" class="h-full w-full rounded-full object-cover" data-alt="Close up portrait of a professional businessman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGwK_Ohqfn2f0IK7553wuy9chBCjCBbD7kPL4ODypjajO8tkshEz_DIdBUY5ry43WzVGBKJcSeDmIvKLfr7bnIjZLebIdPjJ3o7m-IN567Vbt65wdOykGi0OUqCKvktiaIlgfihymXuO4i3sC5RHGEVbRYAwW7tI59xHOj-aqHCnGvHx1-OccplUEt31c5W0P_k2jYocqvR8ovTtuvSYgCTFzBZkaOU9K68ylX-RXV0_iaraasjfObJ5y0b1PNtSVLGZhbXnGBA1I"/>
+</div>
+</div>
+</nav>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 z-40 bg-slate-900/60 backdrop-blur-2xl w-64 shadow-2xl pt-24">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center border border-indigo-400/30">
+<span class="material-symbols-outlined text-indigo-400 text-lg">admin_panel_settings</span>
+</div>
+<div>
+<h2 class="text-indigo-400 font-black font-spartan text-sm leading-none">Módulo Compras</h2>
+<span class="text-[10px] text-slate-500 font-spartan uppercase tracking-widest">Ethereal Command</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all rounded-xl font-spartan uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span>Compras</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-indigo-500/10 text-indigo-400 border-l-2 border-indigo-400 transition-all rounded-r-xl font-spartan uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span>Proveedores</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all rounded-xl font-spartan uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined text-[20px]">warehouse</span>
+<span>Inventario</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all rounded-xl font-spartan uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Pagos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all rounded-xl font-spartan uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span>Reportes</span>
+</a>
+</nav>
+<div class="mt-auto px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-slate-300 transition-all rounded-xl font-spartan uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Configuración</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-slate-300 transition-all rounded-xl font-spartan uppercase tracking-widest text-[11px]" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="pl-64 pt-16 min-h-screen relative overflow-hidden">
+<!-- Background Orbs -->
+<div class="absolute top-20 right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-[-10%] left-[10%] w-[400px] h-[400px] bg-tertiary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="p-8 max-w-7xl mx-auto relative z-10">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<h1 class="font-headline text-5xl font-bold tracking-tight text-on-surface mb-2">Directorio de Proveedores</h1>
+<p class="text-on-surface-variant font-body text-lg">Gestión centralizada y evaluación predictiva de la cadena de suministro.</p>
+</div>
+<button class="group flex items-center gap-2 px-6 py-3.5 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-xl font-headline font-bold text-sm tracking-wide shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-lg">person_add</span>
+                    Registrar Nuevo Proveedor
+                </button>
+</header>
+<!-- Filters & Metrics -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+<!-- Filter Bar -->
+<div class="lg:col-span-8 glass-card rounded-2xl p-4 flex flex-wrap items-center gap-4">
+<div class="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/5 text-sm font-medium text-indigo-400">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                        Filtros Rápidos
+                    </div>
+<button class="px-4 py-2 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-spartan uppercase tracking-widest hover:bg-indigo-500/30 transition-colors">Tecnología</button>
+<button class="px-4 py-2 rounded-lg bg-white/5 text-slate-400 border border-white/5 text-xs font-spartan uppercase tracking-widest hover:bg-white/10 transition-colors">Logística</button>
+<button class="px-4 py-2 rounded-lg bg-white/5 text-slate-400 border border-white/5 text-xs font-spartan uppercase tracking-widest hover:bg-white/10 transition-colors">Materia Prima</button>
+<button class="px-4 py-2 rounded-lg bg-white/5 text-slate-400 border border-white/5 text-xs font-spartan uppercase tracking-widest hover:bg-white/10 transition-colors">Servicios</button>
+<div class="h-6 w-px bg-white/10 mx-2"></div>
+<button class="px-4 py-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-spartan uppercase tracking-widest">Activos</button>
+</div>
+<!-- Zenith Metric -->
+<div class="lg:col-span-4 glass-card rounded-2xl p-5 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl transition-all group-hover:bg-primary/20"></div>
+<div class="relative z-10 flex justify-between items-center">
+<div>
+<p class="text-[10px] font-spartan uppercase tracking-[0.2em] text-slate-500 mb-1">Puntaje Global</p>
+<h3 class="font-headline text-3xl font-bold text-tertiary">94.8%</h3>
+</div>
+<div class="text-right">
+<span class="material-symbols-outlined text-tertiary text-4xl opacity-50">show_chart</span>
+</div>
+</div>
+<p class="text-[11px] text-slate-400 mt-2 font-body">Eficiencia promedio del directorio actual</p>
+</div>
+</section>
+<!-- Providers Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="glass-card rounded-2xl p-6 transition-all hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col h-full group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex flex-col">
+<span class="text-[10px] font-spartan tracking-[0.15em] text-indigo-400 font-bold mb-1">RIF J-29402941-0</span>
+<h4 class="text-xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors">CyberDyne Systems C.A.</h4>
+</div>
+<div class="px-3 py-1 bg-indigo-500/10 rounded-full border border-indigo-500/20 text-[10px] font-bold text-indigo-400 uppercase tracking-tighter">Crédito 30D</div>
+</div>
+<div class="flex items-center gap-2 mb-6">
+<div class="flex gap-0.5">
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined text-slate-600 text-lg">star</span>
+</div>
+<span class="text-xs font-headline font-bold text-tertiary">4.2 / 5.0</span>
+<span class="text-[10px] text-slate-500 font-body px-2 py-0.5 bg-white/5 rounded">IA Rating</span>
+</div>
+<div class="space-y-4 mb-8 flex-1">
+<div>
+<p class="text-[10px] font-spartan uppercase tracking-widest text-slate-500 mb-2">Categorías principales</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-md bg-white/5 text-slate-300 text-[10px] font-medium border border-white/5">Hardware IT</span>
+<span class="px-3 py-1 rounded-md bg-white/5 text-slate-300 text-[10px] font-medium border border-white/5">Soporte Redes</span>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-surface-container bg-slate-800 flex items-center justify-center">
+<span class="text-[10px] font-bold text-slate-400">DS</span>
+</div>
+<div class="w-7 h-7 rounded-full border-2 border-surface-container bg-slate-800 flex items-center justify-center">
+<span class="text-[10px] font-bold text-slate-400">RC</span>
+</div>
+</div>
+<button class="text-indigo-400 text-xs font-headline font-bold hover:underline flex items-center gap-1 group/btn">
+                            Ver Detalles
+                            <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card rounded-2xl p-6 transition-all hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col h-full group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex flex-col">
+<span class="text-[10px] font-spartan tracking-[0.15em] text-indigo-400 font-bold mb-1">RIF G-20001452-9</span>
+<h4 class="text-xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Alimentos El Tunal S.A.</h4>
+</div>
+<div class="px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20 text-[10px] font-bold text-emerald-400 uppercase tracking-tighter">Contado</div>
+</div>
+<div class="flex items-center gap-2 mb-6">
+<div class="flex gap-0.5">
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+</div>
+<span class="text-xs font-headline font-bold text-tertiary">5.0 / 5.0</span>
+<span class="text-[10px] text-slate-500 font-body px-2 py-0.5 bg-white/5 rounded">IA Rating</span>
+</div>
+<div class="space-y-4 mb-8 flex-1">
+<div>
+<p class="text-[10px] font-spartan uppercase tracking-widest text-slate-500 mb-2">Categorías principales</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-md bg-white/5 text-slate-300 text-[10px] font-medium border border-white/5">Materia Prima</span>
+<span class="px-3 py-1 rounded-md bg-white/5 text-slate-300 text-[10px] font-medium border border-white/5">Logística Fría</span>
+<span class="px-3 py-1 rounded-md bg-white/5 text-slate-300 text-[10px] font-medium border border-white/5">+2</span>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-surface-container bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-400">AM</div>
+</div>
+<button class="text-indigo-400 text-xs font-headline font-bold hover:underline flex items-center gap-1 group/btn">
+                            Ver Detalles
+                            <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-2xl p-6 transition-all hover:translate-y-[-4px] hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col h-full group">
+<div class="flex justify-between items-start mb-6">
+<div class="flex flex-col">
+<span class="text-[10px] font-spartan tracking-[0.15em] text-indigo-400 font-bold mb-1">RIF J-40123568-1</span>
+<h4 class="text-xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors">Global Logistics VE</h4>
+</div>
+<div class="px-3 py-1 bg-indigo-500/10 rounded-full border border-indigo-500/20 text-[10px] font-bold text-indigo-400 uppercase tracking-tighter">Crédito 15D</div>
+</div>
+<div class="flex items-center gap-2 mb-6">
+<div class="flex gap-0.5">
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined fill-icon text-tertiary text-lg">star</span>
+<span class="material-symbols-outlined text-slate-600 text-lg">star</span>
+<span class="material-symbols-outlined text-slate-600 text-lg">star</span>
+</div>
+<span class="text-xs font-headline font-bold text-tertiary">3.8 / 5.0</span>
+<span class="text-[10px] text-slate-500 font-body px-2 py-0.5 bg-white/5 rounded">IA Rating</span>
+</div>
+<div class="space-y-4 mb-8 flex-1">
+<div>
+<p class="text-[10px] font-spartan uppercase tracking-widest text-slate-500 mb-2">Categorías principales</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-md bg-white/5 text-slate-300 text-[10px] font-medium border border-white/5">Aduana</span>
+<span class="px-3 py-1 rounded-md bg-white/5 text-slate-300 text-[10px] font-medium border border-white/5">Transporte Terrestre</span>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-white/5 flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-surface-container bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-400">JV</div>
+</div>
+<button class="text-indigo-400 text-xs font-headline font-bold hover:underline flex items-center gap-1 group/btn">
+                            Ver Detalles
+                            <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Performance Heatmap Section (Editorial Asymmetry) -->
+<section class="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-4 glass-card rounded-2xl p-8 border-l-4 border-tertiary">
+<h5 class="font-headline text-2xl font-bold text-on-surface mb-6">Alertas de Evaluación</h5>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-xl bg-error/10 flex items-center justify-center shrink-0 border border-error/20">
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Vencimiento de Registro</p>
+<p class="text-xs text-slate-500">Inversiones Falcon C.A. requiere actualización de solvencias en 3 días.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Oportunidad de Crédito</p>
+<p class="text-xs text-slate-500">CyberDyne Systems ha habilitado línea de crédito para nuevos proyectos.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-8 glass-card rounded-2xl p-0 overflow-hidden flex flex-col md:flex-row relative">
+<div class="p-8 md:w-1/2 relative z-10">
+<h5 class="font-headline text-2xl font-bold text-on-surface mb-4">Análisis Predictivo</h5>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-6">Nuestra IA proyecta una optimización del 12% en costos de suministro para el próximo trimestre seleccionando proveedores con calificación &gt; 4.5.</p>
+<div class="flex items-center gap-4">
+<div class="px-4 py-2 bg-tertiary-container/20 rounded-lg border border-tertiary-container/30">
+<span class="text-[10px] font-spartan uppercase tracking-widest text-tertiary-fixed-dim">Margen de Mejora</span>
+<div class="text-xl font-headline font-bold text-tertiary">+12.4%</div>
+</div>
+</div>
+</div>
+<div class="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
+<img alt="Data Analytics Visualization" class="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay" data-alt="Futuristic data visualization with glowing charts and dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5L02MezJWEWbPzIvGL_OfKD6ichY8uqqZWo1zCP6GAQdpyb_-0_8olyo6K9OKMCbpbSVYuuBB2Ty5bQDMSLyiFbG6x3_2YijPVFwTkVj0ehwy9qFknlNXmmVkGLXdZ1hXMFQIcfHNDhWJ3oN80LH9FMNqp2ghCa_l_RCtv0v7x1hRllotw61tyVzPS9-ODHeClk3tGsae3NA2sURrjpG1ntsD9gdyVzuSKvIEzeorqdJU_HKqxIyMEEqU4TYsQbhgzwAP868IhvQ"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container via-surface-container/20 to-transparent"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

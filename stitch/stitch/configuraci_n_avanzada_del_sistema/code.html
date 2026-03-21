@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=League+Spartan:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#07006c",
+                        "secondary-container": "#571bc1",
+                        "inverse-on-surface": "#283044",
+                        "tertiary-container": "#009eb9",
+                        "on-error": "#690005",
+                        "on-surface": "#dae2fd",
+                        "surface-container-lowest": "#060e20",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "secondary": "#d0bcff",
+                        "outline-variant": "#464554",
+                        "on-secondary": "#3c0091",
+                        "on-primary": "#1000a9",
+                        "surface-container": "#171f33",
+                        "outline": "#908fa0",
+                        "on-secondary-fixed": "#23005c",
+                        "on-error-container": "#ffdad6",
+                        "on-background": "#dae2fd",
+                        "primary": "#c0c1ff",
+                        "on-tertiary-fixed": "#001f26",
+                        "surface-container-high": "#222a3d",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "tertiary": "#4cd7f6",
+                        "surface-container-highest": "#2d3449",
+                        "surface": "#0b1326",
+                        "on-primary-container": "#0d0096",
+                        "on-tertiary": "#003640",
+                        "inverse-surface": "#dae2fd",
+                        "on-tertiary-container": "#002f38",
+                        "on-surface-variant": "#c7c4d7",
+                        "surface-container-low": "#131b2e",
+                        "primary-container": "#8083ff",
+                        "tertiary-fixed": "#acedff",
+                        "background": "#0b1326",
+                        "surface-tint": "#c0c1ff",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-dim": "#0b1326",
+                        "on-secondary-container": "#c4abff",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "secondary-fixed": "#e9ddff",
+                        "surface-bright": "#31394d",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#2d3449",
+                        "inverse-primary": "#494bd6",
+                        "primary-fixed": "#e1e0ff"
+                    },
+                    fontFamily: {
+                        "headline": ["League Spartan", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"],
+                        "spartan": ["League Spartan", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(144, 143, 160, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(192, 193, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="bg-slate-950/50 backdrop-blur-xl font-['Space_Grotesk'] tracking-tight docked full-width top-0 sticky z-50 shadow-[0_20px_40px_rgba(0,0,0,0.4)] flex justify-between items-center w-full px-8 py-4">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold bg-gradient-to-br from-indigo-300 to-indigo-500 bg-clip-text text-transparent font-spartan">ERPX-COMMAND</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Systems</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Security</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Audits</a>
+<a class="text-indigo-400 border-b-2 border-indigo-500 pb-1" href="#">Insights</a>
+</nav>
+<div class="flex items-center gap-6">
+<button class="text-slate-400 hover:bg-white/5 p-2 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-slate-400 hover:bg-white/5 p-2 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="User Profile Avatar" class="w-10 h-10 rounded-full border border-indigo-500/30" data-alt="Cyberpunk style professional user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6jetD7vy1CbH6iwVmWxGNuSbBRNh--LVRWG2UXGAtfQRAxg18ICtRwrYGQl1ygr3LI6mIgvMRjF59rf5mslMYx2tAgZ_nx5V6o4LZyDGOVUFVAmd3dry6ZlZ6f_gVp-t_YjSciAZ4ItE4CLtTto5anL8EdYPK-G5BnXSS53CFZPXfD1UZzf4gsUkpzGYkvjkHxUCeCG8D1LtUmU9F7cdBF8te5n7zjjLmpqKLZs_Vd9J5jiqYiZJRk33NQa_hFVmbaUrXYQqNFxM"/>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar -->
+<aside class="bg-slate-900/80 backdrop-blur-2xl h-screen w-64 border-r border-white/5 shadow-2xl fixed left-0 top-0 h-full flex flex-col pt-24 hidden lg:flex">
+<div class="px-6 mb-8">
+<h2 class="text-indigo-400 font-bold font-spartan text-lg">Admin Console</h2>
+<p class="text-slate-500 text-xs font-medium">Super User Access</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-slate-400 flex items-center gap-3 px-6 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="text-slate-400 flex items-center gap-3 px-6 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span>Segments</span>
+</a>
+<a class="bg-indigo-500/10 text-indigo-300 border-l-4 border-indigo-500 flex items-center gap-3 px-6 py-3 active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<span>Security</span>
+</a>
+<a class="text-slate-400 flex items-center gap-3 px-6 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span>Roles</span>
+</a>
+<a class="text-slate-400 flex items-center gap-3 px-6 py-3 hover:bg-white/5 hover:text-indigo-200 transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Logs</span>
+</a>
+</nav>
+<div class="p-6 border-t border-white/5">
+<button class="w-full bg-gradient-to-br from-indigo-500 to-primary-container text-on-primary font-bold py-3 rounded-xl shadow-lg shadow-indigo-500/20 active:scale-95 transition-all">
+                    Generate Report
+                </button>
+</div>
+<footer class="p-4 space-y-1">
+<a class="text-slate-400 flex items-center gap-3 px-4 py-2 hover:text-indigo-200 text-sm" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="text-slate-400 flex items-center gap-3 px-4 py-2 hover:text-error text-sm" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</footer>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 lg:ml-64 p-8 pt-12 max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<h1 class="text-5xl font-spartan font-bold text-glow tracking-tight text-on-surface">Configuración Avanzada</h1>
+<p class="text-outline mt-2 max-w-2xl font-body">Gestión técnica centralizada de identidad corporativa, protocolos de seguridad y motores de inteligencia artificial.</p>
+</div>
+<div class="flex gap-4">
+<button class="glass-panel px-6 py-3 rounded-xl text-on-surface font-medium hover:bg-white/10 transition-all active:scale-95 border border-error/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-error" data-icon="restart_alt">restart_alt</span>
+                        Reset Sistema
+                    </button>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-3 rounded-xl font-bold shadow-[0_0_30px_rgba(128,131,255,0.4)] active:scale-95 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+                        Guardar Cambios
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Section 1: Datos de Empresa (Wide) -->
+<section class="md:col-span-8 glass-panel p-8 rounded-[2rem] overflow-hidden relative group">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full -mr-20 -mt-20 group-hover:bg-primary/10 transition-colors"></div>
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-tertiary" data-icon="domain">domain</span>
+<h3 class="text-xl font-spartan font-bold uppercase tracking-widest text-indigo-300">Datos de Empresa</h3>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="text-[0.6875rem] uppercase tracking-[0.1em] text-outline font-label">Razón Social</label>
+<input class="w-full bg-surface-container-highest border-none focus:ring-0 rounded-xl px-4 py-3 text-on-surface font-medium border-l-2 border-transparent focus:border-tertiary transition-all" type="text" value="Corporación Tecnológica ERPX S.A."/>
+</div>
+<div class="space-y-2">
+<label class="text-[0.6875rem] uppercase tracking-[0.1em] text-outline font-label">Registro RIF</label>
+<input class="w-full bg-surface-container-highest border-none focus:ring-0 rounded-xl px-4 py-3 text-on-surface font-medium border-l-2 border-transparent focus:border-tertiary transition-all" type="text" value="J-40592831-0"/>
+</div>
+<div class="space-y-4 col-span-1 sm:col-span-2">
+<div class="bg-surface-container p-6 rounded-2xl flex items-center justify-between border border-white/5">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-tertiary/10 rounded-lg">
+<span class="material-symbols-outlined text-tertiary" data-icon="currency_exchange">currency_exchange</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Tasa Cambiaria BCV</h4>
+<p class="text-xs text-outline">Actualización automática cada 12 horas</p>
+</div>
+</div>
+<div class="text-right">
+<div class="text-2xl font-spartan font-bold text-tertiary">36.50 <span class="text-sm font-normal text-outline">VES/USD</span></div>
+<span class="text-[0.6rem] bg-tertiary/20 text-tertiary px-2 py-0.5 rounded-full uppercase font-bold tracking-tighter">Sincronizado</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Integraciones IA (Side) -->
+<section class="md:col-span-4 glass-panel p-8 rounded-[2rem] flex flex-col">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-indigo-400" data-icon="auto_awesome">auto_awesome</span>
+<h3 class="text-xl font-spartan font-bold uppercase tracking-widest text-indigo-300">Motores IA</h3>
+</div>
+<div class="space-y-6 flex-1">
+<!-- Gemini -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
+<span class="material-symbols-outlined text-white text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div>
+<p class="font-bold text-on-surface leading-none">Gemini 1.5 Pro</p>
+<p class="text-xs text-outline">API Endpoint: Active</p>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+</div>
+<!-- Groq -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-black border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="bolt">bolt</span>
+</div>
+<div>
+<p class="font-bold text-on-surface leading-none">Groq Llama 3</p>
+<p class="text-xs text-outline">Ultra-low Latency</p>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+</div>
+<!-- n8n -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-500/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-400 text-sm" data-icon="account_tree">account_tree</span>
+</div>
+<div>
+<p class="font-bold text-on-surface leading-none">n8n Workflows</p>
+<p class="text-xs text-outline">12 Automations</p>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
+</div>
+</div>
+<button class="mt-8 w-full py-3 rounded-xl border border-white/10 text-xs font-bold uppercase tracking-widest text-outline hover:bg-white/5 transition-all">Ver Todas las Llaves API</button>
+</section>
+<!-- Section 3: Seguridad y RBAC -->
+<section class="md:col-span-5 glass-panel p-8 rounded-[2rem]">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-indigo-400" data-icon="shield_person">shield_person</span>
+<h3 class="text-xl font-spartan font-bold uppercase tracking-widest text-indigo-300">Gestión de Roles</h3>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-indigo-500/20 text-indigo-400">
+<span class="material-symbols-outlined text-sm" data-icon="grade" style="font-variation-settings: 'FILL' 1;">grade</span>
+</div>
+<span class="font-bold font-spartan tracking-wider">ADMIN</span>
+</div>
+<span class="text-xs text-outline font-label">Acceso Total</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-tertiary/20 text-tertiary">
+<span class="material-symbols-outlined text-sm" data-icon="inventory_2">inventory_2</span>
+</div>
+<span class="font-bold font-spartan tracking-wider">ALMACENISTA</span>
+</div>
+<span class="text-xs text-outline font-label">Stock &amp; Despacho</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl hover:bg-surface-container transition-all cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="p-2 rounded-lg bg-white/10 text-outline">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</div>
+<span class="font-bold font-spartan tracking-wider">AUDITOR</span>
+</div>
+<span class="text-xs text-outline font-label">Solo Lectura</span>
+</div>
+</div>
+<button class="mt-6 flex items-center justify-center gap-2 w-full py-4 bg-white/5 rounded-xl border border-dashed border-white/20 text-indigo-300 font-bold hover:bg-indigo-500/10 transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform" data-icon="add">add</span>
+                        Nuevo Rol Personalizado
+                    </button>
+</section>
+<!-- Section 4: Auditoría de Accesos -->
+<section class="md:col-span-7 glass-panel p-8 rounded-[2rem] flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-indigo-400" data-icon="history_edu">history_edu</span>
+<h3 class="text-xl font-spartan font-bold uppercase tracking-widest text-indigo-300">Auditoría en Tiempo Real</h3>
+</div>
+<span class="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-widest text-emerald-400">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Live Streaming
+                        </span>
+</div>
+<div class="space-y-4 overflow-y-auto max-h-[300px] pr-2 custom-scrollbar">
+<!-- Log Entry -->
+<div class="flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-all">
+<div class="text-indigo-500 text-xs font-mono pt-1">14:22:05</div>
+<div class="flex-1">
+<p class="text-sm font-medium"><span class="text-indigo-300">ADMIN:</span> Cambio de tasa BCV detectado</p>
+<p class="text-[0.65rem] text-outline uppercase tracking-wider mt-1">IP: 190.204.12.1 • User-Agent: Chrome/124.0</p>
+</div>
+<div class="material-symbols-outlined text-outline text-lg" data-icon="chevron_right">chevron_right</div>
+</div>
+<!-- Log Entry -->
+<div class="flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-all">
+<div class="text-indigo-500 text-xs font-mono pt-1">14:18:42</div>
+<div class="flex-1">
+<p class="text-sm font-medium"><span class="text-indigo-300">SYSTEM:</span> Sincronización exitosa con Groq API</p>
+<p class="text-[0.65rem] text-outline uppercase tracking-wider mt-1">LATENCY: 42ms • MODEL: Llama-3-70b</p>
+</div>
+<div class="material-symbols-outlined text-outline text-lg" data-icon="chevron_right">chevron_right</div>
+</div>
+<!-- Log Entry -->
+<div class="flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-all border-l-2 border-error/40 bg-error/5">
+<div class="text-error text-xs font-mono pt-1">14:15:10</div>
+<div class="flex-1">
+<p class="text-sm font-medium"><span class="text-error">ALMACENISTA:</span> Intento fallido de borrado de stock</p>
+<p class="text-[0.65rem] text-outline uppercase tracking-wider mt-1">AUTH_ERROR: Insufficient Permissions</p>
+</div>
+<div class="material-symbols-outlined text-error text-lg" data-icon="warning">warning</div>
+</div>
+<!-- Log Entry -->
+<div class="flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-all">
+<div class="text-indigo-500 text-xs font-mono pt-1">13:55:00</div>
+<div class="flex-1">
+<p class="text-sm font-medium"><span class="text-indigo-300">USER_ROOT:</span> Login exitoso desde dispositivo nuevo</p>
+<p class="text-[0.65rem] text-outline uppercase tracking-wider mt-1">MFA_VERIFIED: SMS Token</p>
+</div>
+<div class="material-symbols-outlined text-outline text-lg" data-icon="chevron_right">chevron_right</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Stats / Zenith Metric -->
+<div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+<div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5 blur-3xl opacity-20 pointer-events-none"></div>
+<p class="text-[0.6rem] font-label uppercase tracking-widest text-outline mb-2">Uptime Sistema</p>
+<div class="text-3xl font-spartan font-bold text-on-surface">99.99%</div>
+<div class="w-full bg-white/5 h-1 mt-4 rounded-full">
+<div class="bg-indigo-500 h-full w-[99%] rounded-full"></div>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-2xl">
+<p class="text-[0.6rem] font-label uppercase tracking-widest text-outline mb-2">Peticiones IA (24h)</p>
+<div class="text-3xl font-spartan font-bold text-on-surface">12,482</div>
+<p class="text-[0.65rem] text-tertiary mt-2">↑ 14% vs ayer</p>
+</div>
+<div class="glass-panel p-6 rounded-2xl">
+<p class="text-[0.6rem] font-label uppercase tracking-widest text-outline mb-2">Usuarios Activos</p>
+<div class="text-3xl font-spartan font-bold text-on-surface">458</div>
+<div class="flex -space-x-2 mt-4">
+<img class="w-6 h-6 rounded-full border border-surface" data-alt="Small user avatar circular thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2xFK4ymt6GRbKmKHhmMFfecO_xiLrB_x5Q2VfvDJJ9Sx64x4BC1pBVRN0wo2z04vPi842JDjCF0Lejo3pbGOUUJfFOa07pQOqS6bnnkXcq6nPXjn-GHe6m7MAVllOE10hMYnO6pkNkAYSK-xu58eykibJDJKO9_UsuZk0JRJwTk23NV4Dow79XClmEaJIym63YP2esht2MuDMiAgAsrZWuOOx5JrZp0mzN0tNcE9VYUaY8hzp6UfJcFfE6-gzomjm-9I71zKAlbc"/>
+<img class="w-6 h-6 rounded-full border border-surface" data-alt="Small user avatar circular thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG1J-sxpyrthU4kAeWLFJQTTPMybqaXYdSMaDyQxX-bPPOVMYCzEynrhIOO0MrwCZUsCBax4n8cZRmYWk7BnkVXDDP09cfyY0RH_5WnHCgZp1jh_wvx5zXXKhr8U4B1ZaKQVQFe481gQiJQXLwbw4Q1SbNla5Tsf8u0lYHKkWmHVoF7KoWIYYbQuJTf2l5ZdqV2sJK8U6QcR7qVWUBfw1YnHaO-YL0OKEJ1VHkMJ9B_9ik2kA8H8F3O6UhVerS0oOq09bWUX8IhWg"/>
+<img class="w-6 h-6 rounded-full border border-surface" data-alt="Small user avatar circular thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6IlmINFjvgANdWt3E2VdgnlkQKFr2OVE1yXo8BYTQbdoHXBpvk1eZIHpYcfU-6S8yK2_lByxk8YBQHzRBEtFh_n1GTQn_fTdk-HOPgjesYYLVGpoBYyXXXByJMtdyo7qDNSew4L_ax0XrioHyZgg20z8ySIaDoqt3fogtqQT4eCTjpKCA_3RA3jqaoSUNPfXXULbBEV3QlusO23Au4aMVDA4HlJoMzmnlwY7HcE8893p1QTcyLDmEJCR-UBlq-SE1deqkvQr6sp8"/>
+<div class="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center text-[10px] font-bold">+12</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/90 backdrop-blur-xl border-t border-white/5 px-6 py-4 flex justify-between items-center z-50">
+<a class="text-indigo-400 flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">Panel</span>
+</a>
+<a class="text-slate-400 flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">Seguridad</span>
+</a>
+<a class="text-slate-400 flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">IA</span>
+</a>
+<a class="text-slate-400 flex flex-col items-center gap-1" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">Logs</span>
+</a>
+</nav>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(128, 131, 255, 0.2);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(128, 131, 255, 0.4);
+        }
+    </style>
+</body></html>

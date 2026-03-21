@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP Zenith | Architecture Command</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#acedff",
+                        "on-secondary": "#3c0091",
+                        "inverse-on-surface": "#283044",
+                        "surface-container-highest": "#2d3449",
+                        "secondary": "#d0bcff",
+                        "inverse-surface": "#dae2fd",
+                        "surface-bright": "#31394d",
+                        "surface": "#0b1326",
+                        "outline-variant": "#464554",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "tertiary-container": "#009eb9",
+                        "surface-tint": "#c0c1ff",
+                        "error-container": "#93000a",
+                        "surface-dim": "#0b1326",
+                        "on-error": "#690005",
+                        "primary-container": "#8083ff",
+                        "on-surface": "#dae2fd",
+                        "inverse-primary": "#494bd6",
+                        "primary-fixed": "#e1e0ff",
+                        "on-secondary-container": "#c4abff",
+                        "secondary-fixed": "#e9ddff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "background": "#0b1326",
+                        "surface-container-lowest": "#060e20",
+                        "on-tertiary-fixed": "#001f26",
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "surface-container-low": "#131b2e",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "tertiary": "#4cd7f6",
+                        "on-primary-fixed": "#07006c",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#003640",
+                        "outline": "#908fa0",
+                        "on-background": "#dae2fd",
+                        "error": "#ffb4ab",
+                        "secondary-container": "#571bc1",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-tertiary-container": "#002f38",
+                        "on-secondary-fixed": "#23005c",
+                        "surface-container": "#171f33",
+                        "on-primary": "#1000a9",
+                        "on-primary-container": "#0d0096",
+                        "surface-variant": "#2d3449",
+                        "surface-container-high": "#222a3d",
+                        "primary": "#c0c1ff",
+                        "on-surface-variant": "#c7c4d7"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(70, 69, 84, 0.2);
+        }
+        .connection-line {
+            background: linear-gradient(90deg, transparent, #c0c1ff, transparent);
+            height: 1px;
+            filter: drop-shadow(0 0 4px #8083ff);
+        }
+        .connection-line-vertical {
+            background: linear-gradient(180deg, transparent, #c0c1ff, transparent);
+            width: 1px;
+            filter: drop-shadow(0 0 4px #8083ff);
+        }
+        .node-pulse {
+            box-shadow: 0 0 0 0 rgba(192, 193, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary/30">
+<!-- SideNavBar (from Shared Components JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-[#131b2e] border-r border-white/5 shadow-[0px_0px_20px_rgba(0,0,0,0.4)] z-50">
+<div class="p-8">
+<h1 class="text-xl font-bold tracking-tighter text-[#c0c1ff] font-headline">Ethereal Command</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 mt-1">Enterprise ERP v2.0</p>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="text-slate-400 hover:text-slate-200 px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-[11px] uppercase tracking-widest font-label">Architecture</span>
+</a>
+<a class="text-slate-400 hover:text-slate-200 px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="text-[11px] uppercase tracking-widest font-label">Databases</span>
+</a>
+<a class="text-slate-400 hover:text-slate-200 px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">shield_lock</span>
+<span class="text-[11px] uppercase tracking-widest font-label">Security</span>
+</a>
+<!-- Active State: Systems (Architecture context) -->
+<a class="text-[#c0c1ff] bg-white/5 border-l-2 border-[#6366F1] px-6 py-4 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="text-[11px] uppercase tracking-widest font-label">Systems</span>
+</a>
+<a class="text-slate-400 hover:text-slate-200 px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="text-[11px] uppercase tracking-widest font-label">Logs</span>
+</a>
+</nav>
+<div class="mt-auto p-4 border-t border-white/5">
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-bold py-3 rounded-xl mb-4 transition-transform active:scale-[0.98]">
+                New Instance
+            </button>
+<div class="flex flex-col gap-1">
+<a class="text-slate-400 hover:text-slate-200 px-6 py-3 flex items-center gap-3 text-[11px] uppercase tracking-widest font-label" href="#">
+<span class="material-symbols-outlined">help_outline</span> Support
+                </a>
+<a class="text-slate-400 hover:text-slate-200 px-6 py-3 flex items-center gap-3 text-[11px] uppercase tracking-widest font-label" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar (from Shared Components JSON) -->
+<header class="flex justify-between items-center h-16 px-8 sticky top-0 z-40 bg-[#0b1326]/80 backdrop-blur-md border-b border-white/10 shadow-2xl shadow-black/50">
+<div class="flex items-center gap-8 h-full">
+<span class="text-lg font-black tracking-tight text-[#c0c1ff] font-headline">ERP Command Center</span>
+<nav class="flex h-full items-center gap-6">
+<a class="text-slate-400 hover:text-white flex items-center px-4 transition-colors font-body font-semibold" href="#">Cluster</a>
+<a class="text-slate-400 hover:text-white flex items-center px-4 transition-colors font-body font-semibold" href="#">Backup</a>
+<a class="text-[#c0c1ff] border-b-2 border-[#6366F1] h-full flex items-center font-body font-semibold" href="#">Identity</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors">search</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">notifications_active</span>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-primary/20 bg-surface-container-highest">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="Professional user avatar portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUKRlLPjVydTlSfGRRbNe5NjhQyE-ObVwrvE9DslD2kZh3Ct7IjwvOrxcCDr2-9ItggU4x34rOo1pFW4JQ1vS4YibZQCY4gInjWUHPi2mMsyEDp1AkUjiIxYmcm0B3uHLGAXNxY_lroUmdPa_Nao5HcDUt0R1CZMo3FyCvK2ly0fBnEWwsBf-CUz-JfW_A9nktZQyuo6gXdAwRpi6VPCGjNOHkplOoCmNZNsklSFkP9_trqLcNTNphXYVYiNBKc8Uu0hyb__s8sxE"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Architecture Canvas Area -->
+<div class="flex-1 p-8 grid grid-cols-12 gap-8 relative overflow-hidden">
+<!-- Abstract background orbs -->
+<div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full -z-10"></div>
+<div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-tertiary/5 blur-[100px] rounded-full -z-10"></div>
+<!-- Flowchart / Diagram Section (8 Columns) -->
+<div class="col-span-8 flex flex-col gap-6">
+<div class="flex justify-between items-end mb-4">
+<div>
+<h2 class="font-headline text-4xl font-bold tracking-tight text-on-surface">ZENITH Monorepo</h2>
+<p class="text-slate-400 mt-2 font-body max-w-lg">Live mapping of micro-modular dependencies and cross-service synchronization flows.</p>
+</div>
+<div class="glass-panel px-4 py-2 rounded-full flex items-center gap-4 text-xs font-label tracking-widest text-primary">
+<span class="flex h-2 w-2 rounded-full bg-tertiary animate-pulse"></span>
+                        SYSTEMS NOMINAL
+                    </div>
+</div>
+<!-- Interactive Visualization Map -->
+<div class="relative h-[600px] glass-panel rounded-xl overflow-hidden p-12 flex flex-col items-center justify-between">
+<!-- Top Row: Core Shared -->
+<div class="relative z-10 w-full flex justify-center">
+<div class="w-48 p-6 glass-panel rounded-xl flex flex-col items-center text-center border-t-2 border-primary group hover:bg-white/10 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">security</span>
+<h3 class="font-headline font-bold text-sm tracking-tight">Shared (Auth/RBAC)</h3>
+<p class="text-[10px] text-slate-500 mt-2 font-label">NEXT-AUTH / NEON PG</p>
+</div>
+<div class="absolute top-full h-12 w-1 bg-gradient-to-b from-primary/50 to-transparent mt-1"></div>
+</div>
+<!-- Middle Row: Modules -->
+<div class="w-full grid grid-cols-4 gap-4 relative">
+<!-- Connecting Lines -->
+<div class="absolute top-1/2 left-0 right-0 h-[1px] bg-white/5 -translate-y-1/2 -z-10"></div>
+<!-- Node: Comercial -->
+<div class="p-5 glass-panel rounded-xl flex flex-col items-center text-center border-l-2 border-tertiary group transition-all hover:scale-105">
+<span class="material-symbols-outlined text-tertiary text-2xl mb-2" data-weight="fill">storefront</span>
+<h3 class="font-headline font-bold text-xs">Comercial</h3>
+<p class="text-[9px] text-slate-400 mt-1 font-label">SALES / POS</p>
+<div class="absolute -right-2 top-1/2 w-4 h-[1px] bg-tertiary shadow-[0_0_8px_#4cd7f6]"></div>
+</div>
+<!-- Node: Operativo -->
+<div class="p-5 glass-panel rounded-xl flex flex-col items-center text-center border-l-2 border-primary group transition-all hover:scale-105">
+<span class="material-symbols-outlined text-primary text-2xl mb-2">precision_manufacturing</span>
+<h3 class="font-headline font-bold text-xs">Operativo</h3>
+<p class="text-[9px] text-slate-400 mt-1 font-label">INVENTORY / PROD</p>
+<div class="absolute -right-2 top-1/2 w-4 h-[1px] bg-primary shadow-[0_0_8px_#c0c1ff]"></div>
+</div>
+<!-- Node: RRHH -->
+<div class="p-5 glass-panel rounded-xl flex flex-col items-center text-center border-l-2 border-secondary group transition-all hover:scale-105">
+<span class="material-symbols-outlined text-secondary text-2xl mb-2">groups</span>
+<h3 class="font-headline font-bold text-xs">RRHH</h3>
+<p class="text-[9px] text-slate-400 mt-1 font-label">PAYROLL / HR</p>
+<div class="absolute -right-2 top-1/2 w-4 h-[1px] bg-secondary shadow-[0_0_8px_#d0bcff]"></div>
+</div>
+<!-- Node: Configuration -->
+<div class="p-5 glass-panel rounded-xl flex flex-col items-center text-center border-l-2 border-outline group transition-all hover:scale-105">
+<span class="material-symbols-outlined text-slate-400 text-2xl mb-2">tune</span>
+<h3 class="font-headline font-bold text-xs">Config</h3>
+<p class="text-[9px] text-slate-400 mt-1 font-label">SYSTEM VARS</p>
+</div>
+</div>
+<!-- Bottom Row: Data Sink -->
+<div class="w-full flex justify-center">
+<div class="w-64 p-4 glass-panel rounded-xl flex items-center gap-4 bg-surface-container-highest border border-white/10">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">analytics</span>
+</div>
+<div class="text-left">
+<h4 class="text-[10px] font-label uppercase tracking-widest text-slate-500">Global Data Sync</h4>
+<p class="font-headline text-sm font-bold text-on-surface">Accounting &amp; Ledger Integration</p>
+</div>
+</div>
+</div>
+<!-- Dynamic Arrows Decor -->
+<div class="absolute top-1/3 left-1/4 w-32 h-32 border-l border-t border-primary/20 rounded-tl-3xl -z-10"></div>
+<div class="absolute bottom-1/3 right-1/4 w-32 h-32 border-r border-b border-tertiary/20 rounded-br-3xl -z-10"></div>
+</div>
+<!-- Zenith Metric Card -->
+<div class="grid grid-cols-3 gap-6">
+<div class="glass-panel p-6 rounded-xl relative overflow-hidden">
+<p class="text-[10px] font-label uppercase tracking-widest text-slate-400 mb-2">Build Health</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-4xl font-bold text-on-surface">99.8</span>
+<span class="text-tertiary text-sm font-bold">%</span>
+</div>
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary/5 blur-3xl rounded-full"></div>
+</div>
+<div class="glass-panel p-6 rounded-xl relative overflow-hidden">
+<p class="text-[10px] font-label uppercase tracking-widest text-slate-400 mb-2">Latency</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-4xl font-bold text-on-surface">24</span>
+<span class="text-tertiary text-sm font-bold">ms</span>
+</div>
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-tertiary/5 blur-3xl rounded-full"></div>
+</div>
+<div class="glass-panel p-6 rounded-xl relative overflow-hidden">
+<p class="text-[10px] font-label uppercase tracking-widest text-slate-400 mb-2">Active Flows</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-4xl font-bold text-on-surface">1,204</span>
+</div>
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-secondary/5 blur-3xl rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Side Panel (4 Columns) -->
+<div class="col-span-4 flex flex-col gap-6">
+<!-- AI Insights Panel -->
+<div class="glass-panel p-8 rounded-xl border-l-4 border-primary">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-xl">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-on-surface">Gemini AI Insights</h3>
+<p class="text-[10px] font-label tracking-tighter text-slate-500">ARCHITECTURAL AUDIT</p>
+</div>
+</div>
+<div class="space-y-6">
+<div class="bg-surface-container p-4 rounded-xl border border-white/5">
+<h4 class="text-xs font-bold text-primary font-headline mb-2 uppercase tracking-wide">Serverless Optimization</h4>
+<p class="text-sm text-slate-300 leading-relaxed font-body">
+                                Current structure leverages <span class="text-on-surface font-semibold">Neon Serverless</span> for dynamic scaling. Edge runtime in Next.js reduces cold starts by 45%.
+                            </p>
+</div>
+<div class="bg-surface-container p-4 rounded-xl border border-white/5">
+<h4 class="text-xs font-bold text-tertiary font-headline mb-2 uppercase tracking-wide">Storage Strategy</h4>
+<p class="text-sm text-slate-300 leading-relaxed font-body">
+                                Assets are sharded across <span class="text-on-surface font-semibold">Cloudflare R2</span>, providing zero egress fees for Commercial module documents.
+                            </p>
+</div>
+<div class="flex flex-col gap-3 pt-4">
+<div class="flex justify-between text-[11px] font-label">
+<span class="text-slate-500">Reliability Score</span>
+<span class="text-tertiary">EXCELLENT</span>
+</div>
+<div class="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[92%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tech Stack Sidebar -->
+<div class="glass-panel p-8 rounded-xl flex-1">
+<h3 class="font-headline font-bold text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400">terminal</span>
+                        Tech Stack
+                    </h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">database</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">PostgreSQL</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-label">Primary Engine</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-600 group-hover:text-primary transition-colors">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-lg">code</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">TypeScript</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-label">Language</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-600 group-hover:text-tertiary transition-colors">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-lg">hub</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">n8n.io</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-label">Automation</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-600 group-hover:text-secondary transition-colors">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-lg">dns</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">NestJS</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-label">Backend Architecture</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-600 group-hover:text-white transition-colors">check_circle</span>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-white/5">
+<div class="p-6 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20">
+<p class="text-[10px] font-label text-primary uppercase tracking-[0.2em] mb-2">Network Status</p>
+<img alt="Architecture Graph Visualization" class="rounded-xl opacity-50 mb-4 grayscale hover:grayscale-0 transition-all" data-alt="Abstract network connection nodes and lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHzhPh83lS6endpMrv2oUCBxiYzi3sfaniw1WV86lUKVNK5CEPVAhmlduDqyhAmCtXRtlDBOxI3CB6RCCo5GLTJqwvEUiHqlPNnRMiJhM3MNPx-c_4c-7j9LhRw2JAfOAl_tPULsSjYl9eEOS8oHNu3RAmDJCDTCz95rbmrHByTS-nM21wWvPA8W3O01bdizv1XHdMgkmMJH26VsCklFzEONoPLtpYGcCy2X-2kkWlpUtl1736rqRxj67LUnz1a6P4FCEtE5P48nw"/>
+<p class="text-xs text-slate-400 font-body leading-relaxed">Infrastructure spread across 14 global edge nodes for &lt; 30ms latency.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
