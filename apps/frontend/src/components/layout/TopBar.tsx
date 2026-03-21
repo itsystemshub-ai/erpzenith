@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/stores/authStore'
 import { useNotificationStore, type Notification } from '@/stores/notificationStore'
+import { useUiStore } from '@/stores/uiStore'
+import { useThemeStore } from '@/stores/themeStore'
 import { cn } from '@/lib/utils'
 
 interface TopBarProps {
@@ -34,7 +36,8 @@ export function TopBar({ title }: TopBarProps) {
   const router = useRouter()
   const { user, logout } = useAuthStore()
   const { notifications, markRead, markAllRead, remove, unreadCount } = useNotificationStore()
-  const [search, setSearch] = useState('')
+  const { globalSearch, setGlobalSearch } = useUiStore()
+  const { theme, toggle: toggleTheme } = useThemeStore()
   const [open, setOpen] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
   const count = unreadCount()
@@ -64,8 +67,8 @@ export function TopBar({ title }: TopBarProps) {
         <div className="relative hidden md:block">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
           <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={globalSearch}
+            onChange={(e) => setGlobalSearch(e.target.value)}
             placeholder="Buscar... (Cmd+K)"
             className="bg-surface-container-highest/50 border-none rounded-full py-2.5 pl-10 pr-6 text-sm focus:ring-2 focus:ring-primary/40 text-on-surface placeholder:text-outline/50 w-72"
           />
@@ -77,6 +80,17 @@ export function TopBar({ title }: TopBarProps) {
         <div className="hidden sm:flex items-center gap-2 bg-surface-container-highest px-3 py-1.5 rounded-full border border-outline-variant/20">
           <span className="text-tertiary font-bold font-spartan text-xs tracking-widest uppercase">BCV: 36.42 VES</span>
         </div>
+
+        {/* Theme toggle */}
+        <button
+          onClick={toggleTheme}
+          title={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
+          className="w-9 h-9 flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container-highest rounded-xl transition-all"
+        >
+          <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+            {theme === 'light' ? 'dark_mode' : 'light_mode'}
+          </span>
+        </button>
 
         {/* Campanita */}
         <div className="relative" ref={panelRef}>
@@ -161,7 +175,13 @@ export function TopBar({ title }: TopBarProps) {
 
               {/* Footer del panel */}
               {notifications.length > 0 && (
-                <div className="px-5 py-3 border-t border-white/5 flex justify-end">
+                <div className="px-5 py-3 border-t border-white/5 flex items-center justify-between">
+                  <button
+                    onClick={() => { router.push('/dashboard/notificaciones'); setOpen(false) }}
+                    className="text-[10px] text-primary hover:text-tertiary font-spartan uppercase tracking-widest transition-colors"
+                  >
+                    Abrir notificaciones
+                  </button>
                   <button
                     onClick={() => { useNotificationStore.getState().clear(); setOpen(false) }}
                     className="text-[10px] text-outline hover:text-error font-spartan uppercase tracking-widest transition-colors"

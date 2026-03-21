@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "generate": "echo 'no generate needed'",
     "setup": "echo 'frontend ready'",
     "dev": "next dev -p 3000",
     "build": "next build",

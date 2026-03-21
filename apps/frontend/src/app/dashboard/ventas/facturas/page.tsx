@@ -1,9 +1,11 @@
 'use client'
-import { useState } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { useVentasStore } from '@/stores/ventasStore'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
 type EstadoFactura = 'Pagada' | 'Pendiente' | 'Vencida' | 'Anulada'
 
@@ -40,10 +42,19 @@ const estadoConfig: Record<EstadoFactura, { variant: 'success' | 'warning' | 'er
 const ESTADOS: (EstadoFactura | 'Todas')[] = ['Todas', 'Pagada', 'Pendiente', 'Vencida', 'Anulada']
 
 export default function FacturasPage() {
-  const [estadoFiltro, setEstadoFiltro] = useState<EstadoFactura | 'Todas'>('Todas')
-  const [busqueda, setBusqueda] = useState('')
+  const { filtros, setFiltro } = useVentasStore()
+  const estadoFiltro = (filtros.estado || 'Todas') as EstadoFactura | 'Todas'
+  const busqueda = filtros.clienteId // reusing clienteId field as search text
 
-  const filtered = MOCK_FACTURAS.filter((f) => {
+  const { data: facturasData } = useErpQuery<Factura[]>(
+    QK.ventas.facturas(),
+    '/ventas/facturas',
+    { retry: false }
+  )
+
+  const FACTURAS = facturasData ?? MOCK_FACTURAS
+
+  const filtered = FACTURAS.filter((f) => {
     const matchEstado = estadoFiltro === 'Todas' || f.estado === estadoFiltro
     const matchBusqueda =
       f.numero.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -53,9 +64,9 @@ export default function FacturasPage() {
   })
 
   const hoy = '18/01/2025'
-  const facturadoHoy = MOCK_FACTURAS.filter((f) => f.fecha === hoy).reduce((acc, f) => acc + f.totalVES, 0)
-  const pendienteCobro = MOCK_FACTURAS.filter((f) => f.estado === 'Pendiente').reduce((acc, f) => acc + f.totalVES, 0)
-  const vencidas = MOCK_FACTURAS.filter((f) => f.estado === 'Vencida').length
+  const facturadoHoy = FACTURAS.filter((f) => f.fecha === hoy).reduce((acc, f) => acc + f.totalVES, 0)
+  const pendienteCobro = FACTURAS.filter((f) => f.estado === 'Pendiente').reduce((acc, f) => acc + f.totalVES, 0)
+  const vencidas = FACTURAS.filter((f) => f.estado === 'Vencida').length
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -115,7 +126,7 @@ export default function FacturasPage() {
               {ESTADOS.map((e) => (
                 <button
                   key={e}
-                  onClick={() => setEstadoFiltro(e)}
+                  onClick={() => setFiltro('estado', e === 'Todas' ? '' : e)}
                   className={`px-3 py-1.5 rounded-xl text-[10px] font-spartan font-bold uppercase tracking-widest transition-all ${
                     estadoFiltro === e
                       ? 'bg-primary/20 text-primary border border-primary/30'
@@ -131,7 +142,7 @@ export default function FacturasPage() {
                 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
                 <input
                   value={busqueda}
-                  onChange={(e) => setBusqueda(e.target.value)}
+                  onChange={(e) => setFiltro('clienteId', e.target.value)}
                   placeholder="Buscar factura, cliente o RIF..."
                   className="bg-surface-container-highest border-none rounded-xl pl-10 pr-4 py-2.5 text-xs w-72 focus:ring-2 focus:ring-primary/40 text-on-surface"
                 />

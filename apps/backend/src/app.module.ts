@@ -7,6 +7,7 @@ import { ComprasModule } from './modules/compras/compras.module'
 import { VentasModule } from './modules/ventas/ventas.module'
 import { RrhhModule } from './modules/rrhh/rrhh.module'
 import { ConfiguracionModule } from './modules/configuracion/configuracion.module'
+import { DashboardModule } from './modules/dashboard/dashboard.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ConfiguracionModule } from './modules/configuracion/configuracion.modul
     VentasModule,
     RrhhModule,
     ConfiguracionModule,
+    DashboardModule,
   ],
 })
 export class AppModule {}
