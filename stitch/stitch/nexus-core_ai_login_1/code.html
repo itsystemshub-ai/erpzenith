@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inicio de Sesión Nexus-Core AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#207fdf",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111921",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-background-light text-[#111417] min-h-screen flex flex-col md:flex-row antialiased">
+<div class="hidden md:flex md:w-1/2 lg:w-5/12 relative flex-col justify-between p-12 bg-[#111921] text-white overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-40">
+<img alt="Abstract blue network connections and data nodes" class="w-full h-full object-cover" data-alt="Abstract blue network connections and data nodes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEXtIz70N5Ev6kl9zpVdX46AMs4eHOwyCpF4zV6avn4aaMu2_kBX7JfxGx1UWv9oWzTuPxFdxJqTLdkREfRKv7oGoLjTL8IippWsQHQRHdj7xfqAxH5NBDZTqwG7O8Q6aQyDr0EbVdmPb8XBg1YwMMbwvuB2I760FLEX5x8I8B-2iM9lqE9CEfWGYjRQjdwQZLyeFEKbmQCgyuNsibHDRFYzr29ZHXgCTPgBCzOxtCJHlR1C0nDKnToRicOu2DJUXiUGeRIvLxFtn-"/>
+<div class="absolute inset-0 bg-gradient-to-b from-[#111921]/80 to-[#111921]/40 mix-blend-multiply"></div>
+</div>
+<div class="relative z-10 flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-xl font-bold tracking-tight">Nexus-Core AI</h2>
+</div>
+<div class="relative z-10 mt-auto max-w-md">
+<div class="mb-6 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 backdrop-blur-sm border border-white/10 text-primary">
+<span class="material-symbols-outlined text-[24px]">smart_toy</span>
+</div>
+<h1 class="text-3xl font-bold leading-tight tracking-tight mb-4">Gestión Empresarial Inteligente</h1>
+<p class="text-slate-300 text-lg leading-relaxed">
+                Optimiza operaciones con nuestro ERP impulsado por IA. Conecta datos, automatiza flujos de trabajo y escala tu negocio con Nexus-Core.
+            </p>
+<div class="mt-8 flex gap-2">
+<div class="h-1 w-8 rounded-full bg-primary"></div>
+<div class="h-1 w-8 rounded-full bg-white/20"></div>
+<div class="h-1 w-8 rounded-full bg-white/20"></div>
+</div>
+</div>
+<div class="relative z-10 mt-12 text-xs text-slate-500">
+            © 2024 Nexus-Core Systems Inc.
+        </div>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center bg-white p-6 sm:p-12 lg:p-24 overflow-y-auto">
+<div class="w-full max-w-[440px] flex flex-col">
+<div class="md:hidden flex items-center gap-3 mb-8 self-center">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#111417] text-xl font-bold">Nexus-Core AI</h2>
+</div>
+<div class="mb-8">
+<h1 class="text-[#111417] text-[32px] font-bold leading-tight tracking-tight mb-2">Bienvenido de nuevo</h1>
+<p class="text-slate-500 text-base">Por favor ingresa tus datos para iniciar sesión.</p>
+</div>
+<form class="flex flex-col gap-5">
+<div class="space-y-4">
+<label class="flex flex-col gap-1.5">
+<span class="text-[#111417] text-sm font-semibold">Correo Electrónico</span>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary pointer-events-none text-[20px]">mail</span>
+<input class="w-full flex-1 rounded-lg border border-[#dce0e5] bg-white px-4 pl-11 py-3 text-[#111417] placeholder:text-[#647587] focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all duration-200" placeholder="nombre@empresa.com" type="email"/>
+</div>
+</label>
+<label class="flex flex-col gap-1.5">
+<span class="text-[#111417] text-sm font-semibold">Contraseña</span>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary pointer-events-none text-[20px]">lock</span>
+<input class="w-full flex-1 rounded-lg border border-[#dce0e5] bg-white px-4 pl-11 py-3 text-[#111417] placeholder:text-[#647587] focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all duration-200" placeholder="••••••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#111417] transition-colors focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="h-4 w-4 rounded border-[#dce0e5] text-primary focus:ring-primary/20 cursor-pointer" type="checkbox"/>
+<span class="text-sm font-medium text-[#111417]">Recordarme</span>
+</label>
+<a class="text-sm font-semibold text-primary hover:text-primary/80 transition-colors" href="#">¿Olvidaste tu contraseña?</a>
+</div>
+<div class="pt-2 flex flex-col gap-4">
+<button class="w-full flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-primary/90 focus:ring-4 focus:ring-primary/20 transition-all active:scale-[0.99]" type="submit">
+                        Iniciar Sesión
+                    </button>
+<div class="relative flex py-1 items-center">
+<div class="flex-grow border-t border-[#f0f2f4]"></div>
+<span class="flex-shrink-0 mx-4 text-xs font-medium text-slate-400 uppercase tracking-wider">O continuar con</span>
+<div class="flex-grow border-t border-[#f0f2f4]"></div>
+</div>
+<button class="w-full flex items-center justify-center gap-3 rounded-lg border border-[#dce0e5] bg-white px-6 py-3 text-sm font-bold text-[#111417] shadow-sm hover:bg-slate-50 hover:border-slate-300 focus:ring-4 focus:ring-slate-100 transition-all active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+                        Iniciar sesión con SSO
+                    </button>
+</div>
+</form>
+<p class="mt-8 text-center text-sm text-slate-500">
+                ¿No tienes una cuenta? 
+                <a class="font-semibold text-primary hover:underline" href="#">Contactar Ventas</a>
+</p>
+</div>
+</div>
+
+</body></html>

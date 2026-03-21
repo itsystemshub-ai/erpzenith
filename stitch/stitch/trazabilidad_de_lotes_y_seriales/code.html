@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ERP Inventario - Trazabilidad</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "primary-light": "#e9f2fb", 
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "neutral-50": "#f8f9fa",
+                        "neutral-100": "#f1f3f5",
+                        "neutral-200": "#e9ecef",
+                        "neutral-300": "#dee2e6",
+                        "neutral-400": "#ced4da",
+                        "neutral-500": "#adb5bd",
+                        "neutral-600": "#868e96",
+                        "neutral-700": "#495057",
+                        "neutral-800": "#343a40",
+                        "neutral-900": "#212529",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-neutral-900 dark:text-white overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-neutral-900 dark:text-white">
+<div class="size-8 rounded bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<h2 class="text-neutral-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">ERP Inventario</h2>
+</div>
+<div class="hidden lg:flex items-center gap-9">
+<a class="text-neutral-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold leading-normal" href="#">Inventario</a>
+<a class="text-neutral-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Compras</a>
+<a class="text-neutral-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Ventas</a>
+<a class="text-neutral-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reportes</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full relative">
+<div class="text-neutral-500 absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-neutral-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 h-full placeholder:text-neutral-500 pl-11 pr-4 text-sm font-normal leading-normal" placeholder="Buscar lote, serial o producto..." value=""/>
+</div>
+</label>
+<button class="flex items-center justify-center gap-2 h-10 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em] rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="truncate">Nuevo Lote</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-neutral-200 overflow-hidden border border-neutral-300 relative">
+<img alt="User Avatar" class="object-cover w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDe4C9FpNB8o6QKw1myB0dp1cjyaLVqRn7A4Q7YaL0VYqx7CYR5p1n07UQmwmHp5cUsxiZlwdXgseee8xHl6keIal2NlDn1FYUj4A1YVCI5MFB8EPhQn8fzXqimHOaT5XmFmUwOMK2PrSqP58cUqmG0fePsu-2EqJ_BUyH2JfIf9WCY43BwAVhukrD7dCADm3Vt7_ShRjktnxvxi0Ult1kyE-bnJfAJ6C5DkKGZTQ1eEAwh4ofVhaBxUbvPxyPKurJYXRirBmZ_EeL"/>
+</div>
+</div>
+</header>
+<main class="flex flex-col px-6 py-6 md:px-10 lg:px-20 max-w-[1600px] mx-auto w-full gap-6">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 text-sm">
+<a class="text-neutral-500 hover:text-primary transition-colors font-medium" href="#">Inicio</a>
+<span class="text-neutral-400">/</span>
+<a class="text-neutral-500 hover:text-primary transition-colors font-medium" href="#">Inventario</a>
+<span class="text-neutral-400">/</span>
+<span class="text-neutral-900 dark:text-white font-semibold">Trazabilidad</span>
+</div>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-neutral-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
+                    Trazabilidad de Lotes y Seriales
+                </h1>
+<p class="text-neutral-500 dark:text-neutral-400 text-base font-normal max-w-2xl">
+                    Gestión detallada de productos perecederos y electrónicos. Monitoreo de fechas de vencimiento, garantías y rotación de stock.
+                </p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 h-10 px-4 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors text-sm font-bold rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Exportar</span>
+</button>
+<button class="flex items-center gap-2 h-10 px-4 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors text-sm font-bold rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span>Filtros</span>
+</button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="flex flex-col gap-3 rounded-xl p-5 border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">inventory_2</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="p-1.5 bg-primary/10 rounded-md text-primary">
+<span class="material-symbols-outlined text-[20px]">qr_code_2</span>
+</div>
+<p class="text-neutral-500 dark:text-neutral-400 text-sm font-medium">Total Lotes Activos</p>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-neutral-900 dark:text-white text-3xl font-bold leading-none">1,245</p>
+<span class="text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded text-xs font-bold mb-1">+5%</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col gap-3 rounded-xl p-5 border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-amber-500">warning</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="p-1.5 bg-amber-500/10 rounded-md text-amber-600">
+<span class="material-symbols-outlined text-[20px]">event_busy</span>
+</div>
+<p class="text-neutral-500 dark:text-neutral-400 text-sm font-medium">Próximos a Vencer (7 días)</p>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-neutral-900 dark:text-white text-3xl font-bold leading-none">48</p>
+<span class="text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded text-xs font-bold mb-1">+12%</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col gap-3 rounded-xl p-5 border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-rose-500">trending_down</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="p-1.5 bg-rose-500/10 rounded-md text-rose-600">
+<span class="material-symbols-outlined text-[20px]">attach_money</span>
+</div>
+<p class="text-neutral-500 dark:text-neutral-400 text-sm font-medium">Valor en Riesgo</p>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-neutral-900 dark:text-white text-3xl font-bold leading-none">$12,450</p>
+<span class="text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded text-xs font-bold mb-1">-2%</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="flex flex-col gap-3 rounded-xl p-5 border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">devices</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="p-1.5 bg-primary/10 rounded-md text-primary">
+<span class="material-symbols-outlined text-[20px]">barcode_reader</span>
+</div>
+<p class="text-neutral-500 dark:text-neutral-400 text-sm font-medium">Productos Serializados</p>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-neutral-900 dark:text-white text-3xl font-bold leading-none">850</p>
+<span class="text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded text-xs font-bold mb-1">+8%</span>
+</div>
+</div>
+</div>
+<!-- AI Insights & Alerts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- AI Chart Card -->
+<div class="lg:col-span-2 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm p-6 flex flex-col gap-4">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-gradient-to-r from-primary to-purple-500 text-transparent bg-clip-text font-black text-sm uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+                                Análisis IA
+                            </span>
+</div>
+<h3 class="text-lg font-bold text-neutral-900 dark:text-white">Predicción de Rotación de Lotes</h3>
+<p class="text-neutral-500 text-sm">Proyección de salida de stock vs. fecha de caducidad para lotes críticos.</p>
+</div>
+<select class="bg-neutral-50 dark:bg-neutral-700 border-none text-xs font-medium rounded p-2 text-neutral-600 dark:text-neutral-300 cursor-pointer hover:bg-neutral-100 transition">
+<option>Últimos 30 días</option>
+<option>Último Trimestre</option>
+</select>
+</div>
+<!-- Mock Chart Visual -->
+<div class="flex-1 min-h-[240px] w-full flex items-end justify-between gap-2 px-2 pt-8 pb-2 relative">
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none px-2 pb-8 pt-8">
+<div class="w-full h-px bg-neutral-100 dark:bg-neutral-700"></div>
+<div class="w-full h-px bg-neutral-100 dark:bg-neutral-700"></div>
+<div class="w-full h-px bg-neutral-100 dark:bg-neutral-700"></div>
+<div class="w-full h-px bg-neutral-100 dark:bg-neutral-700"></div>
+<div class="w-full h-px bg-neutral-100 dark:bg-neutral-700"></div>
+</div>
+<!-- Bars (Representing Batches) -->
+<div class="flex flex-col items-center gap-2 z-10 group w-1/6">
+<div class="w-full bg-primary/20 rounded-t-sm h-32 relative group-hover:bg-primary/30 transition-all">
+<div class="absolute bottom-0 left-0 w-full bg-primary rounded-t-sm h-20 group-hover:h-24 transition-all duration-500"></div>
+</div>
+<span class="text-xs text-neutral-500 font-medium">Lote A-10</span>
+</div>
+<div class="flex flex-col items-center gap-2 z-10 group w-1/6">
+<div class="w-full bg-amber-100 rounded-t-sm h-40 relative group-hover:bg-amber-200 transition-all">
+<div class="absolute bottom-0 left-0 w-full bg-amber-500 rounded-t-sm h-32 group-hover:h-36 transition-all duration-500"></div>
+</div>
+<span class="text-xs text-neutral-500 font-medium">Lote B-22</span>
+</div>
+<div class="flex flex-col items-center gap-2 z-10 group w-1/6">
+<div class="w-full bg-primary/20 rounded-t-sm h-24 relative group-hover:bg-primary/30 transition-all">
+<div class="absolute bottom-0 left-0 w-full bg-primary rounded-t-sm h-12 group-hover:h-16 transition-all duration-500"></div>
+</div>
+<span class="text-xs text-neutral-500 font-medium">Lote C-90</span>
+</div>
+<div class="flex flex-col items-center gap-2 z-10 group w-1/6">
+<div class="w-full bg-rose-100 rounded-t-sm h-48 relative group-hover:bg-rose-200 transition-all">
+<div class="absolute bottom-0 left-0 w-full bg-rose-500 rounded-t-sm h-44 group-hover:h-46 transition-all duration-500"></div>
+</div>
+<span class="text-xs text-neutral-500 font-medium">Lote D-05</span>
+</div>
+<div class="flex flex-col items-center gap-2 z-10 group w-1/6">
+<div class="w-full bg-primary/20 rounded-t-sm h-28 relative group-hover:bg-primary/30 transition-all">
+<div class="absolute bottom-0 left-0 w-full bg-primary rounded-t-sm h-16 group-hover:h-20 transition-all duration-500"></div>
+</div>
+<span class="text-xs text-neutral-500 font-medium">Lote E-12</span>
+</div>
+</div>
+<div class="flex gap-4 text-xs justify-center mt-2">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary rounded-sm"></div> <span class="text-neutral-600">Rotación Saludable</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-amber-500 rounded-sm"></div> <span class="text-neutral-600">Riesgo Moderado</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-rose-500 rounded-sm"></div> <span class="text-neutral-600">Riesgo Alto (Caducidad Próxima)</span>
+</div>
+</div>
+</div>
+<!-- Alerts List -->
+<div class="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm p-6 flex flex-col gap-4">
+<h3 class="text-lg font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-amber-500">notifications_active</span>
+                    Alertas Urgentes
+                </h3>
+<div class="flex flex-col gap-3 overflow-y-auto max-h-[300px] pr-2 custom-scrollbar">
+<!-- Alert Item 1 -->
+<div class="p-3 rounded-lg bg-amber-50 border border-amber-100 flex gap-3 items-start">
+<span class="material-symbols-outlined text-amber-600 mt-0.5 text-[20px]">warning</span>
+<div>
+<p class="text-sm font-bold text-neutral-900">Lote #8829 - Leche UHT</p>
+<p class="text-xs text-neutral-600 mt-1">Vence en <span class="font-bold text-amber-700">2 días</span>. Stock restante: 50 un.</p>
+<button class="mt-2 text-xs font-semibold text-primary hover:underline">Aplicar Descuento</button>
+</div>
+</div>
+<!-- Alert Item 2 -->
+<div class="p-3 rounded-lg bg-rose-50 border border-rose-100 flex gap-3 items-start">
+<span class="material-symbols-outlined text-rose-600 mt-0.5 text-[20px]">error</span>
+<div>
+<p class="text-sm font-bold text-neutral-900">Serial #SN-2291 - Laptop Dell</p>
+<p class="text-xs text-neutral-600 mt-1">Garantía expira hoy. Revisar estado.</p>
+</div>
+</div>
+<!-- Alert Item 3 -->
+<div class="p-3 rounded-lg bg-neutral-50 border border-neutral-100 flex gap-3 items-start">
+<span class="material-symbols-outlined text-neutral-600 mt-0.5 text-[20px]">inventory</span>
+<div>
+<p class="text-sm font-bold text-neutral-900">Lote #9921 - Yogur Natural</p>
+<p class="text-xs text-neutral-600 mt-1">Rotación baja detectada. Vence en 5 días.</p>
+</div>
+</div>
+</div>
+<button class="w-full py-2 text-sm text-neutral-500 font-medium hover:text-primary transition-colors border-t border-neutral-100 mt-auto">
+                    Ver todas las alertas
+                </button>
+</div>
+</div>
+<!-- Main Data Table Section -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<h3 class="text-xl font-bold text-neutral-900 dark:text-white">Detalle de Inventario</h3>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-2 text-neutral-500">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</span>
+<input class="pl-8 pr-4 py-2 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm bg-white dark:bg-neutral-800 focus:ring-primary focus:border-primary" placeholder="Buscar..." type="text"/>
+</div>
+<button class="p-2 border border-neutral-200 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-800 hover:bg-neutral-50 text-neutral-600">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-neutral-50 dark:bg-neutral-700/50 border-b border-neutral-200 dark:border-neutral-700">
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-neutral-500">Producto</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-neutral-500">Lote / Serial</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-neutral-500">Ubicación</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-neutral-500">Fecha Vencimiento</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-neutral-500">Factura Compra</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-neutral-500">Estado</th>
+<th class="p-4 text-xs font-semibold uppercase tracking-wide text-neutral-500 text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
+<!-- Row 1 -->
+<tr class="group hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-neutral-100 flex-shrink-0 bg-cover bg-center" data-alt="Milk carton product image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfwedbS8SEPEulk1u96AVTBULaZF0UgdmcN9lPg1qebkgQDFSIxsEiS5tzG2a8ZJFZgG8QyVAX-7hM6DikKhmIuP44XBM2LeNjaGqpbAvMoF88aF7G_diJbKpZggK6Zfj-ayVFSiYKlzMu-kYYXWaPzHnhsRGggPPniDjtk2xL0zxpFDqTCow7Tsx5yiC6gjgneWnICtGrGWOkDe8DSt1j5ElX9x9KQHa_QrV-mVCpHVeUhTiRAbi00ErJNTKeKyQo8Er8KjLO_GhS');"></div>
+<div>
+<p class="text-sm font-bold text-neutral-900 dark:text-white">Leche UHT Entera 1L</p>
+<p class="text-xs text-neutral-500">SKU: DAIRY-001</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700 text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-600">
+                                    Lote #8829
+                                </span>
+</td>
+<td class="p-4 text-sm text-neutral-600 dark:text-neutral-300">Bodega Central - A2</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-amber-600">15 Oct 2023</span>
+<span class="text-[10px] text-amber-600 font-medium">Vence en 2 días</span>
+</div>
+</td>
+<td class="p-4">
+<a class="text-sm text-primary hover:underline font-medium" href="#">FAC-2023-902</a>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100">
+<span class="size-1.5 rounded-full bg-amber-500"></span>
+                                    Por Vencer
+                                </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-neutral-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-neutral-100 flex-shrink-0 bg-cover bg-center" data-alt="Laptop product image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDT4jBKNB5AyZqh5t4YEooYrFe7xabfUV2q5IFp8FoP3yzvrDP70OXo9a1i3UYgI_hX9uVdrHZte1yamsPJ8ck-ufxxDEXykKSELgoO-q9oukqq7UnPQiiNLwV_cPGtvtQ4LSkwe6Rggaxl8013t8uB0SpBVSff6qX9lJcWoMng9F7YWLGSj78EJDQoU3JlqEAFWe_5iWbiLHIipSFwM4hCntqB1FBkZntl-7kjZsA6JdTBn7yn-XDircm-lB7VvVb6H6trbqaEx4u2');"></div>
+<div>
+<p class="text-sm font-bold text-neutral-900 dark:text-white">Laptop Dell XPS 15</p>
+<p class="text-xs text-neutral-500">SKU: ELEC-XPS15</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700 text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-600">
+                                    SN-99887766
+                                </span>
+</td>
+<td class="p-4 text-sm text-neutral-600 dark:text-neutral-300">Tienda Norte - Vitrina</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-neutral-900 dark:text-white">12 Oct 2025</span>
+<span class="text-[10px] text-neutral-500">Garantía Extendida</span>
+</div>
+</td>
+<td class="p-4">
+<a class="text-sm text-primary hover:underline font-medium" href="#">FAC-2023-001</a>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                    En Stock
+                                </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-neutral-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-neutral-100 flex-shrink-0 bg-cover bg-center" data-alt="Yogurt product image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC4dFEqbQztaRv9LgSJsH7F_Pr4DBUaZpVaXdJBnR1I6GQFan5T14yxSrBRO0pHsbsr0NXOoVAciC7cuYgjNqODeY1A1D_yrbBhySwFz7MKygUrA2qnUDl2vGe_dAuyUTA60ontltTNGaMZp7DYr9dN63F-AKgQTA3I3V4opSRDea8GN3hgaDmxgoY5U7DJ3b_3doztALTKNJF-kblknQkT1hwquIgFhx5pmn478d2Jq0Hr2CcrUbSO-2cBZxNRJhtY4WLcoL1hE_-E');"></div>
+<div>
+<p class="text-sm font-bold text-neutral-900 dark:text-white">Yogur Natural 150g</p>
+<p class="text-xs text-neutral-500">SKU: DAIRY-045</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700 text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-600">
+                                    Lote #9921
+                                </span>
+</td>
+<td class="p-4 text-sm text-neutral-600 dark:text-neutral-300">Bodega Frío - F1</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-amber-600">18 Oct 2023</span>
+<span class="text-[10px] text-amber-600 font-medium">Vence en 5 días</span>
+</div>
+</td>
+<td class="p-4">
+<a class="text-sm text-primary hover:underline font-medium" href="#">FAC-2023-881</a>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100">
+<span class="size-1.5 rounded-full bg-amber-500"></span>
+                                    Por Vencer
+                                </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-neutral-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-neutral-100 flex-shrink-0 bg-cover bg-center" data-alt="Sneakers product image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACfYrOWSfflQ003gzskwZQogAE8dGX5Ul5IDb7FMW4_GdyobOanODPl8_1cdHRYOP0xTXbZ_jtBZK4qIKGye4UqUv11-SLtXwind1jIVhj5ZN9xWmFo3pB4KpQVsrNE3JdYHrIhmC6uTwCsPCGJJIIA_FPAmzHd9D7zYX05o26Edc7f66nTJcogAmEJBsJuWHO_pHSD4PUSAHOXFWhci7rC_jc7KriJMriOBNV_vxi9MGlSZ5OGhtB0fkErFgnFou_OqwU2BTQK36n');"></div>
+<div>
+<p class="text-sm font-bold text-neutral-900 dark:text-white">Zapatillas Running Pro</p>
+<p class="text-xs text-neutral-500">SKU: SHOE-RUN-01</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700 text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-600">
+                                    Lote #SP-2023
+                                </span>
+</td>
+<td class="p-4 text-sm text-neutral-600 dark:text-neutral-300">Tienda Centro - Depósito</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-neutral-900 dark:text-white">N/A</span>
+<span class="text-[10px] text-neutral-500">No Perecedero</span>
+</div>
+</td>
+<td class="p-4">
+<a class="text-sm text-primary hover:underline font-medium" href="#">FAC-2022-105</a>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-600 border border-neutral-200">
+<span class="size-1.5 rounded-full bg-neutral-500"></span>
+                                    Vendido
+                                </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-neutral-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded bg-neutral-100 flex-shrink-0 bg-cover bg-center" data-alt="Camera product image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZAV-IdFjRfVmdmvG2lbARAt-Ib-ADvkRIXhqAMZBQ6zU0pcwRD_yfy8FpbNWIV7OOMp8TcQeJ7rGzr3awoVgodoOj8YPITX_X0yJq68qs4pIM2OnJYO51rx55MxYYzsuMt6f79d8JAFBVZa5lkECF2nOz2OrJtdeucc_Xf-aJ_U_M-dS2UbeQaYu00cGsvQ2cuIvrHyaDMNuGhYymg29BM26FziYzqDNFHSnSPPxHtmqVRL88-TRSnnjyqNNum2AdrwZrpGIqP7-9');"></div>
+<div>
+<p class="text-sm font-bold text-neutral-900 dark:text-white">Cámara DSLR Alpha</p>
+<p class="text-xs text-neutral-500">SKU: CAM-009</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700 text-xs font-mono font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-600">
+                                    SN-CAM-7728
+                                </span>
+</td>
+<td class="p-4 text-sm text-neutral-600 dark:text-neutral-300">Bodega Seguridad</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-rose-600">01 Sep 2023</span>
+<span class="text-[10px] text-rose-600 font-medium">Garantía Expirada</span>
+</div>
+</td>
+<td class="p-4">
+<a class="text-sm text-primary hover:underline font-medium" href="#">FAC-2021-500</a>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100">
+<span class="size-1.5 rounded-full bg-rose-500"></span>
+                                    Riesgo
+                                </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-neutral-400 hover:text-primary transition-colors p-1">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="flex items-center justify-between p-4 border-t border-neutral-200 dark:border-neutral-700">
+<p class="text-sm text-neutral-500">Mostrando 5 de 1,245 registros</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm border border-neutral-200 dark:border-neutral-700 rounded hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 disabled:opacity-50">Anterior</button>
+<button class="px-3 py-1 text-sm bg-primary text-white rounded hover:bg-primary/90">1</button>
+<button class="px-3 py-1 text-sm border border-neutral-200 dark:border-neutral-700 rounded hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300">2</button>
+<button class="px-3 py-1 text-sm border border-neutral-200 dark:border-neutral-700 rounded hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300">3</button>
+<span class="px-2 text-neutral-400">...</span>
+<button class="px-3 py-1 text-sm border border-neutral-200 dark:border-neutral-700 rounded hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300">Siguiente</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple footer -->
+<footer class="mt-12 py-6 border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-center">
+<p class="text-sm text-neutral-500">© 2023 ERP SaaS - Sistema de Gestión de Inventarios con IA</p>
+</footer>
+</body></html>

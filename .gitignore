@@ -1,33 +1,6 @@
-# Node modules
-node_modules/
-.pnp
-.pnp.js
-
-# Testing
-coverage/
-*.log
-
-# Production
-dist/
-build/
-.next/
-out/
-
-# Environment
+node_modules
+.next
+dist
+.turbo
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Misc
-.DS_Store
-*.pem
-.vscode/
-.idea/
-
-# Prisma
-apps/backend/prisma/migrations/
-
-# Turbo
-.turbo/

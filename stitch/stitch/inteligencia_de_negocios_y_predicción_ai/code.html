@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inteligencia de Negocios y Predicción AI - ERP SaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for data tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#293038] px-6 py-3 bg-white dark:bg-[#111417]">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-[32px]">analytics</span>
+</div>
+<div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Nexus ERP Intelligence</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">Sandbox de Datos &amp; Predicción</p>
+</div>
+</div>
+<!-- Search / AI Query Bar -->
+<div class="hidden md:flex flex-1 max-w-xl mx-8 relative">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<input class="block w-full p-2.5 pl-10 text-sm text-slate-900 border border-slate-300 rounded-lg bg-slate-50 focus:ring-primary focus:border-primary dark:bg-[#1f2937] dark:border-[#374151] dark:placeholder-slate-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary" placeholder="Pregunta a tus datos: '¿Cuál es la proyección de flujo de caja para Q4?'" type="text"/>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg size-10 hover:bg-slate-100 dark:hover:bg-[#293038] text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 hover:bg-slate-100 dark:hover:bg-[#293038] text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-[#293038]"></div>
+<button class="flex items-center gap-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 border-2 border-primary/20" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7IDM-iEoG0L_ZaLbKTWWYwBxPpez5WBIu59PePGV3jvdTKnT-Rmodpqy1ZHx1QQeh6xM1RRZaaQvTwG_BLSL0DFp_wc93d57BjByxvTofcTWz2M-41f3s34YEiKVT1DqaVUetr9Y6mEyXDI7PPwQs9JudeWo3kabqWfi1cGpJ8RtBsaTKt5lSoNQmCH_ftRFJCLo_1zAv_gK2Am7XSWpdaRP9I2T4OCPCu7sEFIkDwvX4IWNlWEJUlKK-M6c-h7e0_tln0n8IPgQJ");'></div>
+<div class="text-left hidden lg:block">
+<p class="text-sm font-medium leading-none">Carlos R.</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Admin. Financiero</p>
+</div>
+</button>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex flex-1 overflow-hidden h-[calc(100vh-65px)]">
+<!-- Left Panel: Dimensions & Data Sandbox Tools -->
+<aside class="w-64 border-r border-slate-200 dark:border-[#293038] flex flex-col bg-white dark:bg-[#161b22] z-10 hidden lg:flex">
+<div class="p-4 border-b border-slate-200 dark:border-[#293038]">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">Bibliotecas de Datos</h3>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-2 text-slate-400">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</span>
+<input class="w-full bg-slate-50 dark:bg-[#0d1117] border border-slate-200 dark:border-[#30363d] rounded text-sm py-1.5 pl-8 text-slate-700 dark:text-slate-200 focus:outline-none focus:border-primary" placeholder="Buscar métrica..." type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-6">
+<!-- Group: Dimensions -->
+<div>
+<div class="flex items-center justify-between mb-2 px-1">
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Dimensiones</span>
+<span class="material-symbols-outlined text-[16px] text-slate-400 cursor-pointer">add</span>
+</div>
+<div class="space-y-1">
+<div class="draggable-item flex items-center gap-2 p-2 rounded cursor-move hover:bg-slate-100 dark:hover:bg-[#21262d] group border border-transparent hover:border-slate-200 dark:hover:border-[#30363d]">
+<span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:text-primary">calendar_month</span>
+<span class="text-sm">Fecha (Mes/Año)</span>
+</div>
+<div class="draggable-item flex items-center gap-2 p-2 rounded cursor-move hover:bg-slate-100 dark:hover:bg-[#21262d] group border border-transparent hover:border-slate-200 dark:hover:border-[#30363d]">
+<span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:text-primary">public</span>
+<span class="text-sm">Región / País</span>
+</div>
+<div class="draggable-item flex items-center gap-2 p-2 rounded cursor-move hover:bg-slate-100 dark:hover:bg-[#21262d] group border border-transparent hover:border-slate-200 dark:hover:border-[#30363d]">
+<span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:text-primary">category</span>
+<span class="text-sm">Categoría Producto</span>
+</div>
+<div class="draggable-item flex items-center gap-2 p-2 rounded cursor-move hover:bg-slate-100 dark:hover:bg-[#21262d] group border border-transparent hover:border-slate-200 dark:hover:border-[#30363d]">
+<span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:text-primary">group</span>
+<span class="text-sm">Segmento Cliente</span>
+</div>
+</div>
+</div>
+<!-- Group: Metrics -->
+<div>
+<div class="flex items-center justify-between mb-2 px-1">
+<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Métricas</span>
+<span class="material-symbols-outlined text-[16px] text-slate-400 cursor-pointer">add</span>
+</div>
+<div class="space-y-1">
+<div class="draggable-item flex items-center gap-2 p-2 rounded cursor-move hover:bg-slate-100 dark:hover:bg-[#21262d] group border border-transparent hover:border-slate-200 dark:hover:border-[#30363d]">
+<span class="material-symbols-outlined text-[18px] text-green-500">attach_money</span>
+<span class="text-sm">Ingresos Totales</span>
+</div>
+<div class="draggable-item flex items-center gap-2 p-2 rounded cursor-move hover:bg-slate-100 dark:hover:bg-[#21262d] group border border-transparent hover:border-slate-200 dark:hover:border-[#30363d]">
+<span class="material-symbols-outlined text-[18px] text-blue-500">trending_up</span>
+<span class="text-sm">MRR (Recurrente)</span>
+</div>
+<div class="draggable-item flex items-center gap-2 p-2 rounded cursor-move hover:bg-slate-100 dark:hover:bg-[#21262d] group border border-transparent hover:border-slate-200 dark:hover:border-[#30363d]">
+<span class="material-symbols-outlined text-[18px] text-red-400">person_remove</span>
+<span class="text-sm">Churn Rate</span>
+</div>
+<div class="draggable-item flex items-center gap-2 p-2 rounded cursor-move hover:bg-slate-100 dark:hover:bg-[#21262d] group border border-transparent hover:border-slate-200 dark:hover:border-[#30363d]">
+<span class="material-symbols-outlined text-[18px] text-purple-400">insights</span>
+<span class="text-sm">LTV Predicho</span>
+<span class="ml-auto text-[10px] bg-purple-500/20 text-purple-300 px-1.5 rounded">AI</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-[#293038] bg-slate-50 dark:bg-[#0d1117]">
+<div class="flex items-start gap-3 p-3 rounded-lg border border-purple-500/30 bg-purple-500/10">
+<span class="material-symbols-outlined text-purple-400 text-xl mt-0.5">smart_toy</span>
+<div>
+<p class="text-xs font-semibold text-purple-200 mb-1">Nexus AI Activo</p>
+<p class="text-[11px] text-slate-400 leading-snug">Analizando patrones en tiempo real. 2 anomalías detectadas hoy.</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 overflow-y-auto custom-scrollbar bg-slate-100 dark:bg-[#0b0e11] p-6 relative">
+<!-- Contextual Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6 sticky top-0 z-20 bg-slate-100/90 dark:bg-[#0b0e11]/90 backdrop-blur-sm py-2">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Panel Ejecutivo Q4</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400">Última actualización: hace 5 minutos por ML Model v4.2</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-[#21262d] border border-slate-200 dark:border-[#30363d] px-3 shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-[18px] text-slate-500">calendar_today</span>
+<span class="text-sm font-medium">Este Año</span>
+</button>
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-[#21262d] border border-slate-200 dark:border-[#30363d] px-3 shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-[18px] text-slate-500">filter_list</span>
+<span class="text-sm font-medium">Filtros</span>
+</button>
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-lg bg-primary text-white px-4 shadow-sm hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span class="text-sm font-medium">Nuevo Tablero</span>
+</button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
+<!-- KPI Card 1 -->
+<div class="p-5 rounded-xl bg-white dark:bg-[#161b22] border border-slate-200 dark:border-[#30363d] shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-slate-400 text-[20px] cursor-pointer">more_horiz</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<div class="p-1.5 rounded-md bg-blue-500/10 text-blue-500">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<h4 class="text-sm font-medium text-slate-500 dark:text-slate-400">Ingresos Recurrentes (ARR)</h4>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">$2.4M</span>
+<span class="text-sm font-medium text-emerald-500 flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_upward</span> 12%</span>
+</div>
+<div class="mt-4 h-1 bg-slate-100 dark:bg-[#30363d] rounded-full overflow-hidden">
+<div class="h-full bg-blue-500 w-[75%] rounded-full"></div>
+</div>
+<p class="text-xs text-slate-400 mt-2">vs. objetivo anual</p>
+</div>
+<!-- KPI Card 2 -->
+<div class="p-5 rounded-xl bg-white dark:bg-[#161b22] border border-slate-200 dark:border-[#30363d] shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-slate-400 text-[20px] cursor-pointer">more_horiz</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<div class="p-1.5 rounded-md bg-red-500/10 text-red-500">
+<span class="material-symbols-outlined text-[20px]">group_off</span>
+</div>
+<h4 class="text-sm font-medium text-slate-500 dark:text-slate-400">Churn Rate Mensual</h4>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">1.2%</span>
+<span class="text-sm font-medium text-emerald-500 flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_downward</span> 0.3%</span>
+</div>
+<div class="mt-4 h-1 bg-slate-100 dark:bg-[#30363d] rounded-full overflow-hidden">
+<div class="h-full bg-red-500 w-[12%] rounded-full"></div>
+</div>
+<p class="text-xs text-slate-400 mt-2">Mejor que el promedio del sector</p>
+</div>
+<!-- KPI Card 3 -->
+<div class="p-5 rounded-xl bg-white dark:bg-[#161b22] border border-slate-200 dark:border-[#30363d] shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-slate-400 text-[20px] cursor-pointer">more_horiz</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<div class="p-1.5 rounded-md bg-purple-500/10 text-purple-400">
+<span class="material-symbols-outlined text-[20px]">query_stats</span>
+</div>
+<h4 class="text-sm font-medium text-slate-500 dark:text-slate-400">Cash Flow Proyectado (Q4)</h4>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">$450k</span>
+<span class="text-sm font-medium text-emerald-500 flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_upward</span> 8%</span>
+</div>
+<div class="mt-3 flex items-center gap-2 text-xs text-purple-400 bg-purple-500/10 px-2 py-1 rounded w-fit">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> Predicción ML (Confianza 92%)
+                    </div>
+</div>
+<!-- KPI Card 4 -->
+<div class="p-5 rounded-xl bg-white dark:bg-[#161b22] border border-slate-200 dark:border-[#30363d] shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-slate-400 text-[20px] cursor-pointer">more_horiz</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<div class="p-1.5 rounded-md bg-orange-500/10 text-orange-500">
+<span class="material-symbols-outlined text-[20px]">diamond</span>
+</div>
+<h4 class="text-sm font-medium text-slate-500 dark:text-slate-400">Valor de Vida (LTV)</h4>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">$12.5k</span>
+<span class="text-sm font-medium text-red-500 flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_downward</span> 1.5%</span>
+</div>
+<div class="mt-4 h-1 bg-slate-100 dark:bg-[#30363d] rounded-full overflow-hidden">
+<div class="h-full bg-orange-500 w-[60%] rounded-full"></div>
+</div>
+<p class="text-xs text-slate-400 mt-2">Bajo rendimiento en segmento SMB</p>
+</div>
+</div>
+<!-- Main Charts Section -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
+<!-- Chart 1: Predictive Cash Flow (Takes 2 columns) -->
+<div class="xl:col-span-2 p-6 rounded-xl bg-white dark:bg-[#161b22] border border-slate-200 dark:border-[#30363d] shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Pronóstico de Flujo de Caja (12 Meses)</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span> Histórico
+                                <span class="w-2 h-2 rounded-full bg-purple-500 ml-2"></span> Predicción IA
+                            </p>
+</div>
+<button class="text-sm text-primary hover:text-primary/80 font-medium">Ver detalles completos</button>
+</div>
+<div class="relative flex-1 min-h-[300px] w-full bg-gradient-to-b from-transparent to-slate-50 dark:to-[#0d1117]/50 rounded-lg p-4">
+<!-- Simulated Chart SVG -->
+<svg class="w-full h-full overflow-visible" viewbox="0 0 800 300">
+<!-- Grid Lines -->
+<line opacity="0.3" stroke="#334155" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="250" y2="250"></line>
+<line opacity="0.3" stroke="#334155" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="180" y2="180"></line>
+<line opacity="0.3" stroke="#334155" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="110" y2="110"></line>
+<line opacity="0.3" stroke="#334155" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="40" y2="40"></line>
+<!-- Confidence Interval Area (Prediction) -->
+<path d="M500,150 Q600,100 800,80 L800,220 Q600,200 500,150 Z" fill="#a855f7" fill-opacity="0.1"></path>
+<!-- Historical Line (Solid Blue) -->
+<path d="M0,220 C50,210 100,240 150,200 S250,150 350,180 S450,160 500,150" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-width="3"></path>
+<!-- Prediction Line (Dashed Purple) -->
+<path d="M500,150 C550,140 650,120 800,100" fill="none" stroke="#a855f7" stroke-dasharray="6 4" stroke-linecap="round" stroke-width="3"></path>
+<!-- Points -->
+<circle class="fill-white dark:fill-[#161b22]" cx="500" cy="150" fill="#white" r="5" stroke="#3b82f6" stroke-width="2"></circle>
+<circle class="fill-white dark:fill-[#161b22]" cx="800" cy="100" fill="#white" r="5" stroke="#a855f7" stroke-width="2"></circle>
+<!-- Annotation -->
+<g transform="translate(520, 120)">
+<rect fill="#1e293b" height="24" opacity="0.9" rx="4" width="120" x="0" y="0"></rect>
+<text fill="white" font-family="Inter" font-size="10" x="10" y="16">Inicio de Predicción</text>
+</g>
+</svg>
+<!-- X Axis Labels -->
+<div class="flex justify-between text-xs text-slate-400 mt-2 px-1">
+<span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span>
+<span class="text-purple-400 font-bold">Jul (Hoy)</span>
+<span class="text-purple-400">Ago</span><span class="text-purple-400">Sep</span><span class="text-purple-400">Oct</span><span class="text-purple-400">Nov</span><span class="text-purple-400">Dic</span>
+</div>
+</div>
+</div>
+<!-- Chart 2: Heatmap Sales by Region -->
+<div class="xl:col-span-1 p-6 rounded-xl bg-white dark:bg-[#161b22] border border-slate-200 dark:border-[#30363d] shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Mapa de Ventas</h3>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">more_vert</span>
+</div>
+<div class="flex-1 bg-slate-100 dark:bg-[#0d1117] rounded-lg overflow-hidden relative">
+<!-- Map Placeholder with data-location -->
+<div class="w-full h-full bg-cover bg-center opacity-80" data-alt="World map showing sales density with heatmap overlay" data-location="Global" style='background-image: url("https://placeholder.pics/svg/300");'>
+</div>
+<!-- Overlay Heatmap Points (Simulated) -->
+<div class="absolute top-[30%] left-[25%] size-8 bg-primary/40 rounded-full blur-sm"></div>
+<div class="absolute top-[35%] left-[45%] size-12 bg-primary/60 rounded-full blur-md"></div>
+<div class="absolute top-[40%] left-[80%] size-6 bg-primary/30 rounded-full blur-sm"></div>
+<!-- Hover Card (Simulated) -->
+<div class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-[#1e293b]/90 backdrop-blur p-3 rounded-lg border border-slate-200 dark:border-slate-600 shadow-lg">
+<div class="flex justify-between items-center mb-1">
+<span class="text-xs font-bold text-slate-700 dark:text-slate-200">Europa</span>
+<span class="text-xs text-emerald-500 font-medium">+8% YoY</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary w-[65%] h-full"></div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 mt-1">
+<span>$1.2M Ventas</span>
+<span>Target: $1.8M</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Cohort Analysis & Sandbox Drop Zone -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6 pb-6">
+<!-- Cohort Analysis Table -->
+<div class="p-6 rounded-xl bg-white dark:bg-[#161b22] border border-slate-200 dark:border-[#30363d] shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Retención de Clientes (Cohortes)</h3>
+<div class="flex gap-2">
+<span class="text-xs px-2 py-1 rounded bg-slate-100 dark:bg-[#21262d] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-[#30363d]">Por Ingresos</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-xs text-center border-collapse">
+<thead>
+<tr>
+<th class="p-2 text-left text-slate-500 font-medium">Cohorte</th>
+<th class="p-2 text-slate-500 font-medium">Mes 0</th>
+<th class="p-2 text-slate-500 font-medium">Mes 1</th>
+<th class="p-2 text-slate-500 font-medium">Mes 2</th>
+<th class="p-2 text-slate-500 font-medium">Mes 3</th>
+<th class="p-2 text-slate-500 font-medium">Mes 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="p-2 text-left font-medium text-slate-700 dark:text-slate-300">Ene 2024</td>
+<td class="p-1"><div class="bg-blue-600/90 text-white py-1 rounded">100%</div></td>
+<td class="p-1"><div class="bg-blue-600/80 text-white py-1 rounded">94%</div></td>
+<td class="p-1"><div class="bg-blue-600/70 text-white py-1 rounded">88%</div></td>
+<td class="p-1"><div class="bg-blue-600/60 text-white py-1 rounded">85%</div></td>
+<td class="p-1"><div class="bg-blue-600/50 text-white py-1 rounded">82%</div></td>
+</tr>
+<tr>
+<td class="p-2 text-left font-medium text-slate-700 dark:text-slate-300">Feb 2024</td>
+<td class="p-1"><div class="bg-blue-600/90 text-white py-1 rounded">100%</div></td>
+<td class="p-1"><div class="bg-blue-600/85 text-white py-1 rounded">96%</div></td>
+<td class="p-1"><div class="bg-blue-600/75 text-white py-1 rounded">91%</div></td>
+<td class="p-1"><div class="bg-blue-600/65 text-white py-1 rounded">87%</div></td>
+<td class="p-1"></td>
+</tr>
+<tr>
+<td class="p-2 text-left font-medium text-slate-700 dark:text-slate-300">Mar 2024</td>
+<td class="p-1"><div class="bg-blue-600/90 text-white py-1 rounded">100%</div></td>
+<td class="p-1"><div class="bg-blue-600/80 text-white py-1 rounded">92%</div></td>
+<td class="p-1"><div class="bg-blue-600/70 text-white py-1 rounded">89%</div></td>
+<td class="p-1"></td>
+<td class="p-1"></td>
+</tr>
+<tr>
+<td class="p-2 text-left font-medium text-slate-700 dark:text-slate-300">Abr 2024</td>
+<td class="p-1"><div class="bg-blue-600/90 text-white py-1 rounded">100%</div></td>
+<td class="p-1"><div class="bg-blue-600/85 text-white py-1 rounded">95%</div></td>
+<td class="p-1"></td>
+<td class="p-1"></td>
+<td class="p-1"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Sandbox Drop Zone / Empty State -->
+<div class="p-6 rounded-xl border-2 border-dashed border-slate-300 dark:border-[#30363d] flex flex-col items-center justify-center text-center bg-slate-50/50 dark:bg-[#0d1117]/30 group hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-[#0d1117]/50 transition-all cursor-pointer h-full min-h-[250px]">
+<div class="size-16 rounded-full bg-slate-100 dark:bg-[#21262d] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px] text-slate-400 group-hover:text-primary">drag_indicator</span>
+</div>
+<h3 class="text-lg font-medium text-slate-700 dark:text-slate-200 mb-2">Zona de Sandbox</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 max-w-xs">Arrastra dimensiones y métricas desde el panel izquierdo aquí para generar visualizaciones personalizadas al instante.</p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

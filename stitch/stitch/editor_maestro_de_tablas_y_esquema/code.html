@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ethereal Command - Maestro de Tablas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=League+Spartan:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#060e20",
+              "primary-fixed-dim": "#c0c1ff",
+              "on-secondary-container": "#c4abff",
+              "surface-container-highest": "#2d3449",
+              "primary-fixed": "#e1e0ff",
+              "primary": "#c0c1ff",
+              "on-tertiary": "#003640",
+              "on-secondary": "#3c0091",
+              "on-primary-fixed": "#07006c",
+              "surface-container": "#171f33",
+              "inverse-on-surface": "#283044",
+              "inverse-surface": "#dae2fd",
+              "surface-bright": "#31394d",
+              "outline-variant": "#464554",
+              "on-surface": "#dae2fd",
+              "primary-container": "#8083ff",
+              "secondary-fixed": "#e9ddff",
+              "tertiary-container": "#009eb9",
+              "surface-variant": "#2d3449",
+              "on-primary-fixed-variant": "#2f2ebe",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed-variant": "#5516be",
+              "tertiary-fixed": "#acedff",
+              "surface-tint": "#c0c1ff",
+              "surface-container-low": "#131b2e",
+              "on-primary-container": "#0d0096",
+              "on-tertiary-container": "#002f38",
+              "on-primary": "#1000a9",
+              "on-tertiary-fixed-variant": "#004e5c",
+              "on-error": "#690005",
+              "error-container": "#93000a",
+              "secondary-fixed-dim": "#d0bcff",
+              "outline": "#908fa0",
+              "surface-dim": "#0b1326",
+              "background": "#0b1326",
+              "on-surface-variant": "#c7c4d7",
+              "error": "#ffb4ab",
+              "secondary-container": "#571bc1",
+              "on-tertiary-fixed": "#001f26",
+              "on-secondary-fixed": "#23005c",
+              "tertiary": "#4cd7f6",
+              "on-background": "#dae2fd",
+              "surface-container-high": "#222a3d",
+              "surface": "#0b1326",
+              "inverse-primary": "#494bd6",
+              "tertiary-fixed-dim": "#4cd7f6",
+              "secondary": "#d0bcff"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "spartan": ["League Spartan"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .ghost-border {
+        outline: 1px solid rgba(70, 69, 84, 0.2);
+      }
+      .zenith-gradient {
+        background: linear-gradient(135deg, #c0c1ff 0%, #8083ff 100%);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #2d3449;
+        border-radius: 10px;
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 antialiased">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col h-screen w-64 border-r border-white/10 bg-slate-900/50 backdrop-blur-xl z-50">
+<div class="p-8">
+<div class="text-xl font-bold bg-gradient-to-br from-indigo-300 to-indigo-500 bg-clip-text text-transparent font-headline tracking-tight">
+                Ethereal Command
+            </div>
+<div class="text-[10px] uppercase tracking-widest text-slate-500 font-label mt-1">Database Manager</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<!-- Schema Explorer Active -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-indigo-300 bg-white/5 border-l-2 border-indigo-500 font-headline transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-xl">database</span>
+<span class="text-sm">Schema Explorer</span>
+</a>
+<!-- Table Editor -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-xl">table_chart</span>
+<span class="text-sm">Table Editor</span>
+</a>
+<!-- Audit Logs -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-xl">history_edu</span>
+<span class="text-sm">Audit Logs</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="text-sm">Settings</span>
+</a>
+</nav>
+<div class="mt-auto p-4 space-y-4 border-t border-white/5">
+<button class="w-full flex items-center justify-center gap-2 py-3 px-4 zenith-gradient text-on-primary font-headline font-bold rounded-xl shadow-lg hover:opacity-90 active:scale-[0.99] transition-all">
+<span class="material-symbols-outlined">add</span>
+<span>New Table</span>
+</button>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-xs text-slate-400 hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">description</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-xs text-slate-400 hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen flex flex-col bg-surface overflow-x-hidden">
+<!-- TopNavBar Shell -->
+<header class="flex justify-between items-center w-full px-8 py-6 bg-slate-900/30 backdrop-blur-md sticky top-0 z-40">
+<div class="flex items-center gap-8">
+<h1 class="font-headline font-black tracking-tighter text-indigo-100 text-2xl">ZENITH ERP</h1>
+<nav class="hidden md:flex items-center gap-6 font-body font-medium antialiased">
+<a class="text-slate-400 hover:text-indigo-200 transition-all text-sm" href="#">Cluster-01</a>
+<a class="text-slate-400 hover:text-indigo-200 transition-all text-sm" href="#">Staging</a>
+<a class="text-indigo-400 border-b-2 border-indigo-400 pb-1 text-sm" href="#">Production</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<input class="bg-surface-container-highest/50 border-none rounded-full px-5 py-2 text-sm w-64 focus:ring-1 focus:ring-primary/50 text-on-surface placeholder:text-slate-500 transition-all" placeholder="Search tables or schemas..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-slate-500 text-lg">search</span>
+</div>
+<div class="flex items-center gap-4 text-slate-400">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">cloud_done</span></button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-white/10 cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="System administrator profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTQp-NeOm6qkt3mJ7zHHTdm36cynjOH20lhFIJOBppvjQjwjFnd7qOtVrgcdlm5grweQzyKDLE3ZTXHxBTauilDuzOKOcyLgnXpSNCdccbKiNuW7h_enay2RQVKXl5sm2IS-YorlcdPIU3-OfqYtMGKDLDC0mmL5-MDWFYtV3LNWmJLtdgAJ_MT9pXZsZY1Qmx1SuZWijtNgOnZrj_--WstLgmFJPDIP5njviULPqMj_hso3kQBT8qPBCd28f-U1GViCWeiNRnDOI"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 space-y-8 flex-1">
+<!-- Zenith Metric Hero Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="col-span-1 glass ghost-border rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/5 rounded-full blur-[80px]"></div>
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-label uppercase tracking-widest text-slate-400">Total Tables</span>
+<span class="material-symbols-outlined text-tertiary">database</span>
+</div>
+<div class="font-headline text-5xl font-bold tracking-tight mb-2">1,284</div>
+<div class="text-xs text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+12 this month</span>
+</div>
+</div>
+<div class="col-span-1 glass ghost-border rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-tertiary/5 rounded-full blur-[80px]"></div>
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-label uppercase tracking-widest text-slate-400">Cluster Load</span>
+<span class="material-symbols-outlined text-primary">analytics</span>
+</div>
+<div class="font-headline text-5xl font-bold tracking-tight mb-2">24.8%</div>
+<div class="text-xs text-slate-400 flex items-center gap-1">
+<span>Optimal Performance</span>
+</div>
+</div>
+<div class="col-span-1 glass ghost-border rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-error/5 rounded-full blur-[80px]"></div>
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-label uppercase tracking-widest text-slate-400">Database Uptime</span>
+<span class="material-symbols-outlined text-secondary">cloud_done</span>
+</div>
+<div class="font-headline text-5xl font-bold tracking-tight mb-2">99.99<span class="text-2xl">%</span></div>
+<div class="text-xs text-slate-400">Service level guaranteed</div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Module Explorer Sidebar -->
+<div class="col-span-12 lg:col-span-3 space-y-6">
+<div class="bg-surface-container-low rounded-xl p-4">
+<h3 class="text-sm font-headline font-bold text-slate-300 px-2 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">folder_open</span>
+                            MODULOS ERP
+                        </h3>
+<div class="space-y-1">
+<details class="group" open="">
+<summary class="flex items-center justify-between px-3 py-2 text-sm text-on-surface-variant hover:bg-white/5 rounded-lg cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg text-primary">precision_manufacturing</span>
+<span>Operativo</span>
+</div>
+<span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="ml-9 mt-1 space-y-1 border-l border-white/5">
+<a class="block px-3 py-1.5 text-xs text-primary bg-primary/5 rounded-r-lg" href="#">tbl_ordenes_trabajo</a>
+<a class="block px-3 py-1.5 text-xs text-slate-400 hover:text-on-surface" href="#">tbl_inventario_materias</a>
+<a class="block px-3 py-1.5 text-xs text-slate-400 hover:text-on-surface" href="#">tbl_logistica_rutas</a>
+</div>
+</details>
+<details class="group">
+<summary class="flex items-center justify-between px-3 py-2 text-sm text-on-surface-variant hover:bg-white/5 rounded-lg cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg text-tertiary">payments</span>
+<span>Comercial</span>
+</div>
+<span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="ml-9 mt-1 space-y-1 border-l border-white/5">
+<a class="block px-3 py-1.5 text-xs text-slate-400 hover:text-on-surface" href="#">tbl_facturacion_emitida</a>
+<a class="block px-3 py-1.5 text-xs text-slate-400 hover:text-on-surface" href="#">tbl_clientes_crm</a>
+</div>
+</details>
+<details class="group">
+<summary class="flex items-center justify-between px-3 py-2 text-sm text-on-surface-variant hover:bg-white/5 rounded-lg cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg text-secondary">groups</span>
+<span>Recursos Humanos</span>
+</div>
+<span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+</details>
+<details class="group">
+<summary class="flex items-center justify-between px-3 py-2 text-sm text-on-surface-variant hover:bg-white/5 rounded-lg cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg text-slate-400">admin_panel_settings</span>
+<span>Configuración</span>
+</div>
+<span class="material-symbols-outlined text-sm group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+</details>
+</div>
+</div>
+<!-- Audit Log Sidebar Snippet -->
+<div class="bg-surface-container-low rounded-xl p-4 overflow-hidden">
+<h3 class="text-sm font-headline font-bold text-slate-300 px-2 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-secondary">history</span>
+                            AUDITORÍA RECIENTE
+                        </h3>
+<div class="space-y-4 max-h-64 overflow-y-auto custom-scrollbar pr-2">
+<div class="flex gap-3 text-xs">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+<div>
+<p class="text-on-surface font-medium">ALTER TABLE</p>
+<p class="text-slate-500">tbl_ordenes_trabajo</p>
+<div class="flex justify-between mt-1 text-[10px] text-slate-600">
+<span>admin_user</span>
+<span>2m ago</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3 text-xs">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary mt-1.5 shrink-0"></div>
+<div>
+<p class="text-on-surface font-medium">CREATE INDEX</p>
+<p class="text-slate-500">idx_cliente_id</p>
+<div class="flex justify-between mt-1 text-[10px] text-slate-600">
+<span>sys_master</span>
+<span>15m ago</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3 text-xs">
+<div class="w-1.5 h-1.5 rounded-full bg-error mt-1.5 shrink-0"></div>
+<div>
+<p class="text-on-surface font-medium">DROP TABLE</p>
+<p class="text-slate-500">temp_cache_v1</p>
+<div class="flex justify-between mt-1 text-[10px] text-slate-600">
+<span>root</span>
+<span>1h ago</span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 text-xs text-primary hover:bg-primary/5 rounded-lg border border-primary/20 transition-all">
+                            Ver Reporte Completo
+                        </button>
+</div>
+</div>
+<!-- Main Content Editor -->
+<div class="col-span-12 lg:col-span-9">
+<div class="bg-surface-container rounded-2xl overflow-hidden glass border border-white/5">
+<!-- Table Header -->
+<div class="p-8 border-b border-white/5 flex flex-wrap justify-between items-center gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h2 class="text-3xl font-headline font-bold tracking-tight">tbl_ordenes_trabajo</h2>
+<span class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] rounded uppercase font-bold tracking-wider">Public</span>
+</div>
+<p class="text-slate-400 text-sm">Gestiona el ciclo de vida de las órdenes de producción operativa.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-sm border border-white/5 transition-all">
+<span class="material-symbols-outlined text-lg">visibility</span>
+                                    Ver Datos
+                                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-sm border border-white/5 transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+                                    Editar Estructura
+                                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl bg-error/10 hover:bg-error/20 text-error text-sm border border-error/20 transition-all">
+<span class="material-symbols-outlined text-lg">delete</span>
+                                    Eliminar
+                                </button>
+</div>
+</div>
+<!-- Table Schema View -->
+<div class="p-0 overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 text-xs font-label uppercase tracking-widest text-slate-500">Columna</th>
+<th class="px-8 py-4 text-xs font-label uppercase tracking-widest text-slate-500">Tipo</th>
+<th class="px-8 py-4 text-xs font-label uppercase tracking-widest text-slate-500">PK</th>
+<th class="px-8 py-4 text-xs font-label uppercase tracking-widest text-slate-500">FK</th>
+<th class="px-8 py-4 text-xs font-label uppercase tracking-widest text-slate-500">Nullable</th>
+<th class="px-8 py-4 text-xs font-label uppercase tracking-widest text-slate-500">Default</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">key</span>
+<span class="font-medium">id_orden</span>
+</div>
+</td>
+<td class="px-8 py-5"><code class="text-xs bg-surface-container-highest px-2 py-1 rounded text-primary-fixed">UUID</code></td>
+<td class="px-8 py-5"><span class="material-symbols-outlined text-primary text-lg">check_circle</span></td>
+<td class="px-8 py-5"><span class="text-slate-600">—</span></td>
+<td class="px-8 py-5"><span class="text-slate-400">NO</span></td>
+<td class="px-8 py-5 text-slate-500 italic">gen_random_uuid()</td>
+</tr>
+<tr class="bg-white/[0.01] hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-600 text-sm">link</span>
+<span class="font-medium">cliente_id</span>
+</div>
+</td>
+<td class="px-8 py-5"><code class="text-xs bg-surface-container-highest px-2 py-1 rounded text-primary-fixed">INT8</code></td>
+<td class="px-8 py-5"></td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-1.5 text-xs text-tertiary">
+<span class="material-symbols-outlined text-sm">database</span>
+                                                tbl_clientes(id)
+                                            </div>
+</td>
+<td class="px-8 py-5"><span class="text-slate-400">NO</span></td>
+<td class="px-8 py-5 text-slate-600">—</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-600 text-sm">short_text</span>
+<span class="font-medium">codigo_seguimiento</span>
+</div>
+</td>
+<td class="px-8 py-5"><code class="text-xs bg-surface-container-highest px-2 py-1 rounded text-primary-fixed">VARCHAR(24)</code></td>
+<td class="px-8 py-5"></td>
+<td class="px-8 py-5"></td>
+<td class="px-8 py-5"><span class="text-slate-400">YES</span></td>
+<td class="px-8 py-5 text-slate-600">—</td>
+</tr>
+<tr class="bg-white/[0.01] hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-600 text-sm">calendar_today</span>
+<span class="font-medium">fecha_creacion</span>
+</div>
+</td>
+<td class="px-8 py-5"><code class="text-xs bg-surface-container-highest px-2 py-1 rounded text-primary-fixed">TIMESTAMPTZ</code></td>
+<td class="px-8 py-5"></td>
+<td class="px-8 py-5"></td>
+<td class="px-8 py-5"><span class="text-slate-400">NO</span></td>
+<td class="px-8 py-5 text-slate-500 italic">now()</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-600 text-sm">payments</span>
+<span class="font-medium">monto_total</span>
+</div>
+</td>
+<td class="px-8 py-5"><code class="text-xs bg-surface-container-highest px-2 py-1 rounded text-primary-fixed">NUMERIC(12,2)</code></td>
+<td class="px-8 py-5"></td>
+<td class="px-8 py-5"></td>
+<td class="px-8 py-5"><span class="text-slate-400">NO</span></td>
+<td class="px-8 py-5 text-slate-600">0.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Action Bar -->
+<div class="p-6 bg-surface-container-low/30 flex justify-between items-center">
+<div class="flex items-center gap-4 text-xs text-slate-500">
+<span>Total: 12 columnas</span>
+<span>Indices: 3</span>
+<span>Storage: 4.2 MB</span>
+</div>
+<button class="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-bold transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                                Agregar Nueva Columna
+                            </button>
+</div>
+</div>
+<!-- Database Audit Report Section (Extended View) -->
+<div class="mt-8 glass rounded-2xl p-8 ghost-border">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-xl font-headline font-bold">Reporte de Auditoría de Base de Datos</h2>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-highest rounded-lg text-slate-400 hover:text-white transition-all"><span class="material-symbols-outlined">filter_list</span></button>
+<button class="p-2 bg-surface-container-highest rounded-lg text-slate-400 hover:text-white transition-all"><span class="material-symbols-outlined">download</span></button>
+</div>
+</div>
+<div class="space-y-4">
+<div class="grid grid-cols-12 gap-4 p-4 rounded-xl hover:bg-white/5 transition-all border-l-4 border-primary">
+<div class="col-span-1 text-slate-500 text-xs">14:22:10</div>
+<div class="col-span-2 font-bold text-primary">ALTER TABLE</div>
+<div class="col-span-5 text-sm text-slate-300">Added column <code class="text-tertiary">priority_level</code> to <code class="text-tertiary">tbl_ordenes_trabajo</code></div>
+<div class="col-span-2 text-xs text-slate-400 flex items-center gap-1"><span class="material-symbols-outlined text-sm">person</span> admin_system</div>
+<div class="col-span-2 text-right"><span class="px-2 py-1 bg-green-500/10 text-green-400 text-[10px] rounded uppercase font-bold">Success</span></div>
+</div>
+<div class="grid grid-cols-12 gap-4 p-4 rounded-xl hover:bg-white/5 transition-all border-l-4 border-tertiary">
+<div class="col-span-1 text-slate-500 text-xs">12:05:45</div>
+<div class="col-span-2 font-bold text-tertiary">CREATE INDEX</div>
+<div class="col-span-5 text-sm text-slate-300">New GIN index created for <code class="text-tertiary">metadata_json</code></div>
+<div class="col-span-2 text-xs text-slate-400 flex items-center gap-1"><span class="material-symbols-outlined text-sm">person</span> db_architect</div>
+<div class="col-span-2 text-right"><span class="px-2 py-1 bg-green-500/10 text-green-400 text-[10px] rounded uppercase font-bold">Success</span></div>
+</div>
+<div class="grid grid-cols-12 gap-4 p-4 rounded-xl hover:bg-white/5 transition-all border-l-4 border-error">
+<div class="col-span-1 text-slate-500 text-xs">09:15:33</div>
+<div class="col-span-2 font-bold text-error">REVOKE ACCESS</div>
+<div class="col-span-5 text-sm text-slate-300">Restricted DELETE permissions for <code class="text-tertiary">analyst_role</code></div>
+<div class="col-span-2 text-xs text-slate-400 flex items-center gap-1"><span class="material-symbols-outlined text-sm">person</span> security_admin</div>
+<div class="col-span-2 text-right"><span class="px-2 py-1 bg-green-500/10 text-green-400 text-[10px] rounded uppercase font-bold">Success</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Decoration -->
+<footer class="mt-auto p-8 border-t border-white/5 text-center text-slate-600 text-xs font-label uppercase tracking-[0.2em]">
+            Zenith OS • Ethereal Command Engine v2.4.0 • Cluster Stable
+        </footer>
+</main>
+<!-- Floating Action Button -->
+<div class="fixed bottom-10 right-10">
+<button class="zenith-gradient w-14 h-14 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(192,193,255,0.4)] text-on-primary hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</body></html>

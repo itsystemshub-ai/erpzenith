@@ -1,34 +1,13 @@
 {
-  "name": "erp-zenith",
-  "version": "1.0.0",
-  "description": "Sistema ERP Profesional para Venezuela",
+  "name": "erpzenith",
   "private": true,
-  "packageManager": "npm@11.8.0",
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "packages/skills",
-    "packages/skills/automation/tasa-bcv"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "db:migrate": "turbo run db:migrate --filter=backend",
-    "db:generate": "turbo run db:generate --filter=backend",
-    "db:studio": "turbo run db:studio --filter=backend",
-    "skills:tasa-bcv": "cd packages/skills/automation/tasa-bcv && node --experimental-modules src/index.js",
-    "skills:tasa-bcv:watch": "cd packages/skills/automation/tasa-bcv && node --watch --experimental-modules src/index.js",
-    "skills:install": "npm install"
+    "lint": "turbo run lint"
   },
   "devDependencies": {
-    "turbo": "^2.0.0",
-    "typescript": "^5.5.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "author": "ERP ZENITH Team",
-  "license": "PROPRIETARY"
+    "turbo": "^2.0.0"
+  }
 }

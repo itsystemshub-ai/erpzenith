@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Constructor de Automatizaciones - ERP SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "primary-light": "#eef6fd",
+                        "primary-dark": "#165ea6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                        "border-light": "#e2e8f0",
+                        "border-dark": "#2d3748",
+                        "text-main": "#111417",
+                        "text-secondary": "#647587",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'floating': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .workflow-line {
+            background-image: linear-gradient(to bottom, #cbd5e1 50%, rgba(255,255,255,0) 0%);
+            background-position: left;
+            background-size: 2px 10px;
+            background-repeat: repeat-y;
+        }
+        .node-hover:hover {
+            border-color: #207fdf;
+            box-shadow: 0 0 0 4px rgba(32, 127, 223, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light text-text-main h-screen overflow-hidden flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="bg-surface-light border-b border-border-light h-16 px-6 flex items-center justify-between shrink-0 z-20">
+<div class="flex items-center gap-4">
+<button class="text-text-secondary hover:text-primary transition-colors p-1 rounded-lg hover:bg-primary-light">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<div class="flex items-center gap-2 group cursor-pointer">
+<h1 class="text-lg font-bold text-text-main group-hover:text-primary transition-colors">Notificación de Ventas Altas (&gt; $5k)</h1>
+<span class="material-symbols-outlined text-text-secondary text-sm opacity-0 group-hover:opacity-100 transition-opacity">edit</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-text-secondary">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span>Activo</span>
+<span class="text-gray-300">|</span>
+<span>Última ejecución: hace 15 min</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="hidden md:flex items-center gap-2 px-3 py-2 text-sm font-medium text-text-main bg-white border border-border-light rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">history</span>
+                Historial
+            </button>
+<button class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-text-main bg-white border border-border-light rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-purple-600">auto_awesome</span>
+<span>Asistente IA</span>
+</button>
+<div class="h-6 w-px bg-border-light mx-1"></div>
+<button class="px-3 py-2 text-sm font-medium text-text-main bg-white border border-border-light rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+                Probar
+            </button>
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm shadow-blue-200">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                Guardar
+            </button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex overflow-hidden relative">
+<!-- Workflow Canvas -->
+<div class="flex-1 overflow-auto bg-background-light relative bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px]">
+<div class="min-h-full min-w-full flex justify-center p-10 pb-32">
+<div class="flex flex-col items-center max-w-[800px] w-full gap-0">
+<!-- Start/Trigger Node -->
+<div class="relative z-10 group w-full max-w-md">
+<div class="absolute -left-12 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+<div class="bg-gray-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap">Desencadenante</div>
+</div>
+<div class="bg-surface-light rounded-xl border-2 border-primary shadow-soft p-4 flex items-start gap-4 cursor-pointer hover:shadow-floating transition-shadow">
+<div class="bg-blue-100 p-2.5 rounded-lg text-primary shrink-0">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-text-main">Nueva Factura de Venta</h3>
+<span class="bg-blue-50 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Trigger</span>
+</div>
+<p class="text-sm text-text-secondary mt-1">Cuando se crea un registro en <span class="font-medium text-gray-700">Ventas</span></p>
+</div>
+<button class="text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Connector Line -->
+<div class="h-8 w-0.5 bg-gray-300"></div>
+<!-- Add Button -->
+<button class="group z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border border-gray-300 hover:border-primary hover:text-primary hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+<div class="absolute left-full ml-2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">Añadir paso</div>
+</button>
+<!-- Connector Line -->
+<div class="h-8 w-0.5 bg-gray-300"></div>
+<!-- Condition Node -->
+<div class="relative z-10 w-full max-w-md">
+<div class="bg-surface-light rounded-xl border border-border-light shadow-soft p-4 flex items-start gap-4 cursor-pointer node-hover transition-all">
+<div class="bg-orange-100 p-2.5 rounded-lg text-orange-600 shrink-0">
+<span class="material-symbols-outlined">call_split</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-text-main">Condición: Valor Alto</h3>
+<span class="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Lógica</span>
+</div>
+<p class="text-sm text-text-secondary mt-1">Si <span class="font-mono bg-gray-100 px-1 rounded text-xs">Total</span> &gt; 5000 USD</p>
+</div>
+<button class="text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Branching Lines -->
+<div class="flex w-full justify-center relative h-12">
+<!-- Vertical line from condition -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-6 bg-gray-300"></div>
+<!-- Horizontal branching line -->
+<div class="absolute top-6 left-1/2 -translate-x-1/2 w-[340px] h-0.5 bg-gray-300 border-b border-gray-300"></div>
+<!-- Vertical lines for branches -->
+<div class="absolute top-6 left-[calc(50%-170px)] w-0.5 h-6 bg-gray-300"></div>
+<div class="absolute top-6 right-[calc(50%-170px)] w-0.5 h-6 bg-gray-300"></div>
+</div>
+<!-- Branches Container -->
+<div class="flex gap-12 w-full justify-center">
+<!-- True Path (Left) -->
+<div class="flex flex-col items-center w-[300px]">
+<div class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full mb-2 border border-green-200">VERDADERO</div>
+<!-- Action Node: WhatsApp -->
+<div class="w-full relative z-10">
+<div class="bg-surface-light rounded-xl border border-primary shadow-soft p-4 flex items-start gap-4 cursor-pointer ring-2 ring-primary ring-opacity-20 hover:shadow-floating transition-all">
+<div class="bg-green-100 p-2.5 rounded-lg text-green-600 shrink-0">
+<span class="material-symbols-outlined">chat</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-text-main">Enviar WhatsApp</h3>
+<span class="bg-green-50 text-green-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Acción</span>
+</div>
+<p class="text-sm text-text-secondary mt-1">Plantilla: <span class="italic">Alerta Gerente</span></p>
+</div>
+<button class="text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="h-8 w-0.5 bg-gray-300"></div>
+<button class="group flex items-center justify-center w-8 h-8 rounded-full bg-white border border-gray-300 hover:border-primary hover:text-primary hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+<div class="h-8 w-0.5 bg-gray-300"></div>
+<!-- Action Node: Email -->
+<div class="w-full relative z-10">
+<div class="bg-surface-light rounded-xl border border-border-light shadow-soft p-4 flex items-start gap-4 cursor-pointer node-hover transition-all opacity-80 hover:opacity-100">
+<div class="bg-purple-100 p-2.5 rounded-lg text-purple-600 shrink-0">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-text-main">Enviar Correo</h3>
+<span class="bg-purple-50 text-purple-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Acción</span>
+</div>
+<p class="text-sm text-text-secondary mt-1">Asunto: Nueva venta mayor...</p>
+</div>
+</div>
+</div>
+</div>
+<!-- False Path (Right) -->
+<div class="flex flex-col items-center w-[300px]">
+<div class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full mb-2 border border-red-200">FALSO</div>
+<!-- Placeholder for empty path -->
+<div class="w-full flex justify-center py-4">
+<div class="text-sm text-gray-400 italic text-center border border-dashed border-gray-300 rounded-lg p-4 w-full bg-gray-50/50">
+                                    Sin acciones configuradas
+                                </div>
+</div>
+<button class="group mt-2 flex items-center justify-center w-8 h-8 rounded-full bg-white border border-gray-300 hover:border-primary hover:text-primary hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</div>
+<!-- End Node -->
+<div class="flex w-full justify-center relative h-12 mt-4">
+<!-- Connecting lines back to center if paths merged, simplified here for vertical flow -->
+</div>
+</div>
+</div>
+<!-- Floating Controls -->
+<div class="absolute bottom-6 left-6 flex gap-2">
+<div class="bg-white rounded-lg shadow-lg border border-border-light p-1 flex items-center">
+<button class="p-2 hover:bg-gray-100 rounded text-text-secondary" title="Zoom Out">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="text-xs font-medium w-10 text-center text-text-secondary">100%</span>
+<button class="p-2 hover:bg-gray-100 rounded text-text-secondary" title="Zoom In">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="bg-white rounded-lg shadow-lg border border-border-light p-2 text-text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">fit_screen</span>
+</button>
+</div>
+</div>
+<!-- Configuration Drawer (Right Side) -->
+<aside class="w-[400px] bg-surface-light border-l border-border-light flex flex-col shadow-xl z-20 shrink-0">
+<!-- Drawer Header -->
+<div class="p-5 border-b border-border-light flex justify-between items-center bg-gray-50/50">
+<div class="flex items-center gap-3">
+<div class="bg-green-100 p-2 rounded-lg text-green-600">
+<span class="material-symbols-outlined text-xl">chat</span>
+</div>
+<div>
+<h2 class="font-bold text-text-main">Enviar WhatsApp</h2>
+<p class="text-xs text-text-secondary">Acción - WhatsApp Business API</p>
+</div>
+</div>
+<button class="text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Drawer Content -->
+<div class="flex-1 overflow-y-auto p-5">
+<form class="flex flex-col gap-6">
+<!-- Account Selection -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-main">Cuenta Conectada</label>
+<select class="form-select block w-full rounded-lg border-border-light bg-gray-50 text-sm focus:border-primary focus:ring-primary">
+<option>WhatsApp Business (Oficina Central)</option>
+<option>WhatsApp Soporte</option>
+<option>+ Conectar nueva cuenta</option>
+</select>
+<div class="flex items-center gap-1.5 text-xs text-green-600">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                            Conexión activa
+                        </div>
+</div>
+<hr class="border-border-light"/>
+<!-- Recipient Field -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="text-sm font-semibold text-text-main">Destinatario (Teléfono)</label>
+<button class="text-xs text-primary font-medium hover:underline" type="button">Insertar variable</button>
+</div>
+<div class="relative">
+<input class="form-input block w-full rounded-lg border-border-light text-sm focus:border-primary focus:ring-primary pr-8" placeholder="+52..." type="text" value="+52 55 1234 5678"/>
+<div class="absolute right-2 top-2 text-gray-400 pointer-events-none">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+</div>
+<p class="text-xs text-text-secondary">Ingrese un número fijo o use una variable dinámica del trigger.</p>
+</div>
+<!-- Message Template -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-text-main">Plantilla de Mensaje</label>
+<select class="form-select block w-full rounded-lg border-border-light bg-gray-50 text-sm focus:border-primary focus:ring-primary mb-2">
+<option selected="">Alerta Gerente (alerta_ventas_v1)</option>
+<option>Confirmación Cliente</option>
+<option>Recordatorio Pago</option>
+</select>
+<!-- Template Preview/Editor -->
+<div class="border border-border-light rounded-lg bg-gray-50 p-3 text-sm text-text-main space-y-2">
+<p>Hola <strong>{{Gerente_Nombre}}</strong>,</p>
+<p>Se ha registrado una nueva venta de alto valor.</p>
+<div class="bg-white border border-border-light p-2 rounded text-xs text-gray-500 font-mono my-2">
+                                ID: {{Factura_ID}}<br/>
+                                Cliente: {{Cliente_Nombre}}<br/>
+                                Total: {{Monto_Total}} {{Moneda}}
+                            </div>
+<p>Por favor revisa el dashboard para más detalles.</p>
+</div>
+</div>
+<!-- Variable Mapping -->
+<div class="flex flex-col gap-3">
+<label class="text-sm font-semibold text-text-main">Mapeo de Variables</label>
+<div class="grid grid-cols-[100px_1fr] gap-2 items-center">
+<span class="text-xs text-text-secondary truncate" title="Gerente_Nombre">Gerente...</span>
+<input class="form-input py-1.5 px-3 rounded border-border-light text-xs w-full" type="text" value="Juan Pérez (Estático)"/>
+</div>
+<div class="grid grid-cols-[100px_1fr] gap-2 items-center">
+<span class="text-xs text-text-secondary truncate" title="Factura_ID">Factura_ID</span>
+<div class="flex items-center gap-1 bg-blue-100 text-primary border border-blue-200 px-2 py-1 rounded text-xs w-full cursor-pointer hover:bg-blue-200">
+<span class="material-symbols-outlined text-[14px]">receipt_long</span>
+                                1. ID Factura
+                            </div>
+</div>
+<div class="grid grid-cols-[100px_1fr] gap-2 items-center">
+<span class="text-xs text-text-secondary truncate" title="Monto_Total">Monto_Total</span>
+<div class="flex items-center gap-1 bg-blue-100 text-primary border border-blue-200 px-2 py-1 rounded text-xs w-full cursor-pointer hover:bg-blue-200">
+<span class="material-symbols-outlined text-[14px]">attach_money</span>
+                                1. Total
+                            </div>
+</div>
+</div>
+</form>
+</div>
+<!-- Drawer Footer -->
+<div class="p-5 border-t border-border-light bg-gray-50/50 flex flex-col gap-3">
+<div class="flex items-center gap-2 text-amber-600 bg-amber-50 p-2 rounded text-xs border border-amber-100">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span>La plantilla requiere aprobación de Meta si se modifica.</span>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 py-2 px-4 rounded-lg border border-border-light bg-white text-text-main font-medium text-sm hover:bg-gray-50 transition-colors">Cancelar</button>
+<button class="flex-1 py-2 px-4 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary-dark transition-colors shadow-sm">Guardar Paso</button>
+</div>
+</div>
+</aside>
+</main>
+<!-- AI Helper Button (Floating) - Optional if not in header -->
+<!-- 
+    <div class="fixed bottom-6 right-[420px] z-30">
+        <button class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-5 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            <span class="font-medium">Sugerir siguiente paso</span>
+        </button>
+    </div> 
+    -->
+</body></html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Terminal de Ventas y POS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "primary-content": "#ffffff",
+                        "primary-dark": "#1a65b2",
+                        "primary-light": "#e9f2fb",
+                        "background-light": "#f3f4f6", 
+                        "background-dark": "#111921",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1f2937",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#374151",
+                        "text-main": "#111827",
+                        "text-sub": "#6b7280"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem", 
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-gray-100 flex flex-col h-screen overflow-hidden">
+<header class="h-16 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-6 shrink-0 z-20 shadow-sm">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">storefront</span>
+</div>
+<div>
+<h1 class="font-bold text-lg leading-tight text-text-main dark:text-white">Empresa Demo POS</h1>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-xs text-text-sub font-medium">En línea • Caja #04</span>
+</div>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-1 ml-4">
+<a class="px-3 py-2 text-sm font-medium text-text-main dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+                    Panel Principal
+                </a>
+</nav>
+</div>
+<div class="flex-1 max-w-2xl mx-6 hidden lg:block">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-sub">person_search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border border-border-light dark:border-border-dark rounded-lg leading-5 bg-gray-50 dark:bg-gray-800 placeholder-text-sub focus:outline-none focus:bg-white dark:focus:bg-gray-900 focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-colors" placeholder="Buscar Cliente (Nombre, Teléfono, ID)..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-2 flex items-center">
+<kbd class="inline-flex items-center border border-gray-200 dark:border-gray-600 rounded px-2 text-xs font-sans font-medium text-text-sub">Alt + C</kbd>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-text-sub transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-text-sub transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-cover bg-center border-2 border-white dark:border-gray-700 shadow-sm ml-2" data-alt="User avatar of a smiling man" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKFyXu7TNYOIUhCYbyjXQBJiQ7K5e8t-m82_v2ziEnU7wzwXR1wOusYEWZuOUzTzG2RuCt8tKG9XAPWIapKI8YwowlPKf7SxWz63f9bfkt1PWOqVj2-3qwcwm8rdUuXbcOF36UZAjMOk-G4EwtjNshvWnNcLWwSe_ooEyqgT-y6-clLIr0DAl-aSfzJe6iohDS3zfbbSjmAmi1FjIhXvJaoLUEAMLn2_90UVq2PbITJvxiXa3h4eu4RRoFMKYt0usFPQnL8HgJCEFO');"></div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<section class="w-full lg:w-[480px] xl:w-[520px] bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex flex-col shrink-0 h-full shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10">
+<div class="p-4 border-b border-border-light dark:border-border-dark flex items-center justify-between">
+<div>
+<h2 class="text-sm font-semibold uppercase tracking-wider text-text-sub">Orden Actual</h2>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="text-xs font-medium text-primary bg-primary-light px-2 py-0.5 rounded text-primary-dark">#ORD-2023-849</span>
+<span class="text-xs text-text-sub">Oct 24, 10:30 AM</span>
+</div>
+</div>
+<div class="lg:hidden">
+<button class="p-2 text-text-sub hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+<span class="material-symbols-outlined">person_search</span>
+</button>
+</div>
+</div>
+<div class="px-4 py-3 bg-gray-50 dark:bg-gray-800/30 border-b border-border-light dark:border-border-dark">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+<div>
+<p class="text-sm font-medium text-text-main dark:text-white leading-none">Cliente Mostrador</p>
+<p class="text-xs text-text-sub mt-1">Venta General</p>
+</div>
+</div>
+<button class="text-xs text-primary font-medium hover:underline">Cambiar</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-3">
+<div class="flex gap-3 items-start group relative">
+<div class="w-14 h-14 rounded-lg bg-gray-100 dark:bg-gray-800 bg-cover bg-center shrink-0 border border-border-light dark:border-border-dark" data-alt="Wireless mouse product image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAxt7hjaA4qrIP5fw8vzeXSdygZxxY5pIyF1XsCiLQuuxZKhnAn03RidwQ9FaLwm3RpR0tw0XVXWgnRLS1fShghEGjtLgWsR-T7JLoaF-t20GDDXCqeFIREgx6lJrYIyIL6cA84bbnuy9J4wGlLUXRZZqRFm2TrxddQ70HO1iGt1yyZK2vOxOY3uXdviLJWo_T8ue4MlAdtnIsOM0TyMjl_5ZCISde9E2b9Hzbqw4x4iI0JQAeIQ-giSEP27NHtpCfLNphCbbwz7t1L');"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm truncate pr-2">Wireless Optical Mouse</h3>
+<span class="font-bold text-text-main dark:text-white text-sm tabular-nums">$50.00</span>
+</div>
+<p class="text-xs text-text-sub mb-2">$25.00 / unidad</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center border border-border-light dark:border-border-dark rounded bg-white dark:bg-gray-800 h-7">
+<button class="w-7 h-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-text-sub transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="w-8 text-center text-sm font-medium text-text-main dark:text-white tabular-nums">2</span>
+<button class="w-7 h-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-text-sub transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-text-sub hover:text-red-500 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex gap-3 items-start group relative">
+<div class="w-14 h-14 rounded-lg bg-gray-100 dark:bg-gray-800 bg-cover bg-center shrink-0 border border-border-light dark:border-border-dark" data-alt="Mechanical keyboard product image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-JHhvzyX8-w3EzUY_3ApMHPJ5cZIAMD-Rpj4yxKr26de6UJOXHoCwo2WUREL_7Px1l7qL12MI2aEwekOk0fWb1djq_7pSb-d60OOox-u3tQUmFJevECuwsWnA6REQq04AeKK4xjRlH8uJKxr8KRsPmCnNHGR3SJdbASd79rHKCFKcYeQ3TWN597mWMOj2gOeOA6mfMQQ6J_FlxNleFWrkuJBczz3L7631ovWibgJ7ebIr8gqB7ILcPiZEbCG-7KLK2sWDOo8g-vFc');"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm truncate pr-2">RGB Mechanical Keyboard</h3>
+<span class="font-bold text-text-main dark:text-white text-sm tabular-nums">$120.00</span>
+</div>
+<p class="text-xs text-text-sub mb-2">$120.00 / unidad</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center border border-border-light dark:border-border-dark rounded bg-white dark:bg-gray-800 h-7">
+<button class="w-7 h-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-text-sub transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="w-8 text-center text-sm font-medium text-text-main dark:text-white tabular-nums">1</span>
+<button class="w-7 h-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 text-text-sub transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-text-sub hover:text-red-500 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="h-10"></div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-4 border-t border-border-light dark:border-border-dark shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+<div class="space-y-2 mb-4 text-sm">
+<div class="flex justify-between text-text-sub">
+<span>Subtotal</span>
+<span class="font-medium text-text-main dark:text-white tabular-nums">$170.00</span>
+</div>
+<div class="flex justify-between text-text-sub">
+<span>Impuestos (10%)</span>
+<span class="font-medium text-text-main dark:text-white tabular-nums">$17.00</span>
+</div>
+<div class="flex justify-between text-primary font-medium">
+<span>Descuento</span>
+<span class="tabular-nums">-$0.00</span>
+</div>
+<div class="h-px bg-border-light dark:bg-border-dark my-2"></div>
+<div class="flex justify-between items-end">
+<span class="text-lg font-bold text-text-main dark:text-white">Total</span>
+<span class="text-2xl font-bold text-primary tabular-nums">$187.00</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-4">
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-sub hover:text-primary border border-border-light dark:border-border-dark transition-all h-20">
+<span class="material-symbols-outlined mb-1 text-xl">percent</span>
+<span class="text-[10px] font-medium uppercase tracking-wide text-center leading-tight">Aplicar Descuento</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-sub hover:text-primary border border-border-light dark:border-border-dark transition-all h-20">
+<span class="material-symbols-outlined mb-1 text-xl">receipt_long</span>
+<span class="text-[10px] font-medium uppercase tracking-wide text-center leading-tight">Factura Electrónica</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-sub hover:text-orange-500 border border-border-light dark:border-border-dark transition-all h-20">
+<span class="material-symbols-outlined mb-1 text-xl">credit_score</span>
+<span class="text-[10px] font-medium uppercase tracking-wide text-center leading-tight">Nota de Crédito</span>
+</button>
+</div>
+<button class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 rounded-lg shadow-lg shadow-primary/30 flex items-center justify-center gap-2 transition-all active:scale-[0.99]">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-lg">Pagar $187.00</span>
+</button>
+</div>
+</section>
+<section class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark relative">
+<div class="p-4 md:p-6 pb-2 sticky top-0 z-10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
+<div class="flex flex-col md:flex-row gap-4 mb-4">
+<div class="relative flex-1">
+<div class="flex items-center bg-white dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg px-4 h-12 shadow-sm focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
+<span class="material-symbols-outlined text-text-sub text-xl mr-3">qr_code_scanner</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-base text-text-main dark:text-white placeholder-text-sub h-full" placeholder="Escanear código o buscar productos..." type="text"/>
+</div>
+</div>
+</div>
+<div class="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
+<button class="px-4 py-2 rounded-full bg-primary text-white font-medium text-sm whitespace-nowrap shadow-sm">Todos</button>
+<button class="px-4 py-2 rounded-full bg-white dark:bg-surface-dark text-text-sub hover:text-text-main border border-border-light dark:border-border-dark font-medium text-sm whitespace-nowrap transition-colors hover:shadow-sm">Electrónica</button>
+<button class="px-4 py-2 rounded-full bg-white dark:bg-surface-dark text-text-sub hover:text-text-main border border-border-light dark:border-border-dark font-medium text-sm whitespace-nowrap transition-colors hover:shadow-sm">Accesorios</button>
+<button class="px-4 py-2 rounded-full bg-white dark:bg-surface-dark text-text-sub hover:text-text-main border border-border-light dark:border-border-dark font-medium text-sm whitespace-nowrap transition-colors hover:shadow-sm">Oficina</button>
+<button class="px-4 py-2 rounded-full bg-white dark:bg-surface-dark text-text-sub hover:text-text-main border border-border-light dark:border-border-dark font-medium text-sm whitespace-nowrap transition-colors hover:shadow-sm">Muebles</button>
+<button class="px-4 py-2 rounded-full bg-white dark:bg-surface-dark text-text-sub hover:text-text-main border border-border-light dark:border-border-dark font-medium text-sm whitespace-nowrap transition-colors hover:shadow-sm">Servicios</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 md:p-6 pt-2">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Monitor" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="High resolution monitor product" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAll3O9-qFTTCu8oTYso06J5xzl8wfx1vmxgz04mMrLUT6ZOXWtzkYaDAU1dXqbXhGSsn4cuaDQC73eiJDyeYAATQRbzKPKdp5xo-xYE6sjnaOSmSsSDOAkcg3CjplfFrbERPRKbbphAq9x0CfXy6KqqBfWnUIwnkEoiI7LGw967AkFTuU4jXDS0o8z3xXj2kAeYAMQrIyP-jEhDCUARwsrUNdaf4SCCnFX1YTdWvpoznIlP2FqlS5-QxrVW7HFe9NPevXTun-NaHMI"/>
+<div class="absolute top-2 right-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">auto_awesome</span>
+                                Sugerido
+                            </div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Monitor 4K Ultra HD 27"</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">5 en stock</span>
+<span class="font-bold text-primary text-base">$320.00</span>
+</div>
+</div>
+</button>
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Smart Watch" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Smart watch product" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCALavpcOoKSQus7kkVQ30y4UPQsOSDRLIVUufTMBewyGLLg--iXcXE5btrfDNCBC4yXSjjKdxq36cunndenFAHEWcR4hU4kdIrjHk8GFH36IVrPUqtAajbzcrsbtYlNB_PxeyTVWVPiBicu9wEpXlTLfvygRhmfM5GUiTPt4HGAurOexcYchPXq7hNgWm4_d4teCQdtAgPx2fs879OKoW-tsEszr4GyDbkXY4qGqw5pNCnV-PqKhVI5aGBwGMMhU7IyRAu6GDCbQlo"/>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Smart Watch Serie 5</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">12 en stock</span>
+<span class="font-bold text-primary text-base">$199.00</span>
+</div>
+</div>
+</button>
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Headphones" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Noise cancelling headphones product" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgn8_RJVQ6FijAql_8crgKuSIizYF-luI1rYOFJB9aQzNxFslVEi49c9c8FgM7BhIPVfpVkCewue-CB8XaTPm9ZzcIr6a8E1nc7gbpjSo2vegd8VGJxTqQ3lgAHXkwgbxaACJoGAtwscI3VGPPaX5j58BcDfP67cHrlpwc1M4NB5bLHUitpT26WUDuGY3QV7BQyx4lddiVMXch_1mUb3ytV8DIl-xgGC1fBANWuL5OMgfSO5YChVVRPwGbTnsjWWdCNSwPr97Yw7kh"/>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Auriculares Cancelación de Ruido</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">8 en stock</span>
+<span class="font-bold text-primary text-base">$149.99</span>
+</div>
+</div>
+</button>
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Laptop Stand" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Aluminum laptop stand" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhDhGzLpSs9XFLCv8YXVM1FogHAIDwQR2aGCdvqBOWsQdBCfEFXRJq2rXwwQw-9-lUl4y-9wVMzo2u7W8t4hqWhFLaMhVArCNIlzZwG-ccXMO-pGk2T0KHhkAV3O2KnjM2c_MWoENdXvRx9NZZA9QWMpoMDUJlPDYWEncrXo18PMkSj_0VfCg4vPH0ScspkFCKeBJnvR0-RePSTTKQz2bIn9CmmKl1otamwLPxfM1HgESZJo8k7xqXiDJBg7S_k-PjxtjdYto_Il3m"/>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Soporte Laptop Aluminio</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">24 en stock</span>
+<span class="font-bold text-primary text-base">$45.00</span>
+</div>
+</div>
+</button>
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Keyboard" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Mechanical keyboard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS9QQ9Ksz-3VjYjUJXlb00Jp1rOJHTeDhw9uFzgzUCGQaVU7UbwAsrzIMbS9bGrl8-c4RaEG4GxtXydyccYUAlqbUTycl41V7Qfn1LaXbpTWIKHNknHI8sQ7nFKS_qbkdj5FNRBl4k0Gd5eUHZF-cWxPPyS3qG5GMscnN3ttGLZsG2HGQm-79DDw9jcwtxxAaKWBzr_CMSyI0ylWZqjfFsoExwX4rciWcJwJDE7-toUaYt4dCXJVtPWXX-iNgjL67ik6sydhbZMX1i"/>
+<div class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
+                                OFERTA
+                            </div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Teclado Mecánico RGB</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">Poco Stock</span>
+<div class="flex flex-col items-end">
+<span class="text-[10px] text-text-sub line-through">$140.00</span>
+<span class="font-bold text-primary text-base">$120.00</span>
+</div>
+</div>
+</div>
+</button>
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Tablet" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Tablet device on table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt0I9XNFo633uZT1yLgi-dW8nt3e4nFjQc4GtIZPSsM0WqIGuePDbUvEovoMi_7GpaB2A2ei82MQMoKJp6XZSVnJqy5wK3Kz_C3E6AFOTqkPwi35Jgp_fQzsybE2emai0ngYfFqve7bgGzulrOqcq7oX6COQsEsIB-md-yf0qomvay1g01R_YNUuLQmdteyMbvn7P0iC3MyL9B7DpEp2--UdsRhs5TQOKytH85vn-ZNPHH1egqMW4eQP0pNO-wQ14bXfEMNJgUKvJw"/>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Tablet Pro 11" 128GB</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">3 en stock</span>
+<span class="font-bold text-primary text-base">$799.00</span>
+</div>
+</div>
+</button>
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<div class="w-full h-full flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-800 text-gray-400">
+<span class="material-symbols-outlined text-4xl mb-2">construction</span>
+<span class="text-xs uppercase font-bold tracking-wider">Servicio</span>
+</div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Soporte Técnico (1h)</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">Servicio</span>
+<span class="font-bold text-primary text-base">$85.00</span>
+</div>
+</div>
+</button>
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Mouse" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Wireless optical mouse" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQhBIlv7kosLOpg9GdQc-6ghkQQrNm4ZzfemSE2DDJJqij_-qtbmB1vXKvsTSXlxhoqymC1jfDLFgf6GlusZfqxZZgK35yNZa6GOKtkqLW4DpK2wOrbIhb7jjfLCthEFNcC_yCAzn1K9xZFB15UmQt7W51padqbcYRLyAJG_Md0R4UAa_uLroCEqUHrFQDgQ0D8aorWGDM4y6M-Kq6PBT9mtxDo3yHBSgKLT4lMh01QR97Fb5kKG12ebOItyGRq7y_OSdOZNrAA3yk"/>
+<div class="absolute top-2 right-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">auto_awesome</span>
+                                Sugerido
+                            </div>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Mouse Óptico Inalámbrico</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">42 en stock</span>
+<span class="font-bold text-primary text-base">$25.00</span>
+</div>
+</div>
+</button>
+<button class="group bg-white dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark overflow-hidden hover:shadow-md hover:border-primary/50 transition-all text-left flex flex-col h-full active:scale-[0.98]">
+<div class="aspect-[4/3] bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="USB Cable" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="USB-C Charging Cable" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkaluO2fU8882MzQr3XV-uiAklsCt85KbM9SYo_HaYeIhJELT5kDAaQVHrfN_qOV1Do9CvqssrihExjIIvn30nxgMLkOLdN5CqDLLSjzC5x3MLl6YCxWf9jDm7a1tVqamg9Yemz3DUua38F0wIEktrxxq-l5OSRkmhj1Oh_E1UHXTynNpj9Pxb7g1O1X6L_fXcOVV-juh9Tv5aWD8NvHV2RA9Fvg0pHO4LG4eFi6tTD-RgSyCr47hLkqr-ZgHb2njVDz6KMNMv3d7z"/>
+</div>
+<div class="p-3 flex flex-col flex-1">
+<h3 class="font-medium text-text-main dark:text-white text-sm line-clamp-2 mb-1">Cable Carga Rápida USB-C</h3>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-text-sub text-xs">100+ en stock</span>
+<span class="font-bold text-primary text-base">$12.50</span>
+</div>
+</div>
+</button>
+</div>
+<div class="h-20"></div>
+</div>
+</section>
+</main>
+
+</body></html>

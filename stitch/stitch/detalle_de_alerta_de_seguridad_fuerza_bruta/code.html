@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#acedff",
+              "on-secondary": "#3c0091",
+              "inverse-on-surface": "#283044",
+              "surface-container-highest": "#2d3449",
+              "secondary": "#d0bcff",
+              "inverse-surface": "#dae2fd",
+              "surface-bright": "#31394d",
+              "surface": "#0b1326",
+              "outline-variant": "#464554",
+              "on-primary-fixed-variant": "#2f2ebe",
+              "tertiary-container": "#009eb9",
+              "surface-tint": "#c0c1ff",
+              "error-container": "#93000a",
+              "surface-dim": "#0b1326",
+              "on-error": "#690005",
+              "primary-container": "#8083ff",
+              "on-surface": "#dae2fd",
+              "inverse-primary": "#494bd6",
+              "primary-fixed": "#e1e0ff",
+              "on-secondary-container": "#c4abff",
+              "secondary-fixed": "#e9ddff",
+              "on-secondary-fixed-variant": "#5516be",
+              "background": "#0b1326",
+              "surface-container-lowest": "#060e20",
+              "on-tertiary-fixed": "#001f26",
+              "tertiary-fixed-dim": "#4cd7f6",
+              "on-tertiary-fixed-variant": "#004e5c",
+              "surface-container-low": "#131b2e",
+              "secondary-fixed-dim": "#d0bcff",
+              "tertiary": "#4cd7f6",
+              "on-primary-fixed": "#07006c",
+              "on-error-container": "#ffdad6",
+              "on-tertiary": "#003640",
+              "outline": "#908fa0",
+              "on-background": "#dae2fd",
+              "error": "#ffb4ab",
+              "secondary-container": "#571bc1",
+              "primary-fixed-dim": "#c0c1ff",
+              "on-tertiary-container": "#002f38",
+              "on-secondary-fixed": "#23005c",
+              "surface-container": "#171f33",
+              "on-primary": "#1000a9",
+              "on-primary-container": "#0d0096",
+              "surface-variant": "#2d3449",
+              "surface-container-high": "#222a3d",
+              "primary": "#c0c1ff",
+              "on-surface-variant": "#c7c4d7"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        outline: 1px solid rgba(70, 69, 84, 0.15);
+      }
+      .critical-glow {
+        box-shadow: 0px 0px 40px rgba(255, 180, 171, 0.15);
+      }
+      .zenith-orb {
+        background: radial-gradient(circle, rgba(192, 193, 255, 0.08) 0%, rgba(192, 193, 255, 0) 70%);
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-[#131b2e] border-r border-white/5 shadow-[0px_0px_20px_rgba(0,0,0,0.4)] z-50">
+<div class="p-8">
+<span class="text-xl font-bold tracking-tighter text-[#c0c1ff] font-space-grotesk">Ethereal Command</span>
+<p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 mt-1 font-label">Enterprise ERP v2.0</p>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="text-slate-400 hover:text-slate-200 px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-medium">Architecture</span>
+</a>
+<a class="text-slate-400 hover:text-slate-200 px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-medium">Databases</span>
+</a>
+<a class="text-[#c0c1ff] bg-white/5 border-l-2 border-[#6366F1] transition-all px-6 py-4 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">shield_lock</span>
+<span class="font-medium">Security</span>
+</a>
+<a class="text-slate-400 hover:text-slate-200 px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-medium">Systems</span>
+</a>
+<a class="text-slate-400 hover:text-slate-200 px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-medium">Logs</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-white/5 p-4">
+<button class="w-full mb-4 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold py-3 rounded-xl transition-transform active:scale-[0.98]">
+                New Instance
+            </button>
+<div class="space-y-1">
+<a class="text-slate-400 hover:text-slate-200 px-6 py-3 flex items-center gap-3 text-sm font-label uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+<a class="text-slate-400 hover:text-slate-200 px-6 py-3 flex items-center gap-3 text-sm font-label uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="flex justify-between items-center h-16 px-8 sticky top-0 z-40 bg-[#0b1326]/80 backdrop-blur-md border-b border-white/10 shadow-2xl shadow-black/50">
+<div class="flex items-center gap-8 h-full">
+<span class="text-lg font-black tracking-tight text-[#c0c1ff] font-headline">ERP Command Center</span>
+<nav class="flex h-full gap-4">
+<a class="text-slate-400 hover:text-white flex items-center px-4 transition-colors font-semibold" href="#">Cluster</a>
+<a class="text-slate-400 hover:text-white flex items-center px-4 transition-colors font-semibold" href="#">Backup</a>
+<a class="text-slate-400 hover:text-white flex items-center px-4 transition-colors font-semibold" href="#">Identity</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-500 text-sm">search</span>
+<input class="bg-surface-container-highest border-none rounded-xl pl-10 pr-4 py-2 text-sm w-64 focus:ring-1 focus:ring-primary/40" placeholder="Search systems..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-slate-400">
+<button class="hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications_active</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-white/10">
+<img alt="User Avatar" class="h-full w-full object-cover" data-alt="Professional user profile avatar circular frame" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhilusD11-8OMHmSvjgkl1kiddWVqH-ik-cQq1hR8xdqJm49M4CNKS4Ir4YkMGuTIzTHjPMkGXliibqLKuoPw70CagP77MmKMp6vvK5KzyUi04R6ggC2zdJ5FM_L_l3Pc2XU_nQqVYttFN7QS7l3NF0VIpdlfxwbxAZXFkK7y0Deoc7WJAieORR82BD20A5jTa2Mo0zQkYusv_H9uyOL2J4WHt_yYhsUAo5LCkI2Pfhv5BYoyzHq_c-dLpFd36SlzT1BT3xtyGimA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Detailed Alert View Content -->
+<div class="p-12 max-w-7xl mx-auto space-y-12">
+<!-- Alert Header Section -->
+<section class="flex flex-col md:flex-row justify-between items-start gap-8">
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-error-container/20 text-error text-[10px] uppercase font-bold tracking-widest border border-error/20 rounded-full">Security Incident</span>
+<span class="text-slate-500 text-sm font-label uppercase tracking-widest">Incident #SEC-4092-B</span>
+</div>
+<h1 class="text-5xl font-bold font-headline tracking-tighter text-on-surface">Intento de Fuerza Bruta Detectado</h1>
+<div class="flex items-center gap-6 text-slate-400">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-sm">Oct 24, 2023 • 14:32:01 UTC</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">person_alert</span>
+<span class="text-sm">Target: admin_root_privileged</span>
+</div>
+</div>
+</div>
+<div class="glass-card critical-glow p-6 rounded-xl border border-error/20 flex flex-col items-center justify-center min-w-[200px]">
+<span class="text-error text-sm font-label uppercase tracking-widest mb-1">Risk Level</span>
+<span class="text-4xl font-black font-headline text-error">CRITICAL</span>
+<div class="w-full bg-error/10 h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-error h-full w-[94%]"></div>
+</div>
+</div>
+</section>
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Origin & Visualization (Left Column) -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Map Visualization -->
+<div class="glass-card rounded-xl overflow-hidden relative group">
+<div class="absolute inset-0 zenith-orb pointer-events-none"></div>
+<div class="h-[400px] w-full bg-surface-container-low flex items-center justify-center relative overflow-hidden">
+<img alt="Origin Map" class="w-full h-full object-cover opacity-30 grayscale contrast-125" data-alt="Monochrome dark satellite map of Singapore geography" data-location="Singapore" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsamxsW09E_GfedzI-3a4CDIlKaloaECCfG0ezrV9-7CTIpzDwrwY1GJSaGSUvgGPIvBRyVGbhh_f0uUKOf2FOxdU9-SWd3yHdwTbb1ymRpze02O-eXKZaxbO8Cnho-bjiDdTKKIZgXIqxyinVUaLm4qa4W24LlWyxiBpvI4UaejEgJf4GzmLHhxp0bki9vMKGKb9YWpClEs6RMmTFornO-7E5989AFC4UnUPQSrdzDYdpGAlpgt_wRd4ZPJFCIG4zYCJJHcEvfW0"/>
+<!-- Origin Pulse -->
+<div class="absolute top-[40%] left-[60%] flex items-center justify-center">
+<div class="absolute h-12 w-12 bg-error/30 rounded-full animate-ping"></div>
+<div class="relative h-4 w-4 bg-error rounded-full border-2 border-white shadow-[0_0_15px_rgba(255,180,171,0.8)]"></div>
+</div>
+<div class="absolute bottom-6 left-6 p-4 glass-card rounded-xl border border-white/10 backdrop-blur-md">
+<p class="text-[10px] uppercase tracking-widest text-slate-400 mb-1">Source Origin</p>
+<h3 class="text-xl font-headline font-bold">182.55.102.12</h3>
+<p class="text-sm text-slate-300">Singapore, DigitalOcean Datacenter</p>
+</div>
+</div>
+</div>
+<!-- AI Analysis Card -->
+<div class="glass-card p-8 rounded-xl relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary"></div>
+<div class="flex items-start gap-6">
+<div class="h-12 w-12 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-3xl">psychology</span>
+</div>
+<div class="flex-1 space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-headline font-bold">Forensic Analysis by Groq AI</h2>
+<span class="text-[10px] bg-tertiary/20 text-tertiary px-2 py-0.5 rounded uppercase tracking-tighter">Model: Llama 3-70B</span>
+</div>
+<p class="text-lg leading-relaxed text-slate-300 italic font-light">
+                                    "Analysis suggests a botnet origin from Singapore, targeting high-privilege roles. The pattern indicates a coordinated dictionary attack using rotated proxies to bypass standard rate limits. Signature matches 'Viper-X' automated toolset."
+                                </p>
+</div>
+</div>
+</div>
+<!-- Audit Trail -->
+<div class="space-y-4">
+<h2 class="text-sm font-label uppercase tracking-widest text-slate-400 px-2">Event Timeline &amp; Audit Trail</h2>
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="divide-y divide-white/5">
+<div class="p-6 flex items-center gap-6 hover:bg-white/5 transition-colors">
+<span class="text-xs font-mono text-slate-500 w-24">14:32:01</span>
+<span class="material-symbols-outlined text-error text-xl">error</span>
+<div class="flex-1">
+<p class="text-sm font-medium">Critical Threshold Breached</p>
+<p class="text-xs text-slate-500">More than 500 failed attempts in 30 seconds</p>
+</div>
+<span class="text-xs bg-surface-container-highest px-2 py-1 rounded">Auto-Alerted</span>
+</div>
+<div class="p-6 flex items-center gap-6 hover:bg-white/5 transition-colors">
+<span class="text-xs font-mono text-slate-500 w-24">14:31:45</span>
+<span class="material-symbols-outlined text-warning text-xl text-yellow-500">warning</span>
+<div class="flex-1">
+<p class="text-sm font-medium">Suspected Scanning Activity</p>
+<p class="text-xs text-slate-500">Incremental ID enumeration detected from IP range 182.55.*</p>
+</div>
+<span class="text-xs bg-surface-container-highest px-2 py-1 rounded">Flagged</span>
+</div>
+<div class="p-6 flex items-center gap-6 hover:bg-white/5 transition-colors">
+<span class="text-xs font-mono text-slate-500 w-24">14:30:12</span>
+<span class="material-symbols-outlined text-slate-500 text-xl">login</span>
+<div class="flex-1">
+<p class="text-sm font-medium">Initial Handshake</p>
+<p class="text-xs text-slate-500">TCP connection established with Auth-0 Gateway</p>
+</div>
+<span class="text-xs bg-surface-container-highest px-2 py-1 rounded">Logged</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Mitigation & Controls (Right Column) -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Action Panel -->
+<div class="glass-card p-8 rounded-xl border-l-4 border-error space-y-8">
+<div>
+<h2 class="text-xl font-headline font-bold mb-2">Mitigation Actions</h2>
+<p class="text-sm text-slate-400">Immediate response required to neutralize the threat.</p>
+</div>
+<div class="space-y-3">
+<button class="w-full flex items-center justify-between p-4 bg-error-container/20 hover:bg-error-container/40 text-error rounded-xl border border-error/30 transition-all group">
+<span class="font-bold">Ban IP Address</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">block</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-highest hover:bg-white/10 text-on-surface rounded-xl border border-white/10 transition-all group">
+<span class="font-bold">Force Logout</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">logout</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-highest hover:bg-white/10 text-on-surface rounded-xl border border-white/10 transition-all group">
+<span class="font-bold">Enable Global MFA</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">verified_user</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 text-slate-500 hover:text-slate-300 transition-all">
+<span class="font-medium">Ignore Alert</span>
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- System Context -->
+<div class="glass-card p-8 rounded-xl space-y-6">
+<h3 class="text-sm font-label uppercase tracking-widest text-slate-400">Affected Infrastructure</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">dns</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">Gateway-A (Singapore)</p>
+<div class="w-full h-1 bg-surface-container-highest rounded-full mt-2">
+<div class="h-full bg-error w-[85%]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 bg-surface-container-highest rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">hub</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">Auth-Service-Node-4</p>
+<div class="w-full h-1 bg-surface-container-highest rounded-full mt-2">
+<div class="h-full bg-tertiary w-[22%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Security Score Zenith Metric -->
+<div class="glass-card p-8 rounded-xl relative overflow-hidden text-center">
+<div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full"></div>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 mb-2 relative">Current Security Posture</p>
+<h4 class="text-5xl font-black font-headline text-on-surface relative">72%</h4>
+<div class="mt-4 flex items-center justify-center gap-2 text-error relative">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+<span class="text-xs font-bold font-label">-8.4% since last incident</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

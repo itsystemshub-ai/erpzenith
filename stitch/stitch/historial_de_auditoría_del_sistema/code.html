@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Historial de Auditoría - ERP SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "primary-50": "#eef8ff",
+                        "primary-100": "#dcf0ff",
+                        "primary-600": "#1063b4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["Roboto Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for JSON blocks */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111417] dark:text-white antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dce0e5] bg-white dark:bg-[#1a2632] dark:border-[#2a3642] px-10 py-3 shadow-sm">
+<div class="flex items-center gap-4 text-[#111417] dark:text-white">
+<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">shield</span>
+</div>
+<h2 class="text-[#111417] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">ERP SaaS <span class="text-[#647587] font-medium text-sm ml-2 hidden sm:inline-block">Security Center</span></h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-[#647587] hover:text-primary dark:text-[#94a3b8] dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold leading-normal" href="#">Seguridad</a>
+<a class="text-[#647587] hover:text-primary dark:text-[#94a3b8] dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Configuración</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-[#647587] hover:text-primary dark:text-[#94a3b8]">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 size-2 bg-red-500 rounded-full border border-white dark:border-[#1a2632]"></span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="User Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1zoATMv4fcQP1yB6mPKvdvrRuVycOP8-UhgrwnLZwU1yGOF5TCIQKAQYHvbrim9PQCAIzwlIde-tvzmybqmQMwGgh1MY7kSvG-dRfLsIIfBA4xbXTx33uS9zBoA8oxhpkucDi6b4OcvuaexO9ABjhSjFt780Y-0M_RuW4K8nDGXHM8w7RX-IF8Ny0Hgf6vbGmMrb9C-n84M6H0NFOiNypLSzS6NtYdcuEK6t-gU83GNs7q-VPYx5NLZo2msU9PCGu1TQMIXqAiIEt");'></div>
+</div>
+</div>
+</header>
+<div class="layout-container flex h-full grow flex-col">
+<div class="px-6 md:px-12 lg:px-20 xl:px-40 flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col w-full max-w-[1400px] flex-1 gap-6">
+<!-- Page Header & Title -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-sm text-[#647587] dark:text-[#94a3b8]">
+<a class="hover:text-primary" href="#">Inicio</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary" href="#">Seguridad</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-medium">Logs de Auditoría</span>
+</div>
+<h1 class="text-[#111417] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Historial de Auditoría del Sistema</h1>
+<p class="text-[#647587] dark:text-[#94a3b8] text-base font-normal max-w-2xl">
+                            Registro inmutable de todas las actividades, accesos y cambios críticos realizados en la plataforma.
+                        </p>
+</div>
+<button class="flex shrink-0 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-5 bg-white border border-[#dce0e5] shadow-sm hover:bg-[#f8fafc] dark:bg-[#1a2632] dark:border-[#2a3642] dark:hover:bg-[#24303d] transition-colors">
+<span class="material-symbols-outlined text-[#111417] dark:text-white text-xl">download</span>
+<span class="text-[#111417] dark:text-white text-sm font-bold">Exportar Logs</span>
+</button>
+</div>
+<!-- Filters Section -->
+<div class="rounded-xl border border-[#dce0e5] dark:border-[#2a3642] bg-white dark:bg-[#1a2632] p-5 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+<!-- Search -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[#111417] dark:text-gray-200 text-sm font-semibold">Buscar</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[#647587]">search</span>
+<input class="w-full rounded-lg border border-[#dce0e5] dark:border-[#3a4b5c] bg-white dark:bg-[#24303d] dark:text-white h-10 pl-10 pr-4 text-sm placeholder:text-[#647587] focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Usuario, IP o ID de Transacción"/>
+</div>
+</div>
+<!-- Date Range -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[#111417] dark:text-gray-200 text-sm font-semibold">Rango de Fecha</label>
+<div class="flex items-center gap-2">
+<div class="relative w-full">
+<input class="w-full rounded-lg border border-[#dce0e5] dark:border-[#3a4b5c] bg-white dark:bg-[#24303d] dark:text-white h-10 px-3 text-sm text-[#647587]" type="date" value="2023-10-01"/>
+</div>
+<span class="text-[#647587]">-</span>
+<div class="relative w-full">
+<input class="w-full rounded-lg border border-[#dce0e5] dark:border-[#3a4b5c] bg-white dark:bg-[#24303d] dark:text-white h-10 px-3 text-sm text-[#647587]" type="date" value="2023-10-31"/>
+</div>
+</div>
+</div>
+<!-- Module & Action -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[#111417] dark:text-gray-200 text-sm font-semibold">Filtros de Contexto</label>
+<div class="flex gap-2">
+<select class="w-full rounded-lg border border-[#dce0e5] dark:border-[#3a4b5c] bg-white dark:bg-[#24303d] dark:text-white h-10 px-3 text-sm text-[#111417]">
+<option>Todos los Módulos</option>
+<option>Inventario</option>
+<option>Usuarios</option>
+<option>Finanzas</option>
+<option>Configuración</option>
+</select>
+<select class="w-full rounded-lg border border-[#dce0e5] dark:border-[#3a4b5c] bg-white dark:bg-[#24303d] dark:text-white h-10 px-3 text-sm text-[#111417]">
+<option>Todas las Acciones</option>
+<option>Crear</option>
+<option>Editar</option>
+<option>Eliminar</option>
+<option>Login</option>
+</select>
+</div>
+</div>
+<!-- Severity & Submit -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[#111417] dark:text-gray-200 text-sm font-semibold">Severidad</label>
+<div class="flex gap-2">
+<div class="flex-1">
+<select class="w-full rounded-lg border border-[#dce0e5] dark:border-[#3a4b5c] bg-white dark:bg-[#24303d] dark:text-white h-10 px-3 text-sm text-[#111417]">
+<option>Cualquiera</option>
+<option>Información</option>
+<option>Advertencia</option>
+<option>Crítico</option>
+</select>
+</div>
+<button class="h-10 px-6 rounded-lg bg-primary text-white font-bold text-sm hover:bg-primary-600 transition-colors shadow-sm shadow-primary/30">
+                                    Aplicar
+                                </button>
+</div>
+</div>
+</div>
+<!-- Active Filters Tags -->
+<div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-[#f0f2f4] dark:border-[#2a3642]">
+<span class="text-xs font-medium text-[#647587] dark:text-[#94a3b8] py-1">Filtros Activos:</span>
+<div class="flex items-center gap-1 bg-[#f0f2f4] dark:bg-[#24303d] px-2 py-1 rounded text-xs font-medium text-[#111417] dark:text-gray-200">
+                            Módulo: Inventario <button class="ml-1 hover:text-red-500"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<div class="flex items-center gap-1 bg-[#f0f2f4] dark:bg-[#24303d] px-2 py-1 rounded text-xs font-medium text-[#111417] dark:text-gray-200">
+                            Ultimos 30 días <button class="ml-1 hover:text-red-500"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<button class="text-xs text-primary hover:underline ml-2">Limpiar todo</button>
+</div>
+</div>
+<!-- Main Table Section -->
+<div class="flex flex-col overflow-hidden rounded-xl border border-[#dce0e5] dark:border-[#2a3642] bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#f8fafc] dark:bg-[#24303d] border-b border-[#dce0e5] dark:border-[#2a3642]">
+<th class="px-6 py-4 text-xs font-bold text-[#647587] dark:text-[#94a3b8] uppercase tracking-wider">Usuario</th>
+<th class="px-6 py-4 text-xs font-bold text-[#647587] dark:text-[#94a3b8] uppercase tracking-wider">Acción</th>
+<th class="px-6 py-4 text-xs font-bold text-[#647587] dark:text-[#94a3b8] uppercase tracking-wider">Módulo</th>
+<th class="px-6 py-4 text-xs font-bold text-[#647587] dark:text-[#94a3b8] uppercase tracking-wider">Severidad</th>
+<th class="px-6 py-4 text-xs font-bold text-[#647587] dark:text-[#94a3b8] uppercase tracking-wider">IP / Ubicación</th>
+<th class="px-6 py-4 text-xs font-bold text-[#647587] dark:text-[#94a3b8] uppercase tracking-wider text-right">Fecha</th>
+<th class="px-6 py-4 text-xs font-bold text-[#647587] dark:text-[#94a3b8] uppercase tracking-wider">Detalles</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#f0f2f4] dark:divide-[#2a3642]">
+<!-- Row 1 -->
+<tr class="group hover:bg-[#f8fafc] dark:hover:bg-[#24303d] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-cover bg-center" data-alt="Avatar of Ana Garcia" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDlw3HAFd3rv0woxnaPfV9qGBW-ZVzXiuwyvwNCwfAZgGAZyvy2R3Ry00_Gs6YhBWvoX5YjBXc-I4_R9rP90jJ5duz3GRTuSOZAEPR16ANUMqItTwXNK2yki8TXY_hKBHpa9eqvqHJVojs4jkG6zlJjrTJBWNjO-RZRaQnzNy_qBj_BNQyPkRbh8_3dhadrrq-tvQPqz2if1mRX5_uehcoEgKVN8nzjvMPLHrrp099DnN032rilkjheCgR9qfC0ABTnyx4Tf1jHD_Qb");'></div>
+<div>
+<p class="text-sm font-semibold text-[#111417] dark:text-white">Ana García</p>
+<p class="text-xs text-[#647587] dark:text-[#94a3b8]">ana.g@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+<span class="material-symbols-outlined text-[14px]">edit</span> Editar
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-sm font-medium text-[#111417] dark:text-gray-200">Inventario</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="size-2.5 rounded-full bg-yellow-500"></span>
+<span class="text-sm text-[#111417] dark:text-gray-200">Advertencia</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">192.168.1.45</span>
+<span class="text-xs text-[#647587]">Madrid, ES</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex flex-col items-end">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">24 Oct 2023</span>
+<span class="text-xs text-[#647587]">14:32:01</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-primary hover:text-primary-600 text-sm font-semibold flex items-center gap-1">
+                                            Ver Cambios
+                                            <span class="material-symbols-outlined text-base">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Expanded Row Visualization for Row 1 -->
+<tr class="bg-[#f8fafc] dark:bg-[#1f2933] border-l-4 border-l-primary">
+<td class="px-6 py-4" colspan="7">
+<div class="flex flex-col gap-3">
+<p class="text-xs font-bold text-[#647587] dark:text-[#94a3b8] uppercase">Diff Comparativo (JSON)</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="rounded border border-[#e2e8f0] dark:border-[#3a4b5c] bg-white dark:bg-[#1a2632] p-3">
+<div class="flex justify-between items-center mb-2 border-b border-dashed border-[#e2e8f0] pb-2">
+<span class="text-xs font-semibold text-red-600 dark:text-red-400">Valor Anterior</span>
+</div>
+<pre class="text-xs font-mono text-[#647587] dark:text-[#94a3b8] overflow-auto custom-scrollbar">
+{
+  "stock_quantity": 50,
+  "last_updated": "2023-10-20"
+}</pre>
+</div>
+<div class="rounded border border-[#e2e8f0] dark:border-[#3a4b5c] bg-white dark:bg-[#1a2632] p-3">
+<div class="flex justify-between items-center mb-2 border-b border-dashed border-[#e2e8f0] pb-2">
+<span class="text-xs font-semibold text-green-600 dark:text-green-400">Valor Nuevo</span>
+</div>
+<pre class="text-xs font-mono text-[#111417] dark:text-white overflow-auto custom-scrollbar">
+{
+  "stock_quantity": <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 font-bold px-1 rounded">45</span>,
+  "last_updated": <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 font-bold px-1 rounded">"2023-10-24"</span>,
+  "updated_by": "ana.g"
+}</pre>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-[#f8fafc] dark:hover:bg-[#24303d] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-cover bg-center" data-alt="Avatar of Carlos Ruiz" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBSWxF88GBxpqF3K-_Py8PM72GqjN6B4k5UrnFGfY33uWw1VATzQpzBMFXVIyEI-pqETbtt5YXGKRcBj71UgK4tcfU3TyymzxidKIrIK24O_LqlR-C3-0oPqgzV6iQfENZsZpZCMCKKifWvsslnPqYaPyOEG_y9uIB5-LewAC3pSy174l029mrwWZuNh_X-_KtezXZsCe0MGwtOHHC6WUUjXrsA6WD-uUc2lfL96nStAIR2MvX6lQBTvnP9ZIBsdMPR3vwf34UGxuEx");'></div>
+<div>
+<p class="text-sm font-semibold text-[#111417] dark:text-white">Carlos Ruiz</p>
+<p class="text-xs text-[#647587] dark:text-[#94a3b8]">carlos.r@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+<span class="material-symbols-outlined text-[14px]">delete</span> Eliminar
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-sm font-medium text-[#111417] dark:text-gray-200">Usuarios</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="size-2.5 rounded-full bg-red-600 animate-pulse"></span>
+<span class="text-sm text-[#111417] dark:text-gray-200 font-medium">Crítico</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">10.0.0.12</span>
+<span class="text-xs text-[#647587]">Interno</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex flex-col items-end">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">24 Oct 2023</span>
+<span class="text-xs text-[#647587]">11:15:00</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-[#647587] hover:text-primary text-sm font-medium flex items-center gap-1">
+                                            Ver Cambios
+                                        </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-[#f8fafc] dark:hover:bg-[#24303d] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-cover bg-center" data-alt="Avatar of Lucia Mendes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDnZj3C2lqGCMB6hUqZ6yRFk3boYX1laVBoZrITR-0Lpt-_Xj82SbqvCUH7QRIj0AVA6O2aMEinTCIZRCoUMvl-bmiWs2GOayMfWRW8288OYlUmBBNWPY_bw1pv4NhxR1hhvZR1C1JtZ7d5YpGyQcMRT2VUqgBUhKgyLpVJIt6o3gKVjoOD_8BBnAcfHKgQHEB2pD042uSLXfeLDDw3MqY1sdbfRMkcG3Zy8gz9uE_yEJk1K9-Cxdc0PU23xGG47mByS06vAX7BKznj");'></div>
+<div>
+<p class="text-sm font-semibold text-[#111417] dark:text-white">Lucia Mendes</p>
+<p class="text-xs text-[#647587] dark:text-[#94a3b8]">lucia.m@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+<span class="material-symbols-outlined text-[14px]">add_circle</span> Crear
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-sm font-medium text-[#111417] dark:text-gray-200">Reportes</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="size-2.5 rounded-full bg-blue-500"></span>
+<span class="text-sm text-[#111417] dark:text-gray-200">Info</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">192.168.1.88</span>
+<span class="text-xs text-[#647587]">Barcelona, ES</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex flex-col items-end">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">24 Oct 2023</span>
+<span class="text-xs text-[#647587]">09:45:22</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-[#647587] hover:text-primary text-sm font-medium flex items-center gap-1">
+                                            Ver Cambios
+                                        </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-[#f8fafc] dark:hover:bg-[#24303d] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">SYS</div>
+<div>
+<p class="text-sm font-semibold text-[#111417] dark:text-white">Sistema</p>
+<p class="text-xs text-[#647587] dark:text-[#94a3b8]">Automático</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span> Job
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-sm font-medium text-[#111417] dark:text-gray-200">Backup</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="size-2.5 rounded-full bg-blue-500"></span>
+<span class="text-sm text-[#111417] dark:text-gray-200">Info</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">localhost</span>
+<span class="text-xs text-[#647587]">Servidor</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex flex-col items-end">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">24 Oct 2023</span>
+<span class="text-xs text-[#647587]">04:00:00</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-[#647587] hover:text-primary text-sm font-medium flex items-center gap-1">
+                                            Ver Logs
+                                        </button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-[#f8fafc] dark:hover:bg-[#24303d] transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-cover bg-center" data-alt="Avatar of David Kim" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAFRN4CV02alMGyQPTLAfqSaBvdah_JKZvHIYMB8Ugnj83dTfIJZqUN84Q0f0qP0Pk-SjC6oiHSmG9KoQ9atZ-sdszyS-y8rn749gcD280u4z3QoXpPYot4_nn6tXCOF-AkcJHWoafGxJbBtBBz9WYKS34tEvIkHIGYk0qYbD034Mb2xkhieaFDcPF2uB0bnhoRzU83Xak_r6N1wRQkNNdEUUy3pupeuZAo2m5POogVC__fSZUkQ0_nzuukbEXw4EwWnnAecqnCVf9");'></div>
+<div>
+<p class="text-sm font-semibold text-[#111417] dark:text-white">David Kim</p>
+<p class="text-xs text-[#647587] dark:text-[#94a3b8]">david.k@empresa.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+<span class="material-symbols-outlined text-[14px]">login</span> Login
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="text-sm font-medium text-[#111417] dark:text-gray-200">Auth</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="size-2.5 rounded-full bg-green-500"></span>
+<span class="text-sm text-[#111417] dark:text-gray-200">Éxito</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">201.14.55.10</span>
+<span class="text-xs text-[#647587]">Mexico City, MX</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<div class="flex flex-col items-end">
+<span class="text-sm font-mono text-[#111417] dark:text-gray-200">23 Oct 2023</span>
+<span class="text-xs text-[#647587]">18:20:10</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<button class="text-[#647587] hover:text-primary text-sm font-medium flex items-center gap-1">
+                                            Ver Sesión
+                                        </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between border-t border-[#dce0e5] dark:border-[#2a3642] px-6 py-4 bg-white dark:bg-[#1a2632]">
+<div class="flex items-center gap-2">
+<p class="text-sm text-[#647587] dark:text-[#94a3b8]">Mostrando</p>
+<select class="rounded border border-[#dce0e5] dark:border-[#3a4b5c] bg-white dark:bg-[#24303d] dark:text-white h-8 px-2 text-sm text-[#111417]">
+<option>10</option>
+<option>20</option>
+<option>50</option>
+</select>
+<p class="text-sm text-[#647587] dark:text-[#94a3b8]">de 1,452 registros</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center size-8 rounded border border-[#dce0e5] dark:border-[#3a4b5c] text-[#647587] dark:text-[#94a3b8] hover:bg-[#f8fafc] dark:hover:bg-[#24303d] disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="flex items-center justify-center size-8 rounded bg-primary text-white font-medium text-sm">1</button>
+<button class="flex items-center justify-center size-8 rounded border border-[#dce0e5] dark:border-[#3a4b5c] text-[#647587] dark:text-[#94a3b8] hover:bg-[#f8fafc] dark:hover:bg-[#24303d]">2</button>
+<button class="flex items-center justify-center size-8 rounded border border-[#dce0e5] dark:border-[#3a4b5c] text-[#647587] dark:text-[#94a3b8] hover:bg-[#f8fafc] dark:hover:bg-[#24303d] hidden sm:flex">3</button>
+<span class="text-[#647587] px-1">...</span>
+<button class="flex items-center justify-center size-8 rounded border border-[#dce0e5] dark:border-[#3a4b5c] text-[#647587] dark:text-[#94a3b8] hover:bg-[#f8fafc] dark:hover:bg-[#24303d]">14</button>
+<button class="flex items-center justify-center size-8 rounded border border-[#dce0e5] dark:border-[#3a4b5c] text-[#647587] dark:text-[#94a3b8] hover:bg-[#f8fafc] dark:hover:bg-[#24303d]">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

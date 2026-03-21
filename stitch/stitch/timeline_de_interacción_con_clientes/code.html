@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Timeline de Interacción con Clientes - ERP SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-10 py-3 sticky top-0 z-50 shadow-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-3xl">grid_view</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">ERP SaaS</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-slate-900 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Tablero</a>
+<a class="text-primary text-sm font-medium" href="#">Ventas</a>
+<a class="text-slate-900 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Clientes</a>
+<a class="text-slate-900 dark:text-slate-200 text-sm font-medium hover:text-primary transition-colors" href="#">Reportes</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="hidden md:flex items-center w-full max-w-xs relative">
+<span class="absolute left-3 text-slate-400 material-symbols-outlined">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 pl-10 pr-4 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 focus:ring-2 focus:ring-primary/50" placeholder="Buscar cliente, correo o nota..."/>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-slate-100 dark:ring-slate-800" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjGy8wtEAyGzmpm5Of6q2SeV_32DIC0CWe6oLbqB89jN6sCdWhm5I6ZZPscbuFESyQb--8o0S7JtdNMkpTO7SpCzEIMZDaflYQFQ7y9HqWGSToa5FuP54Cq4Z59FL0jE6eyVGT9sE9YynvkDDY6-aXheE0Mgr_-jvW8SveIUa38O4WjrVYGs24h3TsG_woq0nvkuXYeL-lbuQxyxpFfvaPhV6-5JzIfIzq9mfYSZcpSmUjNvc2G8e4pGB7bsZ0SdukI9d5iXLYkkYQ");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex justify-center py-8 px-4 md:px-8">
+<div class="w-full max-w-[1024px] flex flex-col gap-6">
+<!-- Breadcrumbs & Header -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary" href="#">Inicio</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary" href="#">Ventas</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Corporación ABC</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="size-16 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary text-2xl font-bold border border-blue-200 dark:border-blue-800">
+                                CA
+                            </div>
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Corporación ABC</h1>
+<div class="flex items-center gap-3 flex-wrap">
+<span class="inline-flex items-center gap-1 rounded-full bg-amber-100 dark:bg-amber-900/40 px-2.5 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-400">
+<span class="material-symbols-outlined text-[14px] fill-1">star</span>
+                                        Cliente VIP
+                                    </span>
+<span class="text-slate-500 dark:text-slate-400 text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">person</span>
+                                        Contacto: Juan Pérez
+                                    </span>
+<span class="text-slate-500 dark:text-slate-400 text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Ciudad de México
+                                    </span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="group flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+<span class="material-symbols-outlined mr-2 text-[20px]">call</span>
+                                Llamar
+                            </button>
+<button class="group flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+<span class="material-symbols-outlined mr-2 text-[20px]">edit</span>
+                                Editar
+                            </button>
+<button class="flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all">
+<span class="material-symbols-outlined mr-2 text-[20px]">add</span>
+                                Nueva Venta
+                            </button>
+</div>
+</div>
+</div>
+<!-- AI Summary Card -->
+<div class="relative overflow-hidden rounded-xl border border-blue-100 dark:border-blue-900 bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-slate-900 p-6 shadow-sm">
+<div class="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-9xl text-primary">psychology</span>
+</div>
+<div class="relative z-10 flex flex-col md:flex-row gap-6 items-start">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-3">
+<div class="p-1.5 bg-blue-100 dark:bg-blue-900/50 rounded-md text-primary">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</div>
+<h3 class="text-base font-bold text-slate-900 dark:text-white">Resumen Inteligente (IA)</h3>
+</div>
+<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                                El cliente expresó preocupación sobre los precios en el último correo (12/Oct). Se agendó una demostración para el 15/Oct. Una nota interna sugiere ofrecer un <strong>10% de descuento</strong> si cierran antes de fin de mes.
+                            </p>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1 rounded-md bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm">
+<span class="size-2 rounded-full bg-red-500"></span>
+                                    Riesgo de cancelación: Medio
+                                </span>
+<span class="inline-flex items-center gap-1 rounded-md bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 px-2 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm">
+<span class="size-2 rounded-full bg-green-500"></span>
+                                    Interés: Alto
+                                </span>
+</div>
+</div>
+<div class="w-full md:w-auto md:min-w-[280px] bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-lg p-4 border border-blue-100 dark:border-slate-700">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Siguiente Acción Sugerida</p>
+<div class="flex items-start gap-3">
+<div class="mt-0.5 rounded-full bg-green-100 dark:bg-green-900/30 p-1 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-[18px]">calendar_add_on</span>
+</div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Confirmar Demo</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Enviar recordatorio para mañana 10:00 AM</p>
+<button class="mt-3 text-xs font-medium text-primary hover:text-blue-700 dark:hover:text-blue-400 flex items-center">
+                                        Ejecutar acción <span class="material-symbols-outlined text-[14px] ml-1">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Composer / Action Bar -->
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="flex border-b border-slate-100 dark:border-slate-700">
+<button class="flex-1 py-3 text-sm font-medium text-primary border-b-2 border-primary bg-blue-50/50 dark:bg-slate-700/50 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                            Nota
+                        </button>
+<button class="flex-1 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            Correo
+                        </button>
+<button class="flex-1 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">call</span>
+                            Llamada
+                        </button>
+<button class="flex-1 py-3 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                            Tarea
+                        </button>
+</div>
+<div class="p-4">
+<textarea class="w-full resize-none border-0 bg-transparent p-0 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Escribe una nota interna, registra una llamada o redacta un correo..." rows="3"></textarea>
+<div class="mt-3 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<button class="rounded-full p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">attach_file</span>
+</button>
+<button class="rounded-full p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+<button class="rounded-full p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">format_bold</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+                                    Visible solo para equipo
+                                </div>
+<button class="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors">
+                                    Guardar Nota
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Filters -->
+<div class="flex flex-wrap items-center justify-between gap-4 py-2">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Historial de Actividad</h3>
+<div class="flex items-center gap-2">
+<div class="relative">
+<button class="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                                Todos los tipos
+                                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<div class="relative">
+<button class="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                                Último mes
+                                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Unified Timeline Feed -->
+<div class="relative pl-6 sm:pl-10 space-y-8 before:absolute before:inset-y-0 before:left-2.5 sm:before:left-[19px] before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800">
+<!-- Today Marker -->
+<div class="relative">
+<span class="absolute -left-[34px] sm:-left-[46px] flex h-6 items-center justify-center bg-background-light dark:bg-background-dark py-1">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wide">Hoy</span>
+</span>
+</div>
+<!-- Timeline Item: Call (Active/Highlighted) -->
+<div class="relative">
+<span class="absolute -left-[35px] sm:-left-12 flex size-8 sm:size-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-900 ring-4 ring-white dark:ring-background-dark">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-lg sm:text-xl">call</span>
+</span>
+<div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Llamada Saliente</span>
+<span class="text-xs text-slate-500">• 14:30 PM • Duración: 5m 20s</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center rounded-md bg-green-50 dark:bg-green-900/20 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">Demo Agendada</span>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-6 ring-2 ring-white dark:ring-slate-800" data-alt="Agent profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBaXajC6wCwD-D17MlTHY6JN5u-00jRQCkIT68u49nbRzkezGUzdUmzdbb50q-9Rs8xqVukDqw8QEa4LqMX093BWWCfcKYOPCGBlHnIXWwDnLphMDeIa-VI-KH6z7XqNhWXRZHtnM8Uq9okyKdBDiUKjnbuIwYTfcjBro3WTh0cDucuxqPCR7aW3A8prap1w07yU8ZR0_LyuU4EgpoxNEZWo-1j1XcPys3e5QAnbW89jjjZ7DXtnFNm7sZzcnCxrs2gUTL65beBAUHW");'></div>
+</div>
+</div>
+<div class="mt-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 shadow-sm">
+<p class="text-sm text-slate-600 dark:text-slate-300 mb-3">
+                                Se contactó a Juan Pérez para discutir la renovación. Mostró mucho interés en las nuevas funcionalidades de IA. Se acordó una demostración técnica para la próxima semana.
+                            </p>
+<div class="flex items-center gap-3 rounded-md bg-slate-50 dark:bg-slate-700/50 px-3 py-2 w-fit">
+<button class="flex size-8 items-center justify-center rounded-full bg-primary text-white hover:bg-blue-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</button>
+<div class="flex flex-col">
+<div class="h-1 w-24 sm:w-32 bg-slate-200 dark:bg-slate-600 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/3"></div>
+</div>
+<span class="text-[10px] text-slate-500 mt-1 font-mono">01:45 / 05:20</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Yesterday Marker -->
+<div class="relative pt-4">
+<span class="absolute -left-[34px] sm:-left-[46px] flex h-6 items-center justify-center bg-background-light dark:bg-background-dark py-1">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wide">Ayer</span>
+</span>
+</div>
+<!-- Timeline Item: Email -->
+<div class="relative">
+<span class="absolute -left-[35px] sm:-left-12 flex size-8 sm:size-10 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 ring-4 ring-white dark:ring-background-dark">
+<span class="material-symbols-outlined text-primary dark:text-blue-400 text-lg sm:text-xl">mail</span>
+</span>
+<div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Correo Recibido</span>
+<span class="text-xs text-slate-500">• 09:15 AM</span>
+</div>
+<button class="text-xs font-medium text-primary hover:underline">Ver hilo completo</button>
+</div>
+<div class="mt-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 shadow-sm hover:border-primary/30 transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Re: Dudas sobre facturación Octubre</h4>
+<span class="material-symbols-outlined text-slate-400 text-[18px]">open_in_new</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">
+                                Hola equipo, estuve revisando la factura adjunta y tengo algunas dudas sobre los cargos adicionales del módulo de inventario. ¿Podríamos agendar una llamada rápida para aclararlo? Gracias.
+                            </p>
+<div class="mt-3 flex gap-2">
+<span class="inline-flex items-center gap-1 rounded px-2 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-600">
+<span class="material-symbols-outlined text-[14px]">attach_file</span>
+                                    factura_oct_2023.pdf
+                                </span>
+</div>
+</div>
+</div>
+<!-- Timeline Item: Internal Note -->
+<div class="relative">
+<span class="absolute -left-[35px] sm:-left-12 flex size-8 sm:size-10 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900 ring-4 ring-white dark:ring-background-dark">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-lg sm:text-xl">sticky_note_2</span>
+</span>
+<div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Nota Interna</span>
+<span class="text-xs text-slate-500">• 12 de Oct • por Pedro Gomez</span>
+</div>
+</div>
+<div class="mt-3 rounded-lg border border-amber-200 dark:border-amber-800/50 bg-amber-50 dark:bg-amber-900/10 p-4">
+<p class="text-sm text-slate-800 dark:text-slate-200">
+                                El cliente mencionó de pasada que están evaluando competidores para el módulo de inventario. Sugiero preparar una comparativa de funcionalidades para la próxima reunión.
+                            </p>
+</div>
+</div>
+<!-- Older Marker -->
+<div class="relative pt-4 pb-2">
+<span class="absolute -left-[34px] sm:-left-[46px] flex h-6 items-center justify-center bg-background-light dark:bg-background-dark py-1">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wide">Oct 10</span>
+</span>
+</div>
+<!-- Timeline Item: Meeting -->
+<div class="relative">
+<span class="absolute -left-[35px] sm:-left-12 flex size-8 sm:size-10 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900 ring-4 ring-white dark:ring-background-dark">
+<span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-lg sm:text-xl">groups</span>
+</span>
+<div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Reunión Trimestral</span>
+<span class="text-xs text-slate-500">• 15:00 PM • 45m</span>
+</div>
+</div>
+<div class="mt-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 shadow-sm opacity-75 hover:opacity-100 transition-opacity">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">videocam</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Google Meet</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300">
+                                Revisión de métricas Q3 y planificación de objetivos para Q4.
+                            </p>
+</div>
+</div>
+<!-- End of timeline indicator -->
+<div class="relative pt-8 pb-12 flex justify-center">
+<button class="text-xs font-medium text-slate-400 hover:text-primary transition-colors flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">expand_more</span>
+                            Cargar más actividad
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

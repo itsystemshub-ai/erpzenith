@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cotizaciones y Presupuestos Pro - ERP SaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white dark:bg-slate-900 px-6 py-3 shadow-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">hexagon</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">ERP Pro <span class="text-xs font-normal opacity-70 ml-1">v4.2</span></h2>
+</div>
+<!-- Navigation Links -->
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium" href="#">Tablero</a>
+<a class="text-primary text-sm font-bold bg-primary/10 px-3 py-1.5 rounded-full" href="#">Ventas</a>
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium" href="#">Clientes</a>
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium" href="#">Inventario</a>
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium" href="#">Reportes</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<label class="hidden lg:flex flex-col min-w-40 h-10 w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800">
+<div class="text-slate-500 flex border-none items-center justify-center pl-3">
+<span class="material-symbols-outlined text-lg">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent border-none text-sm placeholder:text-slate-400 px-3 focus:ring-0" placeholder="Buscar cotización..."/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-700 dark:text-slate-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-700 dark:text-slate-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="size-10 rounded-full bg-gradient-to-tr from-primary to-blue-400 p-0.5 cursor-pointer">
+<img alt="User Avatar" class="rounded-full bg-white size-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrlO1L_w01QuBE84egoWFvPPPbY_T2r5MeE4WtA958rRtc-ac6kkNc0_1MKRZ6SAQTmUlFbGB4n2dqqmg6mLJfsADjit3aj2hcFnm-xaK7Ezj0U6WM3DuI8OmabBEuwwkL5jNNqo6z5zKJgNBQgjP8F9nWWbVZPPNWorycIfWCcafpTAGfXRu94UyACYcIsCnbSNUhH8biPiwlzpD13g4fb54kElbTIJT_kacJrw5INkHos-04mvNnGZKKHvJgh1NW0qqopaveZKLT"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Layout -->
+<main class="flex-1 px-4 md:px-8 py-6 max-w-[1400px] mx-auto w-full">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-6 text-sm text-slate-500">
+<a class="hover:text-primary" href="#">Inicio</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary" href="#">Ventas</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-semibold text-slate-900 dark:text-white">Cotizaciones</span>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Gestión de Cotizaciones</h1>
+<p class="text-slate-500 mt-1">Administra, envía y convierte presupuestos en facturas con un clic.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-sm transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg">tune</span>
+                        Filtros
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-blue-600 text-white rounded-lg font-bold text-sm shadow-md transition-all hover:shadow-lg transform hover:-translate-y-0.5">
+<span class="material-symbols-outlined text-lg">add</span>
+                        Nueva Cotización
+                    </button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+<span class="material-symbols-outlined text-primary">attach_money</span>
+</div>
+<span class="flex items-center text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span> +12%
+                        </span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium">Total Cotizado (Mes)</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">$125,400</h3>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-orange-50 dark:bg-orange-900/30 rounded-lg">
+<span class="material-symbols-outlined text-orange-500">pending_actions</span>
+</div>
+<span class="flex items-center text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span> +5%
+                        </span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium">Pendiente Aprobación</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">23</h3>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-purple-50 dark:bg-purple-900/30 rounded-lg">
+<span class="material-symbols-outlined text-purple-500">bolt</span>
+</div>
+<span class="flex items-center text-rose-600 text-xs font-bold bg-rose-50 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_down</span> -2%
+                        </span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium">Tasa de Conversión</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">45.2%</h3>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg">
+<span class="material-symbols-outlined text-indigo-500">visibility</span>
+</div>
+<span class="flex items-center text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-sm mr-0.5">trending_up</span> +15%
+                        </span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium">Cotizaciones Leídas</p>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">85%</h3>
+</div>
+</div>
+</div>
+<!-- Content Area: Table & Quick Builder -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Quotes List Table (Takes up 2/3 space on large screens) -->
+<div class="xl:col-span-2 flex flex-col bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm overflow-hidden">
+<!-- Toolbar -->
+<div class="flex flex-wrap items-center justify-between p-4 border-b border-slate-100 dark:border-slate-700 gap-4">
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-xs font-semibold rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300">Todas</button>
+<button class="px-3 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-500 border border-slate-200 hover:border-primary hover:text-primary dark:bg-transparent dark:border-slate-600">Borradores</button>
+<button class="px-3 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-500 border border-slate-200 hover:border-primary hover:text-primary dark:bg-transparent dark:border-slate-600">Enviadas</button>
+<button class="px-3 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-500 border border-slate-200 hover:border-primary hover:text-primary dark:bg-transparent dark:border-slate-600">Aceptadas</button>
+</div>
+<div class="relative">
+<input class="pl-8 pr-4 py-1.5 text-sm border-slate-200 rounded-lg focus:ring-primary focus:border-primary dark:bg-slate-900 dark:border-slate-700 w-48 lg:w-64" placeholder="Buscar..." type="text"/>
+<span class="material-symbols-outlined absolute left-2 top-2 text-slate-400 text-lg">search</span>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 text-xs uppercase tracking-wider font-semibold border-b border-slate-100 dark:border-slate-700">
+<th class="px-6 py-4">ID / Fecha</th>
+<th class="px-6 py-4">Cliente</th>
+<th class="px-6 py-4">Estado</th>
+<th class="px-6 py-4 text-right">Total</th>
+<th class="px-6 py-4 text-center">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700 text-sm">
+<!-- Row 1: Read & Hot -->
+<tr class="group hover:bg-blue-50/50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-slate-900 dark:text-white">#COT-2024-892</div>
+<div class="text-xs text-slate-400">Hoy, 10:30 AM</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">TC</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Tech Corp S.A.</div>
+<div class="text-xs text-slate-500">Juan Pérez</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200">
+<span class="material-symbols-outlined text-[14px] mr-1">visibility</span> Leído (Hace 10m)
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right font-bold text-slate-900 dark:text-white">
+                                        $4,250.00
+                                    </td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-2">
+<button class="flex items-center gap-1 px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded text-xs font-bold transition-colors" title="Convertir en Factura">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                                                Facturar
+                                            </button>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Sent -->
+<tr class="group hover:bg-blue-50/50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-slate-900 dark:text-white">#COT-2024-891</div>
+<div class="text-xs text-slate-400">Ayer, 16:45 PM</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">LM</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Logística Mundial</div>
+<div class="text-xs text-slate-500">Ana Garcia</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+<span class="material-symbols-outlined text-[14px] mr-1">send</span> Enviado
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right font-bold text-slate-900 dark:text-white">
+                                        $1,800.00
+                                    </td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-2">
+<button class="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded text-xs font-bold transition-colors dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+                                                Reenviar
+                                            </button>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Draft -->
+<tr class="group hover:bg-blue-50/50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-slate-900 dark:text-white">#COT-2024-890</div>
+<div class="text-xs text-slate-400">22 Oct, 2024</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-xs">IN</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Innovaciones SL</div>
+<div class="text-xs text-slate-500">--</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-[14px] mr-1">edit_note</span> Borrador
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right font-bold text-slate-900 dark:text-white">
+                                        $12,500.00
+                                    </td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-2">
+<button class="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded text-xs font-bold transition-colors dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+                                                Editar
+                                            </button>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Approved -->
+<tr class="group hover:bg-blue-50/50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-slate-900 dark:text-white">#COT-2024-889</div>
+<div class="text-xs text-slate-400">20 Oct, 2024</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">GR</div>
+<div>
+<div class="font-medium text-slate-900 dark:text-white">Grupo Roble</div>
+<div class="text-xs text-slate-500">Carlos M.</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+<span class="material-symbols-outlined text-[14px] mr-1">check_circle</span> Aprobado
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right font-bold text-slate-900 dark:text-white">
+                                        $8,900.00
+                                    </td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-2">
+<span class="text-xs text-emerald-600 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">inventory</span>
+                                                Facturado
+                                            </span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50">
+<span class="text-xs text-slate-500">Mostrando 1-4 de 42 cotizaciones</span>
+<div class="flex gap-1">
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Mini Quick-Builder / Preview (Right Column) -->
+<div class="xl:col-span-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg flex flex-col h-fit sticky top-24">
+<div class="p-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30 rounded-t-xl flex justify-between items-center">
+<h3 class="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">add_circle</span>
+                             Constructor Rápido
+                        </h3>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined">open_in_full</span></button>
+</div>
+<div class="p-5 flex flex-col gap-4">
+<!-- Client Selector with AI hint -->
+<div>
+<label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Cliente</label>
+<div class="relative">
+<input class="w-full rounded-lg border-slate-200 bg-slate-50 dark:bg-slate-900 text-sm focus:border-primary focus:ring-primary" placeholder="Buscar cliente o crear nuevo..." type="text"/>
+<span class="absolute right-3 top-2.5 text-xs text-purple-600 font-bold flex items-center gap-1 pointer-events-none opacity-60">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> AI
+                                </span>
+</div>
+</div>
+<!-- Product List Mockup -->
+<div class="space-y-3">
+<label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">Items</label>
+<div class="flex gap-2 items-start p-2 border border-slate-100 dark:border-slate-700 rounded-lg bg-slate-50/50 dark:bg-slate-900/30 group hover:border-blue-200">
+<div class="flex-1">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Licencia ERP Pro (Anual)</p>
+<p class="text-xs text-slate-500">Plan Enterprise - 10 Usuarios</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-slate-900 dark:text-white">$1,200</p>
+</div>
+<button class="text-slate-300 hover:text-red-500"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+<!-- Add Item Button -->
+<button class="w-full py-2 border border-dashed border-slate-300 dark:border-slate-600 rounded-lg text-slate-500 text-sm hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Agregar Producto
+                            </button>
+</div>
+<!-- Summary -->
+<div class="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-3 space-y-2 mt-2">
+<div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+<span>Subtotal</span>
+<span>$1,200.00</span>
+</div>
+<div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+<span>IVA (21%)</span>
+<span>$252.00</span>
+</div>
+<div class="h-px bg-slate-200 dark:bg-slate-700 my-1"></div>
+<div class="flex justify-between text-base font-bold text-slate-900 dark:text-white">
+<span>Total</span>
+<span class="text-primary">$1,452.00</span>
+</div>
+</div>
+<!-- AI Suggestion Alert -->
+<div class="flex gap-2 items-start p-3 bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-800 rounded-lg">
+<span class="material-symbols-outlined text-purple-600 text-lg mt-0.5">auto_awesome</span>
+<div>
+<p class="text-xs font-bold text-purple-800 dark:text-purple-200">Sugerencia IA</p>
+<p class="text-xs text-purple-700 dark:text-purple-300 leading-snug">Este cliente suele comprar soporte extendido. ¿Agregar "Soporte Premium" con 10% descuento?</p>
+<div class="mt-2 flex gap-2">
+<button class="text-xs bg-purple-600 text-white px-2 py-1 rounded hover:bg-purple-700">Aplicar</button>
+<button class="text-xs text-purple-600 hover:underline">Ignorar</button>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="grid grid-cols-2 gap-2 mt-2">
+<button class="col-span-1 px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700">Guardar</button>
+<button class="col-span-1 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-blue-600 shadow-md shadow-blue-500/20">Enviar</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
