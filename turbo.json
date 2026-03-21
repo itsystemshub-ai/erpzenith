@@ -4,7 +4,11 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "dist/**"]
     },
+    "generate": {
+      "cache": false
+    },
     "setup": {
+      "dependsOn": ["generate"],
       "cache": false
     },
     "dev": {

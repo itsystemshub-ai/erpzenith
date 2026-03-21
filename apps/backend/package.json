@@ -6,7 +6,8 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
-    "setup": "npx prisma migrate deploy && npx prisma generate && npx prisma db seed",
+    "generate": "npx prisma generate",
+    "setup": "npx prisma migrate deploy && npx prisma db seed",
     "dev": "nest start --watch",
     "dev:only": "nest start --watch",
     "build": "nest build",

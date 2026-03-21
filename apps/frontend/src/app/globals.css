@@ -2,32 +2,217 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================================
+   ZENITH DESIGN SYSTEM — globals.css
+   Fuente única de verdad para tokens de diseño, temas y componentes base.
+   Los colores de Tailwind apuntan a estas variables (ver tailwind.config.js).
+   ============================================================================ */
+
+/* ─── TEMA CLARO (predeterminado) ────────────────────────────────────────────
+   Paleta Material You — tono índigo/azul sobre fondos blancos/grises suaves.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Primario */
+  --color-primary:                    #4f52d3;
+  --color-primary-container:          #e8e9ff;
+  --color-on-primary:                 #ffffff;
+  --color-on-primary-container:       #0d0096;
+  --color-primary-rgb:                79, 82, 211;
+
+  /* Secundario */
+  --color-secondary:                  #7c3aed;
+  --color-secondary-container:        #ede9fe;
+  --color-on-secondary:               #ffffff;
+
+  /* Terciario */
+  --color-tertiary:                   #0891b2;
+  --color-tertiary-container:         #cffafe;
+  --color-on-tertiary:                #ffffff;
+
+  /* Superficies */
+  --color-background:                 #f1f4fb;
+  --color-surface:                    #f1f4fb;
+  --color-surface-dim:                #e2e8f4;
+  --color-surface-bright:             #ffffff;
+  --color-surface-container-lowest:   #ffffff;
+  --color-surface-container-low:      #eaeff8;
+  --color-surface-container:          #e2e8f4;
+  --color-surface-container-high:     #d8dfee;
+  --color-surface-container-highest:  #cdd5e6;
+  --color-surface-variant:            #dde3f0;
+
+  /* Texto */
+  --color-on-surface:                 #1a1f36;
+  --color-on-surface-variant:         #3d4466;
+  --color-on-background:              #1a1f36;
+
+  /* Bordes */
+  --color-outline:                    #7a82a8;
+  --color-outline-variant:            #c0c6dc;
+
+  /* Error */
+  --color-error:                      #c0392b;
+  --color-error-container:            #fde8e6;
+
+  /* Inversos */
+  --color-inverse-primary:            #c0c1ff;
+  --color-inverse-surface:            #1a1f36;
+
+  /* Sombras */
+  --shadow-sidebar:   4px 0 24px rgba(79, 82, 211, 0.08);
+  --shadow-card:      0 2px 12px rgba(79, 82, 211, 0.07);
+  --shadow-zenith:    0 4px 20px rgba(79, 82, 211, 0.15), 0 0 10px rgba(99, 102, 241, 0.08);
+  --shadow-floating:  0 20px 25px -5px rgba(79, 82, 211, 0.2), 0 10px 10px -5px rgba(79, 82, 211, 0.1);
+
+  /* Glass */
+  --glass-bg:         rgba(255, 255, 255, 0.72);
+  --glass-border:     rgba(192, 198, 220, 0.45);
+  --glass-blur:       20px;
+
+  /* Gradiente primario */
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #4f52d3 100%);
+}
+
+/* ─── TEMA OSCURO ─────────────────────────────────────────────────────────────
+   Paleta original Zenith — azul profundo con acentos violeta/cyan.
+   Se activa añadiendo la clase .dark al elemento <html>.
+   ─────────────────────────────────────────────────────────────────────────── */
+.dark {
+  /* Primario */
+  --color-primary:                    #c0c1ff;
+  --color-primary-container:          #8083ff;
+  --color-on-primary:                 #1000a9;
+  --color-on-primary-container:       #0d0096;
+  --color-primary-rgb:                192, 193, 255;
+
+  /* Secundario */
+  --color-secondary:                  #d0bcff;
+  --color-secondary-container:        #571bc1;
+  --color-on-secondary:               #3c0091;
+
+  /* Terciario */
+  --color-tertiary:                   #4cd7f6;
+  --color-tertiary-container:         #009eb9;
+  --color-on-tertiary:                #003640;
+
+  /* Superficies */
+  --color-background:                 #0b1326;
+  --color-surface:                    #0b1326;
+  --color-surface-dim:                #0b1326;
+  --color-surface-bright:             #31394d;
+  --color-surface-container-lowest:   #060e20;
+  --color-surface-container-low:      #131b2e;
+  --color-surface-container:          #171f33;
+  --color-surface-container-high:     #222a3d;
+  --color-surface-container-highest:  #2d3449;
+  --color-surface-variant:            #2d3449;
+
+  /* Texto */
+  --color-on-surface:                 #dae2fd;
+  --color-on-surface-variant:         #c7c4d7;
+  --color-on-background:              #dae2fd;
+
+  /* Bordes */
+  --color-outline:                    #908fa0;
+  --color-outline-variant:            #464554;
+
+  /* Error */
+  --color-error:                      #ffb4ab;
+  --color-error-container:            #93000a;
+
+  /* Inversos */
+  --color-inverse-primary:            #494bd6;
+  --color-inverse-surface:            #dae2fd;
+
+  /* Sombras */
+  --shadow-sidebar:   20px 0 40px rgba(0, 0, 0, 0.4);
+  --shadow-card:      0 4px 6px rgba(0, 0, 0, 0.25);
+  --shadow-zenith:    0 20px 40px rgba(0, 0, 0, 0.4), 0 0 15px rgba(99, 102, 241, 0.1);
+  --shadow-floating:  0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+
+  /* Glass */
+  --glass-bg:         rgba(255, 255, 255, 0.03);
+  --glass-border:     rgba(70, 69, 84, 0.2);
+  --glass-blur:       20px;
+
+  /* Gradiente primario */
+  --gradient-primary: linear-gradient(135deg, #c0c1ff 0%, #8083ff 100%);
+}
+
+/* ─── BASE ────────────────────────────────────────────────────────────────────
+   Estilos base que se aplican a elementos HTML nativos.
+   ─────────────────────────────────────────────────────────────────────────── */
 @layer base {
+  html {
+    /* Transición suave al cambiar de tema */
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
   body {
     @apply bg-background text-on-surface;
     font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { @apply bg-surface-container-highest rounded-full; }
+
+  /* Scrollbar minimalista */
+  ::-webkit-scrollbar        { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { @apply bg-surface-container-highest rounded-full; }
+
+  /* Selección de texto */
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    opacity: 0.3;
+  }
 }
 
+/* ─── COMPONENTES ─────────────────────────────────────────────────────────────
+   Clases reutilizables del sistema de diseño Zenith.
+   Todas usan variables CSS → se adaptan automáticamente al tema activo.
+   ─────────────────────────────────────────────────────────────────────────── */
 @layer components {
+
+  /* Glass panel — superficie translúcida con blur */
   .glass-panel {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(70, 69, 84, 0.2);
+    background:             var(--glass-bg);
+    backdrop-filter:        blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border:                 1px solid var(--glass-border);
   }
+
+  /* Glow del logo / elementos destacados */
   .zenith-glow {
-    box-shadow: 0px 20px 40px rgba(0,0,0,0.4), 0px 0px 15px rgba(99,102,241,0.1);
+    box-shadow: var(--shadow-zenith);
   }
+
+  /* Gradiente primario (botones CTA, FAB) */
   .primary-gradient {
-    background: linear-gradient(135deg, #c0c1ff 0%, #8083ff 100%);
+    background: var(--gradient-primary);
   }
+
+  /* Sombra ambiente genérica */
   .ambient-glow {
-    box-shadow: 0px 20px 40px rgba(0,0,0,0.4), 0px 0px 10px rgba(99,102,241,0.1);
+    box-shadow: var(--shadow-zenith);
   }
+
+  /* Sombra del sidebar */
+  .sidebar-shadow {
+    box-shadow: var(--shadow-sidebar);
+  }
+
+  /* Tipografías del sistema */
   .font-headline { font-family: 'Space Grotesk', sans-serif; }
-  .font-spartan { font-family: 'League Spartan', sans-serif; }
+  .font-spartan  { font-family: 'League Spartan', sans-serif; }
+
+  /* Skeleton loader */
+  .skeleton {
+    @apply bg-surface-container-highest rounded animate-pulse;
+  }
+
+  /* Divider */
+  .divider {
+    @apply border-t border-outline-variant/30;
+  }
 }

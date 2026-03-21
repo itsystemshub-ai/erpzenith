@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/authStore'
 import { useNotificationStore } from '@/stores/notificationStore'
+import { useUiStore } from '@/stores/uiStore'
 import { api } from '@/lib/api'
 
 type NavItem = { href: string; icon: string; label: string; children?: { href: string; label: string }[] }
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/dashboard', icon: 'dashboard', label: 'Dashboard' },
-  { href: '/dashboard/ejecutivo', icon: 'leaderboard', label: 'Ejecutivo' },
   {
     href: '/dashboard/inventario', icon: 'inventory_2', label: 'Inventario',
     children: [
@@ -23,6 +23,7 @@ const NAV_ITEMS: NavItem[] = [
       { href: '/dashboard/inventario/smart-control', label: 'Smart Control' },
       { href: '/dashboard/inventario/reabastecimiento', label: 'Reabastecimiento' },
       { href: '/dashboard/inventario/ajustes', label: 'Ajustes' },
+      { href: '/dashboard/reportes/inventario', label: 'Reporte Inventario' },
     ],
   },
   {
@@ -31,6 +32,7 @@ const NAV_ITEMS: NavItem[] = [
       { href: '/dashboard/compras/ordenes', label: 'Órdenes' },
       { href: '/dashboard/compras/proveedores', label: 'Proveedores' },
       { href: '/dashboard/compras/recepcion', label: 'Recepción' },
+      { href: '/dashboard/reportes/compras-bi', label: 'Reporte BI' },
     ],
   },
   { href: '/dashboard/produccion', icon: 'factory', label: 'Producción',
@@ -58,6 +60,10 @@ const NAV_ITEMS: NavItem[] = [
       { href: '/dashboard/ventas/comisiones', label: 'Comisiones' },
       { href: '/dashboard/ventas/portal-b2b', label: 'Portal B2B' },
       { href: '/dashboard/ventas/timeline', label: 'Timeline Clientes' },
+      { href: '/dashboard/reportes/ventas', label: 'Reporte Ventas' },
+      { href: '/dashboard/reportes/ventas-bi', label: 'Reporte BI' },
+      { href: '/dashboard/reportes/ventas-realtime', label: 'Reporte Realtime' },
+      { href: '/dashboard/reportes/generador', label: 'Generador Reportes' },
     ],
   },
   { href: '/dashboard/pos', icon: 'storefront', label: 'POS',
@@ -88,17 +94,6 @@ const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    href: '/dashboard/reportes', icon: 'analytics', label: 'Reportes',
-    children: [
-      { href: '/dashboard/reportes/ventas', label: 'Ventas' },
-      { href: '/dashboard/reportes/ventas-bi', label: 'Ventas BI' },
-      { href: '/dashboard/reportes/ventas-realtime', label: 'Ventas Realtime' },
-      { href: '/dashboard/reportes/compras-bi', label: 'Compras BI' },
-      { href: '/dashboard/reportes/inventario', label: 'Inventario' },
-      { href: '/dashboard/reportes/generador', label: 'Generador' },
-    ],
-  },
-  {
     href: '/dashboard/contabilidad', icon: 'account_balance', label: 'Contabilidad',
     children: [
       { href: '/dashboard/contabilidad/balance', label: 'Balance General' },
@@ -113,7 +108,6 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/dashboard/activos', icon: 'domain', label: 'Activos Fijos' },
   { href: '/dashboard/ai-chat', icon: 'smart_toy', label: 'IA Analista' },
   { href: '/dashboard/buscador', icon: 'search', label: 'Buscador Global' },
-  { href: '/dashboard/notificaciones', icon: 'notifications', label: 'Notificaciones' },
   { href: '/dashboard/soporte', icon: 'support_agent', label: 'Soporte' },
   {
     href: '/dashboard/configuracion', icon: 'settings', label: 'Configuración',
@@ -141,6 +135,7 @@ export function Sidebar() {
   const router = useRouter()
   const { user, logout, accessToken } = useAuthStore()
   const { add: addNotification } = useNotificationStore()
+  const { setActiveModule } = useUiStore()
   const [pendingResets, setPendingResets] = useState(0)
   const [expanded, setExpanded] = useState<string[]>([])
 
@@ -184,7 +179,7 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col py-6 z-50 shadow-[20px_0_40px_rgba(0,0,0,0.4)]">
+    <aside className="h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col py-6 z-50 sidebar-shadow">
       {/* Logo */}
       <div className="px-6 mb-8">
         <div className="flex items-center gap-3">
@@ -217,7 +212,7 @@ export function Sidebar() {
                     ? 'text-primary'
                     : 'text-outline hover:text-on-surface hover:bg-white/5'
                 )}
-                onClick={() => hasChildren ? toggleExpand(item.href) : router.push(item.href)}
+                onClick={() => hasChildren ? toggleExpand(item.href) : (setActiveModule(item.href.split('/')[2] ?? 'dashboard'), router.push(item.href))}
               >
                 <span className="material-symbols-outlined text-[20px]" style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}>
                   {item.icon}
