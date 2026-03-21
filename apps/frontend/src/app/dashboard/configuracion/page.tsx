@@ -161,6 +161,16 @@ export default function ConfiguracionPage() {
               <span className="material-symbols-outlined group-hover:rotate-90 transition-transform">add</span>
               Nuevo Rol Personalizado
             </button>
+            <a
+              href="/dashboard/configuracion/reset-requests"
+              className="mt-4 flex items-center justify-between w-full px-4 py-3 bg-error/5 border border-error/20 rounded-xl hover:bg-error/10 transition-all group"
+            >
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-error text-sm">lock_reset</span>
+                <span className="text-xs font-spartan uppercase tracking-widest text-error">Solicitudes de Contraseña</span>
+              </div>
+              <span className="material-symbols-outlined text-error/50 text-sm group-hover:text-error transition-colors">arrow_forward</span>
+            </a>
           </GlassCard>
 
           {/* Auditoría en Tiempo Real */}

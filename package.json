@@ -1,9 +1,10 @@
 {
   "name": "erpzenith",
   "private": true,
+  "packageManager": "npm@10.8.2",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "dev": "turbo run dev",
+    "dev": "turbo run setup && turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint"
   },
