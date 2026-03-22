@@ -107,21 +107,38 @@ export class ConfiguracionService {
     }
   }
 
+  // Modelo Prisma por nombre de tabla
+  private readonly TABLE_MODEL_MAP: Record<string, string> = {
+    users: 'user', roles: 'role', permissions: 'permission',
+    password_reset_requests: 'passwordResetRequest',
+    productos: 'producto', almacenes: 'almacen', stocks: 'stock',
+    movimientos_stock: 'movimientoStock', proveedores: 'proveedor',
+    ordenes_compra: 'ordenCompra', items_orden_compra: 'itemOrdenCompra',
+    clientes: 'cliente', facturas: 'factura', items_factura: 'itemFactura',
+    empleados: 'empleado', nominas: 'nomina',
+    ordenes_produccion: 'ordenProduccion', items_orden_produccion: 'itemOrdenProduccion',
+    configuracion: 'configuracion', tasas_bcv: 'tasaBCV', empresas: 'empresa',
+  }
+
+  private allowedTable(tableName: string) {
+    if (!this.TABLE_MODEL_MAP[tableName]) throw new Error('Tabla no permitida')
+    return this.TABLE_MODEL_MAP[tableName]
+  }
+
+  async updateRow(tableName: string, id: string, data: Record<string, unknown>) {
+    const model = this.allowedTable(tableName)
+    // Eliminar campos que no se deben actualizar directamente
+    const { id: _id, createdAt: _c, ...safeData } = data as any
+    return (this.prisma as any)[model].update({ where: { id }, data: safeData })
+  }
+
+  async deleteRow(tableName: string, id: string) {
+    const model = this.allowedTable(tableName)
+    return (this.prisma as any)[model].delete({ where: { id } })
+  }
+
   async getTableData(tableName: string, limit = 50) {
-    // Whitelist de tablas permitidas para evitar SQL injection
-    const ALLOWED_TABLES = [
-      'users', 'roles', 'permissions', 'password_reset_requests',
-      'productos', 'almacenes', 'stocks', 'movimientos_stock',
-      'proveedores', 'ordenes_compra', 'items_orden_compra',
-      'clientes', 'facturas', 'items_factura',
-      'empleados', 'nominas',
-      'ordenes_produccion', 'items_orden_produccion',
-      'configuracion', 'tasas_bcv', 'empresas',
-    ]
-    if (!ALLOWED_TABLES.includes(tableName)) {
-      throw new Error('Tabla no permitida')
-    }
-    // $queryRawUnsafe es seguro aquí porque tableName está en whitelist
+    this.allowedTable(tableName) // valida whitelist
     const rows = await this.prisma.$queryRawUnsafe(
       `SELECT * FROM "${tableName}" LIMIT ${limit}`
     )

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { QueryProvider } from '@/components/providers/QueryProvider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { StoreHydration } from '@/components/providers/StoreHydration'
 
 export const metadata: Metadata = {
   title: 'ERP ZENITH',
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <StoreHydration />
         <QueryProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </QueryProvider>

@@ -48,6 +48,13 @@ export const useNotificationStore = create<NotificationState>()(
       clear: () => set({ notifications: [] }),
       unreadCount: () => get().notifications.filter((n) => !n.read).length,
     }),
-    { name: 'zenith-notifications' }
+    { name: 'zenith-notifications',
+      skipHydration: true,
+      storage: {
+        getItem: (key) => { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : null } catch { return null } },
+        setItem: (key, v) => { try { localStorage.setItem(key, JSON.stringify(v)) } catch {} },
+        removeItem: (key) => { try { localStorage.removeItem(key) } catch {} },
+      },
+    }
   )
 )

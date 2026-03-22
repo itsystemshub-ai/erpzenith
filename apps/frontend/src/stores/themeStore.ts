@@ -22,6 +22,13 @@ export const useThemeStore = create<ThemeState>()(
 
       setTheme: (theme) => set({ theme }),
     }),
-    { name: 'zenith-theme' }
+    { name: 'zenith-theme',
+      skipHydration: true,
+      storage: {
+        getItem: (key) => { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : null } catch { return null } },
+        setItem: (key, v) => { try { localStorage.setItem(key, JSON.stringify(v)) } catch {} },
+        removeItem: (key) => { try { localStorage.removeItem(key) } catch {} },
+      },
+    }
   )
 )

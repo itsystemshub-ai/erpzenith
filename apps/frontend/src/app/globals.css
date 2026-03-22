@@ -155,10 +155,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Scrollbar minimalista */
-  ::-webkit-scrollbar        { width: 4px; height: 4px; }
+  /* Scrollbar */
+  ::-webkit-scrollbar        { width: 8px; height: 10px; }
   ::-webkit-scrollbar-track  { background: transparent; }
-  ::-webkit-scrollbar-thumb  { @apply bg-surface-container-highest rounded-full; }
+  ::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.25); border-radius: 9999px; border: 2px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.45); border-radius: 9999px; }
 
   /* Selección de texto */
   ::selection {

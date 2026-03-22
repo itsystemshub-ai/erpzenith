@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Patch, Delete, Body, Param, UseGuards } from '@nestjs/common'
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { ConfiguracionService } from './configuracion.service'
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard'
@@ -44,6 +44,20 @@ export class ConfiguracionController {
   @Get('db-table/:table')
   getTableData(@Param('table') table: string) {
     return this.configuracionService.getTableData(table)
+  }
+
+  @Patch('db-table/:table/:id')
+  updateRow(
+    @Param('table') table: string,
+    @Param('id') id: string,
+    @Body() body: Record<string, unknown>,
+  ) {
+    return this.configuracionService.updateRow(table, id, body)
+  }
+
+  @Delete('db-table/:table/:id')
+  deleteRow(@Param('table') table: string, @Param('id') id: string) {
+    return this.configuracionService.deleteRow(table, id).then(() => ({ ok: true }))
   }
 
   @Get(':clave')
