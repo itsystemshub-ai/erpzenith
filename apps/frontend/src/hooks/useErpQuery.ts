@@ -64,11 +64,13 @@ export function useErpMutation<TData = unknown, TVariables = unknown>(
       opts.onSuccess?.(data, variables)
     },
     onError: (error) => {
-      add({
-        type: 'error',
-        title: 'Error',
-        message: opts.errorMessage ?? error.message ?? 'Ocurrió un error inesperado',
-      })
+      if (opts.errorMessage !== undefined) {
+        add({
+          type: 'error',
+          title: 'Error',
+          message: opts.errorMessage || error.message || 'Ocurrió un error inesperado',
+        })
+      }
     },
   })
 }

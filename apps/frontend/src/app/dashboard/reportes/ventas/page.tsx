@@ -120,8 +120,8 @@ export default function ReporteVentasPage() {
             <table className="w-full text-left">
               <thead>
                 <tr className="bg-white/5">
-                  {['Período', 'Facturas', 'Total USD', 'Total Bs.', 'Ticket Prom.', 'Clientes Nuevos', 'Variación'].map((h) => (
-                    <th key={h} className="px-6 py-4 text-[10px] font-spartan uppercase tracking-widest text-outline whitespace-nowrap">{h}</th>
+                  {['Período', 'Facturas', 'Total USD', 'Total Bs.', 'Ticket', 'Cli. Nuevos', 'Var.'].map((h) => (
+                    <th key={h} className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -131,19 +131,19 @@ export default function ReporteVentasPage() {
                   const variacion = prev ? (((v.totalUSD - prev.totalUSD) / prev.totalUSD) * 100).toFixed(1) : null
                   return (
                     <tr key={v.periodo} className="hover:bg-white/5 transition-colors">
-                      <td className="px-6 py-4 text-sm font-medium text-on-surface">{v.periodo}</td>
-                      <td className="px-6 py-4 text-sm text-on-surface-variant text-center">{v.facturas}</td>
-                      <td className="px-6 py-4 text-sm font-bold text-on-surface">${v.totalUSD.toLocaleString('es-VE', { minimumFractionDigits: 2 })}</td>
-                      <td className="px-6 py-4 text-sm text-tertiary">Bs. {(v.totalUSD * TASA_BCV).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</td>
-                      <td className="px-6 py-4 text-sm text-on-surface">${(v.totalUSD / v.facturas).toFixed(2)}</td>
-                      <td className="px-6 py-4 text-sm text-on-surface-variant text-center">{v.clientesNuevos}</td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 py-3 text-xs font-medium text-on-surface">{v.periodo}</td>
+                      <td className="px-3 py-3 text-xs text-on-surface-variant text-center">{v.facturas}</td>
+                      <td className="px-3 py-3 text-xs font-bold text-on-surface whitespace-nowrap">${v.totalUSD.toLocaleString('es-VE', { minimumFractionDigits: 2 })}</td>
+                      <td className="px-3 py-3 text-xs text-tertiary whitespace-nowrap">Bs. {(v.totalUSD * TASA_BCV).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</td>
+                      <td className="px-3 py-3 text-xs text-on-surface whitespace-nowrap">${(v.totalUSD / v.facturas).toFixed(2)}</td>
+                      <td className="px-3 py-3 text-xs text-on-surface-variant text-center">{v.clientesNuevos}</td>
+                      <td className="px-3 py-3">
                         {variacion ? (
-                          <span className={`text-sm font-bold ${parseFloat(variacion) >= 0 ? 'text-emerald-400' : 'text-error'}`}>
+                          <span className={`text-xs font-bold ${parseFloat(variacion) >= 0 ? 'text-emerald-400' : 'text-error'}`}>
                             {parseFloat(variacion) >= 0 ? '↑' : '↓'} {Math.abs(parseFloat(variacion))}%
                           </span>
                         ) : (
-                          <span className="text-outline text-sm">—</span>
+                          <span className="text-outline text-xs">—</span>
                         )}
                       </td>
                     </tr>
@@ -152,12 +152,12 @@ export default function ReporteVentasPage() {
               </tbody>
               <tfoot>
                 <tr className="bg-surface-container-highest/50 border-t-2 border-primary/20">
-                  <td className="px-6 py-4 text-xs font-spartan uppercase tracking-widest text-outline font-bold">Total</td>
-                  <td className="px-6 py-4 font-bold text-on-surface text-center">{totalFacturas}</td>
-                  <td className="px-6 py-4 font-headline font-bold text-primary">${totalFacturado.toLocaleString('es-VE', { minimumFractionDigits: 2 })}</td>
-                  <td className="px-6 py-4 font-bold text-tertiary">Bs. {(totalFacturado * TASA_BCV).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</td>
-                  <td className="px-6 py-4 font-bold text-on-surface">${ticketPromedio.toFixed(2)}</td>
-                  <td className="px-6 py-4 font-bold text-on-surface text-center">{totalClientesNuevos}</td>
+                  <td className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold">Total</td>
+                  <td className="px-3 py-3 text-xs font-bold text-on-surface text-center">{totalFacturas}</td>
+                  <td className="px-3 py-3 text-xs font-headline font-bold text-primary whitespace-nowrap">${totalFacturado.toLocaleString('es-VE', { minimumFractionDigits: 2 })}</td>
+                  <td className="px-3 py-3 text-xs font-bold text-tertiary whitespace-nowrap">Bs. {(totalFacturado * TASA_BCV).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</td>
+                  <td className="px-3 py-3 text-xs font-bold text-on-surface whitespace-nowrap">${ticketPromedio.toFixed(2)}</td>
+                  <td className="px-3 py-3 text-xs font-bold text-on-surface text-center">{totalClientesNuevos}</td>
                   <td />
                 </tr>
               </tfoot>

@@ -22,10 +22,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
           rel="stylesheet"
         />
-        {/* Evita flash de tema incorrecto al cargar */}
+        {/* Anti-flash: aplica .dark antes de que React hidrate si el usuario lo tenía guardado */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=JSON.parse(localStorage.getItem('zenith-theme')||'{}');if(t.state&&t.state.theme==='dark')document.documentElement.classList.add('dark')}catch(e){}})()`,
+            __html: `(function(){try{var s=JSON.parse(localStorage.getItem('zenith-theme')||'{}');if(s.state?.theme==='dark'||s.state?.theme==='dark')document.documentElement.classList.add('dark')}catch(e){}})()`,
           }}
         />
       </head>

@@ -83,19 +83,19 @@ export default function ComisionesPage() {
             <table className="w-full text-left text-sm">
               <thead className="bg-white/5">
                 <tr>
-                  {['Vendedor', 'Ventas', 'Meta %', 'Comisión Base', 'Bono', 'Total', 'Estado'].map((h) => (
-                    <th key={h} className="px-6 py-4 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold">{h}</th>
+                  {['Vendedor', 'Ventas', 'Meta', 'Com. Base', 'Bono', 'Total', 'Estado'].map((h) => (
+                    <th key={h} className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {vendedores.map((v) => (
                   <tr key={v.vendedor} className="hover:bg-white/5 transition-colors">
-                    <td className="px-6 py-4 font-medium text-on-surface">{v.vendedor}</td>
-                    <td className="px-6 py-4 text-on-surface">{v.ventas}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3 text-xs font-medium text-on-surface">{v.vendedor}</td>
+                    <td className="px-3 py-3 text-xs text-on-surface whitespace-nowrap">{v.ventas}</td>
+                    <td className="px-3 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+                        <div className="w-12 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${v.meta >= 100 ? 'bg-tertiary' : v.meta >= 75 ? 'bg-primary' : 'bg-amber-400'}`}
                             style={{ width: `${Math.min(v.meta, 100)}%` }}
@@ -106,11 +106,11 @@ export default function ComisionesPage() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-on-surface-variant">{v.comisionBase}</td>
-                    <td className="px-6 py-4 text-tertiary font-bold">{v.bono}</td>
-                    <td className="px-6 py-4 font-bold text-on-surface">{v.total}</td>
-                    <td className="px-6 py-4">
-                      <span className={`text-xs font-bold px-3 py-1 rounded-full ${estadoColor[v.estado]}`}>{v.estado}</span>
+                    <td className="px-3 py-3 text-xs text-on-surface-variant whitespace-nowrap">{v.comisionBase}</td>
+                    <td className="px-3 py-3 text-xs text-tertiary font-bold whitespace-nowrap">{v.bono}</td>
+                    <td className="px-3 py-3 text-xs font-bold text-on-surface whitespace-nowrap">{v.total}</td>
+                    <td className="px-3 py-3">
+                      <span className={`text-xs font-bold px-2 py-1 rounded-full ${estadoColor[v.estado]}`}>{v.estado}</span>
                     </td>
                   </tr>
                 ))}

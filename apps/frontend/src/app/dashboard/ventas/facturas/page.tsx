@@ -158,41 +158,41 @@ export default function FacturasPage() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-white/5 border-b border-white/5 font-spartan text-[0.625rem] uppercase tracking-[0.2em] text-outline">
-                  <th className="px-6 py-5">Número</th>
-                  <th className="px-6 py-5">Cliente</th>
-                  <th className="px-6 py-5">Fecha</th>
-                  <th className="px-6 py-5 text-right">Total VES</th>
-                  <th className="px-6 py-5 text-right">Total USD</th>
-                  <th className="px-6 py-5">Estado</th>
-                  <th className="px-6 py-5 text-right">Acciones</th>
+                  <th className="px-3 py-4">Número</th>
+                  <th className="px-3 py-4">Cliente</th>
+                  <th className="px-3 py-4 whitespace-nowrap">Fecha</th>
+                  <th className="px-3 py-4 text-right whitespace-nowrap">Total VES</th>
+                  <th className="px-3 py-4 text-right whitespace-nowrap">Total USD</th>
+                  <th className="px-3 py-4">Estado</th>
+                  <th className="px-3 py-4 text-right">Acc.</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {filtered.map((f) => (
                   <tr key={f.id} className="hover:bg-white/5 transition-colors cursor-pointer">
-                    <td className="px-6 py-4">
-                      <span className="text-sm font-medium text-primary font-mono">{f.numero}</span>
+                    <td className="px-3 py-3">
+                      <span className="text-xs font-medium text-primary font-mono whitespace-nowrap">{f.numero}</span>
                     </td>
-                    <td className="px-6 py-4">
-                      <p className="text-sm font-semibold text-on-surface">{f.cliente}</p>
-                      <p className="text-[10px] text-outline">RIF: {f.rif}</p>
+                    <td className="px-3 py-3 max-w-[160px]">
+                      <p className="text-xs font-semibold text-on-surface truncate">{f.cliente}</p>
+                      <p className="text-[10px] text-outline">{f.rif}</p>
                     </td>
-                    <td className="px-6 py-4 text-sm text-outline">{f.fecha}</td>
-                    <td className="px-6 py-4 text-right font-bold text-on-surface">
+                    <td className="px-3 py-3 text-xs text-outline whitespace-nowrap">{f.fecha}</td>
+                    <td className="px-3 py-3 text-right font-bold text-on-surface text-xs whitespace-nowrap">
                       {f.totalVES.toLocaleString('es-VE')}
                     </td>
-                    <td className="px-6 py-4 text-right text-sm text-outline">
+                    <td className="px-3 py-3 text-right text-xs text-outline whitespace-nowrap">
                       ${f.totalUSD.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3">
                       <Badge variant={estadoConfig[f.estado].variant}>{f.estado}</Badge>
                     </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button className="p-1.5 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
+                    <td className="px-3 py-3 text-right">
+                      <div className="flex items-center justify-end gap-1">
+                        <button className="p-1 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
                           <span className="material-symbols-outlined text-[16px]">visibility</span>
                         </button>
-                        <button className="p-1.5 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
+                        <button className="p-1 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
                           <span className="material-symbols-outlined text-[16px]">print</span>
                         </button>
                       </div>

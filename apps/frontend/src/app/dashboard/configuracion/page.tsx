@@ -3,12 +3,13 @@ import { useState } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Button } from '@/components/ui/Button'
+import { useErpQuery, useErpMutation } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
-const roles = [
-  { id: 'ADMIN', label: 'ADMIN', desc: 'Acceso Total', icon: 'grade', color: 'bg-primary/20 text-primary' },
-  { id: 'ALMACENISTA', label: 'ALMACENISTA', desc: 'Stock & Despacho', icon: 'inventory_2', color: 'bg-tertiary/20 text-tertiary' },
-  { id: 'AUDITOR', label: 'AUDITOR', desc: 'Solo Lectura', icon: 'visibility', color: 'bg-outline/20 text-outline' },
-]
+interface ConfigItem { clave: string; valor: string; descripcion?: string }
+interface TasaBCV { tasa: number; fecha: string }
+interface Permission { id: string; module: string; action: string }
+interface Role { id: string; name: string; permissions: Permission[]; _count?: { users: number } }
 
 const motoresIA = [
   { nombre: 'Gemini 1.5 Pro', desc: 'API Endpoint: Active', icon: 'smart_toy', color: 'bg-gradient-to-tr from-blue-600 to-cyan-400', estado: 'active' },
@@ -16,22 +17,43 @@ const motoresIA = [
   { nombre: 'n8n Workflows', desc: '12 Automations', icon: 'account_tree', color: 'bg-orange-500/20 border border-orange-500/50 text-orange-400', estado: 'warning' },
 ]
 
-const logs = [
-  { hora: '14:22:05', usuario: 'ADMIN', msg: 'Cambio de tasa BCV detectado', meta: 'IP: 190.204.12.1 • Chrome/124.0', tipo: 'info' },
-  { hora: '14:18:42', usuario: 'SYSTEM', msg: 'Sincronización exitosa con Groq API', meta: 'LATENCY: 42ms • MODEL: Llama-3-70b', tipo: 'info' },
-  { hora: '14:15:10', usuario: 'ALMACENISTA', msg: 'Intento fallido de borrado de stock', meta: 'AUTH_ERROR: Insufficient Permissions', tipo: 'error' },
-  { hora: '13:55:00', usuario: 'USER_ROOT', msg: 'Login exitoso desde dispositivo nuevo', meta: 'MFA_VERIFIED: SMS Token', tipo: 'info' },
-]
-
-const stats = [
-  { label: 'Uptime Sistema', valor: '99.99%', sub: null, bar: 99 },
-  { label: 'Peticiones IA (24h)', valor: '12,482', sub: '↑ 14% vs ayer', bar: null },
-  { label: 'Usuarios Activos', valor: '458', sub: null, bar: null },
-]
-
 export default function ConfiguracionPage() {
-  const [razonSocial, setRazonSocial] = useState('Corporación Tecnológica ERPX S.A.')
-  const [rif, setRif] = useState('J-40592831-0')
+  const { data: configs = [] } = useErpQuery<ConfigItem[]>(QK.configuracion.all(), '/configuracion')
+  const { data: bcvData } = useErpQuery<TasaBCV>(QK.configuracion.bcvTasa(), '/configuracion/bcv/tasa')
+  const { data: roles = [] } = useErpQuery<Role[]>(QK.configuracion.roles(), '/configuracion/sistema/roles')
+
+  const getConfig = (clave: string) => configs.find(c => c.clave === clave)?.valor ?? ''
+
+  const [razonSocial, setRazonSocial] = useState<string | null>(null)
+  const [rif, setRif] = useState<string | null>(null)
+
+  const razonSocialVal = razonSocial ?? getConfig('empresa_nombre')
+  const rifVal = rif ?? getConfig('empresa_rif')
+
+  const saveConfig = useErpMutation({
+    endpoint: '/configuracion',
+    method: 'post',
+    invalidateKeys: [QK.configuracion.all()],
+    successMessage: 'Configuración guardada',
+  })
+
+  const handleSave = () => {
+    if (razonSocial) saveConfig.mutate({ clave: 'empresa_nombre', valor: razonSocial } as any)
+    if (rif) saveConfig.mutate({ clave: 'empresa_rif', valor: rif } as any)
+  }
+
+  const roleIcons: Record<string, { icon: string; color: string }> = {
+    SUPERDEV: { icon: 'grade', color: 'bg-primary/20 text-primary' },
+    ADMIN: { icon: 'manage_accounts', color: 'bg-primary/20 text-primary' },
+    VENDEDOR: { icon: 'point_of_sale', color: 'bg-tertiary/20 text-tertiary' },
+    ALMACÉN: { icon: 'inventory_2', color: 'bg-secondary/20 text-secondary' },
+    AUDITOR: { icon: 'visibility', color: 'bg-outline/20 text-outline' },
+  }
+
+  const getRoleStyle = (name: string) => roleIcons[name] ?? { icon: 'shield_person', color: 'bg-outline/20 text-outline' }
+
+  const tasaDisplay = bcvData?.tasa ? Number(bcvData.tasa).toFixed(2) : '—'
+  const fechaBCV = bcvData?.fecha ? new Date(bcvData.fecha).toLocaleDateString('es-VE') : '—'
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -53,9 +75,9 @@ export default function ConfiguracionPage() {
               <span className="material-symbols-outlined text-error text-[18px]">restart_alt</span>
               Reset Sistema
             </Button>
-            <Button>
+            <Button onClick={handleSave} disabled={saveConfig.isPending}>
               <span className="material-symbols-outlined text-[18px]">save</span>
-              Guardar Cambios
+              {saveConfig.isPending ? 'Guardando...' : 'Guardar Cambios'}
             </Button>
           </div>
         </div>
@@ -74,7 +96,7 @@ export default function ConfiguracionPage() {
               <div className="space-y-2">
                 <label className="text-[0.6875rem] uppercase tracking-[0.1em] text-outline font-spartan">Razón Social</label>
                 <input
-                  value={razonSocial}
+                  value={razonSocialVal}
                   onChange={(e) => setRazonSocial(e.target.value)}
                   className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-4 py-3 text-on-surface font-medium focus:outline-none focus:border-tertiary transition-all"
                 />
@@ -82,7 +104,7 @@ export default function ConfiguracionPage() {
               <div className="space-y-2">
                 <label className="text-[0.6875rem] uppercase tracking-[0.1em] text-outline font-spartan">Registro RIF</label>
                 <input
-                  value={rif}
+                  value={rifVal}
                   onChange={(e) => setRif(e.target.value)}
                   className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-4 py-3 text-on-surface font-medium focus:outline-none focus:border-tertiary transition-all"
                 />
@@ -95,12 +117,12 @@ export default function ConfiguracionPage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-on-surface">Tasa Cambiaria BCV</h4>
-                      <p className="text-xs text-outline">Actualización automática cada 12 horas</p>
+                      <p className="text-xs text-outline">Última actualización: {fechaBCV}</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-spartan font-bold text-tertiary">
-                      36.50 <span className="text-sm font-normal text-outline">VES/USD</span>
+                      {tasaDisplay} <span className="text-sm font-normal text-outline">VES/USD</span>
                     </div>
                     <span className="text-[0.6rem] bg-tertiary/20 text-tertiary px-2 py-0.5 rounded-full uppercase font-bold tracking-tighter">
                       Sincronizado
@@ -145,17 +167,20 @@ export default function ConfiguracionPage() {
               <h3 className="text-xl font-spartan font-bold uppercase tracking-widest text-primary">Gestión de Roles</h3>
             </div>
             <div className="space-y-3">
-              {roles.map((rol) => (
-                <div key={rol.id} className="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl hover:bg-surface-container transition-all cursor-pointer">
-                  <div className="flex items-center gap-4">
-                    <div className={`p-2 rounded-xl ${rol.color}`}>
-                      <span className="material-symbols-outlined text-sm">{rol.icon}</span>
+              {roles.map((rol) => {
+                const style = getRoleStyle(rol.name)
+                return (
+                  <div key={rol.id} className="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl hover:bg-surface-container transition-all cursor-pointer">
+                    <div className="flex items-center gap-4">
+                      <div className={`p-2 rounded-xl ${style.color}`}>
+                        <span className="material-symbols-outlined text-sm">{style.icon}</span>
+                      </div>
+                      <span className="font-bold font-spartan tracking-wider text-on-surface">{rol.name}</span>
                     </div>
-                    <span className="font-bold font-spartan tracking-wider text-on-surface">{rol.label}</span>
+                    <span className="text-xs text-outline font-spartan">{rol.permissions.length} permisos</span>
                   </div>
-                  <span className="text-xs text-outline font-spartan">{rol.desc}</span>
-                </div>
-              ))}
+                )
+              })}
             </div>
             <button className="mt-6 flex items-center justify-center gap-2 w-full py-4 bg-white/5 rounded-xl border border-dashed border-white/20 text-primary font-bold hover:bg-primary/10 transition-all group">
               <span className="material-symbols-outlined group-hover:rotate-90 transition-transform">add</span>
@@ -180,45 +205,34 @@ export default function ConfiguracionPage() {
                 <span className="material-symbols-outlined text-primary">history_edu</span>
                 <h3 className="text-xl font-spartan font-bold uppercase tracking-widest text-primary">Auditoría en Tiempo Real</h3>
               </div>
-              <span className="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-widest text-emerald-400">
+              <a href="/dashboard/configuracion/auditoria"
+                className="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-widest text-emerald-400 hover:text-emerald-300 transition-colors">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Live Streaming
-              </span>
+                Ver Historial Completo
+              </a>
             </div>
-            <div className="space-y-3 overflow-y-auto max-h-[280px] pr-1">
-              {logs.map((log, i) => (
-                <div
-                  key={i}
-                  className={`flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-all ${log.tipo === 'error' ? 'border-l-2 border-error/40 bg-error/5' : ''}`}
-                >
-                  <div className={`text-xs font-mono pt-1 ${log.tipo === 'error' ? 'text-error' : 'text-primary'}`}>{log.hora}</div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-on-surface">
-                      <span className={log.tipo === 'error' ? 'text-error' : 'text-primary'}>{log.usuario}:</span> {log.msg}
-                    </p>
-                    <p className="text-[0.65rem] text-outline uppercase tracking-wider mt-1">{log.meta}</p>
-                  </div>
-                  <span className={`material-symbols-outlined text-lg ${log.tipo === 'error' ? 'text-error' : 'text-outline'}`}>
-                    {log.tipo === 'error' ? 'warning' : 'chevron_right'}
-                  </span>
-                </div>
-              ))}
+            <div className="flex flex-col items-center justify-center flex-1 gap-3 text-center py-8">
+              <span className="material-symbols-outlined text-4xl text-outline/40">history_edu</span>
+              <p className="text-sm text-outline">Los logs de auditoría se registran en tiempo real.</p>
+              <a href="/dashboard/configuracion/auditoria"
+                className="mt-2 px-4 py-2 bg-primary/10 text-primary rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary/20 transition-all">
+                Abrir Historial
+              </a>
             </div>
           </GlassCard>
         </div>
 
         {/* Footer Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {stats.map((s) => (
+          {[
+            { label: 'Roles Configurados', valor: String(roles.length), bar: null, sub: null },
+            { label: 'Parámetros del Sistema', valor: String(configs.length), sub: null, bar: null },
+            { label: 'Tasa BCV Actual', valor: tasaDisplay ? `${tasaDisplay} Bs` : '—', sub: `Actualizado: ${fechaBCV}`, bar: null },
+          ].map((s) => (
             <GlassCard key={s.label} className="p-6 relative overflow-hidden">
               <p className="text-[0.6rem] font-spartan uppercase tracking-widest text-outline mb-2">{s.label}</p>
               <div className="text-3xl font-spartan font-bold text-on-surface">{s.valor}</div>
               {s.sub && <p className="text-[0.65rem] text-tertiary mt-2">{s.sub}</p>}
-              {s.bar !== null && (
-                <div className="w-full bg-white/5 h-1 mt-4 rounded-full">
-                  <div className="bg-primary h-full rounded-full" style={{ width: `${s.bar}%` }} />
-                </div>
-              )}
             </GlassCard>
           ))}
         </div>

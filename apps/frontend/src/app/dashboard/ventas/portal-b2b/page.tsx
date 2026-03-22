@@ -69,23 +69,23 @@ export default function PortalB2BPage() {
               <thead className="bg-white/5">
                 <tr>
                   {['Cliente', 'RIF', 'Pedidos', 'Crédito', 'Saldo', 'Estado', ''].map((h) => (
-                    <th key={h} className="px-6 py-4 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold">{h}</th>
+                    <th key={h} className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {clients.map((c) => (
                   <tr key={c.rif} className="hover:bg-white/5 transition-colors">
-                    <td className="px-6 py-4 font-medium text-on-surface">{c.cliente}</td>
-                    <td className="px-6 py-4 font-mono text-on-surface-variant text-xs">{c.rif}</td>
-                    <td className="px-6 py-4 text-on-surface">{c.pedidos}</td>
-                    <td className="px-6 py-4 text-on-surface">{c.credito}</td>
-                    <td className="px-6 py-4 font-bold text-on-surface">{c.saldo}</td>
-                    <td className="px-6 py-4">
-                      <span className={`text-xs font-bold px-3 py-1 rounded-full ${estadoColor[c.estado]}`}>{c.estado}</span>
+                    <td className="px-3 py-3 text-xs font-medium text-on-surface">{c.cliente}</td>
+                    <td className="px-3 py-3 font-mono text-on-surface-variant text-[10px] whitespace-nowrap">{c.rif}</td>
+                    <td className="px-3 py-3 text-xs text-on-surface">{c.pedidos}</td>
+                    <td className="px-3 py-3 text-xs text-on-surface whitespace-nowrap">{c.credito}</td>
+                    <td className="px-3 py-3 text-xs font-bold text-on-surface whitespace-nowrap">{c.saldo}</td>
+                    <td className="px-3 py-3">
+                      <span className={`text-xs font-bold px-2 py-1 rounded-full ${estadoColor[c.estado]}`}>{c.estado}</span>
                     </td>
-                    <td className="px-6 py-4 text-right">
-                      <button className="text-primary text-xs font-bold hover:underline">Ver Portal</button>
+                    <td className="px-3 py-3 text-right">
+                      <button className="text-primary text-xs font-bold hover:underline whitespace-nowrap">Ver Portal</button>
                     </td>
                   </tr>
                 ))}

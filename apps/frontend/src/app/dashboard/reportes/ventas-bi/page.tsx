@@ -144,34 +144,34 @@ export default function VentasBIPage() {
               <thead>
                 <tr className="bg-surface-container-highest/30 text-outline text-[10px] uppercase tracking-widest font-spartan">
                   {['Vendedor', 'Ventas', 'Meta', 'Pedidos', 'Clientes', 'Tendencia'].map(h => (
-                    <th key={h} className="px-5 py-4">{h}</th>
+                    <th key={h} className="px-3 py-3 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {vendedores.map((v, i) => (
                   <tr key={i} className="hover:bg-white/5 transition-colors">
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded-full ${v.color} flex items-center justify-center text-white text-xs font-bold`}>
+                    <td className="px-3 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-7 h-7 rounded-full ${v.color} flex items-center justify-center text-white text-xs font-bold shrink-0`}>
                           {v.nombre.charAt(0)}
                         </div>
-                        <span className="text-sm font-semibold text-on-surface">{v.nombre}</span>
+                        <span className="text-xs font-semibold text-on-surface">{v.nombre}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-4 font-bold text-on-surface">{v.ventas}</td>
-                    <td className="px-5 py-4 w-36">
+                    <td className="px-3 py-3 text-xs font-bold text-on-surface whitespace-nowrap">{v.ventas}</td>
+                    <td className="px-3 py-3 w-28">
                       <div className="flex items-center gap-2">
-                        <div className="flex-1 bg-surface-container-highest h-2 rounded-full overflow-hidden">
+                        <div className="flex-1 bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
                           <div className={`${v.color} h-full rounded-full`} style={{ width: `${v.meta}%` }} />
                         </div>
-                        <span className="text-xs text-on-surface-variant">{v.meta}%</span>
+                        <span className="text-xs text-on-surface-variant shrink-0">{v.meta}%</span>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-sm text-on-surface-variant">{v.pedidos}</td>
-                    <td className="px-5 py-4 text-sm text-on-surface-variant">{v.clientes}</td>
-                    <td className="px-5 py-4">
-                      <span className={`text-sm font-bold ${v.tendencia.startsWith('+') ? 'text-tertiary' : 'text-error'}`}>{v.tendencia}</span>
+                    <td className="px-3 py-3 text-xs text-on-surface-variant">{v.pedidos}</td>
+                    <td className="px-3 py-3 text-xs text-on-surface-variant">{v.clientes}</td>
+                    <td className="px-3 py-3">
+                      <span className={`text-xs font-bold ${v.tendencia.startsWith('+') ? 'text-tertiary' : 'text-error'}`}>{v.tendencia}</span>
                     </td>
                   </tr>
                 ))}

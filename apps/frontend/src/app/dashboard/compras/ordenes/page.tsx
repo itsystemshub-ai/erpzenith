@@ -126,12 +126,12 @@ export default function OrdenesCompraPage() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-white/5 border-b border-white/5 font-spartan text-[0.625rem] uppercase tracking-[0.2em] text-outline">
-                  <th className="px-6 py-5">Número</th>
-                  <th className="px-6 py-5">Proveedor</th>
-                  <th className="px-6 py-5">Fecha</th>
-                  <th className="px-6 py-5 text-right">Total USD</th>
-                  <th className="px-6 py-5">Estado</th>
-                  <th className="px-6 py-5 text-right">Acciones</th>
+                  <th className="px-3 py-4 whitespace-nowrap">Número</th>
+                  <th className="px-3 py-4">Proveedor</th>
+                  <th className="px-3 py-4 whitespace-nowrap">Fecha</th>
+                  <th className="px-3 py-4 text-right whitespace-nowrap">Total USD</th>
+                  <th className="px-3 py-4">Estado</th>
+                  <th className="px-3 py-4 text-right">Acc.</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -139,7 +139,7 @@ export default function OrdenesCompraPage() {
                   Array.from({ length: 3 }).map((_, i) => (
                     <tr key={i}>
                       {Array.from({ length: 6 }).map((_, j) => (
-                        <td key={j} className="px-6 py-4"><div className="h-4 bg-white/5 rounded animate-pulse" /></td>
+                        <td key={j} className="px-3 py-3"><div className="h-4 bg-white/5 rounded animate-pulse" /></td>
                       ))}
                     </tr>
                   ))
@@ -147,29 +147,29 @@ export default function OrdenesCompraPage() {
                   const cfg = estadoConfig[oc.estado] ?? { variant: 'info' as const, label: oc.estado }
                   return (
                     <tr key={oc.id} className="hover:bg-white/5 transition-colors cursor-pointer">
-                      <td className="px-6 py-4">
-                        <span className="text-sm font-medium text-primary font-mono">{oc.numero}</span>
+                      <td className="px-3 py-3">
+                        <span className="text-xs font-medium text-primary font-mono whitespace-nowrap">{oc.numero}</span>
                       </td>
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-semibold text-on-surface">{oc.proveedor.nombre}</p>
-                        <p className="text-[10px] text-outline">RIF: {oc.proveedor.rif}</p>
+                      <td className="px-3 py-3 max-w-[180px]">
+                        <p className="text-xs font-semibold text-on-surface truncate">{oc.proveedor.nombre}</p>
+                        <p className="text-[10px] text-outline">{oc.proveedor.rif}</p>
                       </td>
-                      <td className="px-6 py-4 text-sm text-outline">
+                      <td className="px-3 py-3 text-xs text-outline whitespace-nowrap">
                         {new Date(oc.createdAt).toLocaleDateString('es-VE')}
                       </td>
-                      <td className="px-6 py-4 text-right font-bold text-on-surface">
+                      <td className="px-3 py-3 text-right text-xs font-bold text-on-surface whitespace-nowrap">
                         ${Number(oc.totalUSD).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 py-3">
                         <Badge variant={cfg.variant}>{cfg.label}</Badge>
                       </td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <button className="p-1.5 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
+                      <td className="px-3 py-3 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <button className="p-1 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
                             <span className="material-symbols-outlined text-[16px]">visibility</span>
                           </button>
                           {(oc.estado === 'BORRADOR' || oc.estado === 'PENDIENTE') && (
-                            <button className="p-1.5 rounded-lg hover:bg-emerald-500/10 text-outline hover:text-emerald-400 transition-colors">
+                            <button className="p-1 rounded-lg hover:bg-emerald-500/10 text-outline hover:text-emerald-400 transition-colors">
                               <span className="material-symbols-outlined text-[16px]">check_circle</span>
                             </button>
                           )}

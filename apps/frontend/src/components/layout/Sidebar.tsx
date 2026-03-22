@@ -116,6 +116,7 @@ const NAV_ITEMS: NavItem[] = [
       { href: '/dashboard/configuracion/auditoria', label: 'Auditoría' },
       { href: '/dashboard/configuracion/localizacion', label: 'Localización' },
       { href: '/dashboard/configuracion/backups', label: 'Backups' },
+      { href: '/dashboard/configuracion/base-datos', label: 'Base de Datos' },
       { href: '/dashboard/configuracion/reset-requests', label: 'Reset Requests' },
       { href: '/dashboard/configuracion/seguridad', label: 'Seguridad' },
       { href: '/dashboard/configuracion/automatizaciones', label: 'Automatizaciones' },
