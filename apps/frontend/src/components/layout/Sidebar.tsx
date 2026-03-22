@@ -125,7 +125,6 @@ const NAV_ITEMS: NavItem[] = [
       { href: '/dashboard/configuracion/base-datos', label: 'Base de Datos' },
       { href: '/dashboard/configuracion/suscripcion', label: 'Suscripción' },
       { href: '/dashboard/configuracion/super-admin', label: 'Super Admin' },
-      { href: '/dashboard/configuracion/tenant', label: 'Identidad Tenant' },
       { href: '/dashboard/configuracion/arquitectura', label: 'Arquitectura' },
     ],
   },
