@@ -26,17 +26,119 @@ async function main() {
     create: { name: 'SUPERDEV', permissions: { connect: permisos.map((p) => ({ id: p.id })) } },
   })
 
-  const password = await bcrypt.hash('Zenith@2026!', 12)
+  // Roles por módulo
+  const moduloRoles = [
+    { name: 'ADMIN',        mods: modulos },
+    { name: 'INVENTARIO',   mods: ['inventario'] },
+    { name: 'VENTAS',       mods: ['ventas', 'reportes'] },
+    { name: 'COMPRAS',      mods: ['compras', 'inventario'] },
+    { name: 'RRHH',         mods: ['rrhh', 'nomina'] },
+    { name: 'PRODUCCION',   mods: ['produccion', 'inventario'] },
+    { name: 'CALIDAD',      mods: ['calidad', 'reportes'] },
+    { name: 'REPORTES',     mods: ['reportes'] },
+    { name: 'USER',         mods: ['inventario', 'ventas'] },
+  ]
+
+  const rolesCreados: Record<string, string> = { SUPERDEV: rolSuperDev.id }
+
+  for (const r of moduloRoles) {
+    const rolePerms = permisos.filter(p => (r.mods as string[]).includes(p.module))
+    const rol = await prisma.role.upsert({
+      where: { name: r.name },
+      update: { permissions: { set: rolePerms.map(p => ({ id: p.id })) } },
+      create: { name: r.name, permissions: { connect: rolePerms.map(p => ({ id: p.id })) } },
+    })
+    rolesCreados[r.name] = rol.id
+  }
+  console.log('✅ Roles creados:', Object.keys(rolesCreados).length)
+
+  const superPassword = await bcrypt.hash('Zenith@2026!', 12)
+
+  // Superadmin (sin empresaId)
   const superuser = await prisma.user.upsert({
     where: { username: 'superadminzenith' },
-    update: { password },
-    create: { name: 'Super Admin Zenith', username: 'superadminzenith', password, roleId: rolSuperDev.id, isActive: true },
+    update: { password: superPassword },
+    create: {
+      name: 'Super Admin Zenith', username: 'superadminzenith', password: superPassword,
+      roles: { connect: [{ id: rolesCreados['SUPERDEV'] }] },
+      isActive: true,
+    },
   })
   console.log('✅ Superusuario:', superuser.username)
 
-  // ─── Tasa BCV ────────────────────────────────────────────────────────────
-  const tasa = await prisma.tasaBCV.create({ data: { tasa: new Prisma.Decimal(46.82) } })
-  console.log('✅ Tasa BCV:', tasa.tasa.toString(), 'VES/USD')
+  // Empresa para los usuarios predeterminados — usa la primera que exista en BD, nunca crea una nueva
+  const empresaDemo = await prisma.empresa.findFirst({ orderBy: { createdAt: 'asc' } })
+  if (empresaDemo) {
+    console.log('✅ Empresa base:', empresaDemo.nombre)
+  } else {
+    console.log('⚠️  Sin empresa en BD — usuarios se crearán sin empresaId')
+  }
+
+  // Genera contraseña alfanumérica única: 3 letras mayúsculas + 4 dígitos + 3 letras minúsculas + símbolo
+  function genPass(seed: string): string {
+    const upper = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
+    const lower = 'abcdefghjkmnpqrstuvwxyz'
+    const digits = '23456789'
+    const symbols = '@#$%&!'
+    // Determinista basado en el username para que el seed sea idempotente
+    const hash = seed.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+    const u1 = upper[(hash * 3) % upper.length]
+    const u2 = upper[(hash * 7) % upper.length]
+    const u3 = upper[(hash * 11) % upper.length]
+    const d1 = digits[(hash * 5) % digits.length]
+    const d2 = digits[(hash * 13) % digits.length]
+    const d3 = digits[(hash * 17) % digits.length]
+    const d4 = digits[(hash * 19) % digits.length]
+    const l1 = lower[(hash * 23) % lower.length]
+    const l2 = lower[(hash * 29) % lower.length]
+    const sym = symbols[(hash * 31) % symbols.length]
+    return `${u1}${u2}${d1}${d2}${l1}${l2}${u3}${d3}${d4}${sym}`
+  }
+
+  // Usuarios predeterminados por módulo
+  const usuariosModulo = [
+    { name: 'Admin Sistema',         username: 'admin.zenith',    role: 'ADMIN' },
+    { name: 'Gestor Inventario',     username: 'inv.zenith',      role: 'INVENTARIO' },
+    { name: 'Ejecutivo Ventas',      username: 'ventas.zenith',   role: 'VENTAS' },
+    { name: 'Coordinador Compras',   username: 'compras.zenith',  role: 'COMPRAS' },
+    { name: 'Analista RRHH',         username: 'rrhh.zenith',     role: 'RRHH' },
+    { name: 'Supervisor Producción', username: 'prod.zenith',     role: 'PRODUCCION' },
+    { name: 'Inspector Calidad',     username: 'calidad.zenith',  role: 'CALIDAD' },
+    { name: 'Analista Reportes',     username: 'reportes.zenith', role: 'REPORTES' },
+  ]
+
+  console.log('\n📋 Contraseñas generadas:')
+  for (const u of usuariosModulo) {
+    const plainPass = genPass(u.username)
+    const hashedPass = await bcrypt.hash(plainPass, 12)
+    await prisma.user.upsert({
+      where: { username: u.username },
+      update: {
+        password: hashedPass,
+        roles: { set: [{ id: rolesCreados[u.role] }] },
+        ...(empresaDemo ? { empresaId: empresaDemo.id } : {}),
+      },
+      create: {
+        name: u.name,
+        username: u.username,
+        password: hashedPass,
+        roles: { connect: [{ id: rolesCreados[u.role] }] },
+        ...(empresaDemo ? { empresaId: empresaDemo.id } : {}),
+        isActive: true,
+      },
+    })
+    console.log(`   ${u.username.padEnd(20)} → ${plainPass}`)
+  }
+  console.log('✅ Usuarios de módulo:', usuariosModulo.length)
+
+  // ─── Tasa BCV — solo crea si no existe ninguna ───────────────────────────
+  const tasaExistente = await prisma.tasaBCV.findFirst({ orderBy: { fecha: 'desc' } })
+  if (!tasaExistente) {
+    const tasa = await prisma.tasaBCV.create({ data: { tasa: new Prisma.Decimal(46.82) } })
+    console.log('✅ Tasa BCV inicial:', tasa.tasa.toString(), 'VES/USD')
+  } else {
+    console.log('✅ Tasa BCV existente respetada:', tasaExistente.tasa.toString(), 'VES/USD')
+  }
 
   // ─── Almacenes ───────────────────────────────────────────────────────────
   const almacenes = await Promise.all([

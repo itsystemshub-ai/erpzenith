@@ -1,15 +1,20 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 
-const backups = [
-  { nombre: 'backup_2026-03-21_14-00.sql', tamaño: '248 MB', tipo: 'Automático', estado: 'Completado', estadoColor: 'bg-tertiary/10 text-tertiary border-tertiary/20', fecha: '21 Mar 2026 14:00' },
-  { nombre: 'backup_2026-03-21_08-00.sql', tamaño: '247 MB', tipo: 'Automático', estado: 'Completado', estadoColor: 'bg-tertiary/10 text-tertiary border-tertiary/20', fecha: '21 Mar 2026 08:00' },
-  { nombre: 'backup_2026-03-20_manual.sql', tamaño: '245 MB', tipo: 'Manual', estado: 'Completado', estadoColor: 'bg-tertiary/10 text-tertiary border-tertiary/20', fecha: '20 Mar 2026 16:30' },
-  { nombre: 'backup_2026-03-20_14-00.sql', tamaño: '244 MB', tipo: 'Automático', estado: 'Completado', estadoColor: 'bg-tertiary/10 text-tertiary border-tertiary/20', fecha: '20 Mar 2026 14:00' },
-  { nombre: 'backup_2026-03-19_14-00.sql', tamaño: '241 MB', tipo: 'Automático', estado: 'Error', estadoColor: 'bg-error/10 text-error border-error/20', fecha: '19 Mar 2026 14:00' },
-]
+const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
+
+interface DbInfo { dbSize: string; totalRows: number; totalTables: number; activeConnections: number }
 
 export default function BackupsPage() {
+  const [dbInfo, setDbInfo] = useState<DbInfo | null>(null)
+
+  useEffect(() => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+    fetch(`${API}/configuracion/db-info`, { headers: { Authorization: `Bearer ${token}` } })
+      .then(r => r.json()).then(setDbInfo).catch(() => {})
+  }, [])
+
   return (
     <div className="flex flex-col min-h-full">
       <TopBar title="Seguridad, Backups y Resiliencia" />
@@ -29,10 +34,10 @@ export default function BackupsPage() {
         {/* KPIs */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: 'Último Backup', valor: 'Hace 2h', icon: 'backup', iconColor: 'text-tertiary bg-tertiary/10', badge: 'OK', badgeColor: 'text-tertiary bg-tertiary/10' },
-            { label: 'Backups Este Mes', valor: '62', icon: 'history', iconColor: 'text-primary bg-primary/10', badge: 'Automáticos', badgeColor: 'text-primary bg-primary/10' },
-            { label: 'Espacio Usado', valor: '14.8 GB', icon: 'storage', iconColor: 'text-secondary bg-secondary/10', badge: '74%', badgeColor: 'text-secondary bg-secondary/10' },
-            { label: 'Alertas Activas', valor: '1', icon: 'security', iconColor: 'text-amber-400 bg-amber-500/10', badge: 'Revisar', badgeColor: 'text-amber-400 bg-amber-500/10' },
+            { label: 'Último Backup', valor: 'Sin datos', icon: 'backup', iconColor: 'text-tertiary bg-tertiary/10', badge: 'Pendiente', badgeColor: 'text-outline bg-white/10' },
+            { label: 'Tablas en BD', valor: dbInfo ? String(dbInfo.totalTables) : '—', icon: 'table', iconColor: 'text-primary bg-primary/10', badge: 'Tablas', badgeColor: 'text-primary bg-primary/10' },
+            { label: 'Tamaño BD', valor: dbInfo?.dbSize ?? '—', icon: 'storage', iconColor: 'text-secondary bg-secondary/10', badge: 'PostgreSQL', badgeColor: 'text-secondary bg-secondary/10' },
+            { label: 'Conexiones Activas', valor: dbInfo ? String(dbInfo.activeConnections) : '—', icon: 'cable', iconColor: 'text-amber-400 bg-amber-500/10', badge: 'Activas', badgeColor: 'text-amber-400 bg-amber-500/10' },
           ].map((k) => (
             <div key={k.label} className="glass-panel rounded-2xl p-5 flex flex-col gap-3">
               <div className="flex items-center gap-2">
@@ -110,36 +115,10 @@ export default function BackupsPage() {
           <div className="p-5 border-b border-white/5">
             <h3 className="font-semibold text-on-surface">Historial de Backups</h3>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-surface-container-highest/30 text-outline text-[10px] uppercase tracking-widest font-spartan">
-                  {['Archivo', 'Tamaño', 'Tipo', 'Estado', 'Fecha', ''].map(h => (
-                    <th key={h} className="px-5 py-4">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {backups.map((b, i) => (
-                  <tr key={i} className="hover:bg-white/5 transition-colors">
-                    <td className="px-5 py-4 text-sm font-mono text-on-surface-variant">{b.nombre}</td>
-                    <td className="px-5 py-4 text-sm text-on-surface-variant">{b.tamaño}</td>
-                    <td className="px-5 py-4 text-sm text-on-surface-variant">{b.tipo}</td>
-                    <td className="px-5 py-4">
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${b.estadoColor}`}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-current" />{b.estado}
-                      </span>
-                    </td>
-                    <td className="px-5 py-4 text-xs text-outline">{b.fecha}</td>
-                    <td className="px-5 py-4 text-right">
-                      <button className="text-outline hover:text-primary transition-colors">
-                        <span className="material-symbols-outlined text-[20px]">download</span>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="py-16 text-center">
+            <span className="material-symbols-outlined text-4xl text-outline/30 block mb-2">backup</span>
+            <p className="text-sm text-outline">Sin historial de backups registrado.</p>
+            <p className="text-xs text-outline/60 mt-1">Los backups automáticos se configurarán con Cloudflare R2.</p>
           </div>
         </div>
       </div>

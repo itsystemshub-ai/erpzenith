@@ -8,6 +8,8 @@ import { VentasModule } from './modules/ventas/ventas.module'
 import { RrhhModule } from './modules/rrhh/rrhh.module'
 import { ConfiguracionModule } from './modules/configuracion/configuracion.module'
 import { DashboardModule } from './modules/dashboard/dashboard.module'
+import { EmpresasModule } from './modules/empresas/empresas.module'
+import { UsuariosModule } from './modules/usuarios/usuarios.module'
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { DashboardModule } from './modules/dashboard/dashboard.module'
     RrhhModule,
     ConfiguracionModule,
     DashboardModule,
+    EmpresasModule,
+    UsuariosModule,
   ],
 })
 export class AppModule {}
