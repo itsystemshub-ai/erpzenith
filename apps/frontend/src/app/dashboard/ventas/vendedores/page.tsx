@@ -60,27 +60,27 @@ export default function VendedoresPage() {
             <table className="w-full text-left text-sm">
               <thead className="bg-white/5">
                 <tr>
-                  {['Vendedor', 'Región', 'Ventas Mes', 'Meta %', 'Clientes', 'Estado', ''].map((h) => (
-                    <th key={h} className="px-6 py-4 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold">{h}</th>
+                  {['Vendedor', 'Región', 'Ventas', 'Meta', 'Clientes', 'Estado', ''].map((h) => (
+                    <th key={h} className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {vendedores.map((v) => (
                   <tr key={v.id} className="hover:bg-white/5 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                          <span className="text-xs font-bold text-primary">{v.iniciales}</span>
+                    <td className="px-3 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                          <span className="text-[10px] font-bold text-primary">{v.iniciales}</span>
                         </div>
-                        <span className="font-medium text-on-surface">{v.nombre}</span>
+                        <span className="text-xs font-medium text-on-surface">{v.nombre}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-on-surface-variant">{v.region}</td>
-                    <td className="px-6 py-4 font-bold text-on-surface">{v.ventas}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3 text-xs text-on-surface-variant">{v.region}</td>
+                    <td className="px-3 py-3 text-xs font-bold text-on-surface whitespace-nowrap">{v.ventas}</td>
+                    <td className="px-3 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+                        <div className="w-12 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${v.meta >= 100 ? 'bg-tertiary' : v.meta >= 75 ? 'bg-primary' : 'bg-amber-400'}`}
                             style={{ width: `${Math.min(v.meta, 100)}%` }}
@@ -91,12 +91,12 @@ export default function VendedoresPage() {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-on-surface-variant">{v.clientes}</td>
-                    <td className="px-6 py-4">
-                      <span className={`text-xs font-bold px-3 py-1 rounded-full ${estadoColor[v.estado]}`}>{v.estado}</span>
+                    <td className="px-3 py-3 text-xs text-on-surface-variant">{v.clientes}</td>
+                    <td className="px-3 py-3">
+                      <span className={`text-xs font-bold px-2 py-1 rounded-full ${estadoColor[v.estado]}`}>{v.estado}</span>
                     </td>
-                    <td className="px-6 py-4 text-right">
-                      <Link href={`/dashboard/ventas/vendedores/${v.id}`} className="text-primary text-xs font-bold hover:underline">
+                    <td className="px-3 py-3 text-right">
+                      <Link href={`/dashboard/ventas/vendedores/${v.id}`} className="text-primary text-xs font-bold hover:underline whitespace-nowrap">
                         Ver perfil
                       </Link>
                     </td>

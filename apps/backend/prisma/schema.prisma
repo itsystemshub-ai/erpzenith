@@ -291,3 +291,21 @@ model TasaBCV {
 
   @@map("tasas_bcv")
 }
+
+// ─── Empresas (Tenant) ───────────────────────────────────────────────────────
+
+model Empresa {
+  id        String   @id @default(cuid())
+  nombre    String
+  rif       String   @unique
+  email     String?
+  telefono  String?
+  direccion String?
+  color     String   @default("#6366f1")
+  logo      String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("empresas")
+}

@@ -136,11 +136,11 @@ export default function EmpleadosPage() {
             </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-left">
+          <table className="w-full text-left">
               <thead>
                 <tr className="bg-white/5">
-                  {['Empleado', 'Cédula', 'Cargo', 'Departamento', 'Fecha Ingreso', 'Salario USD', 'Estado', ''].map((h) => (
-                    <th key={h} className="px-6 py-4 text-[10px] font-spartan uppercase tracking-widest text-outline">{h}</th>
+                  {['Empleado', 'Cédula', 'Cargo', 'Depto.', 'Ingreso', 'Salario', 'Estado', ''].map((h) => (
+                    <th key={h} className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -149,31 +149,31 @@ export default function EmpleadosPage() {
                   Array.from({ length: 4 }).map((_, i) => (
                     <tr key={i}>
                       {Array.from({ length: 8 }).map((_, j) => (
-                        <td key={j} className="px-6 py-4"><div className="h-4 bg-white/5 rounded animate-pulse" /></td>
+                        <td key={j} className="px-3 py-3"><div className="h-4 bg-white/5 rounded animate-pulse" /></td>
                       ))}
                     </tr>
                   ))
                 ) : filtrados.map((emp) => (
                   <tr key={emp.id} className="hover:bg-white/5 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-xl bg-primary/20 text-primary flex items-center justify-center font-bold text-sm">
+                    <td className="px-3 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="h-8 w-8 shrink-0 rounded-lg bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">
                           {initials(emp)}
                         </div>
-                        <p className="text-sm font-semibold text-on-surface">{emp.nombre} {emp.apellido}</p>
+                        <p className="text-xs font-semibold text-on-surface">{emp.nombre} {emp.apellido}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm font-mono text-on-surface-variant">{emp.cedula}</td>
-                    <td className="px-6 py-4 text-sm text-on-surface">{emp.cargo}</td>
-                    <td className="px-6 py-4 text-sm text-on-surface-variant">{emp.departamento}</td>
-                    <td className="px-6 py-4 text-sm text-outline">{new Date(emp.fechaIngreso).toLocaleDateString('es-VE')}</td>
-                    <td className="px-6 py-4 text-sm font-bold text-on-surface">${Number(emp.salarioUSD).toLocaleString()}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3 text-xs font-mono text-on-surface-variant">{emp.cedula}</td>
+                    <td className="px-3 py-3 text-xs text-on-surface max-w-[140px] truncate">{emp.cargo}</td>
+                    <td className="px-3 py-3 text-xs text-on-surface-variant">{emp.departamento}</td>
+                    <td className="px-3 py-3 text-xs text-outline whitespace-nowrap">{new Date(emp.fechaIngreso).toLocaleDateString('es-VE')}</td>
+                    <td className="px-3 py-3 text-xs font-bold text-on-surface whitespace-nowrap">${Number(emp.salarioUSD).toLocaleString()}</td>
+                    <td className="px-3 py-3">
                       <Badge variant={estadoVariant[emp.estado] ?? 'info'}>{estadoLabel[emp.estado] ?? emp.estado}</Badge>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3">
                       <button className="text-outline hover:text-primary transition-colors">
-                        <span className="material-symbols-outlined">more_vert</span>
+                        <span className="material-symbols-outlined text-[18px]">more_vert</span>
                       </button>
                     </td>
                   </tr>

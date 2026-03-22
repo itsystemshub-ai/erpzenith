@@ -53,4 +53,12 @@ export const QK = {
     kpis:      () => ['ejecutivo', 'kpis'] as const,
     charts:    () => ['ejecutivo', 'charts'] as const,
   },
+
+  // Configuración
+  configuracion: {
+    all:       () => ['configuracion'] as const,
+    clave:     (clave: string) => ['configuracion', clave] as const,
+    bcvTasa:   () => ['configuracion', 'bcv', 'tasa'] as const,
+    roles:     () => ['configuracion', 'sistema', 'roles'] as const,
+  },
 } as const

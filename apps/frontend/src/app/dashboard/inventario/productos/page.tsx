@@ -132,13 +132,13 @@ export default function ProductosPage() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-white/5 border-b border-white/5 font-spartan text-[0.625rem] uppercase tracking-[0.2em] text-outline">
-                  <th className="px-6 py-5">Producto</th>
-                  <th className="px-6 py-5">SKU</th>
-                  <th className="px-6 py-5">Categoría</th>
-                  <th className="px-6 py-5">Stock / Mín.</th>
-                  <th className="px-6 py-5 text-right">Precio USD</th>
-                  <th className="px-6 py-5">Estado</th>
-                  <th className="px-6 py-5 text-right">Acciones</th>
+                  <th className="px-3 py-4">Producto</th>
+                  <th className="px-3 py-4">SKU</th>
+                  <th className="px-3 py-4">Categoría</th>
+                  <th className="px-3 py-4 whitespace-nowrap">Stock / Mín.</th>
+                  <th className="px-3 py-4 text-right whitespace-nowrap">Precio USD</th>
+                  <th className="px-3 py-4">Estado</th>
+                  <th className="px-3 py-4 text-right">Acc.</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -146,41 +146,41 @@ export default function ProductosPage() {
                   const cfg = estadoConfig[p.estado]
                   return (
                     <tr key={p.id} className="hover:bg-white/5 transition-colors group">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary">
-                            <span className="material-symbols-outlined text-[18px]">inventory_2</span>
+                      <td className="px-3 py-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 shrink-0 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+                            <span className="material-symbols-outlined text-[16px]">inventory_2</span>
                           </div>
-                          <p className="text-sm font-semibold text-on-surface font-spartan">{p.nombre}</p>
+                          <p className="text-xs font-semibold text-on-surface font-spartan max-w-[160px] truncate">{p.nombre}</p>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="text-xs font-mono text-on-surface">{p.sku}</span>
+                      <td className="px-3 py-3">
+                        <span className="text-[10px] font-mono text-on-surface whitespace-nowrap">{p.sku}</span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 py-3">
                         <Badge variant="info">{p.categoria}</Badge>
                       </td>
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-bold text-on-surface">{p.stock}</p>
+                      <td className="px-3 py-3">
+                        <p className="text-xs font-bold text-on-surface">{p.stock}</p>
                         <p className="text-[10px] text-outline">Mín: {p.stockMin}</p>
                       </td>
-                      <td className="px-6 py-4 text-right">
-                        <span className="text-sm font-bold text-on-surface">
+                      <td className="px-3 py-3 text-right">
+                        <span className="text-xs font-bold text-on-surface whitespace-nowrap">
                           ${p.precioUSD.toFixed(2)}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <div className={`w-2 h-2 rounded-full ${cfg.dot}`} />
+                      <td className="px-3 py-3">
+                        <div className="flex items-center gap-1.5">
+                          <div className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
                           <Badge variant={cfg.variant}>{cfg.label}</Badge>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <button className="p-1.5 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
+                      <td className="px-3 py-3 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <button className="p-1 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
                             <span className="material-symbols-outlined text-[16px]">edit</span>
                           </button>
-                          <button className="p-1.5 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
+                          <button className="p-1 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
                             <span className="material-symbols-outlined text-[16px]">more_vert</span>
                           </button>
                         </div>

@@ -100,38 +100,38 @@ export default function OrdenesProduccionPage() {
             <table className="w-full text-left">
               <thead>
                 <tr className="bg-white/5">
-                  {['Número OP', 'Producto', 'Cantidad', 'Fecha Inicio', 'Fecha Fin', 'Progreso', 'Estado', ''].map((h) => (
-                    <th key={h} className="px-6 py-4 text-[10px] font-spartan uppercase tracking-widest text-outline whitespace-nowrap">{h}</th>
+                  {['Número OP', 'Producto', 'Cant.', 'Inicio', 'Fin', 'Progreso', 'Estado', ''].map((h) => (
+                    <th key={h} className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {ordenes.map((o) => (
                   <tr key={o.op} className="hover:bg-white/5 transition-colors">
-                    <td className="px-6 py-4 font-mono text-sm text-primary font-bold">{o.op}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-on-surface">{o.producto}</td>
-                    <td className="px-6 py-4 text-sm text-on-surface-variant">
+                    <td className="px-3 py-3 font-mono text-xs text-primary font-bold whitespace-nowrap">{o.op}</td>
+                    <td className="px-3 py-3 text-xs font-medium text-on-surface max-w-[180px] truncate">{o.producto}</td>
+                    <td className="px-3 py-3 text-xs text-on-surface-variant whitespace-nowrap">
                       {o.cantidad.toLocaleString()} {o.unidad}
                     </td>
-                    <td className="px-6 py-4 text-sm text-outline">{o.inicio}</td>
-                    <td className="px-6 py-4 text-sm text-outline">{o.fin}</td>
-                    <td className="px-6 py-4 min-w-[140px]">
+                    <td className="px-3 py-3 text-xs text-outline whitespace-nowrap">{o.inicio}</td>
+                    <td className="px-3 py-3 text-xs text-outline whitespace-nowrap">{o.fin}</td>
+                    <td className="px-3 py-3 w-32">
                       <div className="flex items-center gap-2">
-                        <div className="flex-1 bg-surface-container-highest rounded-full h-2">
+                        <div className="flex-1 bg-surface-container-highest rounded-full h-1.5">
                           <div
-                            className={`h-2 rounded-full transition-all ${progresoColor(o.progreso)}`}
+                            className={`h-1.5 rounded-full transition-all ${progresoColor(o.progreso)}`}
                             style={{ width: `${o.progreso}%` }}
                           />
                         </div>
-                        <span className="text-xs font-bold text-on-surface w-8 text-right">{o.progreso}%</span>
+                        <span className="text-xs font-bold text-on-surface w-7 text-right shrink-0">{o.progreso}%</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3">
                       <Badge variant={estadoVariant[o.estado]}>{o.estado}</Badge>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3">
                       <button className="text-outline hover:text-primary transition-colors">
-                        <span className="material-symbols-outlined">more_vert</span>
+                        <span className="material-symbols-outlined text-[18px]">more_vert</span>
                       </button>
                     </td>
                   </tr>

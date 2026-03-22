@@ -15,16 +15,7 @@ export class ConfiguracionController {
     return this.configuracionService.getAll()
   }
 
-  @Get(':clave')
-  get(@Param('clave') clave: string) {
-    return this.configuracionService.get(clave)
-  }
-
-  @Post()
-  set(@Body() body: { clave: string; valor: string; descripcion?: string }) {
-    return this.configuracionService.set(body.clave, body.valor, body.descripcion)
-  }
-
+  // Rutas específicas ANTES de :clave para evitar que el wildcard las capture
   @Get('bcv/tasa')
   getTasaBCV() {
     return this.configuracionService.getTasaBCV()
@@ -38,5 +29,30 @@ export class ConfiguracionController {
   @Get('sistema/roles')
   getRoles() {
     return this.configuracionService.getRoles()
+  }
+
+  @Get('auditoria')
+  getAuditLogs() {
+    return this.configuracionService.getAuditLogs()
+  }
+
+  @Get('db-info')
+  getDbInfo() {
+    return this.configuracionService.getDbInfo()
+  }
+
+  @Get('db-table/:table')
+  getTableData(@Param('table') table: string) {
+    return this.configuracionService.getTableData(table)
+  }
+
+  @Get(':clave')
+  get(@Param('clave') clave: string) {
+    return this.configuracionService.get(clave)
+  }
+
+  @Post()
+  set(@Body() body: { clave: string; valor: string; descripcion?: string }) {
+    return this.configuracionService.set(body.clave, body.valor, body.descripcion)
   }
 }

@@ -5,11 +5,15 @@ import { useAuthStore } from '@/stores/authStore'
 import { useNotificationStore, type Notification } from '@/stores/notificationStore'
 import { useUiStore } from '@/stores/uiStore'
 import { useThemeStore } from '@/stores/themeStore'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 import { cn } from '@/lib/utils'
 
 interface TopBarProps {
   title?: string
 }
+
+interface TasaBCV { tasa: number; fecha: string }
 
 const typeIcon: Record<string, string> = {
   info: 'info',
@@ -41,6 +45,13 @@ export function TopBar({ title }: TopBarProps) {
   const [open, setOpen] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
   const count = unreadCount()
+
+  const { data: bcvData } = useErpQuery<TasaBCV>(
+    QK.configuracion.bcvTasa(),
+    '/configuracion/bcv/tasa',
+    { staleTime: 5 * 60 * 1000 }
+  )
+  const tasaDisplay = bcvData?.tasa ? Number(bcvData.tasa).toFixed(2) : '—'
 
   // Cerrar al hacer click fuera
   useEffect(() => {
@@ -78,7 +89,10 @@ export function TopBar({ title }: TopBarProps) {
       <div className="flex items-center gap-3">
         {/* BCV Rate */}
         <div className="hidden sm:flex items-center gap-2 bg-surface-container-highest px-3 py-1.5 rounded-full border border-outline-variant/20">
-          <span className="text-tertiary font-bold font-spartan text-xs tracking-widest uppercase">BCV: 36.42 VES</span>
+          <span className="material-symbols-outlined text-tertiary text-[14px]">currency_exchange</span>
+          <span className="text-tertiary font-bold font-spartan text-xs tracking-widest uppercase">
+            BCV: {tasaDisplay} VES
+          </span>
         </div>
 
         {/* Theme toggle */}
