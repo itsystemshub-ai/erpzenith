@@ -1,31 +1,34 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 
-const planes = [
-  {
-    name: 'Starter', price: 49, users: 5, modules: ['Ventas', 'Inventario', 'Contabilidad básica'],
-    color: 'border-white/20', badge: '',
-  },
-  {
-    name: 'Business', price: 149, users: 25, modules: ['Todo Starter', 'RRHH', 'Compras', 'Reportes avanzados', 'API Access'],
-    color: 'border-primary/40 bg-primary/5', badge: 'Popular',
-  },
-  {
-    name: 'Enterprise', price: 399, users: -1, modules: ['Todo Business', 'Multi-empresa', 'IA avanzada', 'SLA 99.9%', 'Soporte dedicado'],
-    color: 'border-secondary/40 bg-secondary/5', badge: 'Actual',
-  },
-]
+const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
-const facturas = [
-  { fecha: '2024-12-01', monto: 399, estado: 'Pagado', periodo: 'Dic 2024' },
-  { fecha: '2024-11-01', monto: 399, estado: 'Pagado', periodo: 'Nov 2024' },
-  { fecha: '2024-10-01', monto: 399, estado: 'Pagado', periodo: 'Oct 2024' },
-  { fecha: '2024-09-01', monto: 399, estado: 'Pagado', periodo: 'Sep 2024' },
+interface SistemaInfo { ram: { used: number; total: number; pct: number }; uptime: { texto: string }; nodeVersion: string; platform: string }
+interface DbInfo { dbSize: string; totalTables: number }
+interface SeguridadStats { activeUsers: number }
+
+const planes = [
+  { name: 'Starter', price: 49, users: 5, modules: ['Ventas', 'Inventario', 'Contabilidad básica'], color: 'border-white/20', badge: '' },
+  { name: 'Business', price: 149, users: 25, modules: ['Todo Starter', 'RRHH', 'Compras', 'Reportes avanzados', 'API Access'], color: 'border-primary/40 bg-primary/5', badge: 'Popular' },
+  { name: 'Enterprise', price: 399, users: -1, modules: ['Todo Business', 'Multi-empresa', 'IA avanzada', 'SLA 99.9%', 'Soporte dedicado'], color: 'border-secondary/40 bg-secondary/5', badge: 'Actual' },
 ]
 
 export default function SuscripcionPage() {
   const [tab, setTab] = useState<'plan' | 'facturacion' | 'uso'>('plan')
+  const [sistema, setSistema] = useState<SistemaInfo | null>(null)
+  const [dbInfo, setDbInfo] = useState<DbInfo | null>(null)
+  const [segStats, setSegStats] = useState<SeguridadStats | null>(null)
+
+  useEffect(() => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+    const h = { Authorization: `Bearer ${token}` }
+    Promise.all([
+      fetch(`${API}/configuracion/sistema/info`, { headers: h }).then(r => r.json()),
+      fetch(`${API}/configuracion/db-info`, { headers: h }).then(r => r.json()),
+      fetch(`${API}/configuracion/seguridad/stats`, { headers: h }).then(r => r.json()),
+    ]).then(([s, d, sg]) => { setSistema(s); setDbInfo(d); setSegStats(sg) }).catch(() => {})
+  }, [])
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -115,20 +118,9 @@ export default function SuscripcionPage() {
               <div className="px-6 py-4 border-b border-white/10">
                 <h3 className="font-headline font-bold text-on-surface">Historial de Facturas</h3>
               </div>
-              <div className="divide-y divide-white/5">
-                {facturas.map((f, i) => (
-                  <div key={i} className="flex items-center justify-between px-6 py-4 hover:bg-white/5 transition-colors">
-                    <div>
-                      <p className="font-bold text-on-surface">Plan Enterprise — {f.periodo}</p>
-                      <p className="text-xs text-outline">{f.fecha}</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span className="font-bold text-on-surface">${f.monto}</span>
-                      <span className="text-xs px-2 py-1 rounded-full bg-tertiary/20 text-tertiary font-bold">{f.estado}</span>
-                      <button className="text-xs text-primary hover:text-primary/80 font-bold transition-colors">PDF</button>
-                    </div>
-                  </div>
-                ))}
+              <div className="py-16 text-center">
+                <span className="material-symbols-outlined text-4xl text-outline/30 block mb-2">receipt_long</span>
+                <p className="text-sm text-outline">Sin historial de facturas disponible.</p>
               </div>
             </div>
           </div>
@@ -137,29 +129,31 @@ export default function SuscripcionPage() {
         {tab === 'uso' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { label: 'Usuarios Activos', used: 18, total: -1, unit: 'usuarios', color: 'bg-primary' },
-              { label: 'Almacenamiento', used: 12.4, total: 100, unit: 'GB', color: 'bg-secondary' },
-              { label: 'Llamadas API (mes)', used: 48200, total: -1, unit: 'requests', color: 'bg-tertiary' },
-              { label: 'Documentos Generados', used: 1247, total: -1, unit: 'docs', color: 'bg-orange-500' },
+              { label: 'Usuarios Activos', used: segStats?.activeUsers ?? 0, total: -1, unit: 'usuarios', color: 'bg-primary' },
+              { label: 'Tamaño de BD', used: dbInfo?.dbSize ?? '—', total: -1, unit: '', color: 'bg-secondary', isText: true },
+              { label: 'RAM del Servidor', used: sistema?.ram.pct ?? 0, total: 100, unit: '%', color: 'bg-tertiary' },
+              { label: 'Uptime del Servidor', used: sistema?.uptime.texto ?? '—', total: -1, unit: '', color: 'bg-orange-500', isText: true },
             ].map(r => (
               <div key={r.label} className="glass-panel rounded-2xl p-6">
                 <div className="flex justify-between mb-3">
                   <p className="font-bold text-on-surface">{r.label}</p>
                   <p className="text-on-surface-variant text-sm">
-                    <span className="font-bold text-on-surface">{typeof r.used === 'number' && r.used > 1000 ? r.used.toLocaleString() : r.used}</span>
-                    {r.total !== -1 ? ` / ${r.total}` : ''} {r.unit}
+                    {'isText' in r && r.isText
+                      ? <span className="font-bold text-on-surface">{r.used}</span>
+                      : <><span className="font-bold text-on-surface">{r.used}</span>{r.total !== -1 ? ` / ${r.total}` : ''} {r.unit}</>
+                    }
                   </p>
                 </div>
-                {r.total !== -1 ? (
+                {!('isText' in r && r.isText) && r.total !== -1 ? (
                   <>
                     <div className="h-2 bg-white/10 rounded-full">
-                      <div className={`h-full ${r.color} rounded-full`} style={{ width: `${(Number(r.used) / r.total) * 100}%` }} />
+                      <div className={`h-full ${r.color} rounded-full`} style={{ width: `${Math.min(Number(r.used), 100)}%` }} />
                     </div>
-                    <p className="text-xs text-outline mt-2">{((Number(r.used) / r.total) * 100).toFixed(1)}% utilizado</p>
+                    <p className="text-xs text-outline mt-2">{Number(r.used).toFixed(1)}% utilizado</p>
                   </>
-                ) : (
+                ) : !('isText' in r && r.isText) ? (
                   <p className="text-xs text-tertiary font-bold">Ilimitado en plan Enterprise</p>
-                )}
+                ) : null}
               </div>
             ))}
           </div>

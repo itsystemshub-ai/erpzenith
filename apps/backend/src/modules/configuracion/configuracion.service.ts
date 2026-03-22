@@ -39,21 +39,88 @@ export class ConfiguracionService {
     })
   }
 
+  async updateRoleLevel(roleId: string, level: number) {
+    // Obtener todos los permisos existentes
+    const allPerms = await this.prisma.permission.findMany()
+
+    // Filtrar según nivel: 1=read, 2=read+create+update, 3=todo
+    const allowedActions: Record<number, string[]> = {
+      1: ['read'],
+      2: ['read', 'create', 'update'],
+      3: ['read', 'create', 'update', 'delete', 'export'],
+    }
+    const actions = allowedActions[level] ?? allowedActions[2]
+    const permsToAssign = allPerms.filter(p => actions.includes(p.action))
+
+    return this.prisma.role.update({
+      where: { id: roleId },
+      data: { permissions: { set: permsToAssign.map(p => ({ id: p.id })) } },
+      include: { permissions: true, users: { select: { id: true } } },
+    })
+  }
+
   async getAuditLogs() {
     // Placeholder — en producción usar un modelo AuditLog dedicado
     return []
   }
 
+  getSistema() {
+    const mem = process.memoryUsage()
+    const usedMem = mem.heapUsed
+    const totalMem = mem.heapTotal
+    const ramPct = Math.round((usedMem / totalMem) * 100)
+    const uptime = process.uptime()
+    const uptimeHrs = Math.floor(uptime / 3600)
+    const uptimeMins = Math.floor((uptime % 3600) / 60)
+    return {
+      ram: { used: Math.round(usedMem / 1024 / 1024), total: Math.round(totalMem / 1024 / 1024), pct: ramPct },
+      uptime: { segundos: Math.round(uptime), texto: `${uptimeHrs}h ${uptimeMins}m` },
+      nodeVersion: process.version,
+      platform: process.platform,
+    }
+  }
+
+  async getSesiones() {
+    // Usuarios con actividad reciente (updatedAt en las últimas 24h)
+    const hace24h = new Date(Date.now() - 24 * 60 * 60 * 1000)
+    const usuarios = await this.prisma.user.findMany({
+      where: { updatedAt: { gte: hace24h } },
+      select: { id: true, username: true, updatedAt: true, roles: { select: { name: true } } },
+      orderBy: { updatedAt: 'desc' },
+    })
+    return usuarios.map(u => ({
+      id: u.id,
+      user: u.username,
+      role: u.roles[0]?.name ?? 'Sin rol',
+      since: u.updatedAt,
+    }))
+  }
+
+  async getSeguridad() {
+    const totalUsers = await this.prisma.user.count()
+    const activeUsers = await this.prisma.user.count({ where: { isActive: true } })
+    const totalRoles = await this.prisma.role.count()
+    const pendingResets = await this.prisma.passwordResetRequest.count({ where: { status: 'pending' } })
+    return {
+      totalUsers,
+      activeUsers,
+      totalRoles,
+      pendingResets,
+      scoreSeguridad: 87, // calculado estáticamente por ahora
+    }
+  }
+
   async getDbInfo() {
     // Tablas del schema con conteo real de filas
     const tables = [
+      { name: 'empresas',               model: 'empresa' },
       { name: 'users',                  model: 'user' },
+      { name: 'password_reset_requests',model: 'passwordResetRequest' },
       { name: 'roles',                  model: 'role' },
       { name: 'permissions',            model: 'permission' },
-      { name: 'password_reset_requests',model: 'passwordResetRequest' },
       { name: 'productos',              model: 'producto' },
-      { name: 'almacenes',              model: 'almacen' },
       { name: 'stocks',                 model: 'stock' },
+      { name: 'almacenes',              model: 'almacen' },
       { name: 'movimientos_stock',      model: 'movimientoStock' },
       { name: 'proveedores',            model: 'proveedor' },
       { name: 'ordenes_compra',         model: 'ordenCompra' },
@@ -67,7 +134,6 @@ export class ConfiguracionService {
       { name: 'items_orden_produccion', model: 'itemOrdenProduccion' },
       { name: 'configuracion',          model: 'configuracion' },
       { name: 'tasas_bcv',              model: 'tasaBCV' },
-      { name: 'empresas',               model: 'empresa' },
     ]
 
     const counts = await Promise.all(
@@ -109,15 +175,27 @@ export class ConfiguracionService {
 
   // Modelo Prisma por nombre de tabla
   private readonly TABLE_MODEL_MAP: Record<string, string> = {
-    users: 'user', roles: 'role', permissions: 'permission',
+    empresas: 'empresa',
+    users: 'user',
     password_reset_requests: 'passwordResetRequest',
-    productos: 'producto', almacenes: 'almacen', stocks: 'stock',
-    movimientos_stock: 'movimientoStock', proveedores: 'proveedor',
-    ordenes_compra: 'ordenCompra', items_orden_compra: 'itemOrdenCompra',
-    clientes: 'cliente', facturas: 'factura', items_factura: 'itemFactura',
-    empleados: 'empleado', nominas: 'nomina',
-    ordenes_produccion: 'ordenProduccion', items_orden_produccion: 'itemOrdenProduccion',
-    configuracion: 'configuracion', tasas_bcv: 'tasaBCV', empresas: 'empresa',
+    roles: 'role',
+    permissions: 'permission',
+    productos: 'producto',
+    stocks: 'stock',
+    almacenes: 'almacen',
+    movimientos_stock: 'movimientoStock',
+    proveedores: 'proveedor',
+    ordenes_compra: 'ordenCompra',
+    items_orden_compra: 'itemOrdenCompra',
+    clientes: 'cliente',
+    facturas: 'factura',
+    items_factura: 'itemFactura',
+    empleados: 'empleado',
+    nominas: 'nomina',
+    ordenes_produccion: 'ordenProduccion',
+    items_orden_produccion: 'itemOrdenProduccion',
+    configuracion: 'configuracion',
+    tasas_bcv: 'tasaBCV',
   }
 
   private allowedTable(tableName: string) {
@@ -139,6 +217,49 @@ export class ConfiguracionService {
 
   async getTableData(tableName: string, limit = 50) {
     this.allowedTable(tableName) // valida whitelist
+
+    // Para users, devolver datos enriquecidos con roles, empresa y departamento
+    if (tableName === 'users') {
+      const ROLE_DEPT: Record<string, string> = {
+        SUPERDEV: 'Sistema', ADMIN: 'Sistema',
+        INVENTARIO: 'Operaciones', COMPRAS: 'Operaciones',
+        PRODUCCION: 'Operaciones', CALIDAD: 'Operaciones',
+        VENTAS: 'Comercial', RRHH: 'Administración',
+        REPORTES: 'Herramientas', USER: 'Sistema',
+      }
+      const HIERARCHY = ['SUPERDEV','ADMIN','INVENTARIO','VENTAS','COMPRAS','RRHH','PRODUCCION','CALIDAD','REPORTES','USER']
+
+      const users = await this.prisma.user.findMany({
+        take: limit,
+        orderBy: { createdAt: 'asc' },
+        select: {
+          id: true, name: true, username: true, password: true,
+          empresaId: true, isActive: true, mfaEnabled: true, mfaSecret: true,
+          passwordChangedAt: true, createdAt: true, updatedAt: true,
+          roles: { select: { name: true } },
+        },
+      })
+      return users.map(u => {
+        const sortedRoles = [...u.roles].sort((a, b) => HIERARCHY.indexOf(a.name) - HIERARCHY.indexOf(b.name))
+        const primaryRole = sortedRoles[0]?.name ?? 'USER'
+        return {
+          empresaId: u.empresaId,
+          id: u.id,
+          name: u.name,
+          username: u.username,
+          password: u.password,
+          roles: u.roles.map(r => r.name).join(', '),
+          departamento: ROLE_DEPT[primaryRole] ?? 'Sistema',
+          isActive: u.isActive,
+          mfaEnabled: u.mfaEnabled,
+          mfaSecret: u.mfaSecret,
+          passwordChangedAt: u.passwordChangedAt,
+          createdAt: u.createdAt,
+          updatedAt: u.updatedAt,
+        }
+      })
+    }
+
     const rows = await this.prisma.$queryRawUnsafe(
       `SELECT * FROM "${tableName}" LIMIT ${limit}`
     )

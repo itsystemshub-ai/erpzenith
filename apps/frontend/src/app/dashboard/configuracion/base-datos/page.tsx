@@ -16,17 +16,19 @@ interface DbInfo {
 
 const TABLE_SCHEMAS: Record<string, { column: string; type: string; nullable: boolean; pk: boolean; default?: string }[]> = {
   users: [
-    { column: 'id', type: 'VARCHAR(25)', nullable: false, pk: true, default: 'cuid()' },
-    { column: 'name', type: 'VARCHAR(255)', nullable: false, pk: false },
-    { column: 'username', type: 'VARCHAR(255)', nullable: false, pk: false },
-    { column: 'password', type: 'VARCHAR(255)', nullable: false, pk: false },
-    { column: 'roleId', type: 'VARCHAR(25)', nullable: false, pk: false },
-    { column: 'isActive', type: 'BOOLEAN', nullable: false, pk: false, default: 'true' },
-    { column: 'mfaEnabled', type: 'BOOLEAN', nullable: false, pk: false, default: 'false' },
-    { column: 'mfaSecret', type: 'VARCHAR(255)', nullable: true, pk: false },
-    { column: 'passwordChangedAt', type: 'TIMESTAMP', nullable: false, pk: false, default: 'now()' },
-    { column: 'createdAt', type: 'TIMESTAMP', nullable: false, pk: false, default: 'now()' },
-    { column: 'updatedAt', type: 'TIMESTAMP', nullable: false, pk: false },
+    { column: 'empresaId',         type: 'VARCHAR(25)',  nullable: true,  pk: false },
+    { column: 'id',                type: 'VARCHAR(25)',  nullable: false, pk: true,  default: 'cuid()' },
+    { column: 'name',              type: 'VARCHAR(255)', nullable: false, pk: false },
+    { column: 'username',          type: 'VARCHAR(255)', nullable: false, pk: false },
+    { column: 'password',          type: 'VARCHAR(255)', nullable: false, pk: false },
+    { column: 'roles',             type: 'Role[] (M2M)', nullable: false, pk: false },
+    { column: 'departamento',      type: 'VIRTUAL',      nullable: false, pk: false },
+    { column: 'isActive',          type: 'BOOLEAN',      nullable: false, pk: false, default: 'true' },
+    { column: 'mfaEnabled',        type: 'BOOLEAN',      nullable: false, pk: false, default: 'false' },
+    { column: 'mfaSecret',         type: 'VARCHAR(255)', nullable: true,  pk: false },
+    { column: 'passwordChangedAt', type: 'TIMESTAMP',    nullable: false, pk: false, default: 'now()' },
+    { column: 'createdAt',         type: 'TIMESTAMP',    nullable: false, pk: false, default: 'now()' },
+    { column: 'updatedAt',         type: 'TIMESTAMP',    nullable: false, pk: false },
   ],
   roles: [
     { column: 'id', type: 'VARCHAR(25)', nullable: false, pk: true, default: 'cuid()' },
@@ -196,7 +198,8 @@ type TabType = 'Esquema' | 'Datos' | 'SQL'
 // Anchos fijos por columna
 const COL_WIDTHS: Record<string, number> = {
   id: 90, roleId: 90, userId: 90, productoId: 90, almacenId: 90,
-  proveedorId: 90, clienteId: 90, empleadoId: 90,
+  proveedorId: 90, clienteId: 90, empleadoId: 90, empresaId: 90,
+  roles: 180, empresa: 160, departamento: 130,
   isActive: 68, mfaEnabled: 76, mfaSecret: 68,
   name: 120, username: 100, password: 180, newPassword: 180,
   passwordChangedAt: 120, createdAt: 120, updatedAt: 120,
@@ -274,7 +277,7 @@ export default function BaseDatosPage() {
   const schema = TABLE_SCHEMAS[selectedTable] ?? []
   const selectedRows = dbInfo?.tables.find((t) => t.table === selectedTable)?.rows ?? 0
 
-  const USER_COL_ORDER = ['id','name','username','password','roleId','isActive','mfaEnabled','mfaSecret','passwordChangedAt','createdAt','updatedAt']
+  const USER_COL_ORDER = ['empresaId','id','name','username','password','roles','departamento','isActive','mfaEnabled','mfaSecret','passwordChangedAt','createdAt','updatedAt']
   const rawColumns = tableData.length > 0 ? Object.keys(tableData[0]) : schema.map((s) => s.column)
   const dataColumns = selectedTable === 'users'
     ? [...USER_COL_ORDER.filter(c => rawColumns.includes(c)), ...rawColumns.filter(c => !USER_COL_ORDER.includes(c))]

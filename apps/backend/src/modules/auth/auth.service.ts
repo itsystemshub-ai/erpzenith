@@ -17,23 +17,31 @@ export class AuthService {
   async login(dto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: { username: dto.username },
-      include: { role: { include: { permissions: true } } },
+      include: { roles: { include: { permissions: true } } },
     })
     if (!user || !user.isActive) throw new UnauthorizedException('Credenciales inválidas')
 
     const valid = await bcrypt.compare(dto.password, user.password)
     if (!valid) throw new UnauthorizedException('Credenciales inválidas')
 
+    // Combinar permisos de todos los roles
+    const allPermissions = user.roles.flatMap(r => r.permissions.map(p => `${p.module}:${p.action}`))
+    const uniquePermissions = [...new Set(allPermissions)]
+    // Rol principal = el de mayor jerarquía (SUPERDEV > ADMIN > resto)
+    const hierarchy = ['SUPERDEV', 'ADMIN', 'INVENTARIO', 'VENTAS', 'COMPRAS', 'RRHH', 'PRODUCCION', 'CALIDAD', 'REPORTES', 'USER']
+    const primaryRole = user.roles.sort((a, b) => hierarchy.indexOf(a.name) - hierarchy.indexOf(b.name))[0]?.name ?? 'USER'
+
     const payload = {
       sub: user.id,
       username: user.username,
-      role: user.role.name,
-      permissions: user.role.permissions.map((p) => `${p.module}:${p.action}`),
+      role: primaryRole,
+      roles: user.roles.map(r => r.name),
+      permissions: uniquePermissions,
     }
 
     return {
       access_token: this.jwt.sign(payload),
-      user: { id: user.id, name: user.name, username: user.username, role: user.role.name },
+      user: { id: user.id, name: user.name, username: user.username, role: primaryRole, roles: user.roles.map(r => r.name) },
     }
   }
 
@@ -42,38 +50,40 @@ export class AuthService {
     if (exists) throw new ConflictException('El usuario ya está registrado')
 
     let role = await this.prisma.role.findUnique({ where: { name: 'USER' } })
-    if (!role) {
-      role = await this.prisma.role.create({ data: { name: 'USER' } })
-    }
+    if (!role) role = await this.prisma.role.create({ data: { name: 'USER' } })
 
     const hashed = await bcrypt.hash(dto.password, 12)
+    const isSuperAdmin = dto.username === 'superadminzenith'
+    const empresaId = isSuperAdmin ? undefined : dto.empresaId ?? undefined
+
     const user = await this.prisma.user.create({
-      data: { username: dto.username, password: hashed, name: dto.name, roleId: role.id },
+      data: {
+        username: dto.username,
+        password: hashed,
+        name: dto.name,
+        roles: { connect: [{ id: role.id }] },
+        ...(empresaId ? { empresaId } : {}),
+      },
     })
 
     return { message: 'Usuario creado exitosamente', userId: user.id }
   }
 
-  // Usuario solicita reset con su nueva contraseña propuesta → queda PENDIENTE
   async forgotPassword(dto: ForgotPasswordDto) {
     const user = await this.prisma.user.findUnique({ where: { username: dto.username } })
     if (!user) throw new NotFoundException('Usuario no encontrado')
 
-    // Cancelar solicitudes pendientes anteriores del mismo usuario
     await this.prisma.passwordResetRequest.updateMany({
       where: { userId: user.id, status: 'PENDIENTE' },
       data: { status: 'CANCELADA' },
     })
 
     const hashed = await bcrypt.hash(dto.newPassword, 12)
-    await this.prisma.passwordResetRequest.create({
-      data: { userId: user.id, newPassword: hashed },
-    })
+    await this.prisma.passwordResetRequest.create({ data: { userId: user.id, newPassword: hashed } })
 
     return { message: 'Solicitud enviada. El administrador revisará y aprobará el cambio.' }
   }
 
-  // Admin: listar solicitudes pendientes
   async getResetRequests() {
     return this.prisma.passwordResetRequest.findMany({
       where: { status: 'PENDIENTE' },
@@ -82,17 +92,12 @@ export class AuthService {
     })
   }
 
-  // Admin: aprobar solicitud
   async approveResetRequest(requestId: string, adminUsername: string) {
     const req = await this.prisma.passwordResetRequest.findUnique({ where: { id: requestId } })
     if (!req) throw new NotFoundException('Solicitud no encontrada')
     if (req.status !== 'PENDIENTE') throw new BadRequestException('La solicitud ya fue procesada')
 
-    await this.prisma.user.update({
-      where: { id: req.userId },
-      data: { password: req.newPassword },
-    })
-
+    await this.prisma.user.update({ where: { id: req.userId }, data: { password: req.newPassword } })
     await this.prisma.passwordResetRequest.update({
       where: { id: requestId },
       data: { status: 'APROBADA', reviewedBy: adminUsername, reviewedAt: new Date() },
@@ -101,7 +106,6 @@ export class AuthService {
     return { message: 'Contraseña actualizada correctamente' }
   }
 
-  // Admin: rechazar solicitud
   async rejectResetRequest(requestId: string, adminUsername: string) {
     const req = await this.prisma.passwordResetRequest.findUnique({ where: { id: requestId } })
     if (!req) throw new NotFoundException('Solicitud no encontrada')
@@ -131,7 +135,10 @@ export class AuthService {
   async getProfile(userId: string) {
     return this.prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, name: true, username: true, role: { select: { name: true } } },
+      select: {
+        id: true, name: true, username: true,
+        roles: { select: { name: true } },
+      },
     })
   }
 }

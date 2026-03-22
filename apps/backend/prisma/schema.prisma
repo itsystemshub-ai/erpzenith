@@ -14,8 +14,9 @@ model User {
   username             String                @unique
   password             String
   name                 String
-  roleId               String
-  role                 Role                  @relation(fields: [roleId], references: [id])
+  roles                Role[]
+  empresaId            String?
+  empresa              Empresa?              @relation(fields: [empresaId], references: [id])
   isActive             Boolean               @default(true)
   mfaEnabled           Boolean               @default(false)
   mfaSecret            String?
@@ -303,9 +304,14 @@ model Empresa {
   direccion String?
   color     String   @default("#6366f1")
   logo      String?
+  plan      String   @default("Starter")
+  users     Int      @default(0)
+  status    String   @default("activo")
+  mrr       Int      @default(49)
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  usersList User[]
 
   @@map("empresas")
 }

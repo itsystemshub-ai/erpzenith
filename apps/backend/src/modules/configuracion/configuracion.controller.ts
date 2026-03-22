@@ -31,9 +31,29 @@ export class ConfiguracionController {
     return this.configuracionService.getRoles()
   }
 
+  @Patch('sistema/roles/:id/nivel')
+  updateRoleLevel(@Param('id') id: string, @Body('level') level: number) {
+    return this.configuracionService.updateRoleLevel(id, level)
+  }
+
   @Get('auditoria')
   getAuditLogs() {
     return this.configuracionService.getAuditLogs()
+  }
+
+  @Get('sistema/info')
+  getSistema() {
+    return this.configuracionService.getSistema()
+  }
+
+  @Get('sistema/sesiones')
+  getSesiones() {
+    return this.configuracionService.getSesiones()
+  }
+
+  @Get('seguridad/stats')
+  getSeguridad() {
+    return this.configuracionService.getSeguridad()
   }
 
   @Get('db-info')

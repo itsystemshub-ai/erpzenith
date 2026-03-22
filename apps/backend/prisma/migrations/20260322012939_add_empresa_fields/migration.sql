@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "empresas" ADD COLUMN     "mrr" INTEGER NOT NULL DEFAULT 49,
+ADD COLUMN     "plan" TEXT NOT NULL DEFAULT 'Starter',
+ADD COLUMN     "status" TEXT NOT NULL DEFAULT 'activo',
+ADD COLUMN     "users" INTEGER NOT NULL DEFAULT 0;
