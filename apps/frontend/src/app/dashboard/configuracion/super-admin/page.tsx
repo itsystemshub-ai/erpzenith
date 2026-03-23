@@ -376,8 +376,8 @@ export default function SuperAdminPage() {
     {/* Modal Nuevo Tenant */}
     {modal && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-        <div className="glass-panel rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div className="glass-panel rounded-2xl w-full max-w-lg shadow-2xl flex flex-col max-h-[calc(100vh-2rem)]">
+          <div className="flex items-center justify-between px-6 py-3 border-b border-white/10 shrink-0">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-primary/20 flex items-center justify-center">
                 <span className="material-symbols-outlined text-primary text-[20px]">business</span>
@@ -519,8 +519,8 @@ export default function SuperAdminPage() {
     {/* Modal Editar Tenant */}
     {editTarget && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-        <div className="glass-panel rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div className="glass-panel rounded-2xl w-full max-w-lg shadow-2xl flex flex-col max-h-[calc(100vh-2rem)]">
+          <div className="flex items-center justify-between px-6 py-3 border-b border-white/10 shrink-0">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-primary/20 flex items-center justify-center">
                 <span className="material-symbols-outlined text-primary text-[20px]">edit</span>
@@ -535,7 +535,7 @@ export default function SuperAdminPage() {
             </button>
           </div>
 
-          <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+          <div className="p-6 space-y-4 overflow-y-auto flex-1">
             {/* Logo + color */}
             <div className="flex items-center gap-5 p-4 bg-surface-container rounded-xl">
               <label htmlFor="edit-logo-upload" className="w-14 h-14 rounded-xl border-2 border-dashed border-primary/40 flex items-center justify-center shrink-0 cursor-pointer hover:border-primary transition-colors overflow-hidden">

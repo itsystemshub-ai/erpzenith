@@ -302,29 +302,82 @@ export default function ProveedoresPage() {
         </section>
       </div>
 
-      {/* Modal crear/editar */}
       {modal.open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <GlassCard className="w-full max-w-md p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-            <h3 className="text-lg font-headline font-bold text-on-surface">
-              {modal.editing ? 'Editar Proveedor' : 'Nuevo Proveedor'}
-            </h3>
-            {FORM_FIELDS.filter(f => !['region','estado','municipio'].includes(f.key)).map(({ key, label }) => (
-              <div key={key}>
-                <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">{label}</label>
-                <input value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                  className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
+          <div className="w-full max-w-3xl bg-surface-container rounded-2xl border border-white/10 shadow-2xl flex flex-col max-h-[calc(100vh-2rem)]">
+            <div className="flex items-center justify-between px-6 py-3 border-b border-white/10 shrink-0">
+              <h3 className="text-sm font-headline font-bold text-on-surface">{modal.editing ? 'Editar Proveedor' : 'Nuevo Proveedor'}</h3>
+              <button onClick={() => setModal({ open: false, editing: null })} className="p-1.5 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            </div>
+            <div className="px-6 py-3 flex flex-col gap-2.5 overflow-y-auto">
+              <div className="grid grid-cols-2 gap-x-6">
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">RIF</label>
+                  <input value={form.rif} onChange={e => setForm({ ...form, rif: e.target.value })}
+                    className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-3 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
+                </div>
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Empresa / Nombre *</label>
+                  <input value={form.nombre} onChange={e => setForm({ ...form, nombre: e.target.value })}
+                    className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-3 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
+                </div>
               </div>
-            ))}
-            <GeoSelector
-              region={form.region} estado={form.estado} municipio={form.municipio}
-              onChange={(field, value) => setForm(f => ({ ...f, [field]: value }))}
-            />
-            <div className="flex gap-3 pt-2">
+              <div className="grid grid-cols-2 gap-x-6">
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Persona de Contacto</label>
+                  <input value={form.personaContacto} onChange={e => setForm({ ...form, personaContacto: e.target.value })}
+                    className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-3 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
+                </div>
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Teléfono Personal</label>
+                  <input value={form.telefonoPersonal} onChange={e => setForm({ ...form, telefonoPersonal: e.target.value })}
+                    className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-3 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-x-6">
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Teléfono Fijo</label>
+                  <input value={form.telefonoFijo} onChange={e => setForm({ ...form, telefonoFijo: e.target.value })}
+                    className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-3 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
+                </div>
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Región</label>
+                  <GeoSelector region={form.region} estado={form.estado} municipio={form.municipio}
+                    onChange={(field, value) => setForm(f => ({ ...f, [field]: value }))} onlyRegion />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-x-6">
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Estado</label>
+                  <GeoSelector region={form.region} estado={form.estado} municipio={form.municipio}
+                    onChange={(field, value) => setForm(f => ({ ...f, [field]: value }))} onlyEstado />
+                </div>
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Municipio</label>
+                  <GeoSelector region={form.region} estado={form.estado} municipio={form.municipio}
+                    onChange={(field, value) => setForm(f => ({ ...f, [field]: value }))} onlyMunicipio />
+                </div>
+              </div>
+              <div>
+                <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Dirección</label>
+                <input value={form.direccion} onChange={e => setForm({ ...form, direccion: e.target.value })}
+                  className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-3 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
+              </div>
+              <div className="grid grid-cols-2 gap-x-6">
+                <div>
+                  <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">Email</label>
+                  <input value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                    className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-3 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-3 px-6 py-3 border-t border-white/10 shrink-0">
               <Button onClick={handleSave} disabled={saving} className="flex-1">{saving ? 'Guardando...' : 'Guardar'}</Button>
               <Button variant="secondary" onClick={() => setModal({ open: false, editing: null })} className="flex-1">Cancelar</Button>
             </div>
-          </GlassCard>
+          </div>
         </div>
       )}
 

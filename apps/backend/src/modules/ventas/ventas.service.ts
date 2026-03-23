@@ -92,6 +92,14 @@ export class VentasService {
     return this.prisma.cliente.update({ where: { id }, data })
   }
 
+  async deleteAllClientes() {
+    // Delete in order to respect FK constraints: items → facturas → clientes
+    await this.prisma.itemFactura.deleteMany({})
+    await this.prisma.factura.deleteMany({})
+    await this.prisma.cliente.deleteMany({})
+    return { ok: true }
+  }
+
   async deleteCliente(id: string) {
     await this.findClienteById(id)
     await this.prisma.cliente.delete({ where: { id } })
@@ -102,22 +110,30 @@ export class VentasService {
     let created = 0
     let updated = 0
     const emptyCells: string[] = []
+    const errors: string[] = []
+
     for (const row of rows) {
       try {
         if (!row.rif) emptyCells.push(`${row.nombre}: sin RIF`)
-        let existing: any = null
-        if (row.idcima) existing = await this.prisma.cliente.findFirst({ where: { idcima: row.idcima } })
-        if (!existing && row.rif) existing = await this.prisma.cliente.findFirst({ where: { rif: row.rif } })
-        if (existing) {
-          await this.prisma.cliente.update({ where: { id: existing.id }, data: row })
-          updated++
-        } else {
-          await this.prisma.cliente.create({ data: row })
-          created++
+
+        // Sanitize: convert empty strings to undefined so Prisma doesn't store ""
+        const data: any = {}
+        for (const [k, v] of Object.entries(row)) {
+          data[k] = (v === '' || v === null || v === undefined) ? undefined : v
         }
-      } catch { /* skip row on error */ }
+        if (!data.nombre || !String(data.nombre).trim()) data.nombre = 'Sin nombre'
+
+        // Always create — every row gets its own unique id
+        // Duplicate RIF detection is visual only (yellow highlight in frontend)
+        await this.prisma.cliente.create({ data })
+        created++
+      } catch (err: any) {
+        const msg = err?.message ?? String(err)
+        errors.push(`${row.nombre} (${row.rif ?? 'sin RIF'}): ${msg}`)
+        console.error('[bulkUpsertClientes] Error en fila:', row, msg)
+      }
     }
-    return { ok: true, created, updated, emptyCells }
+    return { ok: true, created, updated, emptyCells, errors, skipped: errors.length }
   }
 
   // ─── Vendedores ──────────────────────────────────────────────────────────
@@ -163,21 +179,39 @@ export class VentasService {
     let created = 0
     let updated = 0
     const emptyCells: string[] = []
+    const errors: string[] = []
     for (const row of rows) {
       try {
         if (!row.rif) emptyCells.push(`${row.nombre}: sin RIF`)
+
+        const data: any = {}
+        for (const [k, v] of Object.entries(row)) {
+          data[k] = (v === '' || v === null || v === undefined) ? undefined : v
+        }
+        if (!data.nombre || !String(data.nombre).trim()) data.nombre = 'Sin nombre'
+
         let existing: any = null
-        if (row.idcima) existing = await this.prisma.vendedor.findFirst({ where: { idcima: row.idcima } })
-        if (!existing && row.rif) existing = await this.prisma.vendedor.findFirst({ where: { rif: row.rif } })
+        if (data.idcima) existing = await this.prisma.vendedor.findFirst({ where: { idcima: data.idcima } })
+        if (!existing && data.rif) existing = await this.prisma.vendedor.findFirst({ where: { rif: data.rif } })
+        if (!existing) {
+          existing = await this.prisma.vendedor.findFirst({
+            where: { nombre: { equals: data.nombre, mode: 'insensitive' } },
+          })
+        }
+
         if (existing) {
-          await this.prisma.vendedor.update({ where: { id: existing.id }, data: row })
+          await this.prisma.vendedor.update({ where: { id: existing.id }, data })
           updated++
         } else {
-          await this.prisma.vendedor.create({ data: row })
+          await this.prisma.vendedor.create({ data })
           created++
         }
-      } catch { /* skip row on error */ }
+      } catch (err: any) {
+        const msg = err?.message ?? String(err)
+        errors.push(`${row.nombre} (${row.rif ?? 'sin RIF'}): ${msg}`)
+        console.error('[bulkUpsertVendedores] Error en fila:', row, msg)
+      }
     }
-    return { ok: true, created, updated, emptyCells }
+    return { ok: true, created, updated, emptyCells, errors, skipped: errors.length }
   }
 }
