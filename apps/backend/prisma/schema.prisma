@@ -256,6 +256,10 @@ model Empleado {
   salarioUSD    Decimal   @db.Decimal(10, 2)
   fechaIngreso  DateTime
   estado        String    @default("ACTIVO") // ACTIVO | VACACIONES | BAJA_TEMPORAL | INACTIVO
+  estadoGeo     String?   @map("estado_geo")
+  municipio     String?
+  direccion     String?
+  telefono      String?
   isActive      Boolean   @default(true)
   nominas       Nomina[]
   createdAt     DateTime  @default(now())
@@ -308,6 +312,37 @@ model ItemOrdenProduccion {
   @@map("items_orden_produccion")
 }
 
+// ─── Geografía Venezuela ─────────────────────────────────────────────────────
+
+model GeoRegion {
+  id       String      @id @default(cuid())
+  nombre   String      @unique
+  estados  GeoEstado[]
+
+  @@map("geo_regiones")
+}
+
+model GeoEstado {
+  id          String         @id @default(cuid())
+  nombre      String
+  regionId    String
+  region      GeoRegion      @relation(fields: [regionId], references: [id])
+  municipios  GeoMunicipio[]
+
+  @@unique([nombre, regionId])
+  @@map("geo_estados")
+}
+
+model GeoMunicipio {
+  id        String    @id @default(cuid())
+  nombre    String
+  estadoId  String
+  estado    GeoEstado @relation(fields: [estadoId], references: [id])
+
+  @@unique([nombre, estadoId])
+  @@map("geo_municipios")
+}
+
 // ─── Configuración ───────────────────────────────────────────────────────────
 
 model Configuracion {
@@ -337,6 +372,8 @@ model Empresa {
   email     String?
   telefono  String?
   direccion String?
+  estado    String?
+  municipio String?
   color     String   @default("#6366f1")
   logo      String?
   plan      String   @default("Starter")

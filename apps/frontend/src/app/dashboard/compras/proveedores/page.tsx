@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { useNotificationStore } from '@/stores/notificationStore'
 import api from '@/lib/api'
 import * as XLSX from 'xlsx'
+import { GeoSelector } from '@/components/ui/GeoSelector'
 
 interface Proveedor {
   id: string
@@ -242,46 +243,48 @@ export default function ProveedoresPage() {
           </div>
 
           <GlassCard glow className="overflow-hidden">
-            <table className="w-full text-left border-collapse">
+            <div className="overflow-x-auto [&::-webkit-scrollbar]:h-3 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-thumb]:bg-primary/40 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary/70">
+            <table className="w-full text-left border-collapse min-w-[1200px]">
               <thead>
                 <tr className="bg-white/5 border-b border-white/5 font-spartan text-[0.625rem] uppercase tracking-[0.2em] text-outline">
-                  <th className="px-6 py-5">Proveedor</th>
-                  <th className="px-6 py-5">Región</th>
-                  <th className="px-6 py-5">Estado</th>
-                  <th className="px-6 py-5">Municipio</th>
-                  <th className="px-6 py-5">RIF</th>
-                  <th className="px-6 py-5">Teléfono</th>
-                  <th className="px-6 py-5">Email</th>
-                  <th className="px-6 py-5">Estatus</th>
-                  <th className="px-6 py-5 text-right">Acciones</th>
+                  <th className="px-3 py-4 w-10 text-center">N°</th>
+                  <th className="px-4 py-4">Región</th>
+                  <th className="px-4 py-4">Estado</th>
+                  <th className="px-4 py-4">Municipio</th>
+                  <th className="px-4 py-4">RIF</th>
+                  <th className="px-4 py-4">Empresa</th>
+                  <th className="px-4 py-4">Persona de<br/>Contacto</th>
+                  <th className="px-4 py-4">Dirección</th>
+                  <th className="px-4 py-4">Teléfono<br/>Personal</th>
+                  <th className="px-4 py-4">Teléfono Fijo</th>
+                  <th className="px-4 py-4">Email</th>
+                  <th className="px-4 py-4">Estatus</th>
+                  <th className="px-4 py-4 text-right">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {loading ? (
-                  <tr><td colSpan={8} className="py-16 text-center text-outline text-sm">Cargando proveedores...</td></tr>
+                  <tr><td colSpan={13} className="py-16 text-center text-outline text-sm">Cargando proveedores...</td></tr>
                 ) : filtered.length === 0 ? (
-                  <tr><td colSpan={8} className="py-16 text-center text-outline text-sm">No se encontraron proveedores.</td></tr>
-                ) : filtered.map((p) => (
-                  <tr key={p.id} className="hover:bg-white/5 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                          <span className="material-symbols-outlined text-primary text-[18px]">business</span>
-                        </div>
-                        <p className="text-sm font-semibold text-on-surface">{p.nombre}</p>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-xs text-outline">{p.region ?? '—'}</td>
-                    <td className="px-6 py-4 text-xs text-outline">{p.estado ?? '—'}</td>
-                    <td className="px-6 py-4 text-xs text-outline">{p.municipio ?? '—'}</td>
-                    <td className="px-6 py-4 text-xs font-mono text-outline">{p.rif}</td>
-                    <td className="px-6 py-4 text-sm text-on-surface">{p.telefono ?? '—'}</td>
-                    <td className="px-6 py-4 text-xs text-outline">{p.email ?? '—'}</td>
-                    <td className="px-6 py-4">
+                  <tr><td colSpan={13} className="py-16 text-center text-outline text-sm">No se encontraron proveedores.</td></tr>
+                ) : filtered.map((p, i) => (
+                  <tr key={p.id} className="hover:bg-white/5 transition-colors align-top">
+                    <td className="px-3 py-3 text-center text-[11px] font-mono text-outline">{i + 1}</td>
+                    <td className="px-4 py-3 text-xs text-outline">{p.region ?? '—'}</td>
+                    <td className="px-4 py-3 text-xs text-outline">{p.estado ?? '—'}</td>
+                    <td className="px-4 py-3 text-xs text-outline">{p.municipio ?? '—'}</td>
+                    <td className="px-4 py-3 text-xs font-mono text-outline whitespace-nowrap">{p.rif ?? '—'}</td>
+                    <td className="px-4 py-3"><p className="text-sm font-semibold text-on-surface leading-snug">{p.nombre}</p></td>
+                    <td className="px-4 py-3 text-xs text-outline">{p.personaContacto ?? '—'}</td>
+                    <td className="px-4 py-3 text-xs text-outline max-w-[200px]"><span className="block whitespace-normal leading-snug">{p.direccion ?? '—'}</span></td>
+                    <td className="px-4 py-3 text-xs text-on-surface">{p.telefonoPersonal ?? '—'}</td>
+                    <td className="px-4 py-3 text-xs text-on-surface">{p.telefonoFijo ?? '—'}</td>
+                    <td className="px-4 py-3 text-xs text-outline">{p.email ?? '—'}</td>
+                    <td className="px-4 py-3 whitespace-nowrap">
                       <Badge variant={p.isActive ? 'success' : 'error'}>{p.isActive ? 'Activo' : 'Inactivo'}</Badge>
                     </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="px-4 py-3 text-right whitespace-nowrap">
+                      <div className="flex items-center justify-end gap-1">
                         <button onClick={() => openEdit(p)} className="p-1.5 rounded-lg hover:bg-white/10 text-outline hover:text-on-surface transition-colors">
                           <span className="material-symbols-outlined text-[16px]">edit</span>
                         </button>
@@ -294,6 +297,7 @@ export default function ProveedoresPage() {
                 ))}
               </tbody>
             </table>
+            </div>
           </GlassCard>
         </section>
       </div>
@@ -305,13 +309,17 @@ export default function ProveedoresPage() {
             <h3 className="text-lg font-headline font-bold text-on-surface">
               {modal.editing ? 'Editar Proveedor' : 'Nuevo Proveedor'}
             </h3>
-            {FORM_FIELDS.map(({ key, label }) => (
+            {FORM_FIELDS.filter(f => !['region','estado','municipio'].includes(f.key)).map(({ key, label }) => (
               <div key={key}>
                 <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">{label}</label>
                 <input value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                   className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
               </div>
             ))}
+            <GeoSelector
+              region={form.region} estado={form.estado} municipio={form.municipio}
+              onChange={(field, value) => setForm(f => ({ ...f, [field]: value }))}
+            />
             <div className="flex gap-3 pt-2">
               <Button onClick={handleSave} disabled={saving} className="flex-1">{saving ? 'Guardando...' : 'Guardar'}</Button>
               <Button variant="secondary" onClick={() => setModal({ open: false, editing: null })} className="flex-1">Cancelar</Button>

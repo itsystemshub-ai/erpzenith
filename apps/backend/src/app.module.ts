@@ -11,6 +11,8 @@ import { DashboardModule } from './modules/dashboard/dashboard.module'
 import { EmpresasModule } from './modules/empresas/empresas.module'
 import { UsuariosModule } from './modules/usuarios/usuarios.module'
 
+import { GeoModule } from './modules/geo/geo.module'
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -24,6 +26,7 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module'
     DashboardModule,
     EmpresasModule,
     UsuariosModule,
+    GeoModule,
   ],
 })
 export class AppModule {}

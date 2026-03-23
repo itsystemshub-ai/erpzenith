@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { useNotificationStore } from '@/stores/notificationStore'
 import api from '@/lib/api'
 import * as XLSX from 'xlsx'
+import { GeoSelector } from '@/components/ui/GeoSelector'
 
 interface Cliente {
   id: string
@@ -98,7 +99,7 @@ export default function ClientesPage() {
       }
 
       const mapped = rows.map((r) => ({
-        codigoCima:      getCol(r, 'idcima', 'IDCIMA', 'Id', 'ID') ?? undefined,
+        idcima:          getCol(r, 'idcima', 'IDCIMA', 'Id', 'ID') ?? undefined,
         rif:             formatRif(getCol(r, 'RIF', 'rif', 'CEDULA', 'cedula', 'Cedula')),
         nombre:          getCol(r, 'EMPRESA', 'empresa', 'NOMBRE', 'nombre', 'RAZON SOCIAL', 'Razon Social') ?? 'Sin nombre',
         region:          getCol(r, 'REGIÓN', 'REGION', 'region', 'Región') ?? undefined,
@@ -119,8 +120,9 @@ export default function ClientesPage() {
         }
         alert(`Importación completada: ${res.data.created} creados, ${res.data.updated} actualizados.`)
       } catch (err: any) {
-        console.error('Import error:', err?.response?.data ?? err)
-        alert(`Error al importar: ${err?.response?.data?.message ?? err?.message ?? 'desconocido'}`)
+        const msg = err?.response?.data?.message ?? err?.response?.data ?? err?.message ?? String(err)
+        console.error('Import error:', err)
+        alert(`Error al importar: ${msg}`)
       }
     }
     reader.readAsBinaryString(file)
@@ -251,7 +253,8 @@ export default function ClientesPage() {
           </div>
 
           <GlassCard glow className="overflow-hidden">
-            <table className="w-full text-left border-collapse">
+            <div className="overflow-x-auto [&::-webkit-scrollbar]:h-3 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-thumb]:bg-primary/40 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary/70">
+            <table className="w-full text-left border-collapse min-w-[1200px]">
               <thead>
                 <tr className="bg-white/5 border-b border-white/5 font-spartan text-[0.625rem] uppercase tracking-[0.2em] text-outline">
                   <th className="px-3 py-4 w-10 text-center">N°</th>
@@ -302,6 +305,7 @@ export default function ClientesPage() {
                 ))}
               </tbody>
             </table>
+            </div>
           </GlassCard>
 
           {totalPages > 1 && (
@@ -330,13 +334,17 @@ export default function ClientesPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <GlassCard className="w-full max-w-md p-6 space-y-3 max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-headline font-bold text-on-surface">{modal.editing ? 'Editar Cliente' : 'Nuevo Cliente'}</h3>
-            {FORM_FIELDS.map(({ key, label }) => (
+            {FORM_FIELDS.filter(f => !['region','estado','municipio'].includes(f.key)).map(({ key, label }) => (
               <div key={key}>
                 <label className="text-[10px] font-spartan uppercase tracking-widest text-outline block mb-1">{label}</label>
                 <input value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                   className="w-full bg-surface-container-highest border border-white/10 rounded-xl px-4 py-2 text-sm text-on-surface focus:ring-2 focus:ring-primary/40 outline-none" />
               </div>
             ))}
+            <GeoSelector
+              region={form.region} estado={form.estado} municipio={form.municipio}
+              onChange={(field, value) => setForm(f => ({ ...f, [field]: value }))}
+            />
             <div className="flex gap-3 pt-2">
               <Button onClick={handleSave} disabled={saving} className="flex-1">{saving ? 'Guardando...' : 'Guardar'}</Button>
               <Button variant="secondary" onClick={() => setModal({ open: false, editing: null })} className="flex-1">Cancelar</Button>
