@@ -93,14 +93,26 @@ export class ComprasService {
     let created = 0
     let updated = 0
     const emptyCells: string[] = []
+    const errors: string[] = []
     for (const row of rows) {
       try {
-        // Track empty critical fields
         if (!row.rif) emptyCells.push(`${row.nombre}: sin RIF`)
+
+        const data: any = {}
+        for (const [k, v] of Object.entries(row)) {
+          data[k] = (v === '' || v === null || v === undefined) ? undefined : v
+        }
+        if (!data.nombre || !String(data.nombre).trim()) data.nombre = 'Sin nombre'
+
         let existing: any = null
-        if (row.idcima) existing = await this.prisma.proveedor.findFirst({ where: { idcima: row.idcima } })
-        if (!existing && row.rif) existing = await this.prisma.proveedor.findFirst({ where: { rif: row.rif } })
-        const data = { ...row }
+        if (data.idcima) existing = await this.prisma.proveedor.findFirst({ where: { idcima: data.idcima } })
+        if (!existing && data.rif) existing = await this.prisma.proveedor.findFirst({ where: { rif: data.rif } })
+        if (!existing) {
+          existing = await this.prisma.proveedor.findFirst({
+            where: { nombre: { equals: data.nombre, mode: 'insensitive' } },
+          })
+        }
+
         if (existing) {
           await this.prisma.proveedor.update({ where: { id: existing.id }, data })
           updated++
@@ -108,8 +120,12 @@ export class ComprasService {
           await this.prisma.proveedor.create({ data })
           created++
         }
-      } catch { /* skip row on error */ }
+      } catch (err: any) {
+        const msg = err?.message ?? String(err)
+        errors.push(`${row.nombre} (${row.rif ?? 'sin RIF'}): ${msg}`)
+        console.error('[bulkUpsertProveedores] Error en fila:', row, msg)
+      }
     }
-    return { ok: true, created, updated, emptyCells }
+    return { ok: true, created, updated, emptyCells, errors, skipped: errors.length }
   }
 }

@@ -62,6 +62,11 @@ export class VentasController {
     return this.ventasService.updateCliente(id, body)
   }
 
+  @Delete('clientes')
+  deleteAllClientes() {
+    return this.ventasService.deleteAllClientes()
+  }
+
   @Delete('clientes/:id')
   deleteCliente(@Param('id') id: string) {
     return this.ventasService.deleteCliente(id)

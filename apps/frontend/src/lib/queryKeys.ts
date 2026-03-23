@@ -46,6 +46,8 @@ export const QK = {
     all:       () => ['rrhh'] as const,
     empleados: () => ['rrhh', 'empleados'] as const,
     empleado:  (id: string) => ['rrhh', 'empleados', id] as const,
+    resumen:   () => ['rrhh', 'resumen'] as const,
+    nomina:    () => ['rrhh', 'nomina'] as const,
   },
 
   // Dashboard ejecutivo

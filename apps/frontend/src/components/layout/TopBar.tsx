@@ -28,6 +28,52 @@ const typeColor: Record<string, string> = {
   error: 'text-error',
 }
 
+const moduleRoutes: Record<string, string> = {
+  // Ventas
+  'ventas':                    '/dashboard/ventas/clientes',
+  'Ventas':                    '/dashboard/ventas/clientes',
+  'VENTAS':                    '/dashboard/ventas/clientes',
+  // Compras
+  'compras':                   '/dashboard/compras/proveedores',
+  'Compras':                   '/dashboard/compras/proveedores',
+  'COMPRAS':                   '/dashboard/compras/proveedores',
+  // Inventario
+  'inventario':                '/dashboard/inventario',
+  'Inventario':                '/dashboard/inventario',
+  'INVENTARIO':                '/dashboard/inventario',
+  // RRHH
+  'rrhh':                      '/dashboard/rrhh/empleados',
+  'RRHH':                      '/dashboard/rrhh/empleados',
+  // Configuración
+  'configuracion':             '/dashboard/configuracion',
+  'Configuracion':             '/dashboard/configuracion',
+  'CONFIGURACION':             '/dashboard/configuracion',
+  'configuracion/localizacion':'/dashboard/configuracion',
+  'CONFIGURACION/LOCALIZACION':'/dashboard/configuracion',
+  // Super Admin
+  'super-admin':               '/dashboard/configuracion/super-admin',
+  'SUPER-ADMIN':               '/dashboard/configuracion/super-admin',
+  'superadmin':                '/dashboard/configuracion/super-admin',
+  // Suscripción
+  'suscripcion':               '/dashboard/configuracion/super-admin',
+  'SUSCRIPCION':               '/dashboard/configuracion/super-admin',
+  // Dashboard
+  'dashboard':                 '/dashboard',
+  'Dashboard':                 '/dashboard',
+}
+
+function resolveRoute(module?: string): string | null {
+  if (!module) return null
+  // exact match first
+  if (moduleRoutes[module]) return moduleRoutes[module]
+  // case-insensitive fallback
+  const lower = module.toLowerCase()
+  const key = Object.keys(moduleRoutes).find(k => k.toLowerCase() === lower)
+  if (key) return moduleRoutes[key]
+  // generic: /dashboard/<module>
+  return `/dashboard/${lower}`
+}
+
 function timeAgo(iso: string) {
   const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
   if (diff < 60) return 'ahora'
@@ -66,7 +112,9 @@ export function TopBar({ title }: TopBarProps) {
 
   const handleNotificationClick = (n: Notification) => {
     markRead(n.id)
-    if (n.module) router.push(`/dashboard/${n.module}`)
+    setOpen(false)
+    const route = resolveRoute(n.module)
+    if (route) router.push(route)
   }
 
   return (
@@ -160,7 +208,8 @@ export function TopBar({ title }: TopBarProps) {
                       onClick={() => handleNotificationClick(n)}
                       className={cn(
                         'flex gap-3 px-5 py-4 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all group',
-                        !n.read && 'bg-primary/5'
+                        !n.read && 'bg-primary/5',
+                        resolveRoute(n.module) && 'hover:bg-primary/10'
                       )}
                     >
                       <span
@@ -172,7 +221,12 @@ export function TopBar({ title }: TopBarProps) {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <p className={cn('text-xs font-semibold text-on-surface', !n.read && 'text-primary')}>{n.title}</p>
-                          <span className="text-[10px] text-outline shrink-0">{timeAgo(n.createdAt)}</span>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <span className="text-[10px] text-outline">{timeAgo(n.createdAt)}</span>
+                            {resolveRoute(n.module) && (
+                              <span className="material-symbols-outlined text-[14px] text-outline opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                            )}
+                          </div>
                         </div>
                         <p className="text-[11px] text-on-surface-variant mt-0.5 line-clamp-2">{n.message}</p>
                         {n.module && (
