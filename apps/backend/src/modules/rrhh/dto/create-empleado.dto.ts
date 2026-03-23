@@ -1,5 +1,5 @@
-import { IsString, IsEmail, IsNumber, IsDateString, Min } from 'class-validator'
-import { ApiProperty } from '@nestjs/swagger'
+import { IsString, IsEmail, IsNumber, IsDateString, IsOptional, Min } from 'class-validator'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
 export class CreateEmpleadoDto {
   @ApiProperty()
@@ -34,4 +34,29 @@ export class CreateEmpleadoDto {
   @ApiProperty()
   @IsDateString()
   fechaIngreso: string
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  estadoGeo?: string
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  municipio?: string
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  direccion?: string
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  telefono?: string
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  estado?: string
 }
