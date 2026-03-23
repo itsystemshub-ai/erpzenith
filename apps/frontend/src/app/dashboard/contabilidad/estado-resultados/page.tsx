@@ -180,11 +180,3 @@ function Subtotal({ label, value, color, bg, large }: { label: string; value: st
     </div>
   )
 }
-
-function pct(curr: number, prev: number) {
-  return (((curr - prev) / prev) * 100).toFixed(1)
-}
-
-function fmt(n: number) {
-  return `$${n.toLocaleString('en-US')}`
-}

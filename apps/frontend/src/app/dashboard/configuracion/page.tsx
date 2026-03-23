@@ -33,7 +33,7 @@ export default function ConfiguracionPage() {
   const saveConfig = useErpMutation({
     endpoint: '/configuracion',
     method: 'post',
-    invalidateKeys: [QK.configuracion.all()],
+    invalidateKeys: [[...QK.configuracion.all()]],
     successMessage: 'Configuración guardada',
   })
 

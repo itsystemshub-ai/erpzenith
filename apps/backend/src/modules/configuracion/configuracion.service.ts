@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
+import * as fs from 'fs'
+import * as path from 'path'
 
 @Injectable()
 export class ConfiguracionService {
@@ -119,13 +121,14 @@ export class ConfiguracionService {
       { name: 'roles',                  model: 'role' },
       { name: 'permissions',            model: 'permission' },
       { name: 'productos',              model: 'producto' },
+      { name: 'clientes',               model: 'cliente' },
+      { name: 'vendedores',             model: 'vendedor' },
       { name: 'stocks',                 model: 'stock' },
       { name: 'almacenes',              model: 'almacen' },
       { name: 'movimientos_stock',      model: 'movimientoStock' },
       { name: 'proveedores',            model: 'proveedor' },
       { name: 'ordenes_compra',         model: 'ordenCompra' },
       { name: 'items_orden_compra',     model: 'itemOrdenCompra' },
-      { name: 'clientes',               model: 'cliente' },
       { name: 'facturas',               model: 'factura' },
       { name: 'items_factura',          model: 'itemFactura' },
       { name: 'empleados',              model: 'empleado' },
@@ -182,12 +185,13 @@ export class ConfiguracionService {
     permissions: 'permission',
     productos: 'producto',
     stocks: 'stock',
+    clientes: 'cliente',
+    vendedores: 'vendedor',
     almacenes: 'almacen',
     movimientos_stock: 'movimientoStock',
     proveedores: 'proveedor',
     ordenes_compra: 'ordenCompra',
     items_orden_compra: 'itemOrdenCompra',
-    clientes: 'cliente',
     facturas: 'factura',
     items_factura: 'itemFactura',
     empleados: 'empleado',
@@ -215,7 +219,30 @@ export class ConfiguracionService {
     return (this.prisma as any)[model].delete({ where: { id } })
   }
 
-  async getTableData(tableName: string, limit = 50) {
+  // ── Leer CSV de CIMA2026 ─────────────────────────────────────────────────
+  private readCimaCsv(filename: string, limit = 200): Record<string, unknown>[] {
+    // Busca el CSV relativo a la raíz del proyecto (4 niveles arriba de dist/src/modules/configuracion)
+    const csvPath = path.resolve(__dirname, '../../../../..', 'CIMA2026', 'output', 'csv', filename)
+    if (!fs.existsSync(csvPath)) return []
+    const lines = fs.readFileSync(csvPath, 'utf-8').split('\n').filter(l => l.trim())
+    if (lines.length < 2) return []
+    // Parsear cabecera — quitar comillas
+    const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim())
+    const rows: Record<string, unknown>[] = []
+    for (let i = 1; i < Math.min(lines.length, limit + 1); i++) {
+      // Split respetando comas dentro de comillas
+      const vals = lines[i].match(/(".*?"|[^,]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g) ?? []
+      const obj: Record<string, unknown> = {}
+      headers.forEach((h, idx) => {
+        const raw = (vals[idx] ?? '').replace(/^"|"$/g, '').trim()
+        obj[h] = raw === '' ? null : raw
+      })
+      rows.push(obj)
+    }
+    return rows
+  }
+
+  async getTableData(tableName: string, limit = 200) {
     this.allowedTable(tableName) // valida whitelist
 
     // Para users, devolver datos enriquecidos con roles, empresa y departamento
@@ -257,6 +284,20 @@ export class ConfiguracionService {
           createdAt: u.createdAt,
           updatedAt: u.updatedAt,
         }
+      })
+    }
+
+    // Clientes y vendedores: renombrar id → idcima mostrando solo el número
+    if (tableName === 'clientes' || tableName === 'vendedores') {
+      const rows = await (this.prisma as any)[this.TABLE_MODEL_MAP[tableName]].findMany({
+        take: limit,
+        orderBy: { createdAt: 'asc' },
+      })
+      return rows.map((r: any) => {
+        const { id, ...rest } = r
+        // id puede ser "cima_00006506" → extraer solo el número, o dejarlo tal cual
+        const numeric = id?.toString().replace(/^cima_0*/, '') ?? id
+        return { idcima: numeric, ...rest }
       })
     }
 

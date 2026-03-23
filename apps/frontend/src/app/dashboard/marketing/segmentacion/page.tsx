@@ -85,8 +85,8 @@ export default function SegmentacionPage() {
         {/* Cards de segmentos */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {segmentos.map((s) => (
-            <GlassCard key={s.nombre} className={`p-6 border ${s.border} cursor-pointer hover:scale-[1.02] transition-transform`}
-              onClick={() => setFiltroSegmento(s.nombre === filtroSegmento ? 'Todos' : s.nombre)}
+            <div key={s.nombre} onClick={() => setFiltroSegmento(s.nombre === filtroSegmento ? 'Todos' : s.nombre)} className="cursor-pointer hover:scale-[1.02] transition-transform">
+            <GlassCard className={`p-6 border ${s.border}`}
             >
               <div className="flex items-center justify-between mb-4">
                 <div className={`p-3 rounded-xl ${s.bg}`}>
@@ -105,6 +105,7 @@ export default function SegmentacionPage() {
                   style={{ width: `${s.porcentaje}%` }} />
               </div>
             </GlassCard>
+            </div>
           ))}
         </div>
 

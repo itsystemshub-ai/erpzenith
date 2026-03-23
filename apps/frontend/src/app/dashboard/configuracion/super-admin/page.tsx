@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import { useRouter } from 'next/navigation'
 import { TopBar } from '@/components/layout/TopBar'
 import { useNotificationStore } from '@/stores/notificationStore'
-import { useAuthStore } from '@/stores/authStore'
 import { api } from '@/lib/api'
 
 interface Empresa {
@@ -42,8 +42,7 @@ const EMPTY_FORM = {
 
 export default function SuperAdminPage() {
   const { add: notify } = useNotificationStore()
-  const accessToken = useAuthStore(s => s.accessToken)
-  const headers = { Authorization: `Bearer ${accessToken}` }
+  const router = useRouter()
 
   const [tab, setTab]           = useState<'tenants' | 'metricas' | 'sistema'>('tenants')
   const [search, setSearch]     = useState('')
@@ -66,9 +65,9 @@ export default function SuperAdminPage() {
     try {
       setLoading(true)
       const [dataEmpresas, dataMetricas, dataSistema] = await Promise.all([
-        api.get('/empresas', { headers }).then(r => r.data),
-        api.get('/empresas/metricas', { headers }).then(r => r.data),
-        api.get('/empresas/sistema', { headers }).then(r => r.data),
+        api.get('/empresas').then(r => r.data),
+        api.get('/empresas/metricas').then(r => r.data),
+        api.get('/empresas/sistema').then(r => r.data),
       ])
       setEmpresas(dataEmpresas)
       setMetricas(dataMetricas)
@@ -93,7 +92,7 @@ export default function SuperAdminPage() {
       await api.post('/empresas', {
         ...form,
         mrr: form.status === 'activo' ? PLAN_MRR[form.plan] : 0,
-      }, { headers })
+      })
       notify({ type: 'success', title: 'Tenant creado', message: `${form.nombre} fue registrado.`, module: 'super-admin' })
       setForm({ ...EMPTY_FORM })
       setModal(false)
@@ -106,7 +105,7 @@ export default function SuperAdminPage() {
   const confirmDelete = async () => {
     if (!deleteTarget) return
     try {
-      await api.delete(`/empresas/${deleteTarget.id}`, { headers })
+      await api.delete(`/empresas/${deleteTarget.id}`)
       notify({ type: 'info', title: 'Tenant eliminado', message: `${deleteTarget.nombre} fue eliminado.`, module: 'super-admin' })
       setDeleteTarget(null)
       await load()
@@ -118,7 +117,7 @@ export default function SuperAdminPage() {
   const toggleStatus = async (e: Empresa) => {
     const next = e.status === 'activo' ? 'suspendido' : 'activo'
     try {
-      await api.patch(`/empresas/${e.id}`, { status: next, mrr: next === 'activo' ? PLAN_MRR[e.plan] : 0 }, { headers })
+      await api.patch(`/empresas/${e.id}`, { status: next, mrr: next === 'activo' ? PLAN_MRR[e.plan] : 0 })
       await load()
     } catch { /* silencioso */ }
   }
@@ -133,7 +132,7 @@ export default function SuperAdminPage() {
     if (!editTarget) return
     setEditSaving(true)
     try {
-      await api.patch(`/empresas/${editTarget.id}`, { ...editForm, mrr: editForm.status === 'activo' ? PLAN_MRR[editForm.plan] : 0 }, { headers })
+      await api.patch(`/empresas/${editTarget.id}`, { ...editForm, mrr: editForm.status === 'activo' ? PLAN_MRR[editForm.plan] : 0 })
       notify({ type: 'success', title: 'Tenant actualizado', message: `${editForm.nombre} fue actualizado.`, module: 'super-admin' })
       setEditTarget(null)
       await load()
@@ -168,8 +167,9 @@ export default function SuperAdminPage() {
 
   return (
     <>
-    <div className="w-full p-6 space-y-6">
+    <div className="flex flex-col min-h-screen">
       <TopBar title="Configuración" />
+      <div className="flex-1 p-6 space-y-6 max-w-[1800px] mx-auto w-full">
 
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
@@ -266,7 +266,16 @@ export default function SuperAdminPage() {
                             <span className={`text-xs px-2 py-1 rounded-full font-bold ${planBadge[e.plan] ?? 'bg-white/10 text-on-surface-variant'}`}>{e.plan}</span>
                           </td>
                           <td className="px-4 py-3 text-on-surface-variant text-center">{e.users}</td>
-                          <td className="px-4 py-3 font-bold text-on-surface font-mono">${e.mrr}</td>
+                          <td className="px-4 py-3 font-bold text-on-surface font-mono">
+                            <button
+                              onClick={() => router.push(`/dashboard/configuracion/suscripcion?empresaId=${e.id}`)}
+                              className="flex items-center gap-1.5 text-tertiary hover:text-tertiary/80 hover:underline transition-colors group"
+                              title="Ver suscripción"
+                            >
+                              <span className="font-mono font-bold">${e.mrr}</span>
+                              <span className="material-symbols-outlined text-[13px] opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+                            </button>
+                          </td>
                           <td className="px-4 py-3 text-on-surface-variant text-xs whitespace-nowrap">{e.createdAt?.slice(0, 10)}</td>
                           <td className="px-4 py-3">
                             <span className={`text-xs px-2 py-1 rounded-full font-bold ${statusBadge[e.status] ?? 'bg-white/10 text-on-surface-variant'}`}>{e.status}</span>
@@ -361,6 +370,7 @@ export default function SuperAdminPage() {
           )}
         </div>
       )}
+    </div>
     </div>
 
     {/* Modal Nuevo Tenant */}

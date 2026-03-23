@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards } from '@nestjs/common'
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+import { Controller, Get, Post, Patch, Delete, Body, Param, Query, UseGuards } from '@nestjs/common'
+import { ApiTags, ApiBearerAuth, ApiQuery } from '@nestjs/swagger'
 import { ComprasService } from './compras.service'
 import { CreateOrdenCompraDto } from './dto/create-orden-compra.dto'
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard'
@@ -34,5 +34,33 @@ export class ComprasController {
   @Patch('ordenes/:id/rechazar')
   rechazar(@Param('id') id: string) {
     return this.comprasService.rechazar(id)
+  }
+
+  // ─── Proveedores ─────────────────────────────────────────────────────────
+
+  @Get('proveedores')
+  @ApiQuery({ name: 'search', required: false })
+  findAllProveedores(@Query('search') search?: string) {
+    return this.comprasService.findAllProveedores(search)
+  }
+
+  @Post('proveedores/bulk')
+  bulkUpsertProveedores(@Body() body: { rows: any[] }) {
+    return this.comprasService.bulkUpsertProveedores(body.rows)
+  }
+
+  @Post('proveedores')
+  createProveedor(@Body() body: any) {
+    return this.comprasService.createProveedor(body)
+  }
+
+  @Patch('proveedores/:id')
+  updateProveedor(@Param('id') id: string, @Body() body: any) {
+    return this.comprasService.updateProveedor(id, body)
+  }
+
+  @Delete('proveedores/:id')
+  deleteProveedor(@Param('id') id: string) {
+    return this.comprasService.deleteProveedor(id)
   }
 }
