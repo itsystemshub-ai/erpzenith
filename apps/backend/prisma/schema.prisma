@@ -123,14 +123,21 @@ model MovimientoStock {
 // ─── Compras ─────────────────────────────────────────────────────────────────
 
 model Proveedor {
-  id        String         @id @default(cuid())
-  rif       String         @unique
-  nombre    String
-  email     String?
-  telefono  String?
-  isActive  Boolean        @default(true)
-  ordenes   OrdenCompra[]
-  createdAt DateTime       @default(now())
+  id               String         @id @default(cuid())
+  idcima           String?        @map("idcima")
+  rif              String?        @unique
+  nombre           String
+  region           String?
+  estado           String?
+  municipio        String?
+  personaContacto  String?        @map("persona_contacto")
+  direccion        String?
+  telefonoPersonal String?        @map("telefono_personal")
+  telefonoFijo     String?        @map("telefono_fijo")
+  email            String?
+  isActive         Boolean        @default(true)
+  ordenes          OrdenCompra[]
+  createdAt        DateTime       @default(now())
 
   @@map("proveedores")
 }
@@ -166,15 +173,43 @@ model ItemOrdenCompra {
 
 // ─── Ventas ──────────────────────────────────────────────────────────────────
 
+model Vendedor {
+  id               String   @id @default(cuid())
+  idcima           String?  @map("idcima")
+  rif              String?
+  nombre           String
+  region           String?
+  estado           String?
+  municipio        String?
+  personaContacto  String?  @map("persona_contacto")
+  direccion        String?
+  telefonoPersonal String?  @map("telefono_personal")
+  telefonoFijo     String?  @map("telefono_fijo")
+  email            String?
+  ciudad           String?
+  notas            String?
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+
+  @@map("vendedores")
+}
+
 model Cliente {
-  id        String    @id @default(cuid())
-  rif       String    @unique
-  nombre    String
-  email     String?
-  telefono  String?
-  isActive  Boolean   @default(true)
-  facturas  Factura[]
-  createdAt DateTime  @default(now())
+  id               String    @id @default(cuid())
+  idcima           String?   @map("idcima")
+  rif              String?
+  nombre           String
+  region           String?
+  estado           String?
+  municipio        String?
+  personaContacto  String?   @map("persona_contacto")
+  direccion        String?
+  telefonoPersonal String?   @map("telefono_personal")
+  telefonoFijo     String?   @map("telefono_fijo")
+  email            String?
+  isActive         Boolean   @default(true)
+  facturas         Factura[]
+  createdAt        DateTime  @default(now())
 
   @@map("clientes")
 }

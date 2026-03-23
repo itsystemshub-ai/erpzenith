@@ -89,6 +89,8 @@ const TABLE_SCHEMAS: Record<string, { column: string; type: string; nullable: bo
     { column: 'id', type: 'VARCHAR(25)', nullable: false, pk: true, default: 'cuid()' },
     { column: 'rif', type: 'VARCHAR(255)', nullable: false, pk: false },
     { column: 'nombre', type: 'VARCHAR(255)', nullable: false, pk: false },
+    { column: 'region', type: 'TEXT', nullable: true, pk: false },
+    { column: 'municipio', type: 'TEXT', nullable: true, pk: false },
     { column: 'email', type: 'VARCHAR(255)', nullable: true, pk: false },
     { column: 'telefono', type: 'VARCHAR(50)', nullable: true, pk: false },
     { column: 'isActive', type: 'BOOLEAN', nullable: false, pk: false, default: 'true' },
@@ -107,13 +109,31 @@ const TABLE_SCHEMAS: Record<string, { column: string; type: string; nullable: bo
     { column: 'updatedAt', type: 'TIMESTAMP', nullable: false, pk: false },
   ],
   clientes: [
-    { column: 'id', type: 'VARCHAR(25)', nullable: false, pk: true, default: 'cuid()' },
-    { column: 'rif', type: 'VARCHAR(255)', nullable: false, pk: false },
-    { column: 'nombre', type: 'VARCHAR(255)', nullable: false, pk: false },
-    { column: 'email', type: 'VARCHAR(255)', nullable: true, pk: false },
-    { column: 'telefono', type: 'VARCHAR(50)', nullable: true, pk: false },
-    { column: 'isActive', type: 'BOOLEAN', nullable: false, pk: false, default: 'true' },
-    { column: 'createdAt', type: 'TIMESTAMP', nullable: false, pk: false, default: 'now()' },
+    { column: 'idcima',           type: 'VARCHAR(25)',  nullable: false, pk: true  },
+    { column: 'rif',              type: 'VARCHAR(255)', nullable: true,  pk: false },
+    { column: 'nombre',           type: 'VARCHAR(255)', nullable: false, pk: false },
+    { column: 'region',           type: 'TEXT',         nullable: true,  pk: false },
+    { column: 'municipio',        type: 'TEXT',         nullable: true,  pk: false },
+    { column: 'direccion',        type: 'TEXT',         nullable: true,  pk: false },
+    { column: 'telefono_personal',type: 'VARCHAR(50)',  nullable: true,  pk: false },
+    { column: 'telefono_fijo',    type: 'VARCHAR(50)',  nullable: true,  pk: false },
+    { column: 'email',            type: 'VARCHAR(255)', nullable: true,  pk: false },
+    { column: 'isActive',         type: 'BOOLEAN',      nullable: false, pk: false, default: 'true' },
+    { column: 'createdAt',        type: 'TIMESTAMP',    nullable: false, pk: false, default: 'now()' },
+  ],
+  vendedores: [
+    { column: 'idcima',    type: 'VARCHAR(25)',  nullable: false, pk: true  },
+    { column: 'rif',       type: 'VARCHAR(50)',  nullable: true,  pk: false },
+    { column: 'nombre',    type: 'VARCHAR(255)', nullable: false, pk: false },
+    { column: 'region',    type: 'TEXT',         nullable: true,  pk: false },
+    { column: 'municipio', type: 'TEXT',         nullable: true,  pk: false },
+    { column: 'telefono',  type: 'VARCHAR(50)',  nullable: true,  pk: false },
+    { column: 'ciudad',    type: 'VARCHAR(255)', nullable: true,  pk: false },
+    { column: 'contacto',  type: 'VARCHAR(255)', nullable: true,  pk: false },
+    { column: 'direccion', type: 'TEXT',         nullable: true,  pk: false },
+    { column: 'notas',     type: 'TEXT',         nullable: true,  pk: false },
+    { column: 'isActive',  type: 'BOOLEAN',      nullable: false, pk: false, default: 'true' },
+    { column: 'createdAt', type: 'TIMESTAMP',    nullable: false, pk: false, default: 'now()' },
   ],
   facturas: [
     { column: 'id', type: 'VARCHAR(25)', nullable: false, pk: true, default: 'cuid()' },
@@ -243,8 +263,9 @@ export default function BaseDatosPage() {
   }
 
   useEffect(() => {
-    if (!accessToken) return
-    api.get('/configuracion/db-info', { headers: { Authorization: `Bearer ${accessToken}` } })
+    const token = accessToken || localStorage.getItem('accessToken')
+    if (!token) return
+    api.get('/configuracion/db-info', { headers: { Authorization: `Bearer ${token}` } })
       .then(({ data }) => setDbInfo(data))
       .catch(() => {})
       .finally(() => setLoading(false))
@@ -276,12 +297,14 @@ export default function BaseDatosPage() {
 
   const schema = TABLE_SCHEMAS[selectedTable] ?? []
   const selectedRows = dbInfo?.tables.find((t) => t.table === selectedTable)?.rows ?? 0
+  const isCimaTable = false
 
   const USER_COL_ORDER = ['empresaId','id','name','username','password','roles','departamento','isActive','mfaEnabled','mfaSecret','passwordChangedAt','createdAt','updatedAt']
   const rawColumns = tableData.length > 0 ? Object.keys(tableData[0]) : schema.map((s) => s.column)
-  const dataColumns = selectedTable === 'users'
+  const dataColumnsRaw = selectedTable === 'users'
     ? [...USER_COL_ORDER.filter(c => rawColumns.includes(c)), ...rawColumns.filter(c => !USER_COL_ORDER.includes(c))]
     : rawColumns
+  const dataColumns = [...new Set(dataColumnsRaw)]
 
   const tableWidthPx = dataColumns.reduce((sum, col) => sum + colWidth(col), 0)
 
@@ -396,6 +419,11 @@ export default function BaseDatosPage() {
               <span className="text-xs text-outline bg-surface-container-highest px-2 py-0.5 rounded-full">
                 {selectedRows.toLocaleString()} filas
               </span>
+              {isCimaTable && (
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-400">
+                  CIMA2026 · Solo lectura
+                </span>
+              )}
             </div>
             <div className="flex glass-panel rounded-xl p-1 gap-1">
               {(['Esquema', 'Datos', 'SQL'] as TabType[]).map((tab) => (
@@ -415,10 +443,10 @@ export default function BaseDatosPage() {
           {/* Tab: Esquema */}
           {activeTab === 'Esquema' && (
             <table className="w-full text-left text-sm">
-              <thead className="bg-white/5">
+              <thead className="bg-surface-container sticky top-0 z-10">
                 <tr>
                   {['COLUMNA', 'TIPO', 'NULLABLE', 'PK', 'DEFAULT'].map((h) => (
-                    <th key={h} className="px-6 py-4 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold">{h}</th>
+                    <th key={h} className="px-6 py-4 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold border-b border-white/10">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -450,33 +478,38 @@ export default function BaseDatosPage() {
                   <span className="material-symbols-outlined animate-spin">progress_activity</span>
                   Cargando datos...
                 </div>
-              ) : tableData.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-40 text-outline gap-2">
-                  <span className="material-symbols-outlined text-3xl">inbox</span>
-                  <span className="text-sm">Sin registros</span>
-                </div>
               ) : (
                 <>
                   {/* Contenedor con scroll horizontal SOLO aquí */}
                   <div className="overflow-x-auto">
                     <table style={{ tableLayout: 'fixed', width: tableWidthPx + 90, borderCollapse: 'collapse' }} className="text-xs text-left">
-                      <thead className="bg-white/5">
+                      <thead className="bg-surface-container sticky top-0 z-10">
                         <tr>
                           {dataColumns.map((col) => (
                             <th
                               key={col}
                               style={{ width: colWidth(col), minWidth: colWidth(col) }}
-                              className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold border-r border-white/5"
+                              className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold border-r border-white/5 border-b border-b-white/10"
                             >
                               {col}
                             </th>
                           ))}
-                          <th style={{ width: 90, minWidth: 90 }} className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold text-center">
+                          <th style={{ width: 90, minWidth: 90 }} className="px-3 py-3 text-[10px] font-spartan uppercase tracking-widest text-outline font-bold text-center border-b border-b-white/10">
                             ACCIONES
                           </th>
                         </tr>
                       </thead>
                       <tbody>
+                        {tableData.length === 0 ? (
+                          <tr>
+                            <td colSpan={dataColumns.length + 1} className="px-6 py-10 text-center text-outline">
+                              <div className="flex flex-col items-center gap-2">
+                                <span className="material-symbols-outlined text-3xl">inbox</span>
+                                <span className="text-sm">Sin registros</span>
+                              </div>
+                            </td>
+                          </tr>
+                        ) : null}
                         {tableData.map((row, i) => (
                           <tr key={i} className="border-t border-white/5 hover:bg-white/5 transition-colors">
                             {dataColumns.map((col) => {

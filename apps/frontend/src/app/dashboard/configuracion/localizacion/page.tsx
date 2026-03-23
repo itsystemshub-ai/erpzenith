@@ -58,7 +58,7 @@ export default function LocalizacionPage() {
   const saveBCV = useErpMutation<TasaBCV, { tasa: number }>({
     endpoint: '/configuracion/bcv/tasa',
     method: 'post',
-    invalidateKeys: [QK.configuracion.bcvTasa()],
+    invalidateKeys: [[...QK.configuracion.bcvTasa()]],
   })
 
   const handleSave = async () => {

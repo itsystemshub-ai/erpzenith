@@ -11,7 +11,7 @@ interface Role { id: string; name: string }
 interface Empresa { id: string; nombre: string; color: string; logo?: string }
 interface Usuario {
   id: string; name: string; username: string; isActive: boolean; createdAt: string
-  roles: Role[]; empresa?: Empresa; _showPass?: boolean
+  roles: Role[]; empresa?: Empresa; empresaId?: string; _showPass?: boolean
 }
 
 // Misma función determinista del seed para mostrar contraseña por username
@@ -299,7 +299,7 @@ export default function UsuariosPage() {
               <table className="w-full text-sm" style={{ minWidth: '800px' }}>
                 <thead>
                   <tr className="border-b border-white/10">
-                    {['Avatar', 'Nombre', 'Usuario', 'Contraseña', 'Rol', 'Empresa', 'Estado', 'Registrado', 'Acc.'].map(h => (
+                    {['Avatar', 'Nombre', 'Usuario', 'Contraseña', 'Rol', 'Empresa ID', 'Estado', 'Registrado', 'Acc.'].map(h => (
                       <th key={h} className={`text-left px-4 py-4 text-xs text-outline font-bold uppercase tracking-wide whitespace-nowrap ${h === 'Acc.' ? 'text-right' : ''}`}>{h}</th>
                     ))}
                   </tr>
@@ -329,7 +329,7 @@ export default function UsuariosPage() {
                 <table className="w-full text-sm" style={{ minWidth: '800px' }}>
                   <thead>
                     <tr className="border-b border-white/10">
-                      {['Avatar', 'Nombre', 'Usuario', 'Contraseña', 'Rol', 'Departamento', 'Empresa', 'Estado', 'Registrado', 'Acc.'].map(h => (
+                      {['Avatar', 'Nombre', 'Usuario', 'Contraseña', 'Rol', 'Departamento', 'Empresa ID', 'Estado', 'Registrado', 'Acc.'].map(h => (
                         <th key={h} className={`text-left px-4 py-4 text-xs text-outline font-bold uppercase tracking-wide whitespace-nowrap ${h === 'Acc.' ? 'text-right' : ''}`}>{h}</th>
                       ))}
                     </tr>
@@ -387,11 +387,8 @@ export default function UsuariosPage() {
                           })()}
                         </td>
                         <td className="px-4 py-3 text-xs text-on-surface-variant max-w-[140px]">
-                          {u.empresa
-                            ? <div className="flex items-center gap-2">
-                                <div className="w-4 h-4 rounded shrink-0" style={{ backgroundColor: u.empresa.color }} />
-                                <span className="truncate">{u.empresa.nombre}</span>
-                              </div>
+                          {u.empresaId
+                            ? <span className="font-mono text-primary/70 text-[10px] block truncate">{u.empresaId}</span>
                             : <span className="text-outline">—</span>
                           }
                         </td>

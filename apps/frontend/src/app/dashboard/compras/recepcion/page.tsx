@@ -86,10 +86,9 @@ export default function RecepcionPage() {
             </h4>
             <div className="space-y-3">
               {OC_PENDIENTES.map((oc) => (
+                <div key={oc.id} onClick={() => handleSeleccionar(oc)} className="cursor-pointer">
                 <GlassCard
-                  key={oc.id}
-                  className={`p-5 cursor-pointer transition-all hover:border-primary/30 ${ocSeleccionada?.id === oc.id ? 'border-primary/40 bg-primary/5' : ''}`}
-                  onClick={() => handleSeleccionar(oc)}
+                  className={`p-5 transition-all hover:border-primary/30 ${ocSeleccionada?.id === oc.id ? 'border-primary/40 bg-primary/5' : ''}`}
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -110,6 +109,7 @@ export default function RecepcionPage() {
                     )}
                   </div>
                 </GlassCard>
+                </div>
               ))}
             </div>
           </div>

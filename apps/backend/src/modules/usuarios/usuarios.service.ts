@@ -10,7 +10,7 @@ export class UsuariosService {
     return this.prisma.user.findMany({
       select: {
         id: true, name: true, username: true, isActive: true,
-        createdAt: true, updatedAt: true,
+        createdAt: true, updatedAt: true, empresaId: true,
         roles: { select: { id: true, name: true } },
         empresa: { select: { id: true, nombre: true, color: true, logo: true } },
       },
@@ -31,7 +31,7 @@ export class UsuariosService {
         ...(data.empresaId ? { empresaId: data.empresaId } : {}),
       },
       select: {
-        id: true, name: true, username: true, isActive: true, createdAt: true,
+        id: true, name: true, username: true, isActive: true, createdAt: true, empresaId: true,
         roles: { select: { id: true, name: true } },
         empresa: { select: { id: true, nombre: true, color: true } },
       },
@@ -59,7 +59,7 @@ export class UsuariosService {
       where: { id },
       data: updateData,
       select: {
-        id: true, name: true, username: true, isActive: true, createdAt: true,
+        id: true, name: true, username: true, isActive: true, createdAt: true, empresaId: true,
         roles: { select: { id: true, name: true } },
         empresa: { select: { id: true, nombre: true, color: true } },
       },
