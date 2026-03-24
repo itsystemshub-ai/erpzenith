@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 import { useAuthStore } from '@/stores/authStore'
 import { api } from '@/lib/api'
@@ -53,9 +53,14 @@ const TABLE_SCHEMAS: Record<string, { column: string; type: string; nullable: bo
     { column: 'id',          type: 'VARCHAR(25)',   nullable: false, pk: true,  default: 'cuid()' },
     { column: 'sku',         type: 'VARCHAR(255)',  nullable: false, pk: false, unique: true },
     { column: 'nombre',      type: 'VARCHAR(255)',  nullable: false, pk: false },
+    { column: 'tipo',        type: 'VARCHAR(255)',  nullable: true,  pk: false },
+    { column: 'fabricante',  type: 'VARCHAR(255)',  nullable: true,  pk: false },
+    { column: 'marca',       type: 'VARCHAR(255)',  nullable: true,  pk: false },
+    { column: 'material',    type: 'VARCHAR(255)',  nullable: true,  pk: false },
+    { column: 'espesor',     type: 'VARCHAR(100)',  nullable: true,  pk: false },
     { column: 'descripcion', type: 'TEXT',          nullable: true,  pk: false },
-    { column: 'categoria',   type: 'VARCHAR(255)',  nullable: false, pk: false },
     { column: 'unidad',      type: 'VARCHAR(50)',   nullable: false, pk: false, default: 'UND' },
+    { column: 'medidas',     type: 'VARCHAR(255)',  nullable: true,  pk: false },
     { column: 'precioUSD',   type: 'DECIMAL(12,2)', nullable: false, pk: false },
     { column: 'stockMin',    type: 'INTEGER',       nullable: false, pk: false, default: '0' },
     { column: 'isActive',    type: 'BOOLEAN',       nullable: false, pk: false, default: 'true' },
@@ -298,6 +303,10 @@ export default function BaseDatosPage() {
   const [saving, setSaving] = useState(false)
   // Contraseñas visibles: Set de "rowIndex-colName"
   const [visiblePasswords, setVisiblePasswords] = useState<Set<string>>(new Set())
+  // Paginación
+  const PAGE_SIZE = 15
+  const [schemaPage, setSchemaPage] = useState(1)
+  const [dataPage,   setDataPage]   = useState(1)
 
   const togglePassword = (key: string) => {
     setVisiblePasswords(prev => {
@@ -333,11 +342,15 @@ export default function BaseDatosPage() {
     setActiveTab('Esquema')
     setSqlQuery(`SELECT * FROM ${table} LIMIT 10;`)
     setTableData([])
+    setSchemaPage(1)
+    setDataPage(1)
   }
 
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab)
     if (tab === 'Datos' && tableData.length === 0) loadTableData(selectedTable)
+    if (tab === 'Esquema') setSchemaPage(1)
+    if (tab === 'Datos') setDataPage(1)
   }
 
   const schema = TABLE_SCHEMAS[selectedTable] ?? []
@@ -352,6 +365,22 @@ export default function BaseDatosPage() {
   const dataColumns = [...new Set(dataColumnsRaw)]
 
   const tableWidthPx = dataColumns.reduce((sum, col) => sum + colWidth(col), 0)
+
+  // Paginación — Esquema
+  const schemaTotalPages = Math.max(1, Math.ceil(schema.length / PAGE_SIZE))
+  const schemaSafePage   = Math.min(schemaPage, schemaTotalPages)
+  const schemaPagedRows  = useMemo(
+    () => schema.slice((schemaSafePage - 1) * PAGE_SIZE, schemaSafePage * PAGE_SIZE),
+    [schema, schemaSafePage, PAGE_SIZE]
+  )
+
+  // Paginación — Datos
+  const dataTotalPages = Math.max(1, Math.ceil(tableData.length / PAGE_SIZE))
+  const dataSafePage   = Math.min(dataPage, dataTotalPages)
+  const dataPagedRows  = useMemo(
+    () => tableData.slice((dataSafePage - 1) * PAGE_SIZE, dataSafePage * PAGE_SIZE),
+    [tableData, dataSafePage, PAGE_SIZE]
+  )
 
   const handleSaveEdit = async () => {
     if (!editRow) return
@@ -487,6 +516,7 @@ export default function BaseDatosPage() {
 
           {/* Tab: Esquema */}
           {activeTab === 'Esquema' && (
+            <>
             <table className="w-full text-left text-sm">
               <thead className="bg-surface-container sticky top-0 z-10">
                 <tr>
@@ -496,7 +526,7 @@ export default function BaseDatosPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {schema.map((col) => (
+                {schemaPagedRows.map((col) => (
                   <tr key={col.column} className="hover:bg-white/5 transition-colors">
                     <td className="px-6 py-3 font-mono font-bold text-on-surface">{col.column}</td>
                     <td className="px-6 py-3 font-mono text-secondary text-xs">{col.type}</td>
@@ -516,6 +546,23 @@ export default function BaseDatosPage() {
                 ))}
               </tbody>
             </table>
+            {schemaTotalPages > 1 && (
+              <div className="px-4 py-2 border-t border-white/5 flex items-center justify-between">
+                <span className="text-xs text-outline">
+                  Mostrando {(schemaSafePage - 1) * PAGE_SIZE + 1}–{Math.min(schemaSafePage * PAGE_SIZE, schema.length)} de {schema.length} columnas
+                </span>
+                <div className="flex items-center gap-1">
+                  <button onClick={() => setSchemaPage(1)} disabled={schemaSafePage === 1} className="p-1 rounded hover:bg-white/10 text-outline disabled:opacity-30"><span className="material-symbols-outlined text-[16px]">first_page</span></button>
+                  <button onClick={() => setSchemaPage(p => Math.max(1, p - 1))} disabled={schemaSafePage === 1} className="p-1 rounded hover:bg-white/10 text-outline disabled:opacity-30"><span className="material-symbols-outlined text-[16px]">chevron_left</span></button>
+                  {Array.from({ length: schemaTotalPages }, (_, i) => i + 1).map(pg => (
+                    <button key={pg} onClick={() => setSchemaPage(pg)} className={`w-7 h-7 rounded text-xs font-bold transition-colors ${pg === schemaSafePage ? 'bg-primary text-on-primary' : 'hover:bg-white/10 text-outline'}`}>{pg}</button>
+                  ))}
+                  <button onClick={() => setSchemaPage(p => Math.min(schemaTotalPages, p + 1))} disabled={schemaSafePage === schemaTotalPages} className="p-1 rounded hover:bg-white/10 text-outline disabled:opacity-30"><span className="material-symbols-outlined text-[16px]">chevron_right</span></button>
+                  <button onClick={() => setSchemaPage(schemaTotalPages)} disabled={schemaSafePage === schemaTotalPages} className="p-1 rounded hover:bg-white/10 text-outline disabled:opacity-30"><span className="material-symbols-outlined text-[16px]">last_page</span></button>
+                </div>
+              </div>
+            )}
+            </>
           )}
 
           {/* Tab: Datos */}
@@ -558,15 +605,17 @@ export default function BaseDatosPage() {
                             </td>
                           </tr>
                         ) : null}
-                        {tableData.map((row, i) => (
-                          <tr key={i} className="border-t border-white/5 hover:bg-white/5 transition-colors">
+                        {dataPagedRows.map((row, i) => {
+                          const absIdx = (dataSafePage - 1) * PAGE_SIZE + i
+                          return (
+                          <tr key={absIdx} className="border-t border-white/5 hover:bg-white/5 transition-colors">
                             {dataColumns.map((col) => {
                               const val = (row as Record<string, unknown>)[col]
                               const isNull = val === null || val === undefined
                               const isBool = typeof val === 'boolean'
                               const isId = col === 'id' || col.endsWith('Id')
                               const isPassword = col === 'password' || col === 'newPassword'
-                              const pwKey = `${i}-${col}`
+                              const pwKey = `${absIdx}-${col}`
                               const pwVisible = visiblePasswords.has(pwKey)
                               return (
                                 <td
@@ -622,16 +671,39 @@ export default function BaseDatosPage() {
                               </div>
                             </td>
                           </tr>
-                        ))}
+                          )
+                        })}
                       </tbody>
                     </table>
                   </div>
                   <div className="px-4 py-2 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-xs text-outline">Mostrando {tableData.length} de {selectedRows.toLocaleString()} filas</span>
-                    <button onClick={() => loadTableData(selectedTable)} className="text-xs text-primary hover:underline flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[14px]">refresh</span>
-                      Recargar
-                    </button>
+                    <span className="text-xs text-outline">
+                      {tableData.length === 0
+                        ? 'Sin registros'
+                        : `Mostrando ${(dataSafePage - 1) * PAGE_SIZE + 1}–${Math.min(dataSafePage * PAGE_SIZE, tableData.length)} de ${tableData.length} filas`}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {dataTotalPages > 1 && (
+                        <div className="flex items-center gap-1">
+                          <button onClick={() => setDataPage(1)} disabled={dataSafePage === 1} className="p-1 rounded hover:bg-white/10 text-outline disabled:opacity-30"><span className="material-symbols-outlined text-[16px]">first_page</span></button>
+                          <button onClick={() => setDataPage(p => Math.max(1, p - 1))} disabled={dataSafePage === 1} className="p-1 rounded hover:bg-white/10 text-outline disabled:opacity-30"><span className="material-symbols-outlined text-[16px]">chevron_left</span></button>
+                          {Array.from({ length: Math.min(7, dataTotalPages) }, (_, i) => {
+                            let pg: number
+                            if (dataTotalPages <= 7) pg = i + 1
+                            else if (dataSafePage <= 4) pg = i + 1
+                            else if (dataSafePage >= dataTotalPages - 3) pg = dataTotalPages - 6 + i
+                            else pg = dataSafePage - 3 + i
+                            return <button key={pg} onClick={() => setDataPage(pg)} className={`w-7 h-7 rounded text-xs font-bold transition-colors ${pg === dataSafePage ? 'bg-primary text-on-primary' : 'hover:bg-white/10 text-outline'}`}>{pg}</button>
+                          })}
+                          <button onClick={() => setDataPage(p => Math.min(dataTotalPages, p + 1))} disabled={dataSafePage === dataTotalPages} className="p-1 rounded hover:bg-white/10 text-outline disabled:opacity-30"><span className="material-symbols-outlined text-[16px]">chevron_right</span></button>
+                          <button onClick={() => setDataPage(dataTotalPages)} disabled={dataSafePage === dataTotalPages} className="p-1 rounded hover:bg-white/10 text-outline disabled:opacity-30"><span className="material-symbols-outlined text-[16px]">last_page</span></button>
+                        </div>
+                      )}
+                      <button onClick={() => loadTableData(selectedTable)} className="text-xs text-primary hover:underline flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px]">refresh</span>
+                        Recargar
+                      </button>
+                    </div>
                   </div>
                 </>
               )}

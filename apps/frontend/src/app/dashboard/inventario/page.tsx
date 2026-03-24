@@ -22,12 +22,6 @@ const MOCK_PRODUCTOS: Producto[] = [
   { id: '3', nombre: 'Titanium Flex Cable', categoria: 'Cables & Cableado', sku: 'SKU-4401-T', lote: 'T2023-991', almacen: 'Sucursal Sur', stockActual: 84, stockMinimo: 100, vencimiento: undefined, valoracion: 1450, metodo: 'PEPS', estado: 'low' },
 ]
 
-const almacenes = [
-  { nombre: 'Almacén Principal', capacidad: 84, color: 'bg-primary', borderColor: 'border-primary', textColor: 'text-primary', icon: 'warehouse' },
-  { nombre: 'Hub Norte', capacidad: 32, color: 'bg-tertiary', borderColor: 'border-tertiary', textColor: 'text-tertiary', icon: 'location_on' },
-  { nombre: 'Sucursal Sur', capacidad: 59, color: 'bg-secondary', borderColor: 'border-secondary', textColor: 'text-secondary', icon: 'store' },
-]
-
 const estadoConfig: Record<StockStatus, { label: string; variant: 'error' | 'warning' | 'success'; dot: string }> = {
   critical: { label: 'Crítico', variant: 'error', dot: 'bg-error animate-pulse' },
   low: { label: 'Bajo', variant: 'warning', dot: 'bg-amber-400' },
@@ -98,34 +92,6 @@ export default function InventarioPage() {
     <div className="flex flex-col min-h-screen">
       <TopBar title="Inventario" />
       <div className="flex-1 p-8 space-y-8">
-        <section className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <GlassCard glow className="p-8 relative overflow-hidden flex flex-col justify-center">
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-[60px]" />
-            <p className="text-[0.625rem] font-spartan uppercase tracking-[0.2em] text-primary mb-2">Valor Total Inventario</p>
-            <h3 className="text-4xl font-headline font-bold text-on-surface tracking-tighter">1,248.4k</h3>
-            <p className="text-xs text-tertiary mt-2 flex items-center gap-1">
-              <span className="material-symbols-outlined text-sm">trending_up</span>+12.4% vs mes anterior
-            </p>
-          </GlassCard>
-          <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {almacenes.map((a) => (
-              <div key={a.nombre} className={`bg-surface-container-low rounded-2xl p-6 border-l-2 ${a.borderColor}`}>
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-[0.6875rem] font-spartan uppercase tracking-widest text-outline">{a.nombre}</span>
-                  <span className={`material-symbols-outlined text-xl ${a.textColor}`}>{a.icon}</span>
-                </div>
-                <div className="flex items-end gap-2">
-                  <span className="text-2xl font-headline font-semibold text-on-surface">{a.capacidad}%</span>
-                  <span className="text-[0.625rem] text-outline mb-1">Capacidad</span>
-                </div>
-                <div className="w-full bg-surface-container-highest h-1 rounded-full mt-4">
-                  <div className={`${a.color} h-full rounded-full`} style={{ width: `${a.capacidad}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section className="space-y-4">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>

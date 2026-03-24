@@ -87,7 +87,7 @@ export function TopBar({ title }: TopBarProps) {
   const { user, logout } = useAuthStore()
   const { notifications, markRead, markAllRead, remove, unreadCount } = useNotificationStore()
   const { globalSearch, setGlobalSearch } = useUiStore()
-  const { theme, toggle: toggleTheme } = useThemeStore()
+  const { theme, toggle: toggleTheme, currency, toggleCurrency } = useThemeStore()
   const [open, setOpen] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
   const count = unreadCount()
@@ -142,6 +142,18 @@ export function TopBar({ title }: TopBarProps) {
             BCV: {tasaDisplay} VES
           </span>
         </div>
+
+        {/* Currency toggle */}
+        <button
+          onClick={toggleCurrency}
+          title={currency === 'USD' ? 'Cambiar a Bolívares (VES)' : 'Cambiar a Dólares (USD)'}
+          className="flex items-center gap-1.5 px-3 h-9 bg-surface-container-highest border border-outline-variant/20 rounded-xl text-outline hover:text-on-surface hover:border-primary/40 transition-all font-spartan text-[0.625rem] font-bold uppercase tracking-widest"
+        >
+          <span className="material-symbols-outlined text-[16px]">
+            {currency === 'USD' ? 'attach_money' : 'currency_exchange'}
+          </span>
+          {currency === 'USD' ? 'USD' : 'VES'}
+        </button>
 
         {/* Theme toggle */}
         <button

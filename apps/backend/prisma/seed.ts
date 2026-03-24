@@ -112,19 +112,18 @@ async function main() {
 
   // ─── Productos ───────────────────────────────────────────────────────────
   const productosData = [
-    { sku: 'SKU-8829-X', nombre: 'Hyperion Sensor V2',        categoria: 'Óptica & Precisión',    unidad: 'UND', precioUSD: new Prisma.Decimal(89.50),  stockMin: 20 },
-    { sku: 'SKU-1102-P', nombre: 'Zenith Control Unit',       categoria: 'Procesadores',           unidad: 'UND', precioUSD: new Prisma.Decimal(284.00), stockMin: 50 },
-    { sku: 'SKU-4401-T', nombre: 'Titanium Flex Cable 2m',    categoria: 'Cables & Cableado',      unidad: 'UND', precioUSD: new Prisma.Decimal(18.00),  stockMin: 100 },
-    { sku: 'SKU-2210-M', nombre: 'Motor Servo Industrial 5A', categoria: 'Motores & Actuadores',   unidad: 'UND', precioUSD: new Prisma.Decimal(145.00), stockMin: 30 },
-    { sku: 'SKU-3305-R', nombre: 'Relay Modular 24VDC',       categoria: 'Electrónica',            unidad: 'UND', precioUSD: new Prisma.Decimal(12.50),  stockMin: 200 },
-    { sku: 'SKU-5512-B', nombre: 'Batería LiFePO4 100Ah',     categoria: 'Energía',                unidad: 'UND', precioUSD: new Prisma.Decimal(320.00), stockMin: 15 },
-    { sku: 'SKU-6601-F', nombre: 'Filtro HEPA Industrial',    categoria: 'Filtración',             unidad: 'UND', precioUSD: new Prisma.Decimal(55.00),  stockMin: 40 },
-    { sku: 'SKU-7720-V', nombre: 'Válvula Solenoide 1/2"',    categoria: 'Hidráulica',             unidad: 'UND', precioUSD: new Prisma.Decimal(38.00),  stockMin: 60 },
+    { sku: 'SKU-8829-X', nombre: 'Hyperion Sensor V2',        tipo: 'Sensor',    unidad: 'UND', precioUSD: new Prisma.Decimal(89.50),  stockMin: 20 },
+    { sku: 'SKU-1102-P', nombre: 'Zenith Control Unit',       tipo: 'Electrónica', unidad: 'UND', precioUSD: new Prisma.Decimal(284.00), stockMin: 50 },
+    { sku: 'SKU-4401-T', nombre: 'Titanium Flex Cable 2m',    tipo: 'Cable',     unidad: 'UND', precioUSD: new Prisma.Decimal(18.00),  stockMin: 100 },
+    { sku: 'SKU-2210-M', nombre: 'Motor Servo Industrial 5A', tipo: 'Motor',     unidad: 'UND', precioUSD: new Prisma.Decimal(145.00), stockMin: 30 },
+    { sku: 'SKU-3305-R', nombre: 'Relay Modular 24VDC',       tipo: 'Electrónica', unidad: 'UND', precioUSD: new Prisma.Decimal(12.50),  stockMin: 200 },
+    { sku: 'SKU-5512-B', nombre: 'Batería LiFePO4 100Ah',     tipo: 'Energía',   unidad: 'UND', precioUSD: new Prisma.Decimal(320.00), stockMin: 15 },
+    { sku: 'SKU-6601-F', nombre: 'Filtro HEPA Industrial',    tipo: 'Filtro',    unidad: 'UND', precioUSD: new Prisma.Decimal(55.00),  stockMin: 40 },
+    { sku: 'SKU-7720-V', nombre: 'Válvula Solenoide 1/2"',    tipo: 'Hidráulica', unidad: 'UND', precioUSD: new Prisma.Decimal(38.00),  stockMin: 60 },
   ]
   const productos = []
   for (const p of productosData) {
-    const { sku, ...rest } = p
-    const prod = await prisma.producto.upsert({ where: { sku }, update: rest, create: p })
+    const prod = await prisma.producto.create({ data: p })
     productos.push(prod)
   }
   console.log('✅ Productos:', productos.length)
