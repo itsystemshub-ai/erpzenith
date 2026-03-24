@@ -49,6 +49,22 @@ npm run dev
 | Backend API | http://localhost:3001 |
 | Swagger Docs | http://localhost:3001/api/docs |
 
+---
+
+## 🌐 Deploy en Vercel
+
+Para desplegar en producción:
+
+```bash
+# 1. Instalar Vercel CLI
+npm i -g vercel
+
+# 2. Deploy
+vercel
+```
+
+📖 Ver guía completa: [DEPLOY_VERCEL.md](./DEPLOY_VERCEL.md)
+
 ## 📁 Estructura del Proyecto
 
 ```
