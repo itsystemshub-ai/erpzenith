@@ -14,5 +14,8 @@
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.15.9",
     "turbo": "^2.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.100.0"
   }
 }
