@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
-import { ThrottlerGuard, ThrottlerStorage } from '@nestjs/throttler'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
 
@@ -10,10 +9,6 @@ async function bootstrap() {
 
   // Security: Helmet para headers HTTP seguros
   app.use(helmet())
-
-  // Rate limiting: 10 requests por segundo por IP
-  const storageService = new ThrottlerStorage()
-  app.useGlobalGuards(new ThrottlerGuard([{ ttl: 1000, limit: 10 }], storageService, app.get('Reflector')))
 
   // Aumentar límite para importaciones Excel grandes
   app.use(require('express').json({ limit: '50mb' }))
@@ -39,15 +34,13 @@ async function bootstrap() {
   await app.listen(port)
   console.log(`🚀 ERP ZENITH Backend corriendo en puerto ${port}`)
   console.log(`📚 Swagger docs: http://localhost:${port}/api/docs`)
-  console.log(`🔒 Security: Helmet + Rate Limiting (10 req/s) activados`)
+  console.log(`🔒 Security: Helmet activado`)
 }
 
 // Export for Vercel serverless
 export const handler = async (req: any, res: any) => {
   const app = await NestFactory.create(AppModule, { bodyParser: true })
   app.use(helmet())
-  const storageService = new ThrottlerStorage()
-  app.useGlobalGuards(new ThrottlerGuard([{ ttl: 1000, limit: 10 }], storageService, app.get('Reflector')))
   app.use(require('express').json({ limit: '50mb' }))
   app.use(require('express').urlencoded({ limit: '50mb', extended: true }))
   app.enableCors({ origin: true, credentials: true })

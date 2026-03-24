@@ -17,7 +17,9 @@ import { HealthController } from './common/health.controller'
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    ThrottlerModule.forRoot([{ ttl: 1000, limit: 10 }]),
+    ThrottlerModule.forRoot({
+      throttlers: [{ ttl: 1000, limit: 10 }],
+    }),
     PrismaModule,
     AuthModule,
     InventarioModule,
