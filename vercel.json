@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": "apps/frontend/.next",
+  "env": {
+    "NEXT_PUBLIC_API_URL": "/api",
+    "DATABASE_URL": "@database-url",
+    "JWT_SECRET": "@jwt-secret",
+    "JWT_EXPIRES_IN": "7d",
+    "FRONTEND_URL": "@frontend-url"
+  }
+}

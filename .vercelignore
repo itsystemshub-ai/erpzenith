@@ -1,0 +1,16 @@
+# Vercel ignore file
+.git
+.gitignore
+*.md
+.env.local
+.env*.local
+node_modules
+.nx
+.turbo
+dist
+coverage
+.vscode
+.idea
+*.log
+prisma/*.db
+prisma/*.db-journal

@@ -9,10 +9,10 @@
   "scripts": {
     "dev": "turbo run setup --force && turbo run dev",
     "build": "turbo run build",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "vercel-build": "npm run build"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.15.9",
     "turbo": "^2.0.0"
   },
   "dependencies": {
