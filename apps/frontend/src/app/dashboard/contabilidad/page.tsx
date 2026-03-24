@@ -1,15 +1,35 @@
 'use client'
 import Link from 'next/link'
 import { TopBar } from '@/components/layout/TopBar'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
-const modulos = [
-  { href: '/dashboard/contabilidad/balance', label: 'Balance General', icon: 'account_balance', desc: 'Activos, pasivos y patrimonio', color: 'text-tertiary' },
-  { href: '/dashboard/contabilidad/estado-resultados', label: 'Estado de Resultados', icon: 'trending_up', desc: 'P&L — Ingresos, costos y utilidades', color: 'text-primary' },
-  { href: '/dashboard/contabilidad/libro-diario', label: 'Libro Diario', icon: 'menu_book', desc: 'Registro cronológico de operaciones', color: 'text-secondary' },
-  { href: '/dashboard/contabilidad/asientos', label: 'Asientos Contables', icon: 'receipt_long', desc: 'Detalle y trazabilidad de asientos', color: 'text-orange-400' },
-  { href: '/dashboard/contabilidad/fiscal', label: 'Fiscal & Impuestos', icon: 'gavel', desc: 'IVA, ISLR, IGTF y declaraciones', color: 'text-yellow-400' },
-  { href: '/dashboard/contabilidad/conciliacion', label: 'Conciliación Bancaria', icon: 'compare_arrows', desc: 'Conciliación inteligente con IA', color: 'text-purple-400' },
-]
+interface ContabilidadModule {
+  href: string
+  label: string
+  icon: string
+  desc: string
+  color: string
+}
+
+interface ContabilidadStat {
+  label: string
+  value: string
+  change: string
+  up: boolean
+}
+
+const { data: modulos = [], isLoading: modulosLoading } = useErpQuery<ContabilidadModule[]>(
+  QK.contabilidad.all(),
+  '/contabilidad',
+  { refetchInterval: 60_000 }
+)
+
+const { data: stats = [], isLoading: statsLoading } = useErpQuery<ContabilidadStat[]>(
+  QK.contabilidad.stats(),
+  '/contabilidad/stats',
+  { refetchInterval: 60_000 }
+)
 
 export default function ContabilidadPage() {
   return (

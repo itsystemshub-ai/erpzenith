@@ -1,31 +1,45 @@
 'use client'
 import { TopBar } from '@/components/layout/TopBar'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
-const modulos = [
-  { id: 'ventas', label: 'Ventas', icon: 'point_of_sale', color: 'bg-tertiary/20 border-tertiary/40 text-tertiary', x: 50, y: 10 },
-  { id: 'compras', label: 'Compras', icon: 'shopping_cart', color: 'bg-primary/20 border-primary/40 text-primary', x: 10, y: 35 },
-  { id: 'inventario', label: 'Inventario', icon: 'inventory_2', color: 'bg-secondary/20 border-secondary/40 text-secondary', x: 50, y: 35 },
-  { id: 'contabilidad', label: 'Contabilidad', icon: 'account_balance', color: 'bg-orange-500/20 border-orange-500/40 text-orange-400', x: 90, y: 35 },
-  { id: 'rrhh', label: 'RRHH', icon: 'group', color: 'bg-purple-500/20 border-purple-500/40 text-purple-400', x: 10, y: 65 },
-  { id: 'reportes', label: 'Reportes & BI', icon: 'bar_chart', color: 'bg-pink-500/20 border-pink-500/40 text-pink-400', x: 90, y: 65 },
-]
+interface Modulo {
+  id: string
+  label: string
+  icon: string
+  color: string
+  x: number
+  y: number
+}
 
-const conexiones = [
-  { from: 'ventas', to: 'inventario' },
-  { from: 'ventas', to: 'contabilidad' },
-  { from: 'compras', to: 'inventario' },
-  { from: 'compras', to: 'contabilidad' },
-  { from: 'rrhh', to: 'contabilidad' },
-  { from: 'contabilidad', to: 'reportes' },
-  { from: 'ventas', to: 'reportes' },
-]
+interface Conexion {
+  from: string
+  to: string
+}
 
-const stack = [
-  { capa: 'Frontend', tecnologias: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'React Query'], color: 'border-primary/30 bg-primary/5' },
-  { capa: 'Backend API', tecnologias: ['NestJS', 'TypeScript', 'JWT Auth', 'REST API'], color: 'border-secondary/30 bg-secondary/5' },
-  { capa: 'Base de Datos', tecnologias: ['PostgreSQL 15', 'Prisma ORM', 'Redis Cache'], color: 'border-tertiary/30 bg-tertiary/5' },
-  { capa: 'Infraestructura', tecnologias: ['Docker', 'Nginx', 'SSL/TLS', 'Backups automáticos'], color: 'border-orange-500/30 bg-orange-500/5' },
-]
+interface StackItem {
+  capa: string
+  tecnologias: string[]
+  color: string
+}
+
+const { data: modulos = [], isLoading: modulosLoading } = useErpQuery<Modulo[]>(
+  QK.configuracion.arquitectura.modulos(),
+  '/configuracion/arquitectura/modulos',
+  { refetchInterval: 60_000 }
+)
+
+const { data: conexiones = [], isLoading: conexionesLoading } = useErpQuery<Conexion[]>(
+  QK.configuracion.arquitectura.conexiones(),
+  '/configuracion/arquitectura/conexiones',
+  { refetchInterval: 60_000 }
+)
+
+const { data: stack = [], isLoading: stackLoading } = useErpQuery<StackItem[]>(
+  QK.configuracion.arquitectura.stack(),
+  '/configuracion/arquitectura/stack',
+  { refetchInterval: 60_000 }
+)
 
 export default function ArquitecturaPage() {
   return (

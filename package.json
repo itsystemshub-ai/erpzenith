@@ -2,14 +2,20 @@
   "name": "erpzenith",
   "private": true,
   "packageManager": "npm@10.8.2",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "turbo run setup --force && turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint"
   },
   "devDependencies": {
-    "turbo": "^2.0.0",
-    "@netlify/plugin-nextjs": "^5.15.9"
+    "@netlify/plugin-nextjs": "^5.15.9",
+    "turbo": "^2.0.0"
+  },
+  "dependencies": {
+    "firebase": "^12.11.0"
   }
 }

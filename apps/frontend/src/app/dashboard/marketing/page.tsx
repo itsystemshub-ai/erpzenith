@@ -3,33 +3,65 @@ import { TopBar } from '@/components/layout/TopBar'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
-const metricas = [
-  { label: 'Open Rate', valor: '42.8%', trend: '+2.4%', up: true, color: 'bg-primary', pct: 42.8 },
-  { label: 'Avg. CTR', valor: '12.1%', trend: '-0.8%', up: false, color: 'bg-tertiary', pct: 12.1 },
-  { label: 'Conversion Rate', valor: '8.4%', trend: '+5.2%', up: true, color: 'bg-secondary', pct: 8.4 },
-  { label: 'ROAS / ROI', valor: '4.2x', trend: '+18%', up: true, color: 'bg-primary-container', pct: 70 },
-]
+interface Metrica {
+  label: string
+  valor: string
+  trend: string
+  up: boolean
+  color: string
+  pct: number
+}
 
-const campanas = [
-  { nombre: 'Summer Retention Blast', canal: 'Email • 4,200 leads', performance: '84% Engagement', estado: 'RUNNING', estadoColor: 'text-tertiary bg-tertiary/10', icon: 'mail', iconBg: 'bg-indigo-500/20 border-indigo-500/10', iconColor: 'text-indigo-400' },
-  { nombre: 'Enterprise Social Outreach', canal: 'LinkedIn • Ad Groups 4/12', performance: '--', estado: 'SCHEDULED', estadoColor: 'text-outline bg-surface-container-highest', icon: 'public', iconBg: 'bg-emerald-500/20 border-emerald-500/10', iconColor: 'text-emerald-400' },
-  { nombre: 'A/B Testing: Pricing Page V2', canal: 'Web • 50/50 Split', performance: 'Variant B +12%', estado: 'RUNNING', estadoColor: 'text-tertiary bg-tertiary/10', icon: 'splitscreen', iconBg: 'bg-violet-500/20 border-violet-500/10', iconColor: 'text-violet-400' },
-]
+interface Campana {
+  nombre: string
+  canal: string
+  performance: string
+  estado: 'RUNNING' | 'SCHEDULED' | 'DRAFT' | 'PAUSED'
+  estadoColor: string
+  icon: string
+  iconBg: string
+  iconColor: string
+}
 
-const segmentos = [
-  { nombre: 'Platinum High-Value', clientes: '1,240', pct: '24%', color: 'bg-primary' },
-  { nombre: 'Gold Growing Tier', clientes: '3,892', pct: '42%', color: 'bg-tertiary' },
-  { nombre: 'Silver Prospects', clientes: '8,102', pct: '34%', color: 'bg-outline/40' },
-]
+interface Segmento {
+  nombre: string
+  clientes: string
+  pct: string
+  color: string
+}
 
-const funnel = [
-  { label: 'VISITORS (12.4k)', h: '90%', color: 'bg-primary/20 hover:bg-primary/40' },
-  { label: 'MQL (8.1k)', h: '65%', color: 'bg-primary-container/30 hover:bg-primary-container/50' },
-  { label: 'SQL (2.4k)', h: '40%', color: 'bg-tertiary/20 hover:bg-tertiary/40' },
-  { label: 'WON (412)', h: '25%', color: 'bg-secondary/20 hover:bg-secondary/40' },
-]
+interface FunnelItem {
+  label: string
+  h: string
+  color: string
+}
 
+const { data: metricas = [], isLoading: metricasLoading } = useErpQuery<Metrica[]>(
+  QK.marketing.metricas(),
+  '/marketing/metricas',
+  { refetchInterval: 60_000 }
+)
+
+const { data: campanas = [], isLoading: campanasLoading } = useErpQuery<Campana[]>(
+  QK.marketing.campanas(),
+  '/marketing/campanas',
+  { refetchInterval: 60_000 }
+)
+
+const { data: segmentos = [], isLoading: segmentosLoading } = useErpQuery<Segmento[]>(
+  QK.marketing.segmentos(),
+  '/marketing/segmentos',
+  { refetchInterval: 60_000 }
+)
+
+const { data: funnel = [], isLoading: funnelLoading } = useErpQuery<FunnelItem[]>(
+  QK.marketing.funnel(),
+  '/marketing/funnel',
+  { refetchInterval: 60_000 }
+)
 export default function MarketingPage() {
   return (
     <div className="flex flex-col min-h-screen">

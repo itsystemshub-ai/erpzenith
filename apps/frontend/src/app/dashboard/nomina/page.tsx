@@ -2,7 +2,24 @@
 import { TopBar } from '@/components/layout/TopBar'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Button } from '@/components/ui/Button'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
+interface Empleado {
+  id: string
+  nombre: string
+  empId: string
+  cargo: string
+  salario: string
+  ingreso: string
+  prestaciones: string
+  color: string
+}
+
+interface Deduccion {
+  label: string
+  valor: string
+}
 const empleados = [
   { id: 'AA', nombre: 'Andrés Arreaza', empId: '10293', cargo: 'Gerente de IT', salario: '$2,200.00', ingreso: '15/05/2021', prestaciones: '$4,850.20', color: 'bg-primary/20 text-primary' },
   { id: 'MC', nombre: 'Mariana Colmenares', empId: '10294', cargo: 'Analista Senior', salario: '$1,450.00', ingreso: '10/01/2022', prestaciones: '$2,120.15', color: 'bg-tertiary/20 text-tertiary' },

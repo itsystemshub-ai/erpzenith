@@ -1,20 +1,64 @@
 'use client'
 import { TopBar } from '@/components/layout/TopBar'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
-const kpis = [
-  { label: 'Valor Total Activos', value: '$1,250,000', icon: 'account_balance_wallet', color: 'text-primary', bg: 'bg-primary/10', badge: '+2.5%' },
-  { label: 'Depreciación Mensual', value: '$4,200', icon: 'trending_down', color: 'text-amber-400', bg: 'bg-amber-400/10', badge: 'Mensual' },
-  { label: 'Activos Activos', value: '142', icon: 'inventory_2', color: 'text-tertiary', bg: 'bg-tertiary/10', badge: '+5 nuevos' },
-  { label: 'Por Retirar', value: '3', icon: 'event_busy', color: 'text-error', bg: 'bg-error/10', badge: 'Acción requerida' },
-]
+interface KpiItem {
+  label: string
+  value: string
+  icon: string
+  color: string
+  bg: string
+  badge: string
+}
 
-const activos = [
-  { codigo: 'ACT-001', nombre: 'Toyota Hilux 2023', categoria: 'Vehículos', costo: '$45,000', valorLibros: '$36,000', vidaUtil: 48, pct: 80, estado: 'Activo', icon: 'local_shipping' },
-  { codigo: 'ACT-004', nombre: 'Impresora Industrial 3D', categoria: 'Maquinaria', costo: '$12,500', valorLibros: '$8,200', vidaUtil: 36, pct: 65, estado: 'Activo', icon: 'print' },
-  { codigo: 'ACT-012', nombre: 'MacBook Pro M2 (Lote 5)', categoria: 'Equipos de Cómputo', costo: '$22,000', valorLibros: '$2,400', vidaUtil: 3, pct: 10, estado: 'Por Retirar', icon: 'laptop_mac' },
-  { codigo: 'ACT-008', nombre: 'Escritorios Ergonómicos', categoria: 'Mobiliario', costo: '$5,600', valorLibros: '$0', vidaUtil: 0, pct: 100, estado: 'Depreciado', icon: 'chair' },
-]
+interface Activo {
+  codigo: string
+  nombre: string
+  categoria: string
+  costo: string
+  valorLibros: string
+  vidaUtil: number
+  pct: number
+  estado: 'Activo' | 'Por Retirar' | 'Depreciado'
+  icon: string
+}
 
+interface Asiento {
+  cuenta: string
+  debe: string
+  haber: string
+}
+
+interface Categoria {
+  label: string
+  pct: number
+  color: string
+}
+
+const { data: kpis = [], isLoading: kpisLoading } = useErpQuery<KpiItem[]>(
+  QK.activos.kpis(),
+  '/activos/kpis',
+  { refetchInterval: 60_000 }
+)
+
+const { data: activos = [], isLoading: activosLoading } = useErpQuery<Activo[]>(
+  QK.activos.list(),
+  '/activos',
+  { refetchInterval: 60_000 }
+)
+
+const { data: asientos = [], isLoading: asientosLoading } = useErpQuery<Asiento[]>(
+  QK.activos.asientos(),
+  '/activos/asientos',
+  { refetchInterval: 300_000 }
+)
+
+const { data: categorias = [], isLoading: categoriasLoading } = useErpQuery<Categoria[]>(
+  QK.activos.categorias(),
+  '/activos/categorias',
+  { refetchInterval: 300_000 }
+)
 const estadoColor: Record<string, string> = {
   Activo: 'text-tertiary bg-tertiary/10',
   'Por Retirar': 'text-amber-400 bg-amber-400/10',
@@ -22,20 +66,6 @@ const estadoColor: Record<string, string> = {
 }
 
 const barColor = (pct: number) => pct >= 80 ? 'bg-primary' : pct >= 50 ? 'bg-amber-400' : 'bg-error'
-
-const asientos = [
-  { cuenta: '5200-01 Gasto Depreciación Maquinaria', debe: '$1,200.00', haber: '-' },
-  { cuenta: '5200-02 Gasto Depreciación Vehículos', debe: '$2,450.00', haber: '-' },
-  { cuenta: '5200-03 Gasto Depreciación Eq. Cómputo', debe: '$550.00', haber: '-' },
-  { cuenta: '1600-99 Depreciación Acumulada Activos', debe: '-', haber: '$4,200.00' },
-]
-
-const categorias = [
-  { label: 'Vehículos', pct: 45, color: 'bg-primary' },
-  { label: 'Maquinaria', pct: 30, color: 'bg-secondary' },
-  { label: 'Eq. Cómputo', pct: 15, color: 'bg-tertiary' },
-  { label: 'Mobiliario', pct: 10, color: 'bg-amber-400' },
-]
 
 export default function ActivosPage() {
   return (

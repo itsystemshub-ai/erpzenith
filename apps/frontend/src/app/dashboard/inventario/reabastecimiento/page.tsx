@@ -1,21 +1,37 @@
 'use client'
 import { TopBar } from '@/components/layout/TopBar'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
-const kpis = [
-  { label: 'Reglas Activas', value: '24', icon: 'rule', color: 'text-primary', bg: 'bg-primary/10' },
-  { label: 'Alertas Pendientes', value: '7', icon: 'notification_important', color: 'text-amber-400', bg: 'bg-amber-400/10' },
-  { label: 'Órdenes Generadas', value: '3', icon: 'shopping_cart', color: 'text-tertiary', bg: 'bg-tertiary/10' },
-  { label: 'Ahorro Estimado', value: '$4,200', icon: 'savings', color: 'text-secondary', bg: 'bg-secondary/10' },
-]
+interface KpiItem {
+  label: string
+  value: string
+  icon: string
+  color: string
+  bg: string
+}
 
-const productos = [
-  { producto: 'Válvula V-200', sku: 'SKU-0042', stockActual: 8, puntoReorden: 20, cantSugerida: 50, proveedor: 'TechSolutions C.A.', urgente: true },
-  { producto: 'Bomba BC-100', sku: 'SKU-0018', stockActual: 5, puntoReorden: 15, cantSugerida: 30, proveedor: 'Energía Total Corp.', urgente: true },
-  { producto: 'Filtro FI-30', sku: 'SKU-0091', stockActual: 22, puntoReorden: 25, cantSugerida: 40, proveedor: 'Global Logistics S.A.', urgente: false },
-  { producto: 'Conector CH-50', sku: 'SKU-0055', stockActual: 14, puntoReorden: 30, cantSugerida: 60, proveedor: 'TechSolutions C.A.', urgente: true },
-  { producto: 'Sensor ST-10', sku: 'SKU-0077', stockActual: 31, puntoReorden: 20, cantSugerida: 25, proveedor: 'Energía Total Corp.', urgente: false },
-]
+interface Producto {
+  producto: string
+  sku: string
+  stockActual: number
+  puntoReorden: number
+  cantSugerida: number
+  proveedor: string
+  urgente: boolean
+}
 
+const { data: kpis = [], isLoading: kpisLoading } = useErpQuery<KpiItem[]>(
+  QK.inventario.reabastecimientoKpis(),
+  '/inventario/reabastecimiento/kpis',
+  { refetchInterval: 60_000 }
+)
+
+const { data: productos = [], isLoading: productosLoading } = useErpQuery<Producto[]>(
+  QK.inventario.reabastecimientoProductos(),
+  '/inventario/reabastecimiento/productos',
+  { refetchInterval: 60_000 }
+)
 export default function ReabastecimientoPage() {
   return (
     <div className="flex flex-col min-h-screen">

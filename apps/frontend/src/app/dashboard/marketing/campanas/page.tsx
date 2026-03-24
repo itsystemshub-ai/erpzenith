@@ -3,7 +3,20 @@ import { TopBar } from '@/components/layout/TopBar'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { useErpQuery } from '@/hooks/useErpQuery'
+import { QK } from '@/lib/queryKeys'
 
+interface Campana {
+  nombre: string
+  canal: string
+  audiencia: number
+  enviados: number
+  abiertos: number
+  conversiones: number
+  estado: 'Activa' | 'Completada' | 'Pausada' | 'Borrador'
+  icon: string
+  color: string
+}
 const campanas = [
   {
     nombre: 'Promo Navidad 2025',

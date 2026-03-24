@@ -1,4 +1,5 @@
 import { PrismaClient, Prisma } from '@prisma/client'
+import { Decimal } from '@prisma/client/runtime/library'
 import * as bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
@@ -96,7 +97,7 @@ async function main() {
   // ─── Tasa BCV ────────────────────────────────────────────────────────────
   const tasaExistente = await prisma.tasaBCV.findFirst({ orderBy: { fecha: 'desc' } })
   if (!tasaExistente) {
-    await prisma.tasaBCV.create({ data: { tasa: new Prisma.Decimal('46.82') } })
+    await prisma.tasaBCV.create({ data: { tasa: new Decimal('46.82') } })
     console.log('✅ Tasa BCV inicial: 46.82 VES/USD')
   } else {
     console.log('✅ Tasa BCV existente respetada:', tasaExistente.tasa.toString(), 'VES/USD')
@@ -112,14 +113,14 @@ async function main() {
 
   // ─── Productos ───────────────────────────────────────────────────────────
   const productosData = [
-    { sku: 'SKU-8829-X', nombre: 'Hyperion Sensor V2',        tipo: 'Sensor',    unidad: 'UND', precioUSD: new Prisma.Decimal(89.50),  stockMin: 20 },
-    { sku: 'SKU-1102-P', nombre: 'Zenith Control Unit',       tipo: 'Electrónica', unidad: 'UND', precioUSD: new Prisma.Decimal(284.00), stockMin: 50 },
-    { sku: 'SKU-4401-T', nombre: 'Titanium Flex Cable 2m',    tipo: 'Cable',     unidad: 'UND', precioUSD: new Prisma.Decimal(18.00),  stockMin: 100 },
-    { sku: 'SKU-2210-M', nombre: 'Motor Servo Industrial 5A', tipo: 'Motor',     unidad: 'UND', precioUSD: new Prisma.Decimal(145.00), stockMin: 30 },
-    { sku: 'SKU-3305-R', nombre: 'Relay Modular 24VDC',       tipo: 'Electrónica', unidad: 'UND', precioUSD: new Prisma.Decimal(12.50),  stockMin: 200 },
-    { sku: 'SKU-5512-B', nombre: 'Batería LiFePO4 100Ah',     tipo: 'Energía',   unidad: 'UND', precioUSD: new Prisma.Decimal(320.00), stockMin: 15 },
-    { sku: 'SKU-6601-F', nombre: 'Filtro HEPA Industrial',    tipo: 'Filtro',    unidad: 'UND', precioUSD: new Prisma.Decimal(55.00),  stockMin: 40 },
-    { sku: 'SKU-7720-V', nombre: 'Válvula Solenoide 1/2"',    tipo: 'Hidráulica', unidad: 'UND', precioUSD: new Prisma.Decimal(38.00),  stockMin: 60 },
+    { sku: 'SKU-8829-X', nombre: 'Hyperion Sensor V2',        tipo: 'Sensor',    unidad: 'UND', precioUSD: new Decimal(89.50),  stockMin: 20 },
+    { sku: 'SKU-1102-P', nombre: 'Zenith Control Unit',       tipo: 'Electrónica', unidad: 'UND', precioUSD: new Decimal(284.00), stockMin: 50 },
+    { sku: 'SKU-4401-T', nombre: 'Titanium Flex Cable 2m',    tipo: 'Cable',     unidad: 'UND', precioUSD: new Decimal(18.00),  stockMin: 100 },
+    { sku: 'SKU-2210-M', nombre: 'Motor Servo Industrial 5A', tipo: 'Motor',     unidad: 'UND', precioUSD: new Decimal(145.00), stockMin: 30 },
+    { sku: 'SKU-3305-R', nombre: 'Relay Modular 24VDC',       tipo: 'Electrónica', unidad: 'UND', precioUSD: new Decimal(12.50),  stockMin: 200 },
+    { sku: 'SKU-5512-B', nombre: 'Batería LiFePO4 100Ah',     tipo: 'Energía',   unidad: 'UND', precioUSD: new Decimal(320.00), stockMin: 15 },
+    { sku: 'SKU-6601-F', nombre: 'Filtro HEPA Industrial',    tipo: 'Filtro',    unidad: 'UND', precioUSD: new Decimal(55.00),  stockMin: 40 },
+    { sku: 'SKU-7720-V', nombre: 'Válvula Solenoide 1/2"',    tipo: 'Hidráulica', unidad: 'UND', precioUSD: new Decimal(38.00),  stockMin: 60 },
   ]
   const productos = []
   for (const p of productosData) {
@@ -180,8 +181,8 @@ async function main() {
   for (const oc of ocData) {
     await prisma.ordenCompra.upsert({
       where: { numero: oc.numero },
-      update: { estado: oc.estado, subtotalUSD: new Prisma.Decimal(oc.sub), ivaUSD: new Prisma.Decimal(oc.iva), totalUSD: new Prisma.Decimal(oc.total) },
-      create: { numero: oc.numero, proveedorId: proveedores[oc.idx].id, estado: oc.estado, subtotalUSD: new Prisma.Decimal(oc.sub), ivaUSD: new Prisma.Decimal(oc.iva), totalUSD: new Prisma.Decimal(oc.total), tasaBCV: new Prisma.Decimal(46.82), items: { create: [{ productoId: productos[oc.prodIdx].id, cantidad: oc.cant, precioUSD: new Prisma.Decimal(oc.precio) }] } },
+      update: { estado: oc.estado, subtotalUSD: new Decimal(oc.sub), ivaUSD: new Decimal(oc.iva), totalUSD: new Decimal(oc.total) },
+      create: { numero: oc.numero, proveedorId: proveedores[oc.idx].id, estado: oc.estado, subtotalUSD: new Decimal(oc.sub), ivaUSD: new Decimal(oc.iva), totalUSD: new Decimal(oc.total), tasaBCV: new Decimal(46.82), items: { create: [{ productoId: productos[oc.prodIdx].id, cantidad: oc.cant, precioUSD: new Decimal(oc.precio) }] } },
     })
   }
   console.log('✅ Órdenes de compra:', ocData.length)
@@ -264,16 +265,16 @@ async function main() {
 
   // ─── Empleados ───────────────────────────────────────────────────────────
   const empleadosData = [
-    { cedula: 'V-12345678', nombre: 'Carlos',    apellido: 'Rodríguez', email: 'c.rodriguez@zenith.com.ve', cargo: 'Gerente de Operaciones',  departamento: 'Operaciones',       salarioUSD: new Prisma.Decimal(2800), fechaIngreso: new Date('2020-03-15'), estado: 'ACTIVO' },
-    { cedula: 'V-23456789', nombre: 'María',     apellido: 'González',  email: 'm.gonzalez@zenith.com.ve',  cargo: 'Analista de Inventario',  departamento: 'Inventario',        salarioUSD: new Prisma.Decimal(1200), fechaIngreso: new Date('2021-06-01'), estado: 'ACTIVO' },
-    { cedula: 'V-34567890', nombre: 'Luis',      apellido: 'Martínez',  email: 'l.martinez@zenith.com.ve',  cargo: 'Ejecutivo de Ventas',     departamento: 'Ventas',            salarioUSD: new Prisma.Decimal(1500), fechaIngreso: new Date('2021-09-10'), estado: 'ACTIVO' },
-    { cedula: 'V-45678901', nombre: 'Ana',       apellido: 'Pérez',     email: 'a.perez@zenith.com.ve',     cargo: 'Coordinadora de Compras', departamento: 'Compras',           salarioUSD: new Prisma.Decimal(1350), fechaIngreso: new Date('2022-01-20'), estado: 'ACTIVO' },
-    { cedula: 'V-56789012', nombre: 'José',      apellido: 'Hernández', email: 'j.hernandez@zenith.com.ve', cargo: 'Técnico de Almacén',      departamento: 'Inventario',        salarioUSD: new Prisma.Decimal(850),  fechaIngreso: new Date('2022-05-03'), estado: 'ACTIVO' },
-    { cedula: 'V-67890123', nombre: 'Sofía',     apellido: 'López',     email: 's.lopez@zenith.com.ve',     cargo: 'Contadora Senior',        departamento: 'Contabilidad',      salarioUSD: new Prisma.Decimal(2100), fechaIngreso: new Date('2019-11-15'), estado: 'ACTIVO' },
-    { cedula: 'V-78901234', nombre: 'Miguel',    apellido: 'Torres',    email: 'm.torres@zenith.com.ve',    cargo: 'Desarrollador Backend',   departamento: 'Tecnología',        salarioUSD: new Prisma.Decimal(2500), fechaIngreso: new Date('2023-02-01'), estado: 'ACTIVO' },
-    { cedula: 'V-89012345', nombre: 'Valentina', apellido: 'Díaz',      email: 'v.diaz@zenith.com.ve',      cargo: 'Analista de RRHH',        departamento: 'Recursos Humanos',  salarioUSD: new Prisma.Decimal(1100), fechaIngreso: new Date('2023-07-15'), estado: 'VACACIONES' },
-    { cedula: 'V-90123456', nombre: 'Roberto',   apellido: 'Sánchez',   email: 'r.sanchez@zenith.com.ve',   cargo: 'Supervisor de Producción',departamento: 'Producción',        salarioUSD: new Prisma.Decimal(1800), fechaIngreso: new Date('2020-08-20'), estado: 'ACTIVO' },
-    { cedula: 'V-01234567', nombre: 'Isabella',  apellido: 'Ramírez',   email: 'i.ramirez@zenith.com.ve',   cargo: 'Gerente Comercial',       departamento: 'Ventas',            salarioUSD: new Prisma.Decimal(3200), fechaIngreso: new Date('2018-04-10'), estado: 'ACTIVO' },
+    { cedula: 'V-12345678', nombre: 'Carlos',    apellido: 'Rodríguez', email: 'c.rodriguez@zenith.com.ve', cargo: 'Gerente de Operaciones',  departamento: 'Operaciones',       salarioUSD: new Decimal(2800), fechaIngreso: new Date('2020-03-15'), estado: 'ACTIVO' },
+    { cedula: 'V-23456789', nombre: 'María',     apellido: 'González',  email: 'm.gonzalez@zenith.com.ve',  cargo: 'Analista de Inventario',  departamento: 'Inventario',        salarioUSD: new Decimal(1200), fechaIngreso: new Date('2021-06-01'), estado: 'ACTIVO' },
+    { cedula: 'V-34567890', nombre: 'Luis',      apellido: 'Martínez',  email: 'l.martinez@zenith.com.ve',  cargo: 'Ejecutivo de Ventas',     departamento: 'Ventas',            salarioUSD: new Decimal(1500), fechaIngreso: new Date('2021-09-10'), estado: 'ACTIVO' },
+    { cedula: 'V-45678901', nombre: 'Ana',       apellido: 'Pérez',     email: 'a.perez@zenith.com.ve',     cargo: 'Coordinadora de Compras', departamento: 'Compras',           salarioUSD: new Decimal(1350), fechaIngreso: new Date('2022-01-20'), estado: 'ACTIVO' },
+    { cedula: 'V-56789012', nombre: 'José',      apellido: 'Hernández', email: 'j.hernandez@zenith.com.ve', cargo: 'Técnico de Almacén',      departamento: 'Inventario',        salarioUSD: new Decimal(850),  fechaIngreso: new Date('2022-05-03'), estado: 'ACTIVO' },
+    { cedula: 'V-67890123', nombre: 'Sofía',     apellido: 'López',     email: 's.lopez@zenith.com.ve',     cargo: 'Contadora Senior',        departamento: 'Contabilidad',      salarioUSD: new Decimal(2100), fechaIngreso: new Date('2019-11-15'), estado: 'ACTIVO' },
+    { cedula: 'V-78901234', nombre: 'Miguel',    apellido: 'Torres',    email: 'm.torres@zenith.com.ve',    cargo: 'Desarrollador Backend',   departamento: 'Tecnología',        salarioUSD: new Decimal(2500), fechaIngreso: new Date('2023-02-01'), estado: 'ACTIVO' },
+    { cedula: 'V-89012345', nombre: 'Valentina', apellido: 'Díaz',      email: 'v.diaz@zenith.com.ve',      cargo: 'Analista de RRHH',        departamento: 'Recursos Humanos',  salarioUSD: new Decimal(1100), fechaIngreso: new Date('2023-07-15'), estado: 'VACACIONES' },
+    { cedula: 'V-90123456', nombre: 'Roberto',   apellido: 'Sánchez',   email: 'r.sanchez@zenith.com.ve',   cargo: 'Supervisor de Producción',departamento: 'Producción',        salarioUSD: new Decimal(1800), fechaIngreso: new Date('2020-08-20'), estado: 'ACTIVO' },
+    { cedula: 'V-01234567', nombre: 'Isabella',  apellido: 'Ramírez',   email: 'i.ramirez@zenith.com.ve',   cargo: 'Gerente Comercial',       departamento: 'Ventas',            salarioUSD: new Decimal(3200), fechaIngreso: new Date('2018-04-10'), estado: 'ACTIVO' },
   ]
   for (const e of empleadosData) {
     const { cedula, ...rest } = e
