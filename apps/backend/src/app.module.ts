@@ -10,8 +10,8 @@ import { ConfiguracionModule } from './modules/configuracion/configuracion.modul
 import { DashboardModule } from './modules/dashboard/dashboard.module'
 import { EmpresasModule } from './modules/empresas/empresas.module'
 import { UsuariosModule } from './modules/usuarios/usuarios.module'
-
 import { GeoModule } from './modules/geo/geo.module'
+import { HealthController } from './common/health.controller'
 
 @Module({
   imports: [
@@ -28,5 +28,6 @@ import { GeoModule } from './modules/geo/geo.module'
     UsuariosModule,
     GeoModule,
   ],
+  controllers: [HealthController],
 })
 export class AppModule {}
