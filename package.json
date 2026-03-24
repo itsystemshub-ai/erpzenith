@@ -1,5 +1,6 @@
 {
   "name": "erpzenith",
+  "version": "6.0.0",
   "private": true,
   "packageManager": "npm@10.8.2",
   "workspaces": [
@@ -10,7 +11,18 @@
     "dev": "turbo run setup --force && turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "vercel-build": "npm run build"
+    "test": "turbo run test",
+    "test:cov": "turbo run test:cov",
+    "vercel-build": "npm run build",
+    "version:patch": "npm version patch --git-tag-version false && npm run version:sync",
+    "version:minor": "npm version minor --git-tag-version false && npm run version:sync",
+    "version:major": "npm version major --git-tag-version false && npm run version:sync",
+    "version:sync": "npm run version:sync:backend && npm run version:sync:frontend",
+    "version:sync:backend": "node -p \"JSON.stringify({...require('./apps/backend/package.json'), version: require('./package.json').version}, null, 2)\" > apps/backend/package.json",
+    "version:sync:frontend": "node -p \"JSON.stringify({...require('./apps/frontend/package.json'), version: require('./package.json').version}, null, 2)\" > apps/frontend/package.json",
+    "release:patch": "npm run version:patch && git add . && git commit -m \"chore: release v$(node -p \"require('./package.json').version\")\" && git tag -a \"v$(node -p \"require('./package.json').version\")\" -m \"Release v$(node -p \"require('./package.json').version\")\"",
+    "release:minor": "npm run version:minor && git add . && git commit -m \"chore: release v$(node -p \"require('./package.json').version\")\" && git tag -a \"v$(node -p \"require('./package.json').version\")\" -m \"Release v$(node -p \"require('./package.json').version\")\"",
+    "release:major": "npm run version:major && git add . && git commit -m \"chore: release v$(node -p \"require('./package.json').version\")\" && git tag -a \"v$(node -p \"require('./package.json').version\")\" -m \"Release v$(node -p \"require('./package.json').version\")\""
   },
   "devDependencies": {
     "turbo": "^2.5.4"

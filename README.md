@@ -201,6 +201,16 @@ hotfix/*      # Correcciones urgentes a producción
 npm run dev      # Iniciar ambos servicios en desarrollo
 npm run build    # Build de producción
 npm run lint     # Linting en todos los paquetes
+npm run test     # Ejecutar tests en todos los paquetes
+npm run test:cov # Tests con cobertura de código
+
+# Versionado (Ver VERSIONING.md)
+npm run version:patch   # Incrementa PATCH (x.x.X)
+npm run version:minor   # Incrementa MINOR (x.X.0)
+npm run version:major   # Incrementa MAJOR (X.0.0)
+npm run release:patch   # Patch + commit + tag git
+npm run release:minor   # Minor + commit + tag git
+npm run release:major   # Major + commit + tag git
 ```
 
 ### Backend
@@ -215,6 +225,10 @@ npm run migrate:dev     # Crear migración
 npm run migrate:deploy  # Aplicar migraciones
 npm run db:studio       # Abrir Prisma Studio
 npm run lint            # ESLint
+npm run test            # Ejecutar tests con Jest
+npm run test:watch      # Tests en modo watch
+npm run test:cov        # Tests con cobertura
+npm run test:e2e        # Tests end-to-end
 ```
 
 ### Frontend
@@ -224,7 +238,20 @@ npm run dev     # Desarrollo en puerto 3000
 npm run build   # Build de producción
 npm run start   # Start en producción
 npm run lint    # ESLint + Next.js lint
+npm run test    # Ejecutar tests con Jest + React Testing Library
+npm run test:watch  # Tests en modo watch
+npm run test:cov    # Tests con cobertura
 ```
+
+## 📚 Documentación Adicional
+
+| Documento | Descripción |
+|-----------|-------------|
+| [CHANGELOG.md](./CHANGELOG.md) | Historial de cambios y versiones |
+| [VERSIONING.md](./VERSIONING.md) | Guía de versionado semántico |
+| [DEPLOY_VERCEL.md](./DEPLOY_VERCEL.md) | Guía completa de deploy en Vercel |
+| [SWAGGER_VERIFICATION.md](./SWAGGER_VERIFICATION.md) | Documentación de Swagger API |
+| [VERCEL_ANALYTICS.md](./VERCEL_ANALYTICS.md) | Configuración de analytics y monitoreo |
 
 ## 📦 Módulos del Sistema
 
