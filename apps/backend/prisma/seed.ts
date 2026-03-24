@@ -238,6 +238,7 @@ async function main() {
     },
   }
 
+  console.log('🗺️  Cargando geografía de Venezuela...')
   let geoCreated = 0
   for (const [regionNombre, estados] of Object.entries(geoData)) {
     const region = await prisma.geoRegion.upsert({
@@ -251,13 +252,14 @@ async function main() {
         update: {},
         create: { nombre: estadoNombre, regionId: region.id },
       })
-      for (const municipioNombre of municipios) {
-        await prisma.geoMunicipio.upsert({
-          where: { nombre_estadoId: { nombre: municipioNombre, estadoId: estado.id } },
-          update: {},
-          create: { nombre: municipioNombre, estadoId: estado.id },
+      // Use createMany for bulk insert of municipios
+      const municipiosToCreate = municipios.map(m => ({ nombre: m, estadoId: estado.id }))
+      if (municipiosToCreate.length > 0) {
+        await prisma.geoMunicipio.createMany({
+          data: municipiosToCreate,
+          skipDuplicates: true,
         })
-        geoCreated++
+        geoCreated += municipios.length
       }
     }
   }
