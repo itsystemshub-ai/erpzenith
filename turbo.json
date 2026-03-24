@@ -2,7 +2,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**"]
+      "outputs": [".next/**", "dist/**"],
+      "env": ["FRONTEND_URL"]
     },
     "generate": {
       "cache": false
