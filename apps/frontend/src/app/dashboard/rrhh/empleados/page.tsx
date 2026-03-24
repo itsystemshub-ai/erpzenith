@@ -62,7 +62,7 @@ export default function EmpleadosPage() {
   const [nominaLoading, setNominaLoading] = useState(false)
   const [nominaResult, setNominaResult] = useState<any>(null)
   const [page, setPage] = useState(1)
-  const PAGE_SIZE = 50
+  const PAGE_SIZE = 100
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const { data: empleados = [], isLoading, refetch } = useErpQuery<Empleado[]>(

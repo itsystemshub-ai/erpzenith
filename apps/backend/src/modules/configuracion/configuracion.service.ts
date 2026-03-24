@@ -242,7 +242,7 @@ export class ConfiguracionService {
     return rows
   }
 
-  async getTableData(tableName: string, limit = 200) {
+  async getTableData(tableName: string) {
     this.allowedTable(tableName) // valida whitelist
 
     // Para users, devolver datos enriquecidos con roles, empresa y departamento
@@ -257,7 +257,6 @@ export class ConfiguracionService {
       const HIERARCHY = ['SUPERDEV','ADMIN','INVENTARIO','VENTAS','COMPRAS','RRHH','PRODUCCION','CALIDAD','REPORTES','USER']
 
       const users = await this.prisma.user.findMany({
-        take: limit,
         orderBy: { createdAt: 'asc' },
         select: {
           id: true, name: true, username: true, password: true,
@@ -287,22 +286,16 @@ export class ConfiguracionService {
       })
     }
 
-    // Clientes y vendedores: renombrar id → idcima mostrando solo el número
+    // Clientes y vendedores: mantener id propio + mostrar idcima
     if (tableName === 'clientes' || tableName === 'vendedores') {
       const rows = await (this.prisma as any)[this.TABLE_MODEL_MAP[tableName]].findMany({
-        take: limit,
         orderBy: { createdAt: 'asc' },
       })
-      return rows.map((r: any) => {
-        const { id, ...rest } = r
-        // id puede ser "cima_00006506" → extraer solo el número, o dejarlo tal cual
-        const numeric = id?.toString().replace(/^cima_0*/, '') ?? id
-        return { idcima: numeric, ...rest }
-      })
+      return rows
     }
 
     const rows = await this.prisma.$queryRawUnsafe(
-      `SELECT * FROM "${tableName}" LIMIT ${limit}`
+      `SELECT * FROM "${tableName}" ORDER BY id`
     )
     return rows
   }
