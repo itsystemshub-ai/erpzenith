@@ -100,6 +100,11 @@ export class VentasController {
     return this.ventasService.updateVendedor(id, body)
   }
 
+  @Delete('vendedores')
+  deleteAllVendedores() {
+    return this.ventasService.deleteAllVendedores()
+  }
+
   @Delete('vendedores/:id')
   deleteVendedor(@Param('id') id: string) {
     return this.ventasService.deleteVendedor(id)

@@ -12,10 +12,7 @@ const DEPT_MODULES: Record<string, { nombre: string; desc: string; icon: string 
   'Operaciones': [
     { nombre: 'inventario',    desc: 'Stock y SKUs',           icon: 'inventory_2' },
     { nombre: 'compras',       desc: 'Órdenes y Proveedores',  icon: 'shopping_cart' },
-    { nombre: 'produccion',    desc: 'Órdenes y BOM',          icon: 'factory' },
-    { nombre: 'mantenimiento', desc: 'Activos y Equipos',      icon: 'build' },
-    { nombre: 'calidad',       desc: 'Inspecciones',           icon: 'verified' },
-    { nombre: 'flota',         desc: 'Vehículos y Rutas',      icon: 'local_shipping' },
+
   ],
   'Comercial': [
     { nombre: 'ventas',    desc: 'Facturas y Clientes', icon: 'point_of_sale' },
@@ -67,8 +64,6 @@ const ROLE_DEPT: Record<string, string> = {
   ADMIN:      'Sistema',
   INVENTARIO: 'Operaciones',
   COMPRAS:    'Operaciones',
-  PRODUCCION: 'Operaciones',
-  CALIDAD:    'Operaciones',
   VENTAS:     'Comercial',
   RRHH:       'Administración',
   REPORTES:   'Herramientas',
@@ -80,8 +75,6 @@ const ROLE_ICON: Record<string, string> = {
   ADMIN:      'manage_accounts',
   INVENTARIO: 'inventory_2',
   COMPRAS:    'shopping_cart',
-  PRODUCCION: 'factory',
-  CALIDAD:    'verified',
   VENTAS:     'point_of_sale',
   RRHH:       'group',
   REPORTES:   'bar_chart',

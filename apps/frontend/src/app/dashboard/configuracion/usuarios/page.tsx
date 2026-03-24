@@ -43,8 +43,6 @@ const roleBadge: Record<string, string> = {
   VENTAS:     'bg-tertiary/20 text-tertiary',
   COMPRAS:    'bg-orange-500/20 text-orange-400',
   RRHH:       'bg-pink-500/20 text-pink-400',
-  PRODUCCION: 'bg-yellow-500/20 text-yellow-400',
-  CALIDAD:    'bg-cyan-500/20 text-cyan-400',
   REPORTES:   'bg-indigo-500/20 text-indigo-400',
   USER:       'bg-white/10 text-outline',
 }
@@ -55,8 +53,6 @@ const ROLE_DEPT: Record<string, string> = {
   ADMIN:      'Sistema',
   INVENTARIO: 'Operaciones',
   COMPRAS:    'Operaciones',
-  PRODUCCION: 'Operaciones',
-  CALIDAD:    'Operaciones',
   VENTAS:     'Comercial',
   RRHH:       'Administración',
   REPORTES:   'Herramientas',
@@ -237,7 +233,7 @@ export default function UsuariosPage() {
   const activos = usuarios.filter(u => u.isActive).length
 
   // Rol principal por jerarquía
-  const hierarchy = ['SUPERDEV', 'ADMIN', 'INVENTARIO', 'VENTAS', 'COMPRAS', 'RRHH', 'PRODUCCION', 'CALIDAD', 'REPORTES', 'USER']
+  const hierarchy = ['SUPERDEV', 'ADMIN', 'INVENTARIO', 'VENTAS', 'COMPRAS', 'RRHH', 'REPORTES', 'USER']
   const primaryRole = (u: Usuario) =>
     u.roles.sort((a, b) => hierarchy.indexOf(a.name) - hierarchy.indexOf(b.name))[0]?.name ?? 'USER'
 

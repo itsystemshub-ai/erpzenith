@@ -59,6 +59,11 @@ export class ComprasController {
     return this.comprasService.updateProveedor(id, body)
   }
 
+  @Delete('proveedores')
+  deleteAllProveedores() {
+    return this.comprasService.deleteAllProveedores()
+  }
+
   @Delete('proveedores/:id')
   deleteProveedor(@Param('id') id: string) {
     return this.comprasService.deleteProveedor(id)

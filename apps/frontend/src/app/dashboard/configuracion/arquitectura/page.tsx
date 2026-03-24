@@ -7,7 +7,6 @@ const modulos = [
   { id: 'inventario', label: 'Inventario', icon: 'inventory_2', color: 'bg-secondary/20 border-secondary/40 text-secondary', x: 50, y: 35 },
   { id: 'contabilidad', label: 'Contabilidad', icon: 'account_balance', color: 'bg-orange-500/20 border-orange-500/40 text-orange-400', x: 90, y: 35 },
   { id: 'rrhh', label: 'RRHH', icon: 'group', color: 'bg-purple-500/20 border-purple-500/40 text-purple-400', x: 10, y: 65 },
-  { id: 'produccion', label: 'Producción', icon: 'precision_manufacturing', color: 'bg-blue-500/20 border-blue-500/40 text-blue-400', x: 50, y: 65 },
   { id: 'reportes', label: 'Reportes & BI', icon: 'bar_chart', color: 'bg-pink-500/20 border-pink-500/40 text-pink-400', x: 90, y: 65 },
 ]
 
@@ -16,9 +15,7 @@ const conexiones = [
   { from: 'ventas', to: 'contabilidad' },
   { from: 'compras', to: 'inventario' },
   { from: 'compras', to: 'contabilidad' },
-  { from: 'inventario', to: 'produccion' },
   { from: 'rrhh', to: 'contabilidad' },
-  { from: 'produccion', to: 'inventario' },
   { from: 'contabilidad', to: 'reportes' },
   { from: 'ventas', to: 'reportes' },
 ]

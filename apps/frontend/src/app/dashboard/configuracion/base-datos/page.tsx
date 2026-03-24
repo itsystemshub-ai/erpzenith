@@ -208,22 +208,6 @@ const TABLE_SCHEMAS: Record<string, { column: string; type: string; nullable: bo
     { column: 'tasaBCV', type: 'DECIMAL(10,4)', nullable: false, pk: false },
     { column: 'createdAt', type: 'TIMESTAMP', nullable: false, pk: false, default: 'now()' },
   ],
-  ordenes_produccion: [
-    { column: 'id',          type: 'VARCHAR(25)',  nullable: false, pk: true,  default: 'cuid()' },
-    { column: 'numero',      type: 'VARCHAR(255)', nullable: false, pk: false, unique: true },
-    { column: 'estado',      type: 'VARCHAR(50)',  nullable: false, pk: false, default: 'PLANIFICADA' },
-    { column: 'progreso',    type: 'INTEGER',      nullable: false, pk: false, default: '0' },
-    { column: 'fechaInicio', type: 'TIMESTAMP',    nullable: false, pk: false },
-    { column: 'fechaFin',    type: 'TIMESTAMP',    nullable: false, pk: false },
-    { column: 'createdAt',   type: 'TIMESTAMP',    nullable: false, pk: false, default: 'now()' },
-    { column: 'updatedAt',   type: 'TIMESTAMP',    nullable: false, pk: false },
-  ],
-  items_orden_produccion: [
-    { column: 'id',         type: 'VARCHAR(25)', nullable: false, pk: true,  default: 'cuid()' },
-    { column: 'ordenId',    type: 'VARCHAR(25)', nullable: false, pk: false },
-    { column: 'productoId', type: 'VARCHAR(25)', nullable: false, pk: false },
-    { column: 'cantidad',   type: 'INTEGER',     nullable: false, pk: false },
-  ],
   // ─── Geografía ───────────────────────────────────────────────────────────
   geo_regiones: [
     { column: 'id',     type: 'VARCHAR(25)',  nullable: false, pk: true,  default: 'cuid()' },
