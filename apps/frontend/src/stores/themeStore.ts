@@ -3,11 +3,14 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export type Theme = 'light' | 'dark'
+export type Currency = 'USD' | 'VES'
 
 interface ThemeState {
   theme: Theme
   toggle: () => void
   setTheme: (t: Theme) => void
+  currency: Currency
+  toggleCurrency: () => void
 }
 
 export const useThemeStore = create<ThemeState>()(
@@ -21,6 +24,9 @@ export const useThemeStore = create<ThemeState>()(
       },
 
       setTheme: (theme) => set({ theme }),
+
+      currency: 'USD',
+      toggleCurrency: () => set((s) => ({ currency: s.currency === 'USD' ? 'VES' : 'USD' })),
     }),
     { name: 'zenith-theme',
       skipHydration: true,

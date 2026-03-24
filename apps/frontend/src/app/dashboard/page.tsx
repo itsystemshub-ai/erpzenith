@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { useAuthStore } from '@/stores/authStore'
 import { useErpQuery } from '@/hooks/useErpQuery'
 import { QK } from '@/lib/queryKeys'
+import { useEffect, useState } from 'react'
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend,
@@ -50,8 +51,11 @@ function fmtUSD(n: number) {
 
 export default function DashboardPage() {
   const { user } = useAuthStore()
-  const hour = new Date().getHours()
-  const greeting = hour < 12 ? 'Buenos días' : hour < 18 ? 'Buenas tardes' : 'Buenas noches'
+  const [greeting, setGreeting] = useState('Bienvenido')
+  useEffect(() => {
+    const hour = new Date().getHours()
+    setGreeting(hour < 12 ? 'Buenos días' : hour < 18 ? 'Buenas tardes' : 'Buenas noches')
+  }, [])
 
   const { data: kpis, isLoading: kpisLoading } = useErpQuery<KpiData>(
     QK.ejecutivo.kpis(),

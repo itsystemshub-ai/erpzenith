@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green: #1d9e4a;
+  --green-dark: #1d4c27;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #333;
+  background: #fff;
+}
+
+/* Brand slider animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.brand-track {
+  display: flex;
+  animation: marquee 20s linear infinite;
+  width: max-content;
+}
+
+.brand-track:hover {
+  animation-play-state: paused;
+}
+
+/* Category dropdown */
+.cat-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  min-width: 260px;
+  padding: 8px 0;
+}
+
+.cat-trigger:hover .cat-dropdown,
+.cat-trigger:focus-within .cat-dropdown {
+  display: block;
+}
+
+/* Product card hover */
+.product-card:hover .product-overlay {
+  opacity: 1;
+}
+
+/* Chatbot */
+#chatbot-window {
+  display: none;
+  flex-direction: column;
+}
+#chatbot-window.open {
+  display: flex;
+}

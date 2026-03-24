@@ -22,7 +22,7 @@ const NAV_GROUPS: NavGroup[] = [
         children: [
           { href: '/dashboard/inventario/productos', label: 'Productos' },
           { href: '/dashboard/inventario/movimientos', label: 'Movimientos' },
-          { href: '/dashboard/inventario/almacenes', label: 'Almacenes' },
+
           { href: '/dashboard/inventario/trazabilidad', label: 'Trazabilidad' },
           { href: '/dashboard/inventario/desarrollo', label: 'Desarrollo' },
           { href: '/dashboard/inventario/smart-control', label: 'Smart Control' },

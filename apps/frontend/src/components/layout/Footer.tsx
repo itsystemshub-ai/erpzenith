@@ -10,7 +10,7 @@ export function Footer() {
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           Sistema Operativo
         </span>
-        <span>© {new Date().getFullYear()} ERP Zenith</span>
+        <span suppressHydrationWarning>© {new Date().getFullYear()} ERP Zenith</span>
         <span className="flex items-center gap-1.5">
           <span className="material-symbols-outlined text-[12px]">verified_user</span>
           Cifrado Activo

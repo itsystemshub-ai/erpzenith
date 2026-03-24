@@ -22,6 +22,12 @@ export class InventarioController {
     return this.inventarioService.findProductoById(id)
   }
 
+  @Post('productos/bulk')
+  bulkUpsert(@Body() body: Record<string, unknown>) {
+    const rows = (body.rows as Record<string, unknown>[]) ?? []
+    return this.inventarioService.bulkUpsertProductos(rows as never)
+  }
+
   @Post('productos')
   create(@Body() dto: CreateProductoDto) {
     return this.inventarioService.createProducto(dto)
@@ -30,6 +36,11 @@ export class InventarioController {
   @Put('productos/:id')
   update(@Param('id') id: string, @Body() dto: Partial<CreateProductoDto>) {
     return this.inventarioService.updateProducto(id, dto)
+  }
+
+  @Delete('productos/all')
+  removeAll() {
+    return this.inventarioService.deleteAllProductos()
   }
 
   @Delete('productos/:id')

@@ -12,7 +12,7 @@ export default function LoginLayout({ children }: { children: React.ReactNode })
             <span className="material-symbols-outlined text-[12px]">verified_user</span>
             Cifrado Militar Activo
           </span>
-          <span>© {new Date().getFullYear()} ERP Zenith</span>
+          <span suppressHydrationWarning>© {new Date().getFullYear()} ERP Zenith</span>
           <span className="flex items-center gap-1.5">
             <span className="material-symbols-outlined text-[12px]">shield</span>
             ZENITH PROTECT V4.2

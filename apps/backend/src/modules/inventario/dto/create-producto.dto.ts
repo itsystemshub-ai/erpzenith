@@ -6,6 +6,31 @@ export class CreateProductoDto {
   @IsString()
   sku: string
 
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  tipo?: string
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  fabricante?: string
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  marca?: string
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  material?: string
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  espesor?: string
+
   @ApiProperty()
   @IsString()
   nombre: string
@@ -15,9 +40,10 @@ export class CreateProductoDto {
   @IsString()
   descripcion?: string
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsString()
-  categoria: string
+  medidas?: string
 
   @ApiProperty({ default: 'UND' })
   @IsOptional()
