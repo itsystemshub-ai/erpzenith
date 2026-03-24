@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
-import { ThrottlerGuard } from '@nestjs/throttler'
+import { ThrottlerGuard, ThrottlerStorage } from '@nestjs/throttler'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
 
@@ -12,7 +12,8 @@ async function bootstrap() {
   app.use(helmet())
 
   // Rate limiting: 10 requests por segundo por IP
-  app.useGlobalGuards(new ThrottlerGuard([{ ttl: 1000, limit: 10 }]))
+  const storageService = new ThrottlerStorage()
+  app.useGlobalGuards(new ThrottlerGuard([{ ttl: 1000, limit: 10 }], storageService, app.get('Reflector')))
 
   // Aumentar límite para importaciones Excel grandes
   app.use(require('express').json({ limit: '50mb' }))
@@ -45,7 +46,8 @@ async function bootstrap() {
 export const handler = async (req: any, res: any) => {
   const app = await NestFactory.create(AppModule, { bodyParser: true })
   app.use(helmet())
-  app.useGlobalGuards(new ThrottlerGuard([{ ttl: 1000, limit: 10 }]))
+  const storageService = new ThrottlerStorage()
+  app.useGlobalGuards(new ThrottlerGuard([{ ttl: 1000, limit: 10 }], storageService, app.get('Reflector')))
   app.use(require('express').json({ limit: '50mb' }))
   app.use(require('express').urlencoded({ limit: '50mb', extended: true }))
   app.enableCors({ origin: true, credentials: true })
