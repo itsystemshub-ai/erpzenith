@@ -96,7 +96,7 @@ async function main() {
   // ─── Tasa BCV ────────────────────────────────────────────────────────────
   const tasaExistente = await prisma.tasaBCV.findFirst({ orderBy: { fecha: 'desc' } })
   if (!tasaExistente) {
-    await prisma.tasaBCV.create({ data: { tasa: new Prisma.Decimal(46.82) } })
+    await prisma.tasaBCV.create({ data: { tasa: new Prisma.Decimal('46.82') } })
     console.log('✅ Tasa BCV inicial: 46.82 VES/USD')
   } else {
     console.log('✅ Tasa BCV existente respetada:', tasaExistente.tasa.toString(), 'VES/USD')
