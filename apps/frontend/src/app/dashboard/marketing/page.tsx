@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/Button'
 import { useErpQuery } from '@/hooks/useErpQuery'
 import { QK } from '@/lib/queryKeys'
 
+export const runtime = 'edge'
+
 interface Metrica {
   label: string
   valor: string

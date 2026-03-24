@@ -3,6 +3,8 @@ import { TopBar } from '@/components/layout/TopBar'
 import { useErpQuery } from '@/hooks/useErpQuery'
 import { QK } from '@/lib/queryKeys'
 
+export const runtime = 'edge'
+
 interface Modulo {
   id: string
   label: string
