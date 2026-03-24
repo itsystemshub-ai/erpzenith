@@ -216,4 +216,10 @@
   .divider {
     @apply border-t border-outline-variant/30;
   }
+
+  /* Dark select options — prevents OS-default white background on dark theme */
+  select option {
+    background-color: #222a3d;
+    color: var(--color-on-surface);
+  }
 }

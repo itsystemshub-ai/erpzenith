@@ -24,7 +24,7 @@ const NAV_GROUPS: NavGroup[] = [
           { href: '/dashboard/inventario/movimientos', label: 'Movimientos' },
           { href: '/dashboard/inventario/almacenes', label: 'Almacenes' },
           { href: '/dashboard/inventario/trazabilidad', label: 'Trazabilidad' },
-          { href: '/dashboard/inventario/multialmacenes', label: 'Multialmacenes' },
+          { href: '/dashboard/inventario/desarrollo', label: 'Desarrollo' },
           { href: '/dashboard/inventario/smart-control', label: 'Smart Control' },
           { href: '/dashboard/inventario/reabastecimiento', label: 'Reabastecimiento' },
           { href: '/dashboard/inventario/ajustes', label: 'Ajustes' },
@@ -40,22 +40,7 @@ const NAV_GROUPS: NavGroup[] = [
           { href: '/dashboard/reportes/compras-bi', label: 'Reporte BI' },
         ],
       },
-      {
-        href: '/dashboard/produccion', icon: 'factory', label: 'Producción',
-        children: [
-          { href: '/dashboard/produccion/ordenes', label: 'Órdenes' },
-          { href: '/dashboard/produccion/bom', label: 'BOM' },
-        ],
-      },
-      { href: '/dashboard/mantenimiento', icon: 'build', label: 'Mantenimiento' },
-      {
-        href: '/dashboard/calidad', icon: 'verified', label: 'Calidad',
-        children: [
-          { href: '/dashboard/calidad/inspecciones', label: 'Inspecciones' },
-          { href: '/dashboard/calidad/auditoria', label: 'Auditoría' },
-        ],
-      },
-      { href: '/dashboard/flota', icon: 'local_shipping', label: 'Flota' },
+
     ],
   },
   {
@@ -138,7 +123,6 @@ const NAV_GROUPS: NavGroup[] = [
     label: 'Herramientas', icon: 'build_circle',
     items: [
       { href: '/dashboard/ai-chat', icon: 'smart_toy', label: 'IA Analista' },
-      { href: '/dashboard/buscador', icon: 'search', label: 'Buscador Global' },
       { href: '/dashboard/soporte', icon: 'support_agent', label: 'Soporte' },
     ],
   },

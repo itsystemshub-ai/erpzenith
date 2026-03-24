@@ -44,6 +44,21 @@ export class RrhhService {
     return this.prisma.empleado.update({ where: { id }, data: dto })
   }
 
+  async remove(id: string) {
+    await this.prisma.nomina.deleteMany({ where: { empleadoId: id } })
+    await this.prisma.empleado.delete({ where: { id } })
+    return { ok: true }
+  }
+
+  async getHistorialNomina(empleadoId?: string) {
+    return this.prisma.nomina.findMany({
+      where: empleadoId ? { empleadoId } : {},
+      include: { empleado: { select: { nombre: true, apellido: true, cargo: true } } },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    })
+  }
+
   async calcularNomina(periodo: string) {
     const empleados = await this.prisma.empleado.findMany({ where: { isActive: true, estado: 'ACTIVO' } })
     const tasa = await this.prisma.tasaBCV.findFirst({ orderBy: { fecha: 'desc' } })

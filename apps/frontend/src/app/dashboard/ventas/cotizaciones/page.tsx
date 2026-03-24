@@ -49,7 +49,7 @@ export default function CotizacionesPage() {
                 <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar por cliente o folio..."
                   className="w-full bg-surface-container-highest border-none rounded-xl pl-10 pr-4 py-2 text-sm text-on-surface focus:ring-1 focus:ring-primary/50 placeholder:text-outline" />
               </div>
-              <select className="bg-surface-container-highest border-none rounded-xl px-4 py-2 text-sm text-on-surface-variant focus:ring-1 focus:ring-primary/50">
+              <select className="bg-surface-container-highest border-none rounded-xl px-4 py-2 text-sm text-on-surface-variant focus:ring-1 focus:ring-primary/50 [&>option]:bg-[#222a3d] [&>option]:text-on-surface">
                 <option>Todos los Vendedores</option>
                 <option>Alejandro R.</option>
                 <option>Sofia M.</option>

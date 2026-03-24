@@ -175,9 +175,13 @@ export class VentasService {
     return { ok: true }
   }
 
+  async deleteAllVendedores() {
+    await this.prisma.vendedor.deleteMany({})
+    return { ok: true }
+  }
+
   async bulkUpsertVendedores(rows: Array<{ idcima?: string; rif?: string; nombre: string; region?: string; estado?: string; municipio?: string; personaContacto?: string; direccion?: string; telefonoPersonal?: string; telefonoFijo?: string; email?: string; ciudad?: string; notas?: string }>) {
     let created = 0
-    let updated = 0
     const emptyCells: string[] = []
     const errors: string[] = []
     for (const row of rows) {
@@ -190,28 +194,15 @@ export class VentasService {
         }
         if (!data.nombre || !String(data.nombre).trim()) data.nombre = 'Sin nombre'
 
-        let existing: any = null
-        if (data.idcima) existing = await this.prisma.vendedor.findFirst({ where: { idcima: data.idcima } })
-        if (!existing && data.rif) existing = await this.prisma.vendedor.findFirst({ where: { rif: data.rif } })
-        if (!existing) {
-          existing = await this.prisma.vendedor.findFirst({
-            where: { nombre: { equals: data.nombre, mode: 'insensitive' } },
-          })
-        }
-
-        if (existing) {
-          await this.prisma.vendedor.update({ where: { id: existing.id }, data })
-          updated++
-        } else {
-          await this.prisma.vendedor.create({ data })
-          created++
-        }
+        // Always create — every row gets its own unique id
+        await this.prisma.vendedor.create({ data })
+        created++
       } catch (err: any) {
         const msg = err?.message ?? String(err)
         errors.push(`${row.nombre} (${row.rif ?? 'sin RIF'}): ${msg}`)
         console.error('[bulkUpsertVendedores] Error en fila:', row, msg)
       }
     }
-    return { ok: true, created, updated, emptyCells, errors, skipped: errors.length }
+    return { ok: true, created, updated: 0, emptyCells, errors, skipped: errors.length }
   }
 }

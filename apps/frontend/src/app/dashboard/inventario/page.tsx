@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { useInventarioStore } from '@/stores/inventarioStore'
 import { useErpQuery } from '@/hooks/useErpQuery'
 import { QK } from '@/lib/queryKeys'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 type StockStatus = 'critical' | 'low' | 'normal'
 
@@ -34,31 +34,60 @@ const estadoConfig: Record<StockStatus, { label: string; variant: 'error' | 'war
   normal: { label: 'Normal', variant: 'success', dot: 'bg-emerald-500' },
 }
 
+// Fuera del componente para evitar recreación en cada render
+function normalizar(raw: any[]): Producto[] {
+  return raw.map(p => {
+    const stockActual = p.stockActual ?? p.stocks?.reduce((s: number, st: any) => s + (st.cantidad ?? 0), 0) ?? 0
+    const stockMinimo = p.stockMinimo ?? p.stockMin ?? 0
+    let estado: StockStatus = 'normal'
+    if (stockActual === 0 || stockActual < stockMinimo * 0.5) estado = 'critical'
+    else if (stockActual < stockMinimo) estado = 'low'
+    return {
+      id: p.id,
+      nombre: p.nombre,
+      categoria: p.categoria ?? '—',
+      sku: p.sku,
+      lote: p.lote ?? '—',
+      almacen: p.almacen ?? p.stocks?.[0]?.almacen?.nombre ?? '—',
+      stockActual,
+      stockMinimo,
+      vencimiento: p.vencimiento,
+      valoracion: p.valoracion ?? (p.precioUSD ? parseFloat(p.precioUSD) * stockActual : 0),
+      metodo: p.metodo ?? 'PEPS',
+      estado,
+    }
+  })
+}
+
 export default function InventarioPage() {
   const { filtros, setFiltro, checkStockBajo } = useInventarioStore()
 
   // Intentar cargar desde backend; si falla, usa mock
-  const { data: productosData } = useErpQuery<Producto[]>(
+  const { data: productosData } = useErpQuery<any[]>(
     QK.inventario.productos(),
     '/inventario/productos',
     { retry: false }
   )
 
-  const productos = productosData ?? MOCK_PRODUCTOS
+  // Normalizar con useMemo para evitar nuevo array en cada render
+  const productos = useMemo(
+    () => productosData ? normalizar(productosData) : MOCK_PRODUCTOS,
+    [productosData]
+  )
 
-  // Detectar stock bajo y emitir eventos
+  // Detectar stock bajo — depende de productosData (referencia estable de react-query)
   useEffect(() => {
-    if (productos.length > 0) {
-      checkStockBajo(productos.map(p => ({
-        id: p.id,
-        nombre: p.nombre,
-        sku: p.sku,
-        stock: p.stockActual,
-        stockMinimo: p.stockMinimo,
-        precio: p.valoracion,
-      })))
-    }
-  }, [productos, checkStockBajo])
+    if (productos.length === 0) return
+    checkStockBajo(productos.map(p => ({
+      id: p.id,
+      nombre: p.nombre,
+      sku: p.sku,
+      stock: p.stockActual,
+      stockMinimo: p.stockMinimo,
+      precio: p.valoracion,
+    })))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productosData])
 
   const filtered = productos.filter(p =>
     p.nombre.toLowerCase().includes(filtros.search.toLowerCase()) ||
@@ -132,7 +161,7 @@ export default function InventarioPage() {
               </thead>
               <tbody className="divide-y divide-white/5">
                 {filtered.map((p) => {
-                  const cfg = estadoConfig[p.estado]
+                  const cfg = estadoConfig[p.estado] ?? estadoConfig['normal']
                   return (
                     <tr key={p.id} className="hover:bg-white/5 transition-colors group">
                       <td className="px-6 py-5">

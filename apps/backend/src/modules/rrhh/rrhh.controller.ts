@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Body, Param, Query, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Put, Patch, Delete, Body, Param, Query, UseGuards } from '@nestjs/common'
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { RrhhService } from './rrhh.service'
 import { CreateEmpleadoDto } from './dto/create-empleado.dto'
@@ -31,9 +31,24 @@ export class RrhhController {
     return this.rrhhService.update(id, dto)
   }
 
+  @Patch('empleados/:id')
+  patch(@Param('id') id: string, @Body() dto: Partial<CreateEmpleadoDto>) {
+    return this.rrhhService.update(id, dto)
+  }
+
+  @Delete('empleados/:id')
+  remove(@Param('id') id: string) {
+    return this.rrhhService.remove(id)
+  }
+
   @Post('nomina/calcular')
   calcularNomina(@Body('periodo') periodo: string) {
     return this.rrhhService.calcularNomina(periodo)
+  }
+
+  @Get('nomina/historial')
+  getHistorialNomina(@Query('empleadoId') empleadoId?: string) {
+    return this.rrhhService.getHistorialNomina(empleadoId)
   }
 
   @Get('resumen')

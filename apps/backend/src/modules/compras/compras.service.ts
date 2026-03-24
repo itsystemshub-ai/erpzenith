@@ -73,10 +73,6 @@ export class ComprasService {
   }
 
   async createProveedor(data: { idcima?: string; rif?: string; nombre: string; region?: string; estado?: string; municipio?: string; personaContacto?: string; direccion?: string; telefonoPersonal?: string; telefonoFijo?: string; email?: string }) {
-    if (data.rif) {
-      const existing = await this.prisma.proveedor.findFirst({ where: { rif: data.rif } })
-      if (existing) return this.prisma.proveedor.update({ where: { id: existing.id }, data })
-    }
     return this.prisma.proveedor.create({ data })
   }
 
@@ -89,9 +85,13 @@ export class ComprasService {
     return { ok: true }
   }
 
+  async deleteAllProveedores() {
+    await this.prisma.proveedor.deleteMany({})
+    return { ok: true }
+  }
+
   async bulkUpsertProveedores(rows: Array<{ idcima?: string; rif?: string; nombre: string; region?: string; estado?: string; municipio?: string; personaContacto?: string; direccion?: string; telefonoPersonal?: string; telefonoFijo?: string; email?: string }>) {
     let created = 0
-    let updated = 0
     const emptyCells: string[] = []
     const errors: string[] = []
     for (const row of rows) {
@@ -104,28 +104,15 @@ export class ComprasService {
         }
         if (!data.nombre || !String(data.nombre).trim()) data.nombre = 'Sin nombre'
 
-        let existing: any = null
-        if (data.idcima) existing = await this.prisma.proveedor.findFirst({ where: { idcima: data.idcima } })
-        if (!existing && data.rif) existing = await this.prisma.proveedor.findFirst({ where: { rif: data.rif } })
-        if (!existing) {
-          existing = await this.prisma.proveedor.findFirst({
-            where: { nombre: { equals: data.nombre, mode: 'insensitive' } },
-          })
-        }
-
-        if (existing) {
-          await this.prisma.proveedor.update({ where: { id: existing.id }, data })
-          updated++
-        } else {
-          await this.prisma.proveedor.create({ data })
-          created++
-        }
+        // Always create — every row gets its own unique id
+        await this.prisma.proveedor.create({ data })
+        created++
       } catch (err: any) {
         const msg = err?.message ?? String(err)
         errors.push(`${row.nombre} (${row.rif ?? 'sin RIF'}): ${msg}`)
         console.error('[bulkUpsertProveedores] Error en fila:', row, msg)
       }
     }
-    return { ok: true, created, updated, emptyCells, errors, skipped: errors.length }
+    return { ok: true, created, updated: 0, emptyCells, errors, skipped: errors.length }
   }
 }
