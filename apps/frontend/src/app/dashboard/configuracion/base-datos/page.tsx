@@ -125,6 +125,23 @@ const TABLE_SCHEMAS: Record<string, { column: string; type: string; nullable: bo
     { column: 'cantidad',   type: 'INTEGER',       nullable: false, pk: false },
     { column: 'precioUSD',  type: 'DECIMAL(12,2)', nullable: false, pk: false },
   ],
+  // ─── Producción ──────────────────────────────────────────────────────────
+  ordenes_produccion: [
+    { column: 'id',          type: 'VARCHAR(25)',  nullable: false, pk: true,  default: 'cuid()' },
+    { column: 'numero',      type: 'VARCHAR(255)', nullable: false, pk: false, unique: true },
+    { column: 'estado',      type: 'VARCHAR(50)',  nullable: false, pk: false, default: 'PLANIFICADA' },
+    { column: 'progreso',    type: 'INTEGER',      nullable: false, pk: false, default: '0' },
+    { column: 'fechaInicio', type: 'TIMESTAMP',    nullable: false, pk: false },
+    { column: 'fechaFin',    type: 'TIMESTAMP',    nullable: false, pk: false },
+    { column: 'createdAt',   type: 'TIMESTAMP',    nullable: false, pk: false, default: 'now()' },
+    { column: 'updatedAt',   type: 'TIMESTAMP',    nullable: false, pk: false },
+  ],
+  items_orden_produccion: [
+    { column: 'id',         type: 'VARCHAR(25)', nullable: false, pk: true,  default: 'cuid()' },
+    { column: 'ordenId',    type: 'VARCHAR(25)', nullable: false, pk: false },
+    { column: 'productoId', type: 'VARCHAR(25)', nullable: false, pk: false },
+    { column: 'cantidad',   type: 'INTEGER',     nullable: false, pk: false },
+  ],
   // ─── Ventas ──────────────────────────────────────────────────────────────
   clientes: [
     { column: 'id',               type: 'VARCHAR(25)',  nullable: false, pk: true,  default: 'cuid()' },
@@ -304,7 +321,7 @@ export default function BaseDatosPage() {
   // Contraseñas visibles: Set de "rowIndex-colName"
   const [visiblePasswords, setVisiblePasswords] = useState<Set<string>>(new Set())
   // Paginación
-  const PAGE_SIZE = 15
+  const PAGE_SIZE = 100
   const [schemaPage, setSchemaPage] = useState(1)
   const [dataPage,   setDataPage]   = useState(1)
 
@@ -357,11 +374,18 @@ export default function BaseDatosPage() {
   const selectedRows = dbInfo?.tables.find((t) => t.table === selectedTable)?.rows ?? 0
   const isCimaTable = false
 
-  const USER_COL_ORDER = ['empresaId','id','name','username','password','roles','departamento','isActive','mfaEnabled','mfaSecret','passwordChangedAt','createdAt','updatedAt']
+  const USER_COL_ORDER = ['id','empresaId','name','username','password','roles','departamento','isActive','mfaEnabled','mfaSecret','passwordChangedAt','createdAt','updatedAt']
   const rawColumns = tableData.length > 0 ? Object.keys(tableData[0]) : schema.map((s) => s.column)
+
+  // id siempre primero, luego seguir el orden del schema, luego columnas extra que no estén en el schema
+  const schemaOrder = schema.map(s => s.column)
   const dataColumnsRaw = selectedTable === 'users'
     ? [...USER_COL_ORDER.filter(c => rawColumns.includes(c)), ...rawColumns.filter(c => !USER_COL_ORDER.includes(c))]
-    : rawColumns
+    : [
+        'id',
+        ...schemaOrder.filter(c => c !== 'id' && rawColumns.includes(c)),
+        ...rawColumns.filter(c => c !== 'id' && !schemaOrder.includes(c)),
+      ]
   const dataColumns = [...new Set(dataColumnsRaw)]
 
   const tableWidthPx = dataColumns.reduce((sum, col) => sum + colWidth(col), 0)

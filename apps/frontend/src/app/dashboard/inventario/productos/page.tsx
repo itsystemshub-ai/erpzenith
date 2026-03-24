@@ -101,10 +101,6 @@ function highlight(text: string | null | undefined, tokens: string[]): React.Rea
   )
 }
 
-// Normalización agresiva: solo letras y números
-const normKey = (s: string) =>
-  s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '')
-
 function getStockTotal(p: Producto): number {
   return p.stocks?.reduce((acc, s) => acc + s.cantidad, 0) ?? 0
 }
@@ -133,7 +129,7 @@ export default function ProductosPage() {
   const [importedRows, setImportedRows] = useState(0)
   const [importProgress, setImportProgress] = useState<{ active: boolean; done: number; total: number; error: string | null }>({ active: false, done: 0, total: 0, error: null })
   const [page, setPage]           = useState(1)
-  const PAGE_SIZE = 50
+  const PAGE_SIZE = 100
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { currency } = useThemeStore()
   const addNotification = useNotificationStore(s => s.add)
@@ -154,7 +150,6 @@ export default function ProductosPage() {
 
   const searchTokens = useMemo(() => norm(busqueda).split(/\s+/).filter(Boolean), [busqueda])
 
-  // Detectar SKUs duplicados
   const { duplicateSkuIds } = useMemo(() => {
     const skuMap = new Map<string, string[]>()
     for (const p of rawProductos) {
@@ -202,7 +197,9 @@ export default function ProductosPage() {
   const totalDuplicados = duplicateSkuIds.size
 
   const formatPrecio = (usd: number) =>
-    currency === 'USD' ? `${usd.toFixed(2)}` : `Bs. ${(usd * tasa).toLocaleString('es-VE', { minimumFractionDigits: 2 })}`
+    currency === 'USD'
+      ? usd.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      : `Bs. ${(usd * tasa).toLocaleString('es-VE', { minimumFractionDigits: 2 })}`
 
   const formatValor = (usd: number) =>
     currency === 'USD'
@@ -215,84 +212,101 @@ export default function ProductosPage() {
     if (!file) return
     const reader = new FileReader()
     reader.onload = async (ev) => {
-      const wb   = XLSX.read(ev.target?.result, { type: 'binary' })
-      const ws   = wb.Sheets[wb.SheetNames[0]]
+      const wb  = XLSX.read(ev.target?.result, { type: 'binary' })
+      const ws  = wb.Sheets[wb.SheetNames[0]]
       const rows: Record<string, unknown>[] = XLSX.utils.sheet_to_json(ws, { defval: '' })
 
-      if (rows.length > 0) {
-        console.log('[Import Productos] Columnas detectadas:', Object.keys(rows[0]))
-        Object.entries(rows[0]).forEach(([k, v]) => console.log(`  col "${k}" → "${v}"`))
+      if (rows.length === 0) {
+        addNotification({ type: 'warning', title: 'Sin datos', message: 'El archivo está vacío.', module: 'Inventario' })
+        return
       }
 
-      const headers = rows.length > 0 ? Object.keys(rows[0]) : []
+      const headers = Object.keys(rows[0])
+      console.log('[Import] Headers raw:', headers)
 
-      // Detectar header por normKey (solo alfanumérico, sin símbolos)
-      const findHeader = (...candidates: string[]): string | null => {
-        for (const c of candidates) {
-          const nc = normKey(c)
-          const match = headers.find(h => normKey(h) === nc)
-          if (match) return match
+      // Limpia un string: minúsculas, sin tildes, sin símbolos
+      const clean = (s: string) =>
+        s.toLowerCase()
+         .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+         .replace(/[^a-z0-9]/g, '')
+
+      // Busca el header real cuyo clean() coincida con alguno de los patrones
+      const find = (patterns: string[]): string | null => {
+        const cleaned = patterns.map(clean)
+        // 1. match exacto
+        for (const h of headers) {
+          const ch = clean(h)
+          if (cleaned.includes(ch)) return h
         }
-        // fallback: match parcial
-        for (const c of candidates) {
-          const nc = normKey(c)
-          const match = headers.find(h => normKey(h).includes(nc) || nc.includes(normKey(h)))
-          if (match) return match
+        // 2. el header contiene algún patrón
+        for (const h of headers) {
+          const ch = clean(h)
+          for (const p of cleaned) {
+            if (p.length >= 3 && ch.includes(p)) return h
+          }
+        }
+        // 3. algún patrón contiene el header (header es substring del patrón)
+        for (const h of headers) {
+          const ch = clean(h)
+          if (ch.length < 3) continue
+          for (const p of cleaned) {
+            if (p.includes(ch)) return h
+          }
         }
         return null
       }
 
-      // Mapear headers una sola vez
-      // Encabezados reales del Excel: N°, Código, Tipo, Fabricante, Marca, Material, espesor, Descripción, Medidas, Precio, Stock / Min.
-      const hSku    = findHeader('Codigo', 'Código', 'SKU', 'COD', 'Referencia', 'REF')
-      const hTipo   = findHeader('Tipo', 'Type')
-      const hFab    = findHeader('Fabricante', 'Manufacturer')
-      const hMarca  = findHeader('Marca', 'Brand')
-      const hMat    = findHeader('Material')
-      const hEsp    = findHeader('espesor', 'Espesor', 'Thickness')
-      const hNombre = findHeader('Descripcion', 'Descripción', 'Nombre', 'Producto', 'Name')
-      const hMed    = findHeader('Medidas', 'Medida', 'Dimensiones')
-      const hUnidad = findHeader('Unidad', 'UND', 'Unit')
-      const hPrecio = findHeader('Precio', 'Price', 'Costo', 'PVP', 'Valor', 'PrecioUSD', 'PrecioUsd')
-      // "Stock / Min." → normKey → "stockmin"
-      const hStock  = findHeader('Stock / Min.', 'Stock / Mín.', 'StockMin', 'Stock Min', 'Minimo', 'Mínimo', 'Stock', 'Cantidad', 'Existencia', 'QTY')
+      const hSku    = find(['codigo', 'Codigo', 'Código', 'sku', 'cod', 'referencia', 'ref', 'N'])
+      const hTipo   = find(['tipo', 'type'])
+      const hFab    = find(['fabricante', 'manufacturer'])
+      const hMarca  = find(['marca', 'brand'])
+      const hMat    = find(['material'])
+      const hEsp    = find(['espesor', 'thickness'])
+      const hNombre = find(['descripcion', 'Descripción', 'nombre', 'producto', 'name', 'desc'])
+      const hMed    = find(['medidas', 'medida', 'dimensiones', 'dimension'])
+      const hUnidad = find(['unidad', 'unit', 'und'])
+      const hPrecio = find(['precio', 'price', 'costo', 'pvp', 'valor', 'precioUSD', 'preciousd', 'precio$'])
+      const hStock  = find(['stock', 'cantidad', 'existencia', 'qty', 'inventario', 'stockmin'])
 
-      console.log('[Import Productos] Headers mapeados:', { hSku, hTipo, hFab, hMarca, hMat, hEsp, hNombre, hMed, hUnidad, hPrecio, hStock })
+      console.log('[Import] Headers mapeados:', { hSku, hTipo, hFab, hMarca, hMat, hEsp, hNombre, hMed, hUnidad, hPrecio, hStock })
 
-      const getVal = (r: Record<string, unknown>, h: string | null): string | null => {
+      // Obtiene el valor de una celda como string limpio
+      const val = (r: Record<string, unknown>, h: string | null): string | null => {
         if (!h) return null
         const v = r[h]
-        if (v === null || v === undefined || String(v).trim() === '') return null
-        return String(v).trim()
+        if (v === null || v === undefined) return null
+        const s = String(v).trim()
+        return s === '' ? null : s
+      }
+
+      // Convierte a número (maneja tanto punto como coma decimal)
+      const num = (raw: string | null): number => {
+        if (!raw) return 0
+        const n = parseFloat(raw.replace(/[^0-9.,\-]/g, '').replace(',', '.'))
+        return isNaN(n) ? 0 : n
       }
 
       const mapped = rows
-        .map((r, idx) => {
-          const skuRaw = getVal(r, hSku)
-          const precioRaw = getVal(r, hPrecio)
-          const stockRaw  = getVal(r, hStock)
-          return {
-            sku:        skuRaw || `IMP-${String(idx).padStart(5, '0')}-${Math.random().toString(36).slice(2, 6)}`,
-            tipo:       getVal(r, hTipo)   ?? undefined,
-            fabricante: getVal(r, hFab)    ?? undefined,
-            marca:      getVal(r, hMarca)  ?? undefined,
-            material:   getVal(r, hMat)    ?? undefined,
-            espesor:    getVal(r, hEsp)    ?? undefined,
-            nombre:     getVal(r, hNombre) ?? undefined,
-            medidas:    getVal(r, hMed)    ?? undefined,
-            unidad:     getVal(r, hUnidad) ?? 'UND',
-            precioUSD:  precioRaw ? parseFloat(precioRaw.replace(/[^0-9.,]/g, '').replace(',', '.')) || 0 : 0,
-            stockMin:   stockRaw  ? parseFloat(stockRaw.replace(/[^0-9.,]/g, '').replace(',', '.'))  || 0 : 0,
-          }
-        })
-        .filter(r => Object.values(r).some(v => v !== undefined && String(v).trim() !== ''))
-        .map(r => ({ ...r, nombre: r.nombre ?? 'Sin nombre' }))
+        .map((r, idx) => ({
+          sku:        val(r, hSku) || `IMP-${String(idx).padStart(5, '0')}-${Math.random().toString(36).slice(2, 6)}`,
+          tipo:       val(r, hTipo)   ?? undefined,
+          fabricante: val(r, hFab)    ?? undefined,
+          marca:      val(r, hMarca)  ?? undefined,
+          material:   val(r, hMat)    ?? undefined,
+          espesor:    val(r, hEsp)    ?? undefined,
+          nombre:     val(r, hNombre) ?? 'Sin nombre',
+          medidas:    val(r, hMed)    ?? undefined,
+          unidad:     val(r, hUnidad) ?? 'UND',
+          precioUSD:  num(val(r, hPrecio)),
+          stockMin:   num(val(r, hStock)),
+        }))
+        .filter(r => r.sku || r.nombre !== 'Sin nombre')
 
-      console.log(`[Import Productos] ${rows.length} filas → ${mapped.length} a importar`)
-      if (mapped.length > 0) console.log('[Import Productos] Primera fila mapeada:', mapped[0])
+      console.log(`[Import] ${rows.length} filas -> ${mapped.length} a importar`)
+      if (mapped.length > 0) console.log('[Import] Primera fila:', mapped[0])
 
       if (mapped.length === 0) {
-        addNotification({ type: 'warning', title: 'Sin datos', message: 'No se encontraron filas válidas en el archivo.', module: 'Inventario' })
+        addNotification({ type: 'warning', title: 'Sin datos', message: 'No se encontraron filas válidas.', module: 'Inventario' })
         return
       }
 
@@ -320,10 +334,10 @@ export default function ProductosPage() {
           message: `${created} creados, ${updated} actualizados${skipped ? `, ${skipped} con error` : ''}.`,
           module: 'Inventario',
         })
-        if (skipped > 0) addNotification({ type: 'warning', title: 'Registros con error', message: `${skipped} producto(s) fallaron. Ver consola.`, module: 'Inventario' })
+        if (skipped > 0) addNotification({ type: 'warning', title: 'Registros con error', message: `${skipped} fallaron. Ver consola.`, module: 'Inventario' })
       } catch (err: unknown) {
         const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message ?? String(err)
-        console.error('[Import Productos] Error:', err)
+        console.error('[Import] Error:', err)
         setImportProgress({ active: false, done, total, error: `Error: ${msg}` })
         addNotification({ type: 'error', title: 'Error al importar', message: msg, module: 'Inventario' })
       }
@@ -516,7 +530,7 @@ export default function ProductosPage() {
                     <th className="px-2 py-4">Descripción</th>
                     <th className="px-2 py-4">Medidas</th>
                     <th className="px-2 py-4 text-right">Precio $</th>
-                    <th className="px-2 py-4">Stock/Mín</th>
+                    <th className="px-2 py-4">Stock</th>
                     <th className="px-2 py-4">Estado</th>
                     <th className="px-2 py-4 text-right">Acc.</th>
                   </tr>
@@ -553,7 +567,6 @@ export default function ProductosPage() {
                         </td>
                         <td className={cell}>
                           <p className="text-xs font-bold text-on-surface">{stock}</p>
-                          <p className="text-[10px] text-outline">Mín: {p.stockMin}</p>
                         </td>
                         <td className={cell}>
                           <div className="flex items-center gap-1">
