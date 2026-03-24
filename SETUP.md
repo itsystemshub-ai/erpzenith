@@ -17,9 +17,6 @@ npm install
 # 2. Configurar backend
 cp apps/backend/.env.example apps/backend/.env
 # ⚠️ EDITAR apps/backend/.env con tus credenciales reales
-
-# 3. Configurar frontend (opcional - solo si usas Firebase)
-cp .env.example .env.local
 ```
 
 ## 🗄️ Base de Datos

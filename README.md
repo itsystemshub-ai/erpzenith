@@ -23,10 +23,6 @@ npm install
 # 3. Configurar variables de entorno del backend
 cp apps/backend/.env.example apps/backend/.env
 # Editar apps/backend/.env con tus credenciales reales
-
-# 4. Configurar variables de entorno del frontend (opcional)
-cp .env.example .env.local
-# Editar .env.local si usas Firebase u otros servicios
 ```
 
 ### Desarrollo
@@ -165,7 +161,7 @@ git commit -m "fix(inventario): corregir cálculo de stock negativo"
 git commit -m "refactor(prisma): implementar soft delete middleware"
 
 # Seguridad
-git commit -m "security: rotar credenciales de Firebase"
+git commit -m "security: rotar credenciales de base de datos"
 
 # Docs
 git commit -m "docs: actualizar README con guía de migraciones"
@@ -240,13 +236,6 @@ JWT_SECRET="tu-secreto-seguro"
 JWT_EXPIRES_IN="7d"
 PORT=3001
 FRONTEND_URL="http://localhost:3000"
-```
-
-### Frontend (.env.local - opcional)
-
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY="..."
-NEXT_PUBLIC_FIREBASE_PROJECT_ID="..."
 ```
 
 ## 🚨 Solución de Problemas
