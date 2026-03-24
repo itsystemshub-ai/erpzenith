@@ -1,5 +1,5 @@
--- Clientes: rename codigoCima → idcima, add personaContacto
-ALTER TABLE "clientes" RENAME COLUMN "codigo_cima" TO "idcima";
+-- Clientes: idcima ya agregado en migración anterior, add personaContacto
+-- ALTER TABLE "clientes" RENAME COLUMN "codigo_cima" TO "idcima"; -- Ya existe como idcima
 ALTER TABLE "clientes" ADD COLUMN IF NOT EXISTS "persona_contacto" TEXT;
 
 -- Vendedores: rename telefono → telefono_personal, rename contacto → persona_contacto,
