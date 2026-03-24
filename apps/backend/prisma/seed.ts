@@ -51,12 +51,12 @@ async function main() {
   }
   console.log('✅ Roles creados:', Object.keys(rolesCreados).length)
 
-  const superPassword = await bcrypt.hash('Zenith@2026!', 12)
-  await prisma.user.upsert({
-    where: { username: 'superadminzenith' },
-    update: { password: superPassword, roles: { set: [{ id: rolesCreados['SUPERDEV'] }] } },
-    create: { name: 'Super Admin Zenith', username: 'superadminzenith', password: superPassword, roles: { connect: [{ id: rolesCreados['SUPERDEV'] }] }, isActive: true },
-  })
+   const superPassword = await bcrypt.hash('Zenith@2026!', 12)
+   await prisma.user.upsert({
+     where: { username: 'superadminzenith' },
+     update: { password: superPassword, roles: { set: [{ id: rolesCreados['SUPERDEV'] }] }, isActive: true },
+     create: { name: 'Super Admin Zenith', username: 'superadminzenith', password: superPassword, roles: { connect: [{ id: rolesCreados['SUPERDEV'] }] }, isActive: true },
+   })
   console.log('✅ Superusuario: superadminzenith')
 
   const empresaDemo = await prisma.empresa.findFirst({ orderBy: { createdAt: 'asc' } })
