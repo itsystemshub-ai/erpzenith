@@ -7,11 +7,11 @@
   },
   "scripts": {
     "generate": "npx prisma generate",
-    "setup": "npx prisma migrate deploy && npx prisma db seed",
+    "setup": "npx prisma db push --accept-data-loss && npx prisma db seed",
     "dev": "nest start --watch",
     "dev:only": "nest start --watch",
     "build": "nest build",
-    "start:prod": "npx prisma migrate deploy && npx prisma generate && node dist/main",
+    "start:prod": "npx prisma db push --accept-data-loss && npx prisma generate && node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "dependencies": {
