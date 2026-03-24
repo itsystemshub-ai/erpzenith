@@ -10,13 +10,14 @@ ALTER TABLE "vendedores" ADD COLUMN IF NOT EXISTS "telefono_fijo" TEXT;
 -- copy old contacto → persona_contacto if exists
 DO $$ BEGIN
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='vendedores' AND column_name='contacto') THEN
-    UPDATE "vendedores" SET "persona_contacto" = "contacto";
+    UPDATE "vendedores" SET "persona_contacto" = "contacto" WHERE "persona_contacto" IS NULL;
     ALTER TABLE "vendedores" DROP COLUMN "contacto";
   END IF;
 END $$;
--- rename telefono → telefono_personal
+-- rename telefono → telefono_personal only if telefono exists and telefono_personal doesn't
 DO $$ BEGIN
-  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='vendedores' AND column_name='telefono') THEN
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='vendedores' AND column_name='telefono')
+     AND NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='vendedores' AND column_name='telefono_personal') THEN
     ALTER TABLE "vendedores" RENAME COLUMN "telefono" TO "telefono_personal";
   END IF;
 END $$;
@@ -31,7 +32,7 @@ ALTER TABLE "proveedores" ADD COLUMN IF NOT EXISTS "telefono_fijo" TEXT;
 -- copy old telefono → telefono_personal if exists
 DO $$ BEGIN
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='proveedores' AND column_name='telefono') THEN
-    UPDATE "proveedores" SET "telefono_personal" = "telefono";
+    UPDATE "proveedores" SET "telefono_personal" = "telefono" WHERE "telefono_personal" IS NULL;
     ALTER TABLE "proveedores" DROP COLUMN "telefono";
   END IF;
 END $$;
