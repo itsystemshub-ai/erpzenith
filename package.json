@@ -13,9 +13,9 @@
     "vercel-build": "npm run build"
   },
   "devDependencies": {
-    "turbo": "^2.0.0"
+    "turbo": "^2.5.4"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.100.0"
+    "@supabase/supabase-js": "^2.49.5"
   }
 }
