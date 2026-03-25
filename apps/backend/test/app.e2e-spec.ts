@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import * as request from 'supertest';
+import request from 'supertest';
 
 // Ejemplo de test E2E - Configurar según el módulo que se vaya a probar
 describe('AppController (e2e)', () => {

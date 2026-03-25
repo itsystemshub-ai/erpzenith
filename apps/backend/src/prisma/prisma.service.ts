@@ -27,7 +27,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
   // ─── Middleware para Soft Delete ────────────────────────────────────────────
   private setupSoftDeleteMiddleware() {
-    this.$use(async (params, next) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this as any).$use(async (params: any, next: any) => {
       // Solo aplicar si el modelo tiene soft delete
       if (!this.modelsWithSoftDelete.includes(params.model)) {
         return next(params)
@@ -77,7 +78,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
   // ─── Middleware para actualizar updatedAt automáticamente ───────────────────
   private setupUpdatedAtMiddleware() {
-    this.$use(async (params, next) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this as any).$use(async (params: any, next: any) => {
       if (['update', 'updateMany'].includes(params.action)) {
         params.args = params.args || {}
         params.args.data = params.args.data || {}
