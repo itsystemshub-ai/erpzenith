@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run setup --force && turbo run dev",
+    "dev": "turbo run dev",
     "dev:fast": "turbo run dev",
     "dev:backend": "cd apps/backend && npm run dev",
     "dev:frontend": "cd apps/frontend && npm run dev",
