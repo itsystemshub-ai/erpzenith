@@ -13,7 +13,6 @@
       "cache": false
     },
     "dev": {
-      "dependsOn": ["setup"],
       "cache": false,
       "persistent": true
     },
