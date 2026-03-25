@@ -25,6 +25,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     await this.$disconnect()
   }
 
+  // Enable explicit disconnect for serverless
+  async onApplicationShutdown(signal?: string) {
+    await this.$disconnect()
+  }
+
   // ─── Middleware para Soft Delete ────────────────────────────────────────────
   private setupSoftDeleteMiddleware() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

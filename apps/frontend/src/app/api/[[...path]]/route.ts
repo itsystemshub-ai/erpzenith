@@ -1,28 +1,57 @@
 import { INestApplication } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
-import { ThrottlerGuard } from '@nestjs/throttler'
 import helmet from 'helmet'
-import { AppModule } from '../src/app.module'
+import { AppModule } from '../../../backend/src/app.module'
 
-let app: INestApplication
+// Cache the app instance for serverless function reuse
+let cachedApp: INestApplication | null = null
 
-async function getNestApp() {
-  if (!app) {
-    app = await NestFactory.create(AppModule, { bodyParser: true })
-    app.use(helmet())
-    app.useGlobalGuards(new ThrottlerGuard([{ ttl: 1000, limit: 10 }]))
-    app.use(require('express').json({ limit: '50mb' }))
-    app.use(require('express').urlencoded({ limit: '50mb', extended: true }))
-    app.enableCors({ origin: true, credentials: true })
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
-    await app.init()
+async function createNestApp(): Promise<INestApplication> {
+  if (cachedApp) {
+    return cachedApp
   }
+
+  const app = await NestFactory.create(AppModule, { bodyParser: true })
+  
+  app.use(helmet())
+  app.use(require('express').json({ limit: '50mb' }))
+  app.use(require('express').urlencoded({ limit: '50mb', extended: true }))
+  app.enableCors({ origin: true, credentials: true })
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
+  
+  await app.init()
+  cachedApp = app
+  
   return app
 }
 
+export async function GET(req: any, res: any) {
+  const app = await createNestApp()
+  app.getHttpAdapter().getInstance()(req, res)
+}
+
+export async function POST(req: any, res: any) {
+  const app = await createNestApp()
+  app.getHttpAdapter().getInstance()(req, res)
+}
+
+export async function PUT(req: any, res: any) {
+  const app = await createNestApp()
+  app.getHttpAdapter().getInstance()(req, res)
+}
+
+export async function DELETE(req: any, res: any) {
+  const app = await createNestApp()
+  app.getHttpAdapter().getInstance()(req, res)
+}
+
+export async function PATCH(req: any, res: any) {
+  const app = await createNestApp()
+  app.getHttpAdapter().getInstance()(req, res)
+}
+
 export default async function handler(req: any, res: any) {
-  const nestApp = await getNestApp()
-  const adapter = nestApp.getHttpAdapter()
-  adapter.getInstance()(req, res)
+  const app = await createNestApp()
+  app.getHttpAdapter().getInstance()(req, res)
 }
