@@ -1,0 +1,35 @@
+# Backend .gitignore
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage
+.turbo
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+*.suo
+*.ntvs*
