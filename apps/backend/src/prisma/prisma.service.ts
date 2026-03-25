@@ -15,77 +15,144 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     'empresa',
   ]
 
+  constructor() {
+    super({
+      // Extend the Prisma Client with middleware
+      query: {
+        // Soft delete middleware
+        $allModels: {
+          async findUnique({ args, query }) {
+            return await this.applySoftDeleteFilter('findUnique', args, query)
+          },
+          async findFirst({ args, query }) {
+            return await this.applySoftDeleteFilter('findFirst', args, query)
+          },
+          async findMany({ args, query }) {
+            return await this.applySoftDeleteFilter('findMany', args, query)
+          },
+          async delete({ args, query }) {
+            return await this.applySoftDelete('delete', args, query)
+          },
+          async deleteMany({ args, query }) {
+            return await this.applySoftDelete('deleteMany', args, query)
+          },
+        },
+        // updatedAt middleware
+        $allModels: {
+          async update({ args, query }) {
+            return await this.updateTimestamps('update', args, query)
+          },
+          async updateMany({ args, query }) {
+            return await this.updateTimestamps('updateMany', args, query)
+          },
+        },
+      },
+    })
+    
+    // Apply the extensions
+    // Note: The above query extensions are applied in the constructor
+  }
+
   async onModuleInit() {
     await this.$connect()
-    this.setupSoftDeleteMiddleware()
-    this.setupUpdatedAtMiddleware()
   }
 
   async onModuleDestroy() {
     await this.$disconnect()
   }
 
-  // ─── Middleware para Soft Delete ────────────────────────────────────────────
-  private setupSoftDeleteMiddleware() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this as any).$use(async (params: any, next: any) => {
-      // Solo aplicar si el modelo tiene soft delete
-      if (!this.modelsWithSoftDelete.includes(params.model)) {
-        return next(params)
-      }
+  // Apply soft delete filter to find operations
+  private async applySoftDeleteFilter(
+    action: 'findUnique' | 'findFirst' | 'findMany',
+    args: any,
+    query: any
+  ) {
+    // Solo aplicar si el modelo tiene soft delete
+    if (!this.modelsWithSoftDelete.includes(args?.model)) {
+      return query(args)
+    }
 
-      // Intercepta las operaciones de find
-      if (['findUnique', 'findFirst', 'findMany'].includes(params.action)) {
-        // Si ya hay un where con deletedAt, no modificar
-        if (params.args?.where?.deletedAt !== undefined) {
-          return next(params)
-        }
+    // Si ya hay un where con deletedAt, no modificar
+    if (args?.where?.deletedAt !== undefined) {
+      return query(args)
+    }
 
-        params.args = params.args || {}
-        params.args.where = params.args.where || {}
-        params.args.where.deletedAt = null
+    // Filtrar por deletedAt = null
+    args = {
+      ...args,
+      where: {
+        ...args.where,
+        deletedAt: null,
+      },
+    }
 
-        // Asegurar que las relaciones también filtren por deletedAt
-        if (params.args.include) {
-          for (const relation of Object.keys(params.args.include)) {
-            if (this.modelsWithSoftDelete.includes(relation)) {
-              params.args.include[relation] = {
-                where: { deletedAt: null },
-                ...params.args.include[relation],
-              }
-            }
+    // Asegurar que las relaciones también filtren por deletedAt
+    if (args.include) {
+      for (const relation of Object.keys(args.include)) {
+        if (this.modelsWithSoftDelete.includes(relation)) {
+          args.include[relation] = {
+            ...args.include[relation],
+            where: {
+              ...args.include[relation].where,
+              deletedAt: null,
+            },
           }
         }
       }
+    }
 
-      // Intercepta las operaciones de delete (soft delete)
-      if (params.action === 'delete') {
-        params.action = 'update'
-        params.args = params.args || {}
-        params.args.data = { deletedAt: new Date() }
-      }
-
-      // Intercepta deleteMany (soft delete)
-      if (params.action === 'deleteMany') {
-        params.action = 'updateMany'
-        params.args = params.args || {}
-        params.args.data = { deletedAt: new Date() }
-      }
-
-      return next(params)
-    })
+    return query(args)
   }
 
-  // ─── Middleware para actualizar updatedAt automáticamente ───────────────────
-  private setupUpdatedAtMiddleware() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this as any).$use(async (params: any, next: any) => {
-      if (['update', 'updateMany'].includes(params.action)) {
-        params.args = params.args || {}
-        params.args.data = params.args.data || {}
-        params.args.data.updatedAt = new Date()
-      }
-      return next(params)
-    })
+  // Apply soft delete (convert delete to update)
+  private async applySoftDelete(
+    action: 'delete' | 'deleteMany',
+    args: any,
+    query: any
+  ) {
+    // Solo aplicar si el modelo tiene soft delete
+    if (!this.modelsWithSoftDelete.includes(args?.model)) {
+      return query(args)
+    }
+
+    if (action === 'delete') {
+      return query({
+        ...args,
+        action: 'update',
+        data: {
+          ...args.data,
+          deletedAt: new Date(),
+        },
+      })
+    } else if (action === 'deleteMany') {
+      return query({
+        ...args,
+        action: 'updateMany',
+        data: {
+          ...args.data,
+          deletedAt: new Date(),
+        },
+      })
+    }
+
+    return query(args)
+  }
+
+  // Update timestamps (updatedAt)
+  private async updateTimestamps(
+    action: 'update' | 'updateMany',
+    args: any,
+    query: any
+  ) {
+    if (['update', 'updateMany'].includes(action)) {
+      return query({
+        ...args,
+        data: {
+          ...args.data,
+          updatedAt: new Date(),
+        },
+      })
+    }
+    return query(args)
   }
 }

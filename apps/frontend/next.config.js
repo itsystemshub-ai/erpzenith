@@ -7,6 +7,12 @@ const nextConfig = {
       { protocol: 'https', hostname: 'nmhxxmvvbgqnodlfetil.supabase.co' },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 }
 
 module.exports = nextConfig

@@ -4,14 +4,9 @@
   "installCommand": "cd ../.. && npm install",
   "buildCommand": "cd apps/frontend && npm run build",
   "outputDirectory": "apps/frontend/.next",
-  "functions": {
-    "apps/frontend/src/app/api/**/*.ts": {
-      "maxDuration": 60
-    }
-  },
   "env": {
     "NEXT_PUBLIC_API_URL": "/api",
-    "BACKEND_URL": "@backend-url",
+    "BACKEND_URL": "http://localhost:3001",
     "NODE_ENV": "production"
   }
 }
