@@ -1,57 +1,138 @@
-import { INestApplication } from '@nestjs/common'
-import { NestFactory } from '@nestjs/core'
-import { ValidationPipe } from '@nestjs/common'
-import helmet from 'helmet'
-import { AppModule } from '../../../backend/src/app.module'
+import { NextRequest, NextResponse } from 'next/server'
 
-// Cache the app instance for serverless function reuse
-let cachedApp: INestApplication | null = null
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3001'
 
-async function createNestApp(): Promise<INestApplication> {
-  if (cachedApp) {
-    return cachedApp
+// Helper para construir la URL completa
+function buildBackendUrl(path: string[], search: string): string {
+  // Filtrar segmentos vacíos y construir el path
+  const cleanPath = path.filter(p => p && p !== 'api').join('/')
+  const pathname = cleanPath ? `/${cleanPath}` : ''
+  return `${BACKEND_URL}${pathname}${search}`
+}
+
+// Helper para manejar errores
+function handleError(error: unknown): NextResponse {
+  console.error('Backend error:', error)
+  const message = error instanceof Error ? error.message : 'Backend unavailable'
+  return NextResponse.json(
+    { error: 'Service unavailable', message },
+    { status: 503 }
+  )
+}
+
+export async function GET(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  try {
+    const { path } = await params
+    const url = buildBackendUrl(path, request.nextUrl.search)
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(request.headers.get('Authorization') && { Authorization: request.headers.get('Authorization')! }),
+      },
+    })
+    
+    const data = await response.json()
+    return NextResponse.json(data, { status: response.status })
+  } catch (error) {
+    return handleError(error)
   }
-
-  const app = await NestFactory.create(AppModule, { bodyParser: true })
-  
-  app.use(helmet())
-  app.use(require('express').json({ limit: '50mb' }))
-  app.use(require('express').urlencoded({ limit: '50mb', extended: true }))
-  app.enableCors({ origin: true, credentials: true })
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))
-  
-  await app.init()
-  cachedApp = app
-  
-  return app
 }
 
-export async function GET(req: any, res: any) {
-  const app = await createNestApp()
-  app.getHttpAdapter().getInstance()(req, res)
+export async function POST(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  try {
+    const { path } = await params
+    const url = buildBackendUrl(path, request.nextUrl.search)
+    const body = await request.json()
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(request.headers.get('Authorization') && { Authorization: request.headers.get('Authorization')! }),
+      },
+      body: JSON.stringify(body),
+    })
+    
+    const data = await response.json()
+    return NextResponse.json(data, { status: response.status })
+  } catch (error) {
+    return handleError(error)
+  }
 }
 
-export async function POST(req: any, res: any) {
-  const app = await createNestApp()
-  app.getHttpAdapter().getInstance()(req, res)
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  try {
+    const { path } = await params
+    const url = buildBackendUrl(path, request.nextUrl.search)
+    const body = await request.json()
+    
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(request.headers.get('Authorization') && { Authorization: request.headers.get('Authorization')! }),
+      },
+      body: JSON.stringify(body),
+    })
+    
+    const data = await response.json()
+    return NextResponse.json(data, { status: response.status })
+  } catch (error) {
+    return handleError(error)
+  }
 }
 
-export async function PUT(req: any, res: any) {
-  const app = await createNestApp()
-  app.getHttpAdapter().getInstance()(req, res)
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  try {
+    const { path } = await params
+    const url = buildBackendUrl(path, request.nextUrl.search)
+    
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(request.headers.get('Authorization') && { Authorization: request.headers.get('Authorization')! }),
+      },
+    })
+    
+    const data = await response.json()
+    return NextResponse.json(data, { status: response.status })
+  } catch (error) {
+    return handleError(error)
+  }
 }
 
-export async function DELETE(req: any, res: any) {
-  const app = await createNestApp()
-  app.getHttpAdapter().getInstance()(req, res)
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  try {
+    const { path } = await params
+    const url = buildBackendUrl(path, request.nextUrl.search)
+    const body = await request.json()
+    
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(request.headers.get('Authorization') && { Authorization: request.headers.get('Authorization')! }),
+      },
+      body: JSON.stringify(body),
+    })
+    
+    const data = await response.json()
+    return NextResponse.json(data, { status: response.status })
+  } catch (error) {
+    return handleError(error)
+  }
 }
 
-export async function PATCH(req: any, res: any) {
-  const app = await createNestApp()
-  app.getHttpAdapter().getInstance()(req, res)
-}
-
-export default async function handler(req: any, res: any) {
-  const app = await createNestApp()
-  app.getHttpAdapter().getInstance()(req, res)
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  })
 }

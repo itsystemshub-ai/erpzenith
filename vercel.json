@@ -2,19 +2,16 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "installCommand": "cd ../.. && npm install",
-  "buildCommand": "cd ../.. && npm run build",
+  "buildCommand": "cd apps/frontend && npm run build",
   "outputDirectory": "apps/frontend/.next",
   "functions": {
-    "apps/frontend/src/app/api/[[...path]]/route.ts": {
+    "apps/frontend/src/app/api/**/*.ts": {
       "maxDuration": 60
     }
   },
   "env": {
     "NEXT_PUBLIC_API_URL": "/api",
-    "DATABASE_URL": "@database-url",
-    "JWT_SECRET": "@jwt-secret",
-    "JWT_EXPIRES_IN": "7d",
-    "FRONTEND_URL": "@frontend-url",
+    "BACKEND_URL": "@backend-url",
     "NODE_ENV": "production"
   }
 }
