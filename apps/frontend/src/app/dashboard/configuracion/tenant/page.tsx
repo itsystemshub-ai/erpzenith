@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 import { useNotificationStore } from '@/stores/notificationStore'
+import { safeStorage } from '@/lib/safeStorage'
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -13,7 +14,7 @@ interface Empresa {
 const EMPTY_FORM = { nombre: '', rif: '', email: '', telefono: '', direccion: '', color: '#6366f1' }
 
 function authHeaders() {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  const token = safeStorage.getItem('accessToken')
   return { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
 }
 

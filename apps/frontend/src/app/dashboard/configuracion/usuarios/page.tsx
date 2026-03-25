@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import { TopBar } from '@/components/layout/TopBar'
 import { useNotificationStore } from '@/stores/notificationStore'
 import { useAuthStore } from '@/stores/authStore'
+import { safeStorage } from '@/lib/safeStorage'
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -87,7 +88,7 @@ export default function UsuariosPage() {
   const accessToken = useAuthStore(s => s.accessToken)
 
   const getHeaders = () => {
-    const token = accessToken ?? (typeof window !== 'undefined' ? localStorage.getItem('token') : null)
+    const token = accessToken ?? safeStorage.getItem('accessToken')
     return { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
   }
 
