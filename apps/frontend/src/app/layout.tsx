@@ -4,7 +4,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import { QueryProvider } from '@/components/providers/QueryProvider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
-import { StoreHydration } from '@/components/providers/StoreHydration'
 
 export const metadata: Metadata = {
   title: 'ERP ZENITH',
@@ -25,18 +24,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
           rel="stylesheet"
         />
-        {/* Anti-flash: aplica .dark antes de que React hidrate si el usuario lo tenía guardado */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=JSON.parse(localStorage.getItem('zenith-theme')||'{}');if(s.state?.theme==='dark'||s.state?.theme==='dark')document.documentElement.classList.add('dark')}catch(e){}})()`,
-          }}
-        />
       </head>
-      <body>
-        <StoreHydration />
-        <QueryProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </QueryProvider>
+      <body className="antialiased">
+        <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </body>
