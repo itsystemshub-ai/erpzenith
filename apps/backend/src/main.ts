@@ -14,9 +14,9 @@ async function bootstrap() {
   app.use(require('express').json({ limit: '50mb' }))
   app.use(require('express').urlencoded({ limit: '50mb', extended: true }))
 
-  // CORS
+  // CORS - Permitir todos los orígenes en producción
   app.enableCors({
-    origin: true,
+    origin: process.env.NODE_ENV === 'production' ? true : 'http://localhost:3000',
     credentials: true,
   })
 
@@ -35,6 +35,7 @@ async function bootstrap() {
   console.log(`🚀 ERP ZENITH Backend corriendo en puerto ${port}`)
   console.log(`📚 Swagger docs: http://localhost:${port}/api/docs`)
   console.log(`🔒 Security: Helmet activado`)
+  console.log(`🌍 CORS: ${process.env.NODE_ENV === 'production' ? 'Producción' : 'Desarrollo'}`)
 }
 
 bootstrap()
