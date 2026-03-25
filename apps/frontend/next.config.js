@@ -13,6 +13,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  output: 'standalone',
+  reactStrictMode: false,
+  swcMinify: true,
 }
 
 module.exports = nextConfig
