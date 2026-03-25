@@ -3,6 +3,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 import { useAuthStore } from '@/stores/authStore'
 import { api } from '@/lib/api'
+import { safeStorage } from '@/lib/safeStorage'
 
 interface TableInfo { table: string; rows: number }
 interface DbInfo {
@@ -334,7 +335,7 @@ export default function BaseDatosPage() {
   }
 
   useEffect(() => {
-    const token = accessToken || localStorage.getItem('accessToken')
+    const token = accessToken || safeStorage.getItem('accessToken')
     if (!token) return
     api.get('/configuracion/db-info', { headers: { Authorization: `Bearer ${token}` } })
       .then(({ data }) => setDbInfo(data))

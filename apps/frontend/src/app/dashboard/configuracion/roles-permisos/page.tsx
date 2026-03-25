@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
 import { useErpQuery } from '@/hooks/useErpQuery'
 import { QK } from '@/lib/queryKeys'
+import { safeStorage } from '@/lib/safeStorage'
 
 interface Permission { id: string; module: string; action: string }
 interface Role { id: string; name: string; permissions: Permission[]; users?: { id: string }[] }
@@ -139,7 +140,7 @@ export default function RolesPermisosPage() {
     if (!displayRole) return
     setSaving(true)
     try {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+      const token = safeStorage.getItem('accessToken')
       await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'}/configuracion/sistema/roles/${displayRole.id}/nivel`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },

@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
+import { safeStorage } from '@/lib/safeStorage'
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -32,7 +33,7 @@ export default function SeguridadPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+    const token = safeStorage.getItem('accessToken')
     const headers = { Authorization: `Bearer ${token}` }
     Promise.all([
       fetch(`${API}/configuracion/seguridad/stats`, { headers }).then(r => r.json()),

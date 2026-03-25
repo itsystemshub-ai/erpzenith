@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { TopBar } from '@/components/layout/TopBar'
+import { safeStorage } from '@/lib/safeStorage'
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -10,7 +11,7 @@ export default function BackupsPage() {
   const [dbInfo, setDbInfo] = useState<DbInfo | null>(null)
 
   useEffect(() => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+    const token = safeStorage.getItem('accessToken')
     fetch(`${API}/configuracion/db-info`, { headers: { Authorization: `Bearer ${token}` } })
       .then(r => r.json()).then(setDbInfo).catch(() => {})
   }, [])
