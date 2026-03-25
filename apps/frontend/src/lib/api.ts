@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { safeStorage } from './safeStorage'
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
@@ -6,9 +7,12 @@ export const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
+  // Solo ejecutar en cliente
   if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('accessToken')
-    if (token) config.headers.Authorization = `Bearer ${token}`
+    const token = safeStorage.getItem('accessToken')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
   }
   return config
 })
@@ -16,9 +20,11 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res,
   (err) => {
+    // Solo manejar 401 en cliente
     if (err.response?.status === 401 && typeof window !== 'undefined') {
-      localStorage.removeItem('accessToken')
-      window.location.href = '/login'
+      safeStorage.removeItem('accessToken')
+      // Usar evento personalizado en lugar de redirect directo
+      window.dispatchEvent(new CustomEvent('auth:session-expired'))
     }
     return Promise.reject(err)
   }

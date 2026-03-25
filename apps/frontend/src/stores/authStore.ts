@@ -1,6 +1,7 @@
 'use client'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { safeStorage } from '@/lib/safeStorage'
 
 interface User {
   id: string
@@ -27,11 +28,11 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       isAuthenticated: false,
       login: (accessToken, user) => {
-        localStorage.setItem('accessToken', accessToken)
+        safeStorage.setItem('accessToken', accessToken)
         set({ accessToken, user, isAuthenticated: true })
       },
       logout: () => {
-        localStorage.removeItem('accessToken')
+        safeStorage.removeItem('accessToken')
         set({ accessToken: null, user: null, isAuthenticated: false })
       },
       hasPermission: (permission) => {
@@ -49,9 +50,9 @@ export const useAuthStore = create<AuthState>()(
       name: 'auth-storage',
       partialize: (s) => ({ user: s.user, accessToken: s.accessToken, isAuthenticated: s.isAuthenticated }),
       storage: {
-        getItem: (key) => { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : null } catch { return null } },
-        setItem: (key, v) => { try { localStorage.setItem(key, JSON.stringify(v)) } catch {} },
-        removeItem: (key) => { try { localStorage.removeItem(key) } catch {} },
+        getItem: (key) => safeStorage.getJSON(key),
+        setItem: (key, v) => safeStorage.setJSON(key, v),
+        removeItem: (key) => safeStorage.removeItem(key),
       },
     }
   )
