@@ -3,7 +3,7 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "dist/**"],
-      "env": ["FRONTEND_URL"]
+      "env": ["FRONTEND_URL", "NEXT_PUBLIC_API_URL", "BACKEND_URL", "NODE_ENV"]
     },
     "generate": {
       "cache": false

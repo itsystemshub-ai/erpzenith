@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../prisma/prisma.service'
-import * as fs from 'fs'
-import * as path from 'path'
 
 @Injectable()
 export class ConfiguracionService {
@@ -220,26 +218,8 @@ export class ConfiguracionService {
   }
 
   // ── Leer CSV de CIMA2026 ─────────────────────────────────────────────────
-  private readCimaCsv(filename: string, limit = 200): Record<string, unknown>[] {
-    // Busca el CSV relativo a la raíz del proyecto (4 niveles arriba de dist/src/modules/configuracion)
-    const csvPath = path.resolve(__dirname, '../../../../..', 'CIMA2026', 'output', 'csv', filename)
-    if (!fs.existsSync(csvPath)) return []
-    const lines = fs.readFileSync(csvPath, 'utf-8').split('\n').filter(l => l.trim())
-    if (lines.length < 2) return []
-    // Parsear cabecera — quitar comillas
-    const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim())
-    const rows: Record<string, unknown>[] = []
-    for (let i = 1; i < Math.min(lines.length, limit + 1); i++) {
-      // Split respetando comas dentro de comillas
-      const vals = lines[i].match(/(".*?"|[^,]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g) ?? []
-      const obj: Record<string, unknown> = {}
-      headers.forEach((h, idx) => {
-        const raw = (vals[idx] ?? '').replace(/^"|"$/g, '').trim()
-        obj[h] = raw === '' ? null : raw
-      })
-      rows.push(obj)
-    }
-    return rows
+  private readCimaCsv(_filename: string, _limit = 200): Record<string, unknown>[] {
+    return []
   }
 
   async getTableData(tableName: string) {

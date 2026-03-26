@@ -4,50 +4,22 @@ import { TopBar } from '@/components/layout/TopBar'
 import { useErpQuery } from '@/hooks/useErpQuery'
 import { QK } from '@/lib/queryKeys'
 
-export const runtime = 'edge'
-
-interface ContabilidadModule {
-  href: string
-  label: string
-  icon: string
-  desc: string
-  color: string
-}
-
-interface ContabilidadStat {
-  label: string
-  value: string
-  change: string
-  up: boolean
-}
-
-const { data: modulos = [], isLoading: modulosLoading } = useErpQuery<ContabilidadModule[]>(
-  QK.contabilidad.all(),
-  '/contabilidad',
-  { refetchInterval: 60_000 }
-)
-
-const { data: stats = [], isLoading: statsLoading } = useErpQuery<ContabilidadStat[]>(
-  QK.contabilidad.stats(),
-  '/contabilidad/stats',
-  { refetchInterval: 60_000 }
-)
+interface ContabilidadModule { href: string; label: string; icon: string; desc: string; color: string }
 
 export default function ContabilidadPage() {
+  const { data: modulos = [] } = useErpQuery<ContabilidadModule[]>(QK.contabilidad.all(), '/contabilidad', { refetchInterval: 60_000 })
+
   return (
     <div className="flex flex-col min-h-screen">
       <TopBar title="Contabilidad" />
       <div className="flex-1 p-8 space-y-8 max-w-[1600px] mx-auto w-full">
-
         <div>
           <h2 className="text-4xl font-headline font-bold text-on-surface">Contabilidad</h2>
           <p className="text-on-surface-variant mt-1">Gestión financiera completa — balances, P&L, fiscal y conciliación</p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {modulos.map(m => (
-            <Link key={m.href} href={m.href}
-              className="glass-panel rounded-2xl p-6 hover:bg-white/5 transition-all group">
+            <Link key={m.href} href={m.href} className="glass-panel rounded-2xl p-6 hover:bg-white/5 transition-all group">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white/15 transition-colors">
                   <span className={`material-symbols-outlined text-2xl ${m.color}`}>{m.icon}</span>
@@ -61,8 +33,6 @@ export default function ContabilidadPage() {
             </Link>
           ))}
         </div>
-
-        {/* Quick stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { label: 'Ingresos del Mes', value: '$5,565,000', change: '+12.4%', up: true },
