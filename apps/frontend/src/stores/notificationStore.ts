@@ -1,7 +1,5 @@
-'use client'
+﻿'use client'
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import { safeStorage } from '@/lib/safeStorage'
 
 export interface Notification {
   id: string
@@ -13,43 +11,23 @@ export interface Notification {
 
 interface NotificationState {
   notifications: Notification[]
-  addNotification: (notification: Omit<Notification, 'id' | 'timestamp'>) => void
+  add: (n: Omit<Notification, 'id' | 'timestamp'>) => void
+  addNotification: (n: Omit<Notification, 'id' | 'timestamp'>) => void
+  remove: (id: string) => void
   removeNotification: (id: string) => void
-  clearNotifications: () => void
+  clear: () => void
 }
 
-export const useNotificationStore = create<NotificationState>()(
-  persist(
-    (set, get) => ({
-      notifications: [],
-      addNotification: (notification) => {
-        const id = Math.random().toString(36).substring(7)
-        const newNotification: Notification = {
-          ...notification,
-          id,
-          timestamp: Date.now(),
-        }
-        set((state) => ({
-          notifications: [...state.notifications, newNotification],
-        }))
-        // Auto-remove después de 5 segundos
-        setTimeout(() => {
-          get().removeNotification(id)
-        }, 5000)
-      },
-      removeNotification: (id) =>
-        set((state) => ({
-          notifications: state.notifications.filter((n) => n.id !== id),
-        })),
-      clearNotifications: () => set({ notifications: [] }),
-    }),
-    {
-      name: 'notification-storage',
-      storage: {
-        getItem: (key) => safeStorage.getJSON(key),
-        setItem: (key, v) => safeStorage.setJSON(key, v),
-        removeItem: (key) => safeStorage.removeItem(key),
-      },
-    }
-  )
-)
+export const useNotificationStore = create<NotificationState>()((set, get) => ({
+  notifications: [],
+  add: (notification) => {
+    const id = Math.random().toString(36).substring(7)
+    const item: Notification = { ...notification, id, timestamp: Date.now() }
+    set((s) => ({ notifications: [...s.notifications, item] }))
+    setTimeout(() => get().remove(id), 5000)
+  },
+  addNotification: (n) => get().add(n),
+  remove: (id) => set((s) => ({ notifications: s.notifications.filter((n) => n.id !== id) })),
+  removeNotification: (id) => get().remove(id),
+  clear: () => set({ notifications: [] }),
+}))
