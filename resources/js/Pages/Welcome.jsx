@@ -3,98 +3,148 @@ import { Head, Link } from '@inertiajs/react';
 export default function Welcome({ canLogin, canRegister, products }) {
     return (
         <>
-            <Head title="Zenith E-Commerce" />
-            <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex flex-col font-sans selection:bg-rose-500 selection:text-white">
+            <Head>
+                <title>MAYOR DE REPUESTO LA CIMA, C.A.</title>
+                <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+                <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+                <style>{`
+                    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+                    .editorial-grid { display: grid; grid-template-columns: repeat(12, 1fr); }
+                `}</style>
+            </Head>
+            
+            <div className="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col">
                 
-                {/* Header / Navbar */}
-                <header className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black/50 backdrop-blur-md sticky top-0 z-50">
-                    <div className="max-w-7xl mx-auto flex items-center justify-between">
+                {/* Top Navigation Bar */}
+                <nav className="bg-zinc-950/90 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50 docked full-width top-0 sticky z-50">
+                    <div className="flex justify-between items-center w-full px-6 py-4 max-w-[1920px] mx-auto">
                         <div className="flex items-center gap-4">
-                            <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-orange-400">
-                                Zenith Store
-                            </span>
+                            <img alt="MAYOR DE REPUESTO LA CIMA logo" className="h-10 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbJ8Btl-XhxjD1Hu7RKW2cZByhxG5wCkOWhAJo0CvhOS2CbKozaDA-tDbAQheFhT6pnhmJpS_ayWpCGQo_SBVWOiyMti_VahdWcDAxxMI4yU9d8ejWFH8rHorwYNg9Km1mSDDiavu1-t7h3CI7BXLwtgfIgFSx0aNRfvjeh0QPYEQAUReeCClOY78zdUh6-V5ANXGbLFkpjHiBkqi022DFG0ZUXv0g24B7Yp2A0918GpIj3FvrEkTupDUqLkM4axRlzPIwjVpw_OQ" />
+                            <span className="text-xl font-bold tracking-tighter text-[#9ACD32] font-headline tracking-tight uppercase">MAYOR DE REPUESTO LA CIMA, C.A.</span>
                         </div>
-                        <nav className="flex items-center justify-end gap-4">
+                        <div className="hidden md:flex items-center gap-8 font-headline tracking-tight uppercase text-sm">
+                            <Link href="/modulo/tienda_virtual/catalog_grid_view" className="text-zinc-400 font-medium hover:text-white transition-colors duration-200">
+                                Catálogo Completo
+                            </Link>
+                            <Link href="/modulo/tienda_virtual/nosotros_contacto_e_commerce" className="text-zinc-400 font-medium hover:text-white transition-colors duration-200">
+                                Nosotros
+                            </Link>
+                        </div>
+                        <div className="flex items-center gap-6">
                             {canLogin ? (
-                                <Link
-                                    href={route('dashboard')}
-                                    className="rounded-md px-3 py-2 text-sm font-semibold transition hover:text-black/70 focus:outline-none dark:hover:text-white/80"
-                                >
+                                <Link href={route('dashboard')} className="hidden lg:block text-zinc-400 font-medium font-headline tracking-tight uppercase hover:text-white transition-colors duration-200">
                                     Portal ERP
                                 </Link>
                             ) : (
                                 <>
-                                    <Link
-                                        href={route('login')}
-                                        className="rounded-md px-3 py-2 text-sm font-semibold transition hover:text-black/70 focus:outline-none dark:hover:text-white/80"
-                                    >
-                                        Log in
+                                    <Link href="/modulo/auth/login_register" className="hidden lg:block text-zinc-400 font-medium font-headline tracking-tight uppercase hover:text-white transition-colors duration-200">
+                                        Iniciar Sesión / Registro
                                     </Link>
-                                    {canRegister && (
-                                        <Link
-                                            href={route('register')}
-                                            className="rounded-md px-3 py-2 text-sm font-semibold transition hover:text-black/70 focus:outline-none dark:hover:text-white/80"
-                                        >
-                                            Register
-                                        </Link>
-                                    )}
+                                    <Link href="/modulo/auth/creacion_cuenta_corporativa" className="hidden lg:block text-[#9ACD32] font-medium font-headline tracking-tight uppercase hover:text-white transition-colors duration-200">
+                                        Crear Cuenta B2B
+                                    </Link>
                                 </>
                             )}
-                        </nav>
+                            <Link href="/modulo/tienda_virtual/your_cart_7_items" className="bg-[#9ACD32] text-on-primary-container px-4 py-2 font-headline font-bold tracking-tight uppercase scale-95 active:scale-90 transition-transform flex items-center">
+                                Cart (0)
+                            </Link>
+                        </div>
                     </div>
-                </header>
+                </nav>
 
-                {/* Main Storefront Content */}
-                <main className="flex-1 w-full max-w-7xl mx-auto mt-10 px-6">
-                    {/* Hero Section */}
-                    <div className="py-16 text-center">
-                        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
-                            Todo lo que buscas en un <span className="text-rose-500">solo click</span>.
-                        </h1>
-                        <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-8">
-                            Navega por nuestro catálogo de productos impulsado por el sistema Zenith ERP, sincronizado en tiempo real.
-                        </p>
+                {/* Hero Section */}
+                <section className="relative min-h-[700px] flex items-center overflow-hidden bg-on-surface">
+                    <div className="absolute inset-0 z-0">
+                        <img alt="Industrial Diesel Engine" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCagO0b8fbL5mHd01cJKj-yY4TXKz3pJKApoPR3XypDtgxQeE3kAgK8IKYXiuiYy9wlITkGEIPukkyY37Z1EAvCyEsp_fOGYMfm-yAA4YALLy7Tp8-eplYfdagRdehPNAtC9eKAB0i7xqZWA-p44Ux73Mdw8xGQL2B0vm-_HDUE23-j79iRANyUhPfEYlBl45QJV2nNltmDGc9-75xUPuZyU_BBKdOaqXrAwMAqH6q70D_uCpd4wp0fgKcMXUlvkne4AE13G63F4y4" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-on-surface via-transparent to-transparent"></div>
                     </div>
+                    <div className="container mx-auto px-6 relative z-10">
+                        <div className="max-w-4xl">
+                            <div className="inline-block px-3 py-1 bg-primary text-on-primary font-headline text-xs tracking-widest uppercase mb-6">Precisión Industrial Garantizada</div>
+                            <h1 className="text-white font-headline text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-[0.9] mb-8">
+                                POTENCIANDO LA <br /> <span className="text-[#9ACD32]">INDUSTRIA PESADA</span>
+                            </h1>
+                            <p className="text-tertiary-container text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
+                                Especialistas en repuestos de alta gama para motores industriales. Garantizamos la continuidad operativa de su maquinaria con componentes reales e integrados a nuestro ERP.
+                            </p>
+                        </div>
+                    </div>
+                </section>
 
-                    {/* Product Grid */}
-                    <div className="mb-8">
-                        <h2 className="text-2xl font-bold mb-6">Productos Destacados</h2>
-                        {products && products.length > 0 ? (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                                {products.map((product) => (
-                                    <div key={product.id} className="group flex flex-col bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700">
-                                        <div className="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center p-4">
-                                            {/* Placeholder Image */}
-                                            <svg className="w-16 h-16 text-gray-400 group-hover:scale-110 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
+                {/* Featured Products Bento */}
+                <section className="py-24 bg-surface" id="productos">
+                    <div className="container mx-auto px-6">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                            <div>
+                                <span className="text-primary font-headline font-bold uppercase tracking-widest text-xs">Catálogo Sincronizado</span>
+                                <h2 className="font-headline text-4xl md:text-5xl font-black uppercase tracking-tight">Inventario en Tiempo Real</h2>
+                            </div>
+                        </div>
+
+                        {/* Dynamic DB Products Mapping */}
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            {products.map((product, idx) => (
+                                <div key={product.id} className="md:col-span-1 bg-surface-container-low p-6 flex flex-col justify-between h-full group hover:-translate-y-1 transition-transform border border-outline-variant/30">
+                                    <div>
+                                        <h3 className="font-headline text-lg font-bold uppercase mb-2 text-on-surface line-clamp-2">{product.name}</h3>
+                                        <p className="text-xs text-secondary mb-4 line-clamp-3">{product.description}</p>
+                                    </div>
+                                    <div className="mt-auto">
+                                        <div className="text-primary font-headline text-xl font-bold mb-4 tracking-widest">
+                                            $ {product.price}
                                         </div>
-                                        <div className="p-5 flex-1 flex flex-col">
-                                            <h3 className="font-semibold text-lg line-clamp-2 mb-1">{product.name}</h3>
-                                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1">{product.description}</p>
-                                            <div className="flex items-center justify-between mt-auto">
-                                                <span className="text-xl font-bold text-gray-900 dark:text-white">${product.price}</span>
-                                                <button className="bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full transition-colors shadow-md hover:shadow-lg">
-                                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                                    </svg>
-                                                </button>
-                                            </div>
+                                        <button className="w-full border border-primary text-primary hover:bg-primary hover:text-white px-4 py-2 font-headline font-bold uppercase tracking-widest text-xs transition-colors">
+                                            Añadir
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Contact Section */}
+                <section className="py-24 bg-surface-container" id="contacto">
+                    <div className="container mx-auto px-6">
+                        <div className="editorial-grid gap-12">
+                            <div className="col-span-12 lg:col-span-6">
+                                <h2 className="font-headline text-5xl font-black uppercase tracking-tighter mb-8 leading-none">Estamos en el <br /><span className="text-primary">Corazón Industrial</span></h2>
+                                <div className="space-y-8 mt-12">
+                                    <div className="flex gap-4">
+                                        <span className="material-symbols-outlined text-primary">location_on</span>
+                                        <div>
+                                            <h4 className="font-headline font-bold uppercase text-xs tracking-widest text-secondary mb-1">Dirección</h4>
+                                            <p className="text-sm">Zona Industrial Norte, Av. Henry Ford, Galpón 4A. Valencia, Carabobo.</p>
                                         </div>
                                     </div>
-                                ))}
+                                    <div className="flex gap-4">
+                                        <span className="material-symbols-outlined text-primary">badge</span>
+                                        <div>
+                                            <h4 className="font-headline font-bold uppercase text-xs tracking-widest text-secondary mb-1">Identificación Fiscal</h4>
+                                            <p className="text-sm">RIF: J-40308741-5</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        ) : (
-                            <div className="text-center py-12 text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 rounded-xl">
-                                No hay productos sincronizados en el inventario.
-                            </div>
-                        )}
+                        </div>
                     </div>
-                </main>
+                </section>
 
                 {/* Footer */}
-                <footer className="py-6 text-center text-sm text-gray-500 dark:text-gray-400 mt-auto border-t border-gray-200 dark:border-gray-800">
-                    &copy; {new Date().getFullYear()} Zenith Enterprise. Todos los derechos reservados.
+                <footer className="bg-zinc-900 w-full mt-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 py-12 w-full max-w-[1920px] mx-auto">
+                        <div>
+                            <div className="font-headline font-black text-zinc-100 mb-6 text-lg uppercase tracking-widest">MAYOR DE REPUESTO LA CIMA, C.A.</div>
+                            <p className="text-zinc-500 text-sm font-body leading-relaxed antialiased">
+                                Distribución nacional de repuestos originales integrados con el sistema avanzado Zenith ERP.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="bg-zinc-800 py-6 px-8 text-center md:text-left">
+                        <p className="text-zinc-500 text-xs font-body antialiased">
+                            © 2026 MAYOR DE REPUESTO LA CIMA, C.A. RIF: J-40308741-5.
+                        </p>
+                    </div>
                 </footer>
             </div>
         </>

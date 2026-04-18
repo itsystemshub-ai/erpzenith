@@ -1,3 +1,18 @@
+<?php
+    use Illuminate\Support\Facades\Auth;
+    use App\Models\Role;
+    use App\Models\Permission;
+
+    $user = Auth::user();
+
+    if ($user) {
+        $role = Role::find($user->role_id);
+        $permissions = Permission::whereIn('id', $role->permissions->pluck('id'))->get();
+    } else {
+        $permissions = [];
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>

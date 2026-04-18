@@ -1,0 +1,395 @@
+import React from 'react';
+import { Link } from '@inertiajs/react';
+
+export default function CentroDeReportesDeInventario() {
+    return (
+        <div className="legacy-view min-h-screen bg-surface">
+            
+{/* Comentario remanente */}
+<aside className="hidden md:flex flex-col h-screen w-64 docked left-0 border-r-0 bg-stone-50 dark:bg-stone-900 sticky top-0 shadow-[4px_0_24px_rgba(0,0,0,0.04)] py-8 gap-2 z-[60]">
+<div className="px-6 mb-8">
+<div className="flex items-center gap-3 mb-1">
+<div className="w-10 h-10 bg-primary-container flex items-center justify-center rounded">
+<span className="material-symbols-outlined text-on-primary-container" >precision_manufacturing</span>
+</div>
+<div>
+<div className="text-lg font-black text-stone-800 dark:text-stone-100 tracking-tighter uppercase">REPORTING SUITE</div>
+<div className="text-[10px] font-bold tracking-widest text-lime-600 dark:text-lime-400">V2.4 Precision Engine</div>
+</div>
+</div>
+</div>
+<nav className="flex-1 px-4 space-y-1">
+<a className="flex items-center gap-3 px-4 py-3 bg-lime-500/10 text-lime-700 dark:text-lime-400 border-r-4 border-lime-600 transition-transform font-['Inter'] font-semibold tracking-wide text-xs uppercase" href="#">
+<span className="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                Inventory
+            </a>
+<a className="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform font-['Inter'] font-semibold tracking-wide text-xs uppercase" href="#">
+<span className="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+                Sales
+            </a>
+<a className="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform font-['Inter'] font-semibold tracking-wide text-xs uppercase" href="#">
+<span className="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+                Purchases
+            </a>
+<a className="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform font-['Inter'] font-semibold tracking-wide text-xs uppercase" href="#">
+<span className="material-symbols-outlined" data-icon="payments">payments</span>
+                Finance
+            </a>
+<a className="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform font-['Inter'] font-semibold tracking-wide text-xs uppercase" href="#">
+<span className="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+                Accounting
+            </a>
+<a className="flex items-center gap-3 px-4 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform font-['Inter'] font-semibold tracking-wide text-xs uppercase" href="#">
+<span className="material-symbols-outlined" data-icon="groups">groups</span>
+                HR
+            </a>
+</nav>
+<div className="px-4 mt-auto space-y-1">
+<button className="w-full py-3 mb-4 bg-primary text-on-primary font-bold text-[10px] tracking-widest uppercase hover:opacity-90 transition-opacity">
+                EXPORT ALL DATA
+            </button>
+<a className="flex items-center gap-3 px-4 py-2 text-stone-500 hover:text-lime-600 transition-colors text-xs font-bold uppercase" href="#">
+<span className="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+                Support
+            </a>
+<a className="flex items-center gap-3 px-4 py-2 text-stone-500 hover:text-lime-600 transition-colors text-xs font-bold uppercase" href="#">
+<span className="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+                Logs
+            </a>
+</div>
+</aside>
+<div className="flex-1 flex flex-col min-w-0">
+{/* Comentario remanente */}
+<header className="bg-surface dark:bg-stone-950/80 backdrop-blur-xl flex justify-between items-center w-full px-6 py-4 mx-auto docked full-width top-0 z-50 tonal-shift-no-borders bg-stone-100 dark:bg-stone-900">
+<div className="flex items-center gap-8">
+<h1 className="text-xl font-bold tracking-tighter text-stone-900 dark:text-stone-50 font-['Space_Grotesk'] uppercase">INDUSTRIAL FORGE ERP</h1>
+<nav className="hidden lg:flex items-center gap-6">
+<a className="text-stone-500 dark:text-stone-400 font-['Space_Grotesk'] uppercase tracking-tight hover:text-lime-500 transition-colors" href="#">Dashboard</a>
+<a className="text-lime-600 dark:text-lime-400 border-b-2 border-lime-600 dark:border-lime-400 pb-1 font-['Space_Grotesk'] uppercase tracking-tight" href="#">Analytics</a>
+<a className="text-stone-500 dark:text-stone-400 font-['Space_Grotesk'] uppercase tracking-tight hover:text-lime-500 transition-colors" href="#">Reports</a>
+<a className="text-stone-500 dark:text-stone-400 font-['Space_Grotesk'] uppercase tracking-tight hover:text-lime-500 transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<div className="flex items-center gap-4">
+<div className="relative hidden sm:block">
+<span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">search</span>
+<input className="bg-surface-container-highest border-none text-[10px] font-bold tracking-widest pl-10 pr-4 py-2 w-64 focus:ring-2 focus:ring-primary" placeholder="SEARCH ASSETS..." type="text"/>
+</div>
+<button className="text-stone-500 hover:text-primary transition-colors">
+<span className="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button className="text-stone-500 hover:text-primary transition-colors">
+<span className="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<img alt="User Profile Avatar" className="w-8 h-8 rounded-full border border-outline-variant/30" data-alt="professional male executive in a sharp business suit with a confident expression in a high-end corporate office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcnsvBR8q1GNl76lSnrk95-TBgRNEI43KZOy0fJX7VxBp7KAfYW2zFNm2dO-2IzKWjsKO-UtIPES-5nIlWQBgcVCRRs2uNROoE8OahtrGqs8B44MLuZNY-UtANWtVf2Gy115954dFWyHL-OXXGBUYPqWOGRqEI3l_FGoXSmzUQ0DAhQRhoUJrla85qAJhNVzK9icWa-0nxrJ8clRUfcmtdeW00B8rwCT4-JXW5Zy4ny5XS_DJIiJCT5JrOdppQxwyf2BK6Q4PhQek"/>
+</div>
+</header>
+{/* Comentario remanente */}
+<main className="p-6 lg:p-10 space-y-8">
+{/* Comentario remanente */}
+<div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 className="text-4xl font-black tracking-tight uppercase mb-2">Inventory Reporting Center</h2>
+<p className="text-secondary font-medium max-w-2xl">Compliance Art. 177: Detailed Valuation using Costo Promedio Ponderado (Weighted Average Cost). Real-time stock audit and kinetic turnover analysis.</p>
+</div>
+<div className="flex items-center gap-3">
+<button className="flex items-center gap-2 px-4 py-2.5 bg-surface-container-high text-on-surface-variant font-bold text-[11px] tracking-widest uppercase hover:scale-105 transition-transform">
+<span className="material-symbols-outlined text-sm">picture_as_pdf</span>
+                        Export PDF
+                    </button>
+<button className="flex items-center gap-2 px-4 py-2.5 bg-primary text-on-primary font-bold text-[11px] tracking-widest uppercase hover:scale-105 transition-transform">
+<span className="material-symbols-outlined text-sm">table_view</span>
+                        Export Excel
+                    </button>
+</div>
+</div>
+{/* Comentario remanente */}
+<div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div className="md:col-span-2 bg-primary-container p-8 relative overflow-hidden flex flex-col justify-between min-h-[220px]">
+<div className="relative z-10">
+<div className="text-[10px] font-black uppercase tracking-[0.2em] mb-1 opacity-80">Total Inventory Valuation</div>
+<div className="text-5xl font-black tracking-tighter text-on-primary-container">$4,892,450.00</div>
+</div>
+<div className="relative z-10 flex items-center gap-4 text-on-primary-container/70">
+<div className="flex items-center gap-1 font-bold text-xs">
+<span className="material-symbols-outlined text-sm" >trending_up</span>
+                            +12.4% vs Last Quarter
+                        </div>
+<div className="text-[10px] font-bold uppercase tracking-widest">Weighted Average Logic Applied</div>
+</div>
+<div className="absolute -right-10 -bottom-10 opacity-10">
+<span className="material-symbols-outlined text-[200px]" >calculate</span>
+</div>
+</div>
+<div className="bg-surface-container-lowest p-6 flex flex-col justify-between">
+<div>
+<div className="text-[10px] font-black text-secondary uppercase tracking-[0.2em] mb-4">Critical Stock Alerts</div>
+<div className="text-4xl font-black text-error">18</div>
+</div>
+<div className="text-xs font-bold text-error bg-error-container/30 py-1 px-2 w-fit">Requires Immediate Reorder</div>
+</div>
+<div className="bg-surface-container-lowest p-6 flex flex-col justify-between">
+<div>
+<div className="text-[10px] font-black text-secondary uppercase tracking-[0.2em] mb-4">Stock Turnover Rate</div>
+<div className="text-4xl font-black">4.2x</div>
+</div>
+<div className="text-xs font-bold text-primary bg-primary-container/20 py-1 px-2 w-fit">Optimal Efficiency</div>
+</div>
+</div>
+{/* Comentario remanente */}
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div className="lg:col-span-2 bg-surface-container-low p-8 rounded-lg relative">
+<div className="flex items-center justify-between mb-8">
+<h3 className="text-xl font-bold uppercase tracking-tight">Stock Turnover Kinetic Analysis</h3>
+<div className="flex items-center gap-2">
+<span className="w-3 h-3 bg-primary"></span>
+<span className="text-[10px] font-black uppercase tracking-widest">Volume Flux</span>
+</div>
+</div>
+{/* Comentario remanente */}
+<div className="h-[300px] flex items-end gap-3 px-4 border-b border-outline-variant/30">
+<div className="flex-1 bg-stone-300 h-[40%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-stone-300 h-[60%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-stone-300 h-[45%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-primary h-[85%] transition-all"></div>
+<div className="flex-1 bg-stone-300 h-[70%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-stone-300 h-[50%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-stone-300 h-[90%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-stone-300 h-[55%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-stone-300 h-[40%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-stone-300 h-[65%] transition-all hover:bg-primary"></div>
+<div className="flex-1 bg-primary-container h-[95%] transition-all"></div>
+<div className="flex-1 bg-stone-300 h-[60%] transition-all hover:bg-primary"></div>
+</div>
+<div className="flex justify-between mt-4 text-[10px] font-bold text-stone-500 tracking-widest uppercase">
+<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+</div>
+</div>
+<div className="bg-inverse-surface text-inverse-on-surface p-8">
+<div className="flex items-center justify-between mb-6">
+<h3 className="text-lg font-bold uppercase tracking-tight">Priority Reorder</h3>
+<span className="material-symbols-outlined text-primary-fixed">warning</span>
+</div>
+<div className="space-y-6">
+<div className="border-l-2 border-primary-fixed pl-4">
+<div className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1">SKU: TRB-902-X</div>
+<div className="text-sm font-bold uppercase mb-1">High-Pressure Turbine Seal</div>
+<div className="flex justify-between items-center">
+<span className="text-xs">Stock: 2 units</span>
+<span className="text-xs text-primary-fixed font-bold">Min: 15 units</span>
+</div>
+</div>
+<div className="border-l-2 border-primary-fixed pl-4">
+<div className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1">SKU: GRX-44-LUB</div>
+<div className="text-sm font-bold uppercase mb-1">Synthetic Gear Lubricant (50L)</div>
+<div className="flex justify-between items-center">
+<span className="text-xs">Stock: 5 units</span>
+<span className="text-xs text-primary-fixed font-bold">Min: 40 units</span>
+</div>
+</div>
+<div className="border-l-2 border-stone-600 pl-4">
+<div className="text-[10px] font-black uppercase tracking-widest opacity-50 mb-1">SKU: CRV-11-FLT</div>
+<div className="text-sm font-bold uppercase mb-1">Ind. Grade Carbon Filter</div>
+<div className="flex justify-between items-center">
+<span className="text-xs">Stock: 12 units</span>
+<span className="text-xs text-primary-fixed font-bold">Min: 25 units</span>
+</div>
+</div>
+</div>
+<button className="w-full mt-8 py-3 bg-primary-fixed text-on-primary-fixed font-black text-[10px] tracking-widest uppercase">Generate Bulk Order</button>
+</div>
+</div>
+{/* Comentario remanente */}
+<div className="bg-surface-container-low overflow-hidden">
+<div className="p-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 className="text-xl font-bold uppercase tracking-tight">Kardex Central Registry</h3>
+<p className="text-xs font-medium text-secondary">History of movements and Weighted Average Cost valuation (Art. 177)</p>
+</div>
+<div className="flex items-center gap-2">
+<select className="bg-surface border-none text-[10px] font-bold tracking-widest py-2 px-4 focus:ring-1 focus:ring-primary">
+<option>ALL PRODUCT CATEGORIES</option>
+<option>RAW MATERIALS</option>
+<option>FINISHED GOODS</option>
+</select>
+<select className="bg-surface border-none text-[10px] font-bold tracking-widest py-2 px-4 focus:ring-1 focus:ring-primary">
+<option>LAST 30 DAYS</option>
+<option>CURRENT FISCAL YEAR</option>
+</select>
+</div>
+</div>
+<div className="overflow-x-auto">
+<table className="w-full text-left border-collapse">
+<thead>
+<tr className="bg-stone-200/50 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">
+<th className="px-8 py-4">Transaction Date</th>
+<th className="px-8 py-4">Item Identification</th>
+<th className="px-8 py-4">Type</th>
+<th className="px-8 py-4 text-right">Qty Change</th>
+<th className="px-8 py-4 text-right">Unit Cost (Avg)</th>
+<th className="px-8 py-4 text-right">Total Valuation</th>
+<th className="px-8 py-4">Ref. Doc</th>
+</tr>
+</thead>
+<tbody className="text-xs font-semibold divide-y divide-stone-200/30">
+<tr className="bg-surface hover:bg-stone-100 transition-colors">
+<td className="px-8 py-4">2023-11-24 09:12</td>
+<td className="px-8 py-4">
+<div className="font-bold">HEAVY-DUTY PISTON ARM</div>
+<div className="text-[9px] text-secondary">SKU: HDPA-1002</div>
+</td>
+<td className="px-8 py-4">
+<span className="inline-flex items-center gap-1 text-primary">
+<span className="material-symbols-outlined text-xs">arrow_downward</span>
+                                        PURCHASE
+                                    </span>
+</td>
+<td className="px-8 py-4 text-right">+450</td>
+<td className="px-8 py-4 text-right">$1,240.00</td>
+<td className="px-8 py-4 text-right font-bold">$558,000.00</td>
+<td className="px-8 py-4 font-mono text-[10px] opacity-60">PO-88210-FG</td>
+</tr>
+<tr className="bg-surface-container-low hover:bg-stone-100 transition-colors">
+<td className="px-8 py-4">2023-11-24 11:45</td>
+<td className="px-8 py-4">
+<div className="font-bold">TITANIUM VALVE ASSEMBLY</div>
+<div className="text-[9px] text-secondary">SKU: TVA-009-S</div>
+</td>
+<td className="px-8 py-4">
+<span className="inline-flex items-center gap-1 text-orange-600">
+<span className="material-symbols-outlined text-xs">arrow_upward</span>
+                                        SALE
+                                    </span>
+</td>
+<td className="px-8 py-4 text-right">-120</td>
+<td className="px-8 py-4 text-right">$2,890.50</td>
+<td className="px-8 py-4 text-right font-bold">$346,860.00</td>
+<td className="px-8 py-4 font-mono text-[10px] opacity-60">INV-441092</td>
+</tr>
+<tr className="bg-surface hover:bg-stone-100 transition-colors">
+<td className="px-8 py-4">2023-11-23 15:20</td>
+<td className="px-8 py-4">
+<div className="font-bold">HYDRAULIC PUMP FLUID (L)</div>
+<div className="text-[9px] text-secondary">SKU: HPF-99-B</div>
+</td>
+<td className="px-8 py-4">
+<span className="inline-flex items-center gap-1 text-primary">
+<span className="material-symbols-outlined text-xs">arrow_downward</span>
+                                        PURCHASE
+                                    </span>
+</td>
+<td className="px-8 py-4 text-right">+2,000</td>
+<td className="px-8 py-4 text-right">$45.12</td>
+<td className="px-8 py-4 text-right font-bold">$90,240.00</td>
+<td className="px-8 py-4 font-mono text-[10px] opacity-60">PO-88195-FG</td>
+</tr>
+<tr className="bg-surface-container-low hover:bg-stone-100 transition-colors">
+<td className="px-8 py-4">2023-11-23 16:05</td>
+<td className="px-8 py-4">
+<div className="font-bold">HEAVY-DUTY PISTON ARM</div>
+<div className="text-[9px] text-secondary">SKU: HDPA-1002</div>
+</td>
+<td className="px-8 py-4">
+<span className="inline-flex items-center gap-1 text-error">
+<span className="material-symbols-outlined text-xs">error</span>
+                                        ADJUSTMENT
+                                    </span>
+</td>
+<td className="px-8 py-4 text-right">-5</td>
+<td className="px-8 py-4 text-right">$1,240.00</td>
+<td className="px-8 py-4 text-right font-bold">$6,200.00</td>
+<td className="px-8 py-4 font-mono text-[10px] opacity-60">AUDIT-X9</td>
+</tr>
+<tr className="bg-surface hover:bg-stone-100 transition-colors">
+<td className="px-8 py-4">2023-11-22 08:30</td>
+<td className="px-8 py-4">
+<div className="font-bold">GRAPHITE GASKET PACK</div>
+<div className="text-[9px] text-secondary">SKU: GGP-223</div>
+</td>
+<td className="px-8 py-4">
+<span className="inline-flex items-center gap-1 text-orange-600">
+<span className="material-symbols-outlined text-xs">arrow_upward</span>
+                                        SALE
+                                    </span>
+</td>
+<td className="px-8 py-4 text-right">-500</td>
+<td className="px-8 py-4 text-right">$12.50</td>
+<td className="px-8 py-4 text-right font-bold">$6,250.00</td>
+<td className="px-8 py-4 font-mono text-[10px] opacity-60">INV-441050</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div className="p-6 bg-stone-200/30 flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
+<div className="flex gap-4">
+<button className="hover:text-primary transition-colors">First</button>
+<button className="hover:text-primary transition-colors">Prev</button>
+</div>
+<div className="flex items-center gap-2">
+<span className="w-6 h-6 bg-primary text-on-primary flex items-center justify-center">1</span>
+<span className="w-6 h-6 hover:bg-stone-300 flex items-center justify-center cursor-pointer">2</span>
+<span className="w-6 h-6 hover:bg-stone-300 flex items-center justify-center cursor-pointer">3</span>
+<span>...</span>
+<span className="w-6 h-6 hover:bg-stone-300 flex items-center justify-center cursor-pointer">42</span>
+</div>
+<div className="flex gap-4">
+<button className="hover:text-primary transition-colors">Next</button>
+<button className="hover:text-primary transition-colors">Last</button>
+</div>
+</div>
+</div>
+{/* Comentario remanente */}
+<div className="bg-surface-container-high p-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div>
+<h4 className="text-sm font-black uppercase tracking-[0.2em] mb-4">Regulatory Compliance Detail</h4>
+<p className="text-xs text-secondary leading-relaxed mb-4">
+                        All valuations presented in this report are calculated in strict adherence to <strong>Art. 177 - Weighted Average Cost (Costo Promedio Ponderado)</strong>. This method ensures that the cost of each item is determined from the weighted average of the cost of similar items at the beginning of a period and the cost of similar items purchased or produced during the period.
+                    </p>
+<p className="text-xs text-secondary leading-relaxed">
+                        Audit trail is maintained for every transaction. Adjustments for physical inventory counts are logged separately and require supervisor validation.
+                    </p>
+</div>
+<div className="grid grid-cols-2 gap-4">
+<div className="bg-surface p-4 border-l-4 border-primary">
+<div className="text-[9px] font-black uppercase opacity-50 mb-1">Last Audit Date</div>
+<div className="text-sm font-bold uppercase">Oct 30, 2023</div>
+</div>
+<div className="bg-surface p-4 border-l-4 border-primary">
+<div className="text-[9px] font-black uppercase opacity-50 mb-1">Accuracy Index</div>
+<div className="text-sm font-bold uppercase">99.82%</div>
+</div>
+<div className="bg-surface p-4 border-l-4 border-primary">
+<div className="text-[9px] font-black uppercase opacity-50 mb-1">Fiscal Status</div>
+<div className="text-sm font-bold uppercase text-lime-600">Compliant</div>
+</div>
+<div className="bg-surface p-4 border-l-4 border-primary">
+<div className="text-[9px] font-black uppercase opacity-50 mb-1">Asset Turnover</div>
+<div className="text-sm font-bold uppercase">Optimized</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+{/* Comentario remanente */}
+<nav className="md:hidden fixed bottom-0 left-0 right-0 bg-surface dark:bg-stone-900 border-t-0 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] flex justify-around p-3 z-50">
+<button className="flex flex-col items-center gap-1 text-lime-600">
+<span className="material-symbols-outlined" >inventory_2</span>
+<span className="text-[9px] font-bold uppercase">Inventory</span>
+</button>
+<button className="flex flex-col items-center gap-1 text-stone-400">
+<span className="material-symbols-outlined">trending_up</span>
+<span className="text-[9px] font-bold uppercase">Sales</span>
+</button>
+<button className="flex flex-col items-center gap-1 text-stone-400">
+<span className="material-symbols-outlined">payments</span>
+<span className="text-[9px] font-bold uppercase">Finance</span>
+</button>
+<button className="flex flex-col items-center gap-1 text-stone-400">
+<span className="material-symbols-outlined">account_balance</span>
+<span className="text-[9px] font-bold uppercase">Accounting</span>
+</button>
+</nav>
+
+        </div>
+    );
+};

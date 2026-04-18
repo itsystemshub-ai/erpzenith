@@ -1,0 +1,315 @@
+import React from 'react';
+import { Link } from '@inertiajs/react';
+
+export default function CLculoProcesamientoNMina() {
+    return (
+        <div className="legacy-view min-h-screen bg-surface">
+            
+{/* Comentario remanente */}
+<nav className="fixed top-0 w-full z-50 bg-neutral-900/80 backdrop-blur-xl shadow-[0_24px_40px_rgba(26,28,28,0.06)] flex justify-between items-center w-full px-6 py-3">
+<div className="flex items-center gap-8">
+<span className="text-xl font-bold tracking-tighter text-neutral-50 font-headline uppercase">FORGE INDUSTRIAL ERP</span>
+<div className="hidden md:flex gap-6 items-center">
+<a className="text-neutral-500 font-['Inter'] font-semibold text-sm uppercase transition-all duration-200 hover:bg-neutral-800 px-3 py-1" href="#">Dashboard</a>
+<a className="text-lime-400 font-bold border-b-2 border-lime-600 font-['Inter'] text-sm uppercase px-3 py-1" href="#">Payroll</a>
+<a className="text-neutral-500 font-['Inter'] font-semibold text-sm uppercase transition-all duration-200 hover:bg-neutral-800 px-3 py-1" href="#">Inventory</a>
+</div>
+</div>
+<div className="flex items-center gap-4">
+<span className="material-symbols-outlined text-neutral-400 hover:text-lime-400 cursor-pointer transition-colors">notifications</span>
+<span className="material-symbols-outlined text-neutral-400 hover:text-lime-400 cursor-pointer transition-colors">settings</span>
+<div className="w-8 h-8 bg-neutral-800 rounded-full flex items-center justify-center overflow-hidden border border-neutral-700">
+<img alt="HR Manager Profile" data-alt="Professional HR manager portrait in industrial office setting, soft professional lighting, sharp suit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkRM1CyCqP_kXy4-iFpQxI8ifwU9z_S4_Auq_gd505SPnV_B_cU1BqjpYvh0ysy1_6JTH2oKXZOxdjLauNPpa40rh1ueIZqCvcR2txDOu7jDv6erYTELm4QEkkWCfGUP01bOaCGsIRd5-jhKMO_5LwZNJKcGqc0-4i_EemsE0rufeAfodcWWeT2WAUNqevv0DxzHWpsbHhYSboqTHOBL1Jjs2S8HfZrt-cTnXW87PZ1qiBIrtenTkAlBUEtHmYczWQPwoIr5fTU4o"/>
+</div>
+</div>
+</nav>
+{/* Comentario remanente */}
+<aside className="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 z-40 bg-neutral-950 border-r border-neutral-800 pt-20">
+<div className="px-6 py-4">
+<span className="font-headline font-black text-lime-400 text-xs tracking-widest uppercase">HR MODULE</span>
+<p className="text-[10px] text-neutral-500 font-bold uppercase tracking-tighter">Industrial Control</p>
+</div>
+<div className="flex-1 flex flex-col mt-4">
+<a className="flex items-center gap-3 px-6 py-3 text-neutral-400 hover:bg-neutral-800 transition-colors duration-200 font-['Inter'] font-semibold text-sm uppercase" href="#">
+<span className="material-symbols-outlined text-sm">badge</span> Employee Files
+            </a>
+<a className="flex items-center gap-3 px-6 py-3 bg-lime-900/20 text-lime-300 border-r-4 border-lime-600 transition-colors duration-200 font-['Inter'] font-semibold text-sm uppercase" href="#">
+<span className="material-symbols-outlined text-sm">payments</span> Payroll
+            </a>
+<a className="flex items-center gap-3 px-6 py-3 text-neutral-400 hover:bg-neutral-800 transition-colors duration-200 font-['Inter'] font-semibold text-sm uppercase" href="#">
+<span className="material-symbols-outlined text-sm">account_balance</span> Social Benefits
+            </a>
+<a className="flex items-center gap-3 px-6 py-3 text-neutral-400 hover:bg-neutral-800 transition-colors duration-200 font-['Inter'] font-semibold text-sm uppercase" href="#">
+<span className="material-symbols-outlined text-sm">event_busy</span> Leave Mgmt
+            </a>
+<a className="flex items-center gap-3 px-6 py-3 text-neutral-400 hover:bg-neutral-800 transition-colors duration-200 font-['Inter'] font-semibold text-sm uppercase" href="#">
+<span className="material-symbols-outlined text-sm">gavel</span> Legal Reports
+            </a>
+</div>
+<div className="p-6 border-t border-neutral-800">
+<button className="w-full bg-primary text-on-primary py-3 font-headline font-bold uppercase text-xs tracking-widest hover:scale-102 active:scale-95 transition-all">
+                Generate Report
+            </button>
+</div>
+</aside>
+{/* Comentario remanente */}
+<main className="md:ml-64 pt-20 p-6 min-h-screen">
+{/* Comentario remanente */}
+<header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 className="font-headline text-4xl font-extrabold uppercase tracking-tighter text-white">Payroll Calculation</h1>
+<p className="text-neutral-500 font-label text-sm uppercase tracking-widest mt-1">Industrial Processing Unit • V.2.4.0</p>
+</div>
+{/* Comentario remanente */}
+<div className="bg-neutral-900 p-1 flex items-center rounded-lg border border-neutral-800">
+<div className="px-4 py-2 flex flex-col border-r border-neutral-800">
+<span className="text-[10px] text-lime-400 font-bold uppercase tracking-tighter">Period Start</span>
+<input className="bg-transparent border-none text-white p-0 text-sm focus:ring-0" type="date" value="2023-11-01"/>
+</div>
+<div className="px-4 py-2 flex flex-col border-r border-neutral-800">
+<span className="text-[10px] text-lime-400 font-bold uppercase tracking-tighter">Period End</span>
+<input className="bg-transparent border-none text-white p-0 text-sm focus:ring-0" type="date" value="2023-11-15"/>
+</div>
+<button className="px-4 py-2 hover:bg-neutral-800 transition-colors">
+<span className="material-symbols-outlined text-neutral-400">refresh</span>
+</button>
+</div>
+</header>
+{/* Comentario remanente */}
+<div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div className="bg-neutral-900 p-6 border-l-4 border-lime-500">
+<p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest">Gross Total</p>
+<h3 className="text-2xl font-headline font-bold text-white mt-1">245.890,00 <span className="text-xs text-neutral-500 uppercase">VED</span></h3>
+</div>
+<div className="bg-neutral-900 p-6 border-l-4 border-neutral-700">
+<p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest">Deductions Sum</p>
+<h3 className="text-2xl font-headline font-bold text-white mt-1">12.340,50 <span className="text-xs text-neutral-500 uppercase">VED</span></h3>
+</div>
+<div className="bg-neutral-900 p-6 border-l-4 border-lime-500">
+<p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest">Net Payable</p>
+<h3 className="text-2xl font-headline font-bold text-lime-400 mt-1">233.549,50 <span className="text-xs text-neutral-500 uppercase">VED</span></h3>
+</div>
+<div className="bg-neutral-900 p-6 border-l-4 border-neutral-700">
+<p className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest">Patronal Costs</p>
+<h3 className="text-2xl font-headline font-bold text-white mt-1">34.120,00 <span className="text-xs text-neutral-500 uppercase">VED</span></h3>
+</div>
+</div>
+{/* Comentario remanente */}
+<div className="bg-neutral-900 rounded-lg overflow-hidden border border-neutral-800 mb-8">
+<div className="px-6 py-4 border-b border-neutral-800 flex justify-between items-center">
+<h2 className="font-headline font-bold uppercase text-sm tracking-widest text-neutral-300">Detailed Payroll Worksheet</h2>
+<div className="flex gap-4">
+<button className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-lime-400 hover:text-white transition-colors">
+<span className="material-symbols-outlined text-sm">filter_alt</span> Filter Employees
+                    </button>
+<button className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition-colors">
+<span className="material-symbols-outlined text-sm">download</span> CSV Export
+                    </button>
+</div>
+</div>
+<div className="overflow-x-auto">
+<table className="w-full text-left border-collapse">
+<thead>
+<tr className="bg-neutral-950/50">
+<th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-500">Employee Details</th>
+<th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-500">Base Salary</th>
+<th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-500">LOTTT Recargos</th>
+<th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-500">Deductions (IVSS/FAOV)</th>
+<th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-500">Cesta Ticket</th>
+<th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-500">Net Total</th>
+<th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-500 text-right">Actions</th>
+</tr>
+</thead>
+<tbody className="divide-y divide-neutral-800">
+{/* Comentario remanente */}
+<tr className="hover:bg-neutral-800/50 transition-colors">
+<td className="px-6 py-4">
+<div className="flex items-center gap-3">
+<div className="w-8 h-8 rounded bg-neutral-800 flex items-center justify-center font-bold text-lime-400 text-xs">RM</div>
+<div>
+<p className="text-sm font-bold text-white">RICARDO MENDOZA</p>
+<p className="text-[10px] text-neutral-500 uppercase font-medium">Operations Lead • ID: 402231</p>
+</div>
+</div>
+</td>
+<td className="px-6 py-4 text-sm font-medium text-neutral-300">45.000,00</td>
+<td className="px-6 py-4">
+<div className="flex flex-col gap-1">
+<span className="text-[10px] px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded w-fit">OT 50%: 12.5h</span>
+<span className="text-[10px] px-2 py-0.5 bg-lime-900/30 text-lime-400 rounded w-fit">Bonus: 5.000,00</span>
+</div>
+</td>
+<td className="px-6 py-4 text-sm font-medium text-error/80">
+<p>-1.250,40 <span className="text-[9px] text-neutral-500 block uppercase">IVSS (0.5%) + FAOV (0.25%)</span></p>
+</td>
+<td className="px-6 py-4">
+<p className="text-sm font-medium text-neutral-300">1.000,00</p>
+<p className="text-[9px] text-neutral-500 uppercase">22 Days Active</p>
+</td>
+<td className="px-6 py-4 font-headline font-bold text-lime-400">49.749,60</td>
+<td className="px-6 py-4 text-right">
+<button className="p-2 hover:bg-neutral-700 rounded-lg transition-all" title="View Details">
+<span className="material-symbols-outlined text-sm text-neutral-400">visibility</span>
+</button>
+<button className="p-2 hover:bg-neutral-700 rounded-lg transition-all" title="Download Receipt">
+<span className="material-symbols-outlined text-sm text-neutral-400">file_download</span>
+</button>
+</td>
+</tr>
+{/* Comentario remanente */}
+<tr className="hover:bg-neutral-800/50 transition-colors">
+<td className="px-6 py-4">
+<div className="flex items-center gap-3">
+<div className="w-8 h-8 rounded bg-neutral-800 flex items-center justify-center font-bold text-lime-400 text-xs">AS</div>
+<div>
+<p className="text-sm font-bold text-white">ANA SÁNCHEZ</p>
+<p className="text-[10px] text-neutral-500 uppercase font-medium">Mechanical Engineer • ID: 402245</p>
+</div>
+</div>
+</td>
+<td className="px-6 py-4 text-sm font-medium text-neutral-300">62.000,00</td>
+<td className="px-6 py-4">
+<div className="flex flex-col gap-1">
+<span className="text-[10px] px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded w-fit">OT 75%: 4.0h</span>
+<span className="text-[10px] px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded w-fit">Comm: 8.500,00</span>
+</div>
+</td>
+<td className="px-6 py-4 text-sm font-medium text-error/80">
+<p>-1.860,00 <span className="text-[9px] text-neutral-500 block uppercase">PF (1%) + IVSS/FAOV</span></p>
+</td>
+<td className="px-6 py-4">
+<p className="text-sm font-medium text-neutral-300">1.000,00</p>
+<p className="text-[9px] text-neutral-500 uppercase">22 Days Active</p>
+</td>
+<td className="px-6 py-4 font-headline font-bold text-lime-400">69.640,00</td>
+<td className="px-6 py-4 text-right">
+<button className="p-2 hover:bg-neutral-700 rounded-lg transition-all" title="View Details">
+<span className="material-symbols-outlined text-sm text-neutral-400">visibility</span>
+</button>
+<button className="p-2 hover:bg-neutral-700 rounded-lg transition-all" title="Download Receipt">
+<span className="material-symbols-outlined text-sm text-neutral-400">file_download</span>
+</button>
+</td>
+</tr>
+{/* Comentario remanente */}
+<tr className="hover:bg-neutral-800/50 transition-colors">
+<td className="px-6 py-4">
+<div className="flex items-center gap-3">
+<div className="w-8 h-8 rounded bg-neutral-800 flex items-center justify-center font-bold text-lime-400 text-xs">JV</div>
+<div>
+<p className="text-sm font-bold text-white">JOSE VILLALOBOS</p>
+<p className="text-[10px] text-neutral-500 uppercase font-medium">Technician II • ID: 402289</p>
+</div>
+</div>
+</td>
+<td className="px-6 py-4 text-sm font-medium text-neutral-300">38.500,00</td>
+<td className="px-6 py-4">
+<div className="flex flex-col gap-1">
+<span className="text-[10px] px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded w-fit">OT 100%: 8.0h</span>
+</div>
+</td>
+<td className="px-6 py-4 text-sm font-medium text-error/80">
+<p>-962,50 <span className="text-[9px] text-neutral-500 block uppercase">Full Deductions</span></p>
+</td>
+<td className="px-6 py-4">
+<p className="text-sm font-medium text-neutral-300">850,00</p>
+<p className="text-[9px] text-neutral-500 uppercase">18 Days Active</p>
+</td>
+<td className="px-6 py-4 font-headline font-bold text-lime-400">42.387,50</td>
+<td className="px-6 py-4 text-right">
+<button className="p-2 hover:bg-neutral-700 rounded-lg transition-all" title="View Details">
+<span className="material-symbols-outlined text-sm text-neutral-400">visibility</span>
+</button>
+<button className="p-2 hover:bg-neutral-700 rounded-lg transition-all" title="Download Receipt">
+<span className="material-symbols-outlined text-sm text-neutral-400">file_download</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+{/* Comentario remanente */}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+{/* Comentario remanente */}
+<div className="bg-neutral-900 p-8 rounded-lg border border-neutral-800 flex flex-col justify-between">
+<div>
+<h3 className="font-headline font-extrabold text-2xl uppercase tracking-tighter text-white mb-6">Accounting Summary</h3>
+<div className="space-y-4">
+<div className="flex justify-between items-center text-sm font-medium">
+<span className="text-neutral-500 uppercase tracking-widest text-[11px]">Total Basic Wage</span>
+<span className="text-white">145.500,00</span>
+</div>
+<div className="flex justify-between items-center text-sm font-medium">
+<span className="text-neutral-500 uppercase tracking-widest text-[11px]">Overtime (50/75/100)</span>
+<span className="text-white">28.400,00</span>
+</div>
+<div className="flex justify-between items-center text-sm font-medium">
+<span className="text-neutral-500 uppercase tracking-widest text-[11px]">Legal Deductions</span>
+<span className="text-error/80">-12.340,50</span>
+</div>
+<div className="pt-4 border-t border-neutral-800 flex justify-between items-center">
+<span className="font-headline font-black text-lime-400 uppercase tracking-widest">Net Liability</span>
+<span className="font-headline font-black text-2xl text-lime-400">233.549,50</span>
+</div>
+</div>
+</div>
+</div>
+{/* Comentario remanente */}
+<div className="flex flex-col gap-4">
+<button className="flex-1 bg-primary text-on-primary p-6 flex flex-col items-center justify-center gap-2 group hover:scale-[1.01] active:scale-95 transition-all shadow-[0_10px_20px_rgba(73,104,0,0.2)]">
+<span className="material-symbols-outlined text-3xl">account_balance_wallet</span>
+<span className="font-headline font-bold text-xl uppercase tracking-tight">Process &amp; Generate Accounting Seats</span>
+<p className="text-[10px] font-medium uppercase tracking-widest opacity-70">Automatic Ledger Entry Posting</p>
+</button>
+<div className="grid grid-cols-2 gap-4">
+<button className="bg-neutral-800 border border-neutral-700 p-4 flex flex-col items-center gap-2 hover:bg-neutral-700 transition-all uppercase font-headline font-bold text-xs tracking-widest text-white">
+<span className="material-symbols-outlined">description</span>
+                        Download Receipts
+                    </button>
+<button className="bg-neutral-800 border border-neutral-700 p-4 flex flex-col items-center gap-2 hover:bg-neutral-700 transition-all uppercase font-headline font-bold text-xs tracking-widest text-white">
+<span className="material-symbols-outlined">print</span>
+                        Print Summary
+                    </button>
+</div>
+</div>
+</div>
+</main>
+{/* Comentario remanente */}
+<footer className="md:ml-64 bg-neutral-950 border-t border-neutral-900 py-12 px-8">
+<div className="flex flex-col md:flex-row justify-between items-start gap-8">
+<div>
+<span className="font-headline font-black text-2xl text-neutral-50 uppercase tracking-tighter">FORGE<span className="text-lime-500">.ERP</span></span>
+<p className="text-neutral-500 text-sm mt-2 max-w-xs">Industrial-grade resource planning for high-performance engineering sectors.</p>
+</div>
+<div className="grid grid-cols-2 gap-12">
+<div>
+<p className="text-[10px] text-lime-400 font-bold uppercase tracking-widest mb-4">Identification</p>
+<ul className="text-sm text-neutral-400 space-y-2">
+<li>RIF: J-30495821-0</li>
+<li>NIT: 0049283120</li>
+<li>SENCAMER: R-49502</li>
+</ul>
+</div>
+<div>
+<p className="text-[10px] text-lime-400 font-bold uppercase tracking-widest mb-4">Technical Support</p>
+<ul className="text-sm text-neutral-400 space-y-2">
+<li className="flex items-center gap-2"><span className="material-symbols-outlined text-[14px]">mail</span> support@forge-erp.io</li>
+<li className="flex items-center gap-2"><span className="material-symbols-outlined text-[14px]">phone</span> +58 (241) 555-0199</li>
+<li className="flex items-center gap-2"><span className="material-symbols-outlined text-[14px]">location_on</span> Valencia, Edo. Carabobo</li>
+</ul>
+</div>
+</div>
+</div>
+<div className="mt-12 pt-8 border-t border-neutral-900 flex justify-between items-center">
+<p className="text-[10px] text-neutral-600 uppercase font-bold tracking-widest">© 2023 Forge Industrial ERP Systems. All Rights Reserved.</p>
+<div className="flex gap-4">
+<div className="w-2 h-2 rounded-full bg-lime-500 animate-pulse"></div>
+<span className="text-[10px] text-neutral-600 uppercase font-bold tracking-widest">System Status: Operational</span>
+</div>
+</div>
+</footer>
+
+        </div>
+    );
+};

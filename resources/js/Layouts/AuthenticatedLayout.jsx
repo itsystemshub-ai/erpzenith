@@ -30,6 +30,18 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+                                <NavLink
+                                    href={route('erp.currencies.index')}
+                                    active={route().current('erp.currencies.*')}
+                                >
+                                    Monedas (Tesorería)
+                                </NavLink>
+                                <NavLink
+                                    href={route('erp.products.index')}
+                                    active={route().current('erp.products.*')}
+                                >
+                                    Catálogo Productos
+                                </NavLink>
                             </div>
                         </div>
 
