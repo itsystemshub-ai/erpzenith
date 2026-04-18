@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function GestiNEmpleadosExpedienteDigital() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <aside className="h-screen w-64 fixed left-0 top-0 z-40 bg-neutral-50 dark:bg-neutral-950 flex flex-col border-r border-neutral-200 dark:border-neutral-800">

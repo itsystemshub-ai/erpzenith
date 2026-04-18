@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function GestiNUsuariosRolesGranulares() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <aside className="fixed left-0 top-0 h-screen w-64 flex flex-col border-r-0 bg-stone-950 dark:bg-black z-50 font-['Space_Grotesk'] uppercase tracking-tight">

@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function VistaPreviaImpresiNFactura() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <header className="no-print bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-xl docked full-width top-0 sticky z-40">

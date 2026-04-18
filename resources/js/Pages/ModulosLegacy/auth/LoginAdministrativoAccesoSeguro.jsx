@@ -1,9 +1,20 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 
 export default function LoginAdministrativoAccesoSeguro() {
+    const { data, setData, post, processing, errors } = useForm({
+        email: '',
+        password: '',
+        remember: false,
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+        post('/login');
+    };
+
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <main className="w-full max-w-4xl grid md:grid-cols-12 gap-0 overflow-hidden rounded-lg shadow-2xl relative">
@@ -41,22 +52,24 @@ export default function LoginAdministrativoAccesoSeguro() {
 <h2 className="font-headline text-2xl font-bold text-zinc-900 tracking-tight mb-2">OPERATOR AUTHENTICATION</h2>
 <div className="h-1 w-12 bg-primary"></div>
 </div>
-<form className="space-y-6">
+<form className="space-y-6" onSubmit={submit}>
 {/* Comentario remanente */}
 <div className="space-y-2">
-<label className="block font-label text-[10px] font-bold text-stone-500 tracking-widest uppercase">System Identifier</label>
+<label className="block font-label text-[10px] font-bold text-stone-500 tracking-widest uppercase">System Identifier (Email)</label>
 <div className="relative">
 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 text-sm">person</span>
-<input className="w-full bg-surface-container pl-12 pr-4 py-4 border-none focus:ring-2 focus:ring-primary text-on-surface font-headline tracking-widest placeholder:text-stone-400" placeholder="OPERATOR_ID" type="text"/>
+<input className="w-full bg-surface-container pl-12 pr-4 py-4 border-none focus:ring-2 focus:ring-primary text-on-surface font-headline tracking-widest placeholder:text-stone-400" placeholder="admin@zenith.com" type="email" value={data.email} onChange={e => setData('email', e.target.value)} required/>
 </div>
+{errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
 </div>
 {/* Comentario remanente */}
 <div className="space-y-2">
 <label className="block font-label text-[10px] font-bold text-stone-500 tracking-widest uppercase">Access Cipher</label>
 <div className="relative">
 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 text-sm">lock_open</span>
-<input className="w-full bg-surface-container pl-12 pr-4 py-4 border-none focus:ring-2 focus:ring-primary text-on-surface font-headline tracking-widest placeholder:text-stone-400" placeholder="••••••••" type="password"/>
+<input className="w-full bg-surface-container pl-12 pr-4 py-4 border-none focus:ring-2 focus:ring-primary text-on-surface font-headline tracking-widest placeholder:text-stone-400" placeholder="••••••••" type="password" value={data.password} onChange={e => setData('password', e.target.value)} required/>
 </div>
+{errors.password && <div className="text-red-500 text-xs mt-1">{errors.password}</div>}
 </div>
 {/* Comentario remanente */}
 <div className="p-4 bg-surface-container-low border border-outline-variant/20 rounded-sm">
@@ -67,17 +80,17 @@ export default function LoginAdministrativoAccesoSeguro() {
 <span className="text-[9px] text-primary font-bold">SMS SENT</span>
 </div>
 <div className="flex gap-2">
-<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxlength="1" type="text" value="4"/>
-<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxlength="1" type="text" value="9"/>
-<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxlength="1" placeholder="0" type="text"/>
-<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxlength="1" placeholder="0" type="text"/>
-<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxlength="1" placeholder="0" type="text"/>
-<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxlength="1" placeholder="0" type="text"/>
+<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxLength="1" type="text" defaultValue="4"/>
+<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxLength="1" type="text" defaultValue="9"/>
+<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxLength="1" placeholder="0" type="text"/>
+<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxLength="1" placeholder="0" type="text"/>
+<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxLength="1" placeholder="0" type="text"/>
+<input className="w-full h-12 text-center bg-surface-container-highest border-none text-zinc-900 font-headline font-bold focus:ring-2 focus:ring-primary" maxLength="1" placeholder="0" type="text"/>
 </div>
 </div>
 {/* Comentario remanente */}
-<button className="w-full py-4 bg-[#FF8C00] hover:bg-[#E67E00] text-black font-headline font-black text-sm tracking-[0.2em] uppercase transition-all flex items-center justify-center gap-3 active:scale-[0.98]" type="submit">
-                    LOGIN TO CORE
+<button disabled={processing} className="w-full py-4 bg-[#FF8C00] hover:bg-[#E67E00] text-black font-headline font-black text-sm tracking-[0.2em] uppercase transition-all flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-50" type="submit">
+                    {processing ? 'AUTHENTICATING...' : 'LOGIN TO CORE'}
                     <span className="material-symbols-outlined">bolt</span>
 </button>
 <div className="flex justify-between items-center">

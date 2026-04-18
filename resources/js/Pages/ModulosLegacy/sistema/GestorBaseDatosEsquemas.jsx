@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function GestorBaseDatosEsquemas() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <header className="fixed top-0 left-0 w-full h-16 bg-stone-950/80 backdrop-blur-md flex justify-between items-center pl-64 pr-8 z-40">

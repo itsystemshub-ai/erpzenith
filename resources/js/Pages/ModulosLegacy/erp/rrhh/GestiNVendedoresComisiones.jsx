@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function GestiNVendedoresComisiones() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <aside className="flex flex-col fixed left-0 top-0 h-full z-50 bg-[#161818] w-64 border-r border-outline-variant/10">

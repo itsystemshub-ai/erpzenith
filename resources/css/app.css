@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .bg-industrial-mesh {
+        background-image: radial-gradient(circle at 2px 2px, #262626 1px, transparent 0);
+        background-size: 24px 24px;
+    }
+    .asymmetric-cut {
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
+    }
+}

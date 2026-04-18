@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function CentroReportesRrhh() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <header className="bg-surface dark:bg-stone-950/80 backdrop-blur-xl docked full-width top-0 z-50 tonal-shift-no-borders bg-stone-100 dark:bg-stone-900 flat no shadows ambient-depth">

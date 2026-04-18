@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function GestiNProductosInventario() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <nav className="h-screen w-64 fixed left-0 top-0 bg-stone-100 dark:bg-stone-950 flex flex-col py-6 border-r border-stone-200/50 dark:border-stone-800/50 z-50">

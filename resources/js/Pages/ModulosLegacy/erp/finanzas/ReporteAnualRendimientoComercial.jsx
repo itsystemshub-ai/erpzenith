@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function ReporteAnualRendimientoComercial() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <header className="fixed top-0 w-full z-40 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-xl shadow-[0_24px_40px_rgba(26,28,28,0.04)] border-b border-stone-200/10">

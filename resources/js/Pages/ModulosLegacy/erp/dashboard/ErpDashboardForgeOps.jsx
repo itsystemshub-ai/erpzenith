@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function ErpDashboardForgeOps() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <aside className="h-screen w-64 fixed left-0 top-0 z-50 flex flex-col bg-stone-100 border-r border-stone-200">
@@ -22,26 +22,26 @@ export default function ErpDashboardForgeOps() {
 </div>
 <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar">
 {/* Comentario remanente */}
-<a className="flex items-center gap-3 px-3 py-2.5 bg-lime-500/10 text-lime-700 font-bold border-r-4 border-lime-500 transition-transform duration-150" href="#">
+<Link className="flex items-center gap-3 px-3 py-2.5 bg-lime-500/10 text-lime-700 font-bold border-r-4 border-lime-500 transition-transform duration-150" href="/modulo/erp/dashboard/ErpDashboardForgeOps">
 <span className="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
 <span className="text-sm font-medium tracking-wide">Dashboard</span>
-</a>
-<a className="flex items-center gap-3 px-3 py-2.5 text-stone-600 hover:bg-stone-200 transition-transform duration-150" href="#">
+</Link>
+<Link className="flex items-center gap-3 px-3 py-2.5 text-stone-600 hover:bg-stone-200 transition-transform duration-150" href="/modulo/erp/inventario/CentroDeReportesDeInventario">
 <span className="material-symbols-outlined text-[20px]" data-icon="inventory_2">inventory_2</span>
 <span className="text-sm font-medium tracking-wide">Inventory</span>
-</a>
-<a className="flex items-center gap-3 px-3 py-2.5 text-stone-600 hover:bg-stone-200 transition-transform duration-150" href="#">
+</Link>
+<Link className="flex items-center gap-3 px-3 py-2.5 text-stone-600 hover:bg-stone-200 transition-transform duration-150" href="/modulo/erp/ventas/DashboardDeVentasKpis">
 <span className="material-symbols-outlined text-[20px]" data-icon="payments">payments</span>
 <span className="text-sm font-medium tracking-wide">Sales</span>
-</a>
-<a className="flex items-center gap-3 px-3 py-2.5 text-stone-600 hover:bg-stone-200 transition-transform duration-150" href="#">
+</Link>
+<Link className="flex items-center gap-3 px-3 py-2.5 text-stone-600 hover:bg-stone-200 transition-transform duration-150" href="/modulo/erp/compras/DashboardDeComprasErp">
 <span className="material-symbols-outlined text-[20px]" data-icon="shopping_cart">shopping_cart</span>
 <span className="text-sm font-medium tracking-wide">Purchases</span>
-</a>
-<a className="flex items-center gap-3 px-3 py-2.5 text-stone-600 hover:bg-stone-200 transition-transform duration-150" href="#">
+</Link>
+<Link className="flex items-center gap-3 px-3 py-2.5 text-stone-600 hover:bg-stone-200 transition-transform duration-150" href="/modulo/configuracion/ConfiguraciNDeParMetrosGlobales">
 <span className="material-symbols-outlined text-[20px]" data-icon="settings_input_component">settings_input_component</span>
 <span className="text-sm font-medium tracking-wide">Configuration</span>
-</a>
+</Link>
 {/* Comentario remanente */}
 <div className="pt-4 pb-2 px-3">
 <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Internal / WIP</span>

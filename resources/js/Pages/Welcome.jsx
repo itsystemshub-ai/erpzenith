@@ -37,10 +37,10 @@ export default function Welcome({ canLogin, canRegister, products }) {
                                 </Link>
                             ) : (
                                 <>
-                                    <Link href="/modulo/auth/login_register" className="hidden lg:block text-zinc-400 font-medium font-headline tracking-tight uppercase hover:text-white transition-colors duration-200">
+                                    <Link href={route('login')} className="hidden lg:block text-zinc-400 font-medium font-headline tracking-tight uppercase hover:text-white transition-colors duration-200">
                                         Iniciar Sesión / Registro
                                     </Link>
-                                    <Link href="/modulo/auth/creacion_cuenta_corporativa" className="hidden lg:block text-[#9ACD32] font-medium font-headline tracking-tight uppercase hover:text-white transition-colors duration-200">
+                                    <Link href="/modulo/auth/create_corporate_account" className="hidden lg:block text-[#9ACD32] font-medium font-headline tracking-tight uppercase hover:text-white transition-colors duration-200">
                                         Crear Cuenta B2B
                                     </Link>
                                 </>

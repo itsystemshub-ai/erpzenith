@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function CentroReportesFinancieros() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <aside className="hidden md:flex flex-col h-screen w-64 docked left-0 bg-stone-50 dark:bg-stone-900 shadow-[4px_0_24px_rgba(0,0,0,0.04)] fixed z-40 py-8 gap-2 border-r-0">
@@ -12,18 +12,18 @@ export default function CentroReportesFinancieros() {
 <p className="text-[10px] font-bold text-lime-600 dark:text-lime-400 tracking-widest mt-1 opacity-80">REPORTING SUITE V2.4</p>
 </div>
 <nav className="flex-1 space-y-1">
-<a className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-transform hover:translate-x-1 duration-150 group" href="#">
+<Link className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-transform hover:translate-x-1 duration-150 group" href="/modulo/erp/inventario/CentroDeReportesDeInventario">
 <span className="material-symbols-outlined mr-3 text-lg" data-icon="inventory_2">inventory_2</span>
 <span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Inventory</span>
-</a>
+</Link>
 <a className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-transform hover:translate-x-1 duration-150" href="#">
 <span className="material-symbols-outlined mr-3 text-lg" data-icon="trending_up">trending_up</span>
 <span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Sales</span>
 </a>
-<a className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-transform hover:translate-x-1 duration-150" href="#">
+<Link className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-transform hover:translate-x-1 duration-150" href="/modulo/erp/compras/DashboardDeComprasErp">
 <span className="material-symbols-outlined mr-3 text-lg" data-icon="shopping_cart">shopping_cart</span>
 <span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Purchases</span>
-</a>
+</Link>
 <a className="flex items-center px-6 py-3 bg-lime-500/10 text-lime-700 dark:text-lime-400 border-r-4 border-lime-600 transition-transform hover:translate-x-1 duration-150" href="#">
 <span className="material-symbols-outlined mr-3 text-lg" data-icon="payments">payments</span>
 <span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Finance</span>

@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function CentroReportesContables() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <aside className="hidden md:flex flex-col h-screen w-64 docked left-0 border-r-0 bg-stone-50 dark:bg-stone-900 shadow-[4px_0_24px_rgba(0,0,0,0.04)] py-8 gap-2 sticky top-0">

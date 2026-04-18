@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function BalanceGeneral() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <aside className="h-screen w-64 fixed left-0 top-0 border-r-0 bg-zinc-900 flex flex-col py-8 gap-4 shadow-[40px_0_40px_-40px_rgba(0,0,0,0.1)] z-40 hidden md:flex">

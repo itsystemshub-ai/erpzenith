@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function GestiNProveedoresB2b() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <aside className="bg-stone-900 h-screen w-64 left-0 top-0 fixed flex flex-col h-full py-8 gap-4 shadow-2xl z-40 hidden md:flex">

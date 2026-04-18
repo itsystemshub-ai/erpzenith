@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 
 export default function CierreContableLiquidaciNImpuestos() {
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <header className="fixed top-0 z-50 flex justify-between items-center w-full px-6 py-3 bg-stone-950/80 backdrop-blur-xl border-b-0">
@@ -38,10 +38,10 @@ export default function CierreContableLiquidaciNImpuestos() {
 </div>
 </div>
 <nav className="flex-1 space-y-1">
-<a className="flex items-center gap-4 text-stone-500 hover:text-stone-200 py-3 px-6 hover:bg-stone-800/80 transition-all font-label text-sm font-semibold tracking-wide active:translate-x-1 duration-150" href="#">
+<Link className="flex items-center gap-4 text-stone-500 hover:text-stone-200 py-3 px-6 hover:bg-stone-800/80 transition-all font-label text-sm font-semibold tracking-wide active:translate-x-1 duration-150" href="/modulo/erp/dashboard/ErpDashboardForgeOps">
 <span className="material-symbols-outlined" data-icon="dashboard">dashboard</span>
 <span>Dashboard</span>
-</a>
+</Link>
 <a className="flex items-center gap-4 text-stone-500 hover:text-stone-200 py-3 px-6 hover:bg-stone-800/80 transition-all font-label text-sm font-semibold tracking-wide active:translate-x-1 duration-150" href="#">
 <span className="material-symbols-outlined" data-icon="account_tree">account_tree</span>
 <span>Chart of Accounts</span>

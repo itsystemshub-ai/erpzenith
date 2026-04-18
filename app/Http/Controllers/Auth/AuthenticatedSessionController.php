@@ -18,7 +18,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('ModulosLegacy/stitch_la_cima_repuestos/login_administrativo_acceso_seguro/LoginAdministrativoAccesoSeguro', [
+        return Inertia::render('ModulosLegacy/auth/LoginAdministrativoAccesoSeguro', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
         ]);

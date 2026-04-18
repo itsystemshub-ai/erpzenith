@@ -1,21 +1,9 @@
 import React from 'react';
-import { Link, useForm } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 
 export default function LoginRegister() {
-    const { data, setData, post, processing, errors } = useForm({
-        email: '',
-        password: '',
-        remember: false,
-    });
-
-    const submit = (e) => {
-        e.preventDefault();
-        // Redirige la data hacia el método real de inicio de sesión de Laravel
-        post('/login');
-    };
-
     return (
-        <div className="legacy-view min-h-screen bg-surface">
+        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
             
 {/* Comentario remanente */}
 <nav className="bg-zinc-950/90 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50 docked full-width top-0 sticky z-50">
@@ -45,22 +33,13 @@ export default function LoginRegister() {
 <h1 className="text-4xl font-headline font-bold text-on-surface mt-2 tracking-tight uppercase">Client Login</h1>
 <p className="text-secondary mt-2">Access your industrial parts inventory and order history.</p>
 </header>
-<form className="space-y-6" onSubmit={submit}>
+<form className="space-y-6">
 <div className="space-y-1.5">
 <label className="text-xs font-bold uppercase tracking-wider text-secondary">Work Email</label>
 <div className="relative">
 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-secondary text-lg">mail</span>
-<input 
-    className="w-full pl-12 pr-4 py-3.5 bg-surface-container-high border-none focus:ring-2 focus:ring-primary rounded-lg transition-all text-on-surface placeholder:text-secondary/50" 
-    placeholder="name@company.com" 
-    type="email"
-    name="email"
-    value={data.email}
-    onChange={(e) => setData('email', e.target.value)}
-    required
-/>
+<input className="w-full pl-12 pr-4 py-3.5 bg-surface-container-high border-none focus:ring-2 focus:ring-primary rounded-lg transition-all text-on-surface placeholder:text-secondary/50" placeholder="name@company.com" type="email"/>
 </div>
-{errors.email && <div className="text-error text-xs mt-1 font-bold">{errors.email}</div>}
 </div>
 <div className="space-y-1.5">
 <div className="flex justify-between items-center">
@@ -69,35 +48,15 @@ export default function LoginRegister() {
 </div>
 <div className="relative">
 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-secondary text-lg">lock</span>
-<input 
-    className="w-full pl-12 pr-4 py-3.5 bg-surface-container-high border-none focus:ring-2 focus:ring-primary rounded-lg transition-all text-on-surface placeholder:text-secondary/50" 
-    placeholder="••••••••" 
-    type="password"
-    name="password"
-    value={data.password}
-    onChange={(e) => setData('password', e.target.value)}
-    required
-/>
+<input className="w-full pl-12 pr-4 py-3.5 bg-surface-container-high border-none focus:ring-2 focus:ring-primary rounded-lg transition-all text-on-surface placeholder:text-secondary/50" placeholder="••••••••" type="password"/>
 </div>
-{errors.password && <div className="text-error text-xs mt-1 font-bold">{errors.password}</div>}
 </div>
 <div className="flex items-center gap-3">
-<input 
-    className="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant/30" 
-    id="remember" 
-    type="checkbox"
-    name="remember"
-    checked={data.remember}
-    onChange={(e) => setData('remember', e.target.checked)}
-/>
-<label className="text-sm text-on-surface-variant" htmlFor="remember">Keep me logged in</label>
+<input className="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant/30" id="remember" type="checkbox"/>
+<label className="text-sm text-on-surface-variant" htmlFor="remember">Keep me logged in for 30 days</label>
 </div>
-<button 
-    className="w-full bg-primary hover:bg-primary-container text-on-primary font-headline font-bold uppercase py-4 rounded-lg flex items-center justify-center gap-2 group transition-all active:scale-[0.98] disabled:opacity-50" 
-    type="submit"
-    disabled={processing}
->
-<span>{processing ? 'Authenticating...' : 'Authenticate Session'}</span>
+<button className="w-full bg-primary hover:bg-primary-container text-on-primary font-headline font-bold uppercase py-4 rounded-lg flex items-center justify-center gap-2 group transition-all active:scale-[0.98]" type="submit">
+<span>Authenticate Session</span>
 <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </button>
 </form>
