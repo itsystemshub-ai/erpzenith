@@ -1,18 +1,3 @@
-<?php
-    use Illuminate\Support\Facades\Auth;
-    use App\Models\Role;
-    use App\Models\Permission;
-
-    $user = Auth::user();
-
-    if ($user) {
-        $role = Role::find($user->role_id);
-        $permissions = Permission::whereIn('id', $role->permissions->pluck('id'))->get();
-    } else {
-        $permissions = [];
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -21,9 +6,11 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <!-- Fonts & Icons -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @routes
@@ -31,7 +18,7 @@
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased text-on-surface bg-surface selection:bg-primary-container selection:text-on-primary-container">
         @inertia
     </body>
 </html>

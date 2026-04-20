@@ -8,12 +8,10 @@ use Inertia\Inertia;
 
 // E-Commerce Storefront (Public)
 Route::get('/', function () {
-    $products = DB::table('products')->where('is_active', true)->get();
-    return Inertia::render('Welcome', [
+    $products = DB::table('products')->where('is_active', true)->limit(8)->get();
+    return Inertia::render('Tienda/Index', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
         'products' => $products
     ]);
 });
@@ -35,11 +33,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Admin ERP Routes
     Route::get('/erp/currencies', [\App\Http\Controllers\Erp\CurrencyController::class, 'index'])->name('erp.currencies.index');
     Route::post('/erp/currencies', [\App\Http\Controllers\Erp\CurrencyController::class, 'store'])->name('erp.currencies.store');
-    Route::put('/erp/currencies/{id}', [\App\Http\Controllers\Erp\CurrencyController::class, 'update'])->name('erp.currencies.update');
-    Route::delete('/erp/currencies/{id}', [\App\Http\Controllers\Erp\CurrencyController::class, 'destroy'])->name('erp.currencies.destroy');
 
     Route::get('/erp/products', [\App\Http\Controllers\Erp\ProductController::class, 'index'])->name('erp.products.index');
     Route::post('/erp/products', [\App\Http\Controllers\Erp\ProductController::class, 'store'])->name('erp.products.store');
+
+    // Módulo Ventas (Nuevas Rutas Estáticas)
+    Route::get('/erp/ventas/pos', function() {
+        return Inertia::render('erp/ventas/POS');
+    })->name('erp.ventas.pos');
+
+    Route::get('/erp/ventas/historial', function() {
+        return Inertia::render('erp/ventas/SalesHistory');
+    })->name('erp.ventas.history');
 
     // === ENRUTADOR MAESTRO UNIVERSAL PARA LAS 81+ PÁGINAS LEGACY ===
     // Garantiza que absolutamente ninguna página quede por fuera. Navegación dinámica.
