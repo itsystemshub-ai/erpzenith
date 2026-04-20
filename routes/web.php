@@ -61,7 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $segment)));
         }, $segments);
         
-        $componentPath = 'ModulosLegacy/' . implode('/', $jsxSegments);
+        $componentPath = 'erp/' . implode('/', $jsxSegments);
         
         return Inertia::render($componentPath);
     })->where('path', '.*')->name('erp.legacy.universal');

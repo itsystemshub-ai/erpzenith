@@ -1,371 +1,278 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function CentroDeReportesDeVentas() {
-    return (
-        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
-            
-{/* Comentario remanente */}
-<aside className="hidden md:flex flex-col h-full py-8 gap-2 bg-stone-50 dark:bg-stone-900 h-screen w-64 docked left-0 border-r-0 shadow-[4px_0_24px_rgba(0,0,0,0.04)] fixed z-40">
-<div className="px-6 mb-8">
-<h1 className="text-lg font-black text-stone-800 dark:text-stone-100 uppercase tracking-tighter">REPORTING SUITE</h1>
-<p className="font-['Inter'] font-semibold tracking-wide text-xs text-lime-600 dark:text-lime-400">V2.4 Precision Engine</p>
-</div>
-<nav className="flex-grow space-y-1">
-<a className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150 font-['Inter'] font-semibold tracking-wide text-xs" href="#">
-<span className="material-symbols-outlined mr-3" data-icon="inventory_2">inventory_2</span> Inventory
-            </a>
-<a className="flex items-center px-6 py-3 bg-lime-500/10 text-lime-700 dark:text-lime-400 border-r-4 border-lime-600 hover:translate-x-1 transition-transform ease-in-out duration-150 font-['Inter'] font-semibold tracking-wide text-xs" href="#">
-<span className="material-symbols-outlined mr-3" data-icon="trending_up">trending_up</span> Sales
-            </a>
-<a className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150 font-['Inter'] font-semibold tracking-wide text-xs" href="#">
-<span className="material-symbols-outlined mr-3" data-icon="shopping_cart">shopping_cart</span> Purchases
-            </a>
-<a className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150 font-['Inter'] font-semibold tracking-wide text-xs" href="#">
-<span className="material-symbols-outlined mr-3" data-icon="payments">payments</span> Finance
-            </a>
-<a className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150 font-['Inter'] font-semibold tracking-wide text-xs" href="#">
-<span className="material-symbols-outlined mr-3" data-icon="account_balance">account_balance</span> Accounting
-            </a>
-<a className="flex items-center px-6 py-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150 font-['Inter'] font-semibold tracking-wide text-xs" href="#">
-<span className="material-symbols-outlined mr-3" data-icon="groups">groups</span> HR
-            </a>
-</nav>
-<div className="mt-auto px-6 space-y-4">
-<button className="w-full py-3 bg-primary text-on-primary font-bold uppercase text-[10px] tracking-[0.15em] hover:brightness-110 transition-all">EXPORT ALL DATA</button>
-<div className="pt-4 border-t border-stone-200 dark:border-stone-800">
-<a className="flex items-center py-2 text-stone-500 hover:text-lime-600 transition-colors font-['Inter'] font-semibold tracking-wide text-xs" href="#">
-<span className="material-symbols-outlined mr-3" data-icon="support_agent">support_agent</span> Support
-                </a>
-<a className="flex items-center py-2 text-stone-500 hover:text-lime-600 transition-colors font-['Inter'] font-semibold tracking-wide text-xs" href="#">
-<span className="material-symbols-outlined mr-3" data-icon="history_edu">history_edu</span> Logs
-                </a>
-</div>
-</div>
-</aside>
-{/* Comentario remanente */}
-<main className="flex-grow md:ml-64 bg-surface min-h-screen transition-all">
-{/* Comentario remanente */}
-<header className="bg-surface dark:bg-stone-950/80 backdrop-blur-xl docked full-width top-0 z-50 flex justify-between items-center w-full px-6 py-4 mx-auto sticky top-0">
-<div className="flex items-center gap-8">
-<span className="text-xl font-bold tracking-tighter text-stone-900 dark:text-stone-50 font-['Space_Grotesk'] uppercase">INDUSTRIAL FORGE ERP</span>
-<div className="hidden lg:flex items-center gap-6">
-<a className="text-stone-500 dark:text-stone-400 font-['Space_Grotesk'] uppercase tracking-tight hover:text-lime-500 dark:hover:text-lime-300 transition-colors scale-98-on-click duration-200" href="#">Dashboard</a>
-<a className="text-lime-600 dark:text-lime-400 border-b-2 border-lime-600 dark:border-lime-400 pb-1 font-['Space_Grotesk'] uppercase tracking-tight transition-colors scale-98-on-click duration-200" href="#">Analytics</a>
-<a className="text-stone-500 dark:text-stone-400 font-['Space_Grotesk'] uppercase tracking-tight hover:text-lime-500 dark:hover:text-lime-300 transition-colors scale-98-on-click duration-200" href="#">Reports</a>
-<a className="text-stone-500 dark:text-stone-400 font-['Space_Grotesk'] uppercase tracking-tight hover:text-lime-500 dark:hover:text-lime-300 transition-colors scale-98-on-click duration-200" href="#">Settings</a>
-</div>
-</div>
-<div className="flex items-center gap-4">
-<div className="relative hidden sm:block">
-<span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">search</span>
-<input className="bg-surface-container-low border-none text-[10px] font-bold tracking-widest pl-10 pr-4 py-2 w-48 focus:ring-2 focus:ring-primary" placeholder="GLOBAL SEARCH..." type="text"/>
-</div>
-<div className="flex items-center gap-2">
-<button className="p-2 text-stone-500 hover:bg-stone-100 rounded-full transition-colors">
-<span className="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button className="p-2 text-stone-500 hover:bg-stone-100 rounded-full transition-colors">
-<span className="material-symbols-outlined" data-icon="help_outline">help_outline</span>
-</button>
-<div className="w-8 h-8 rounded-full overflow-hidden ml-2 ring-2 ring-primary/20">
-<img alt="User Profile Avatar" className="w-full h-full object-cover" data-alt="portrait of a professional male industrial engineer wearing glasses and a clean work uniform in a modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDatgu__omT88uWFq8ZSBwJ4wRpml1CGtIRMpHL2po55i2CpX4pZD7tOHp9Oqeh-7IRJuCKaNHZ7vEsQLLOc8x3TimMICLIwBvjQHNzZGxBj2x3r2Fe6n9MoNsj53NUmMByTXXYvv5iGLZfSQZUM5mo6Z2svVgUqpAabKmw-YjjxugeyKxpK9uTTPBzLa2pz5Tqe0wovhTslPfGR04IsIdXvHYj1I5iONOz_ZXn_vYh6LfMHk4S3v2VpG-v0Ixthl0teswJvGCrXN0"/>
-</div>
-</div>
-</div>
-</header>
-{/* Comentario remanente */}
-<div className="p-8 space-y-8 max-w-[1600px] mx-auto">
-{/* Comentario remanente */}
-<section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
-<div className="lg:col-span-8">
-<h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-4 text-stone-900">ANNUAL<br/><span className="text-primary italic">PERFORMANCE</span></h2>
-<p className="max-w-xl text-stone-500 leading-relaxed font-body">Fiscal Year 2024 industrial output analysis. High-precision telemetry reflecting a 12.4% increase in heavy machinery turnover and regional market penetration across North American territories.</p>
-</div>
-<div className="lg:col-span-4 flex flex-col items-end gap-2">
-<div className="flex items-baseline gap-2">
-<span className="text-xs font-bold text-stone-400 uppercase tracking-widest">Total Revenue</span>
-<span className="text-4xl font-bold font-headline">$482.9M</span>
-</div>
-<div className="flex gap-4">
-<div className="bg-primary-container/20 px-4 py-2 flex items-center gap-2">
-<span className="material-symbols-outlined text-primary text-sm" >trending_up</span>
-<span className="text-[10px] font-black uppercase tracking-widest text-primary">+12.4% YOY</span>
-</div>
-<div className="bg-surface-container-high px-4 py-2 flex items-center gap-2">
-<span className="text-[10px] font-black uppercase tracking-widest text-stone-500">Q4 PROJECTION: $142M</span>
-</div>
-</div>
-</div>
-</section>
-{/* Comentario remanente */}
-<div className="flex flex-wrap items-center gap-4 py-4 border-y border-stone-200">
-<div className="flex items-center gap-3 bg-surface-container-lowest p-1 shadow-sm">
-<button className="px-4 py-2 text-[10px] font-bold tracking-widest uppercase bg-primary text-on-primary">All Time</button>
-<button className="px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-stone-400 hover:text-stone-900">Yearly</button>
-<button className="px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-stone-400 hover:text-stone-900">Monthly</button>
-</div>
-<div className="h-8 w-[1px] bg-stone-200 mx-2"></div>
-<div className="flex items-center gap-3">
-<select className="bg-surface-container-high border-none text-[10px] font-bold uppercase tracking-widest py-2 pl-4 pr-10 focus:ring-2 focus:ring-primary">
-<option>Global Sales Reps</option>
-<option>Alexander Forge</option>
-<option>Marcus Sterling</option>
-</select>
-<select className="bg-surface-container-high border-none text-[10px] font-bold uppercase tracking-widest py-2 pl-4 pr-10 focus:ring-2 focus:ring-primary">
-<option>Product Category</option>
-<option>Turbines</option>
-<option>Hydraulics</option>
-</select>
-</div>
-<div className="ml-auto flex items-center gap-2">
-<span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Active Filters: 02</span>
-<button className="text-[10px] font-bold text-primary uppercase tracking-widest border-b border-primary hover:border-b-2">Clear All</button>
-</div>
-</div>
-{/* Comentario remanente */}
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-{/* Comentario remanente */}
-<div className="md:col-span-2 lg:col-span-3 bg-surface-container-lowest p-8 relative overflow-hidden flex flex-col justify-between">
-<div>
-<h3 className="text-xl font-bold uppercase tracking-tight mb-2">Revenue Pulse</h3>
-<p className="text-xs text-stone-500 uppercase tracking-widest mb-8">Monthly Sales Velocity / USD Millions</p>
-</div>
-{/* Comentario remanente */}
-<div className="h-64 w-full flex items-end gap-2 px-4">
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" >
-<div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold bg-on-surface text-surface px-2 py-1 transition-opacity">JAN: 32M</div>
-</div>
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-stone-200 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-primary group relative hover:bg-primary transition-colors" ></div>
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-stone-200 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" ></div>
-<div className="flex-1 bg-stone-100 group relative hover:bg-primary-container transition-colors" ></div>
-</div>
-<div className="flex justify-between mt-4 px-4 text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-<span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span>
-</div>
-</div>
-{/* Comentario remanente */}
-<div className="lg:col-span-1 bg-surface-container-high p-8 flex flex-col">
-<h3 className="text-xl font-bold uppercase tracking-tight mb-6">Top Engines</h3>
-<div className="space-y-6 flex-grow">
-<div className="flex items-center gap-4">
-<span className="text-3xl font-black text-primary/30">01</span>
-<div>
-<h4 className="text-xs font-black uppercase tracking-widest">V12 Core-X Turbine</h4>
-<p className="text-[10px] text-stone-500 font-bold">$124.2M Rev.</p>
-</div>
-</div>
-<div className="flex items-center gap-4">
-<span className="text-3xl font-black text-stone-300">02</span>
-<div>
-<h4 className="text-xs font-black uppercase tracking-widest">Hydra-Flow P6</h4>
-<p className="text-[10px] text-stone-500 font-bold">$98.5M Rev.</p>
-</div>
-</div>
-<div className="flex items-center gap-4">
-<span className="text-3xl font-black text-stone-300">03</span>
-<div>
-<h4 className="text-xs font-black uppercase tracking-widest">Apex Gear-Shift 4</h4>
-<p className="text-[10px] text-stone-500 font-bold">$76.1M Rev.</p>
-</div>
-</div>
-<div className="flex items-center gap-4">
-<span className="text-3xl font-black text-stone-300">04</span>
-<div>
-<h4 className="text-xs font-black uppercase tracking-widest">Nano-Lubricant 500</h4>
-<p className="text-[10px] text-stone-500 font-bold">$42.8M Rev.</p>
-</div>
-</div>
-</div>
-<button className="mt-8 text-[10px] font-black uppercase tracking-[0.2em] text-primary border-b-2 border-primary w-fit">VIEW FULL INVENTORY</button>
-</div>
-{/* Comentario remanente */}
-<div className="lg:col-span-2 bg-stone-900 text-stone-50 p-8 relative overflow-hidden group">
-<div className="relative z-10">
-<h3 className="text-xl font-bold uppercase tracking-tight mb-2">Regional Density</h3>
-<p className="text-[10px] text-lime-400 font-bold uppercase tracking-[0.2em] mb-6">Primary Hub: Chicago, IL</p>
-<div className="grid grid-cols-2 gap-4">
-<div className="bg-stone-800/50 p-4 border-l-2 border-lime-500">
-<p className="text-[10px] text-stone-400 uppercase font-black">Americas</p>
-<p className="text-2xl font-bold">$212M</p>
-</div>
-<div className="bg-stone-800/50 p-4">
-<p className="text-[10px] text-stone-400 uppercase font-black">EMEA</p>
-<p className="text-2xl font-bold">$148M</p>
-</div>
-<div className="bg-stone-800/50 p-4">
-<p className="text-[10px] text-stone-400 uppercase font-black">APAC</p>
-<p className="text-2xl font-bold">$92M</p>
-</div>
-<div className="bg-stone-800/50 p-4">
-<p className="text-[10px] text-stone-400 uppercase font-black">Other</p>
-<p className="text-2xl font-bold">$30M</p>
-</div>
-</div>
-</div>
-{/* Comentario remanente */}
-<div className="absolute right-[-10%] top-[-10%] opacity-20 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-<img alt="Map Data Distribution" className="w-96 h-96 object-cover grayscale brightness-150" data-alt="abstract schematic map of global trade routes with glowing cyan connections on a dark industrial background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz54wfhWAM554GYhoIIkjWPvSi3_EHvDNGYd62uoXSXJc7HK2980_KazfDpoqj16vi8h__1JoN18tSMsclZ0eUdlBaU5Oa2MNhPM68GkakFzpuLqwIeGw9-z-ZpsuRwIL-83uXwdGIynDuVvOBioIe5I2Gdt6jIDghIWVQOURoT5ekWZL6JhDlfh3II4t0amhvSa47SPFa0lk8KRkLrA7YJ9HLFTs2CZ9edvfo0weIUJg1r2R3YFAjAPAUfudSHtFlwWLPwEvceHk"/>
-</div>
-</div>
-{/* Comentario remanente */}
-<div className="lg:col-span-2 bg-primary p-8 text-on-primary flex flex-col justify-between">
-<div className="flex justify-between items-start">
-<div>
-<h3 className="text-xl font-bold uppercase tracking-tight">Top Performer</h3>
-<p className="text-xs font-bold uppercase tracking-widest opacity-80">Q3 Sales Leader</p>
-</div>
-<span className="material-symbols-outlined text-4xl" data-icon="star" >star</span>
-</div>
-<div className="flex items-center gap-6 mt-8">
-<img alt="Top Sales Rep" className="w-20 h-20 object-cover rounded-full border-4 border-on-primary/20 shadow-xl" data-alt="close-up portrait of a confident middle-aged businesswoman in a sharp black suit with industrial office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtxE9W0zkODwQT3mjcng04hwnJdgwkB6Oj0GTCjb524uL9b4bgw3r37IJFRLmvJaOby0OZfoqQ8E-o1F2f4bk1JcvahMYQYupwXFz0ti8PZFfbtjhku0kF_nZufrhBf7MQn5ibNM8BQ-b3SClEsgvt8pw1WXUc7UWLcueBovj-FVywTZvnKBwxgSumh5AF-FQI-pZrhxi9h2NaQsG2-GJP1I58nUHpsKWrW-KXvmr5cLuIIiG2PXdrqAw1MQmGJm8evjqnCuMYnLg"/>
-<div>
-<h4 className="text-2xl font-black uppercase tracking-tighter">ELARA VANCE</h4>
-<p className="text-xs font-bold uppercase tracking-widest">Senior Accounts Executive</p>
-</div>
-</div>
-<div className="grid grid-cols-3 gap-4 mt-8 border-t border-on-primary/20 pt-6">
-<div>
-<p className="text-[10px] font-bold uppercase tracking-widest opacity-70">Closed</p>
-<p className="text-lg font-bold">$12.4M</p>
-</div>
-<div>
-<p className="text-[10px] font-bold uppercase tracking-widest opacity-70">Pipeline</p>
-<p className="text-lg font-bold">$4.8M</p>
-</div>
-<div>
-<p className="text-[10px] font-bold uppercase tracking-widest opacity-70">Win Rate</p>
-<p className="text-lg font-bold">84%</p>
-</div>
-</div>
-</div>
-</div>
-{/* Comentario remanente */}
-<section className="bg-surface-container-lowest overflow-hidden">
-<div className="px-8 py-6 flex justify-between items-center border-b border-stone-100">
-<div>
-<h3 className="text-xl font-bold uppercase tracking-tight">TRANSACTION LOG</h3>
-<p className="text-[10px] text-stone-400 font-bold uppercase tracking-widest">Detailed Transaction Telemetry / Real-time Sync</p>
-</div>
-<div className="flex gap-2">
-<button className="bg-stone-100 p-2 hover:bg-stone-200 transition-colors">
-<span className="material-symbols-outlined text-stone-500">filter_list</span>
-</button>
-<button className="bg-stone-100 p-2 hover:bg-stone-200 transition-colors">
-<span className="material-symbols-outlined text-stone-500">file_download</span>
-</button>
-</div>
-</div>
-<div className="overflow-x-auto">
-<table className="w-full text-left border-collapse">
-<thead>
-<tr className="bg-surface-container-low text-[10px] font-black uppercase tracking-widest text-stone-500">
-<th className="px-8 py-4">Transaction ID</th>
-<th className="px-8 py-4">Customer Entity</th>
-<th className="px-8 py-4">Product Line</th>
-<th className="px-8 py-4">Sales Rep</th>
-<th className="px-8 py-4">Date Stamp</th>
-<th className="px-8 py-4 text-right">Revenue (USD)</th>
-<th className="px-8 py-4 text-center">Status</th>
-</tr>
-</thead>
-<tbody className="text-xs font-['Inter'] font-semibold">
-<tr className="border-b border-stone-50 hover:bg-stone-50/50 transition-colors">
-<td className="px-8 py-5 text-stone-400">#FT-882109</td>
-<td className="px-8 py-5">General Dynamics Corp</td>
-<td className="px-8 py-5">V12 Core-X</td>
-<td className="px-8 py-5">Elara Vance</td>
-<td className="px-8 py-5">OCT 12, 2024</td>
-<td className="px-8 py-5 text-right font-bold">$1,240,000.00</td>
-<td className="px-8 py-5 text-center">
-<span className="bg-lime-100 text-lime-700 px-2 py-1 text-[9px] font-black uppercase">Settled</span>
-</td>
-</tr>
-<tr className="border-b border-stone-50 bg-stone-50/20 hover:bg-stone-50/50 transition-colors">
-<td className="px-8 py-5 text-stone-400">#FT-882110</td>
-<td className="px-8 py-5">Boeing Industrial</td>
-<td className="px-8 py-5">Hydra-Flow P6</td>
-<td className="px-8 py-5">Marcus Sterling</td>
-<td className="px-8 py-5">OCT 11, 2024</td>
-<td className="px-8 py-5 text-right font-bold">$845,200.00</td>
-<td className="px-8 py-5 text-center">
-<span className="bg-lime-100 text-lime-700 px-2 py-1 text-[9px] font-black uppercase">Settled</span>
-</td>
-</tr>
-<tr className="border-b border-stone-50 hover:bg-stone-50/50 transition-colors">
-<td className="px-8 py-5 text-stone-400">#FT-882111</td>
-<td className="px-8 py-5">SpaceX Heavy Fab</td>
-<td className="px-8 py-5">Apex Gear-Shift 4</td>
-<td className="px-8 py-5">Alexander Forge</td>
-<td className="px-8 py-5">OCT 10, 2024</td>
-<td className="px-8 py-5 text-right font-bold">$2,100,500.00</td>
-<td className="px-8 py-5 text-center">
-<span className="bg-amber-100 text-amber-700 px-2 py-1 text-[9px] font-black uppercase">Pending</span>
-</td>
-</tr>
-<tr className="border-b border-stone-50 bg-stone-50/20 hover:bg-stone-50/50 transition-colors">
-<td className="px-8 py-5 text-stone-400">#FT-882112</td>
-<td className="px-8 py-5">Tesla Gigafactory</td>
-<td className="px-8 py-5">Nano-Lubricant 500</td>
-<td className="px-8 py-5">Elara Vance</td>
-<td className="px-8 py-5">OCT 09, 2024</td>
-<td className="px-8 py-5 text-right font-bold">$312,000.00</td>
-<td className="px-8 py-5 text-center">
-<span className="bg-lime-100 text-lime-700 px-2 py-1 text-[9px] font-black uppercase">Settled</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div className="px-8 py-4 bg-surface-container-low flex justify-between items-center">
-<span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Showing 4 of 2,841 Entries</span>
-<div className="flex gap-1">
-<button className="w-8 h-8 flex items-center justify-center bg-surface-container-lowest border border-stone-200 text-stone-400 hover:text-primary transition-colors">
-<span className="material-symbols-outlined text-sm">chevron_left</span>
-</button>
-<button className="w-8 h-8 flex items-center justify-center bg-primary text-on-primary font-bold text-[10px]">1</button>
-<button className="w-8 h-8 flex items-center justify-center bg-surface-container-lowest border border-stone-200 text-stone-600 font-bold text-[10px] hover:bg-stone-100 transition-colors">2</button>
-<button className="w-8 h-8 flex items-center justify-center bg-surface-container-lowest border border-stone-200 text-stone-600 font-bold text-[10px] hover:bg-stone-100 transition-colors">3</button>
-<button className="w-8 h-8 flex items-center justify-center bg-surface-container-lowest border border-stone-200 text-stone-400 hover:text-primary transition-colors">
-<span className="material-symbols-outlined text-sm">chevron_right</span>
-</button>
-</div>
-</div>
-</section>
-</div>
-</main>
-{/* Comentario remanente */}
-<nav className="md:hidden fixed bottom-0 left-0 right-0 bg-surface dark:bg-stone-950 border-t border-stone-200 z-50 flex justify-around items-center h-16 px-4">
-<a className="flex flex-col items-center text-stone-400" href="#">
-<span className="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-<span className="text-[8px] font-bold uppercase mt-1">Inv</span>
-</a>
-<a className="flex flex-col items-center text-lime-600" href="#">
-<span className="material-symbols-outlined" data-icon="trending_up">trending_up</span>
-<span className="text-[8px] font-bold uppercase mt-1">Sales</span>
-</a>
-<a className="flex flex-col items-center text-stone-400" href="#">
-<span className="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
-<span className="text-[8px] font-bold uppercase mt-1">Purch</span>
-</a>
-<a className="flex flex-col items-center text-stone-400" href="#">
-<span className="material-symbols-outlined" data-icon="payments">payments</span>
-<span className="text-[8px] font-bold uppercase mt-1">Fin</span>
-</a>
-<a className="flex flex-col items-center text-stone-400" href="#">
-<span className="material-symbols-outlined" data-icon="account_balance">account_balance</span>
-<span className="text-[8px] font-bold uppercase mt-1">Acc</span>
-</a>
-</nav>
+    const topEngines = [
+        { rank: '01', name: 'V12 Core-X Turbine', rev: '$124.2M Rev.', color: 'text-primary/30' },
+        { rank: '02', name: 'Hydra-Flow P6', rev: '$98.5M Rev.', color: 'text-stone-300' },
+        { rank: '03', name: 'Apex Gear-Shift 4', rev: '$76.1M Rev.', color: 'text-stone-300' },
+        { rank: '04', name: 'Nano-Lubricant 500', rev: '$42.8M Rev.', color: 'text-stone-300' }
+    ];
 
-        </div>
+    const regions = [
+        { label: 'Americas', val: '$212M', active: true },
+        { label: 'EMEA', val: '$148M', active: false },
+        { label: 'APAC', val: '$92M', active: false },
+        { label: 'Other', val: '$30M', active: false }
+    ];
+
+    const transactions = [
+        { id: '#FT-882109', customer: 'General Dynamics Corp', product: 'V12 Core-X', rep: 'Elara Vance', date: 'OCT 12, 2024', rev: '$1,240,000.00', status: 'Settled' },
+        { id: '#FT-882110', customer: 'Boeing Industrial', product: 'Hydra-Flow P6', rep: 'Marcus Sterling', date: 'OCT 11, 2024', rev: '$845,200.00', status: 'Settled' },
+        { id: '#FT-882111', customer: 'SpaceX Heavy Fab', product: 'Apex Gear-Shift 4', rep: 'Alexander Forge', date: 'OCT 10, 2024', rev: '$2,100,500.00', status: 'Pending' },
+        { id: '#FT-882112', customer: 'Tesla Gigafactory', product: 'Nano-Lubricant 500', rep: 'Elara Vance', date: 'OCT 09, 2024', rev: '$312,000.00', status: 'Settled' }
+    ];
+
+    return (
+        <AuthenticatedLayout
+            header={
+                <div className="flex items-center gap-2 text-primary font-headline text-sm uppercase tracking-widest">
+                    <span className="material-symbols-outlined text-lg">analytics</span>
+                    <span>Ventas <span className="text-white/60 mx-2">|</span> Centro de Reportes</span>
+                </div>
+            }
+        >
+            <Head title="Centro de Reportes de Ventas - Industrial Forge" />
+
+            <div className="space-y-16 pb-20 px-4">
+                {/* Hero Performance Header */}
+                <header className="relative flex flex-col xl:flex-row xl:items-end justify-between gap-12 mt-8">
+                    <div className="space-y-8 lg:col-span-8">
+                        <div className="flex items-center gap-4">
+                            <span className="bg-primary/20 text-primary text-[9px] font-black px-4 py-1.5 rounded-full tracking-[0.4em] uppercase border border-primary/10 italic">Reporting Suite Suite</span>
+                            <div className="h-px w-12 bg-outline-variant/10"></div>
+                            <span className="text-[10px] font-black text-stone-500 uppercase tracking-widest leading-none tracking-[0.3em]">Precision Output v2.4</span>
+                        </div>
+                        <h1 className="text-5xl md:text-8xl font-headline font-black uppercase tracking-tighter leading-[0.85] text-white">Annual <br/> <span className="text-stone-700">Performance</span></h1>
+                        <p className="max-w-2xl text-stone-500 text-sm font-semibold uppercase leading-relaxed tracking-wide italic"> Fiscal Year 2024 industrial output analysis. High-precision telemetry reflecting a 12.4% increase in heavy machinery turnover.</p>
+                    </div>
+                    
+                    <div className="flex flex-col items-end gap-6 bg-zinc-950 p-10 rounded-[48px] border border-outline-variant/5 shadow-3xl">
+                        <div className="flex flex-col items-end">
+                            <span className="text-[10px] font-black text-stone-700 uppercase tracking-[0.4em] mb-2">Total Yield Revenue</span>
+                            <span className="text-5xl font-headline font-black text-primary italic tracking-tighter uppercase leading-none">$482.9M</span>
+                        </div>
+                        <div className="flex gap-4">
+                            <div className="bg-primary/10 px-6 py-3 rounded-full flex items-center gap-3 border border-primary/10">
+                                <span className="material-symbols-outlined text-primary text-xl font-black">trending_up</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">+12.4% YOY</span>
+                            </div>
+                            <div className="bg-zinc-900 px-6 py-3 rounded-full border border-zinc-800">
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-600">Q4 PROJECTED: $142M</span>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                {/* Precision Filters Bar */}
+                <div className="flex flex-wrap items-center gap-6 py-8 border-y border-zinc-900">
+                    <div className="flex items-center gap-3 bg-zinc-950 p-2 rounded-2xl border border-zinc-900">
+                        <button className="px-6 py-3 text-[10px] font-black tracking-widest uppercase bg-primary text-black rounded-xl italic">All Time</button>
+                        <button className="px-6 py-3 text-[10px] font-black tracking-widest uppercase text-stone-700 hover:text-white transition-colors">Yearly</button>
+                        <button className="px-6 py-3 text-[10px] font-black tracking-widest uppercase text-stone-700 hover:text-white transition-colors">Monthly</button>
+                    </div>
+                    <div className="h-10 w-px bg-zinc-900 mx-4 hidden lg:block"></div>
+                    <div className="flex items-center gap-4">
+                        {['Global Sales Reps', 'Product Category'].map((f, i) => (
+                            <select key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl text-[9px] font-black uppercase tracking-[0.3em] py-3 pl-6 pr-12 focus:ring-2 focus:ring-primary text-stone-400">
+                                <option>{f}</option>
+                            </select>
+                        ))}
+                    </div>
+                    <div className="ml-auto flex items-center gap-6">
+                        <span className="text-[9px] font-black text-stone-800 uppercase tracking-[0.4em]">Active Filters: <span className="text-primary italic">02</span></span>
+                        <button className="text-[9px] font-black text-primary uppercase tracking-[0.4em] border-b-2 border-primary/20 pb-1 hover:border-primary transition-all italic">Clear All Filters</button>
+                    </div>
+                </div>
+
+                {/* Dashboard Bento Grid */}
+                <div className="grid grid-cols-12 gap-8">
+                    {/* Revenue Pulse Chart */}
+                    <section className="col-span-12 xl:col-span-9 bg-zinc-900 rounded-[56px] border border-outline-variant/10 shadow-3xl p-12 relative overflow-hidden group">
+                         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start gap-8 mb-16">
+                            <div className="space-y-2">
+                                <h3 className="text-3xl font-headline font-black text-white uppercase tracking-tighter italic leading-none">Revenue <br/> <span className="text-primary italic">Pulse</span></h3>
+                                <p className="text-[10px] font-black text-stone-700 uppercase tracking-[0.4em]">Monthly Sales Velocity / USD Millions</p>
+                            </div>
+                        </div>
+
+                        {/* Chart Visualization */}
+                        <div className="h-72 flex items-end justify-between gap-2 px-6 relative z-10">
+                            {[40, 55, 45, 70, 60, 85, 50, 65, 75, 80, 90, 95].map((h, i) => (
+                                <div key={i} className="flex-1 bg-zinc-950/50 rounded-t-2xl transition-all duration-700 group hover:bg-zinc-800 relative cursor-pointer" style={{ height: `${h}%` }}>
+                                    <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+                                        <div className="bg-primary text-black text-[9px] font-black px-3 py-1.5 rounded-lg shadow-2xl skew-x-[-10deg]">
+                                            VAL: {h}M
+                                        </div>
+                                    </div>
+                                    {h === 85 && <div className="absolute inset-0 bg-primary/20 rounded-t-2xl border-t-4 border-primary shadow-[0_0_30px_rgba(154,205,50,0.1)]"></div>}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="flex justify-between mt-8 px-6 text-[9px] font-black text-stone-800 uppercase tracking-[0.4em] relative z-10">
+                            {['JAN', 'MAR', 'MAY', 'JUL', 'SEP', 'NOV'].map(m => <span key={m}>{m}</span>)}
+                        </div>
+
+                        {/* Background Data Mesh */}
+                        <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(154,205,50,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(154,205,50,.2)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+                    </section>
+
+                    {/* Top Engines Sidebar */}
+                    <section className="col-span-12 xl:col-span-3 bg-zinc-900 rounded-[56px] border border-outline-variant/10 shadow-3xl p-10 flex flex-col justify-between group">
+                        <div className="space-y-10">
+                            <h3 className="text-xl font-headline font-black text-white uppercase tracking-tighter italic leading-none flex items-center gap-4">
+                                <span className="material-symbols-outlined text-primary text-2xl font-black">precision_manufacturing</span>
+                                Top Engines
+                            </h3>
+                            <div className="space-y-8">
+                                {topEngines.map((e, i) => (
+                                    <div key={i} className="flex items-center gap-6 group/item cursor-pointer">
+                                        <span className={`text-4xl font-headline font-black italic tracking-tighter ${e.color}`}>{e.rank}</span>
+                                        <div className="space-y-1">
+                                            <h4 className="text-[10px] font-black text-white uppercase tracking-[0.2em] group-hover/item:text-primary transition-colors">{e.name}</h4>
+                                            <p className="text-[9px] font-black text-stone-700 uppercase tracking-widest">{e.rev}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <button className="w-full bg-zinc-950 text-stone-700 border border-zinc-800 py-4 rounded-2xl font-black text-[9px] uppercase tracking-[0.4em] hover:text-white hover:border-white transition-all active:scale-95 italic mt-12">View Full Inventory</button>
+                    </section>
+
+                    {/* Regional Density */}
+                    <section className="col-span-12 lg:col-span-6 bg-zinc-900 rounded-[56px] border border-outline-variant/10 shadow-3xl p-12 relative overflow-hidden group">
+                        <div className="relative z-10 space-y-10">
+                            <div>
+                                <h3 className="text-2xl font-headline font-black text-white uppercase tracking-tighter italic leading-none mb-3">Regional <br/> <span className="text-primary italic">Density</span></h3>
+                                <p className="text-[9px] font-black text-primary/60 uppercase tracking-[0.4em] italic">Primary Hub: Chicago, IL // Central Logistics</p>
+                            </div>
+                            <div className="grid grid-cols-2 gap-6">
+                                {regions.map((r, i) => (
+                                    <div key={i} className={`p-6 rounded-[32px] border ${r.active ? 'bg-zinc-950/80 border-primary/20 border-l-[6px] border-l-primary' : 'bg-transparent border-zinc-800 opacity-60'}`}>
+                                        <p className="text-[9px] font-black text-stone-700 uppercase tracking-[0.4em] mb-2">{r.label}</p>
+                                        <p className="text-3xl font-headline font-black text-white italic tracking-tighter">{r.val}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        {/* Background Abstract Map Decor */}
+                        <div className="absolute -right-20 -top-20 opacity-10 group-hover:scale-110 transition-transform duration-[2000ms]">
+                            <span className="material-symbols-outlined text-[400px] text-zinc-950" style={{ fontVariationSettings: "'FILL' 1" }}>public</span>
+                        </div>
+                    </section>
+
+                    {/* Sales Rep Spotlight */}
+                    <section className="col-span-12 lg:col-span-6 bg-primary rounded-[56px] shadow-3xl p-12 flex flex-col justify-between group relative overflow-hidden">
+                        <div className="relative z-10 flex justify-between items-start">
+                            <div className="space-y-2">
+                                <h3 className="text-2xl font-headline font-black text-black uppercase tracking-tighter italic leading-none">Top <br/> <span className="opacity-40 italic">Performer</span></h3>
+                                <p className="text-[9px] font-black text-black/50 uppercase tracking-[0.4em]">Q3 Sales Leader Protocol</p>
+                            </div>
+                            <div className="h-16 w-16 bg-black/5 rounded-full flex items-center justify-center border border-black/10">
+                                <span className="material-symbols-outlined text-black text-4xl font-black italic" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
+                            </div>
+                        </div>
+
+                        <div className="relative z-10 flex items-center gap-10">
+                             <div className="w-32 h-32 rounded-[48px] overflow-hidden border-4 border-black/10 shadow-2xl shrink-0 grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105">
+                                <img alt="Top Performer" className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" />
+                             </div>
+                             <div className="space-y-2">
+                                <h4 className="text-4xl font-headline font-black text-black uppercase tracking-tighter italic leading-tight">Elara <br/> <span className="opacity-40 italic">Vance</span></h4>
+                                <span className="text-[10px] font-black text-black uppercase tracking-[0.3em] block">Senior Accounts Executive</span>
+                             </div>
+                        </div>
+
+                        <div className="relative z-10 grid grid-cols-3 gap-8 border-t border-black/10 pt-8 mt-8">
+                            {[
+                                { l: 'Closed', v: '$12.4M' },
+                                { l: 'Pipeline', v: '$4.8M' },
+                                { l: 'Win Rate', v: '84%' }
+                            ].map((stat, i) => (
+                                <div key={i} className="space-y-1">
+                                     <span className="text-[8px] font-black text-black/40 uppercase tracking-widest block">{stat.l}</span>
+                                     <span className="text-xl font-headline font-black text-black italic tracking-tighter">{stat.v}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+
+                {/* High-Density Transaction Log */}
+                <section className="bg-zinc-900 rounded-[56px] border border-outline-variant/10 shadow-3xl overflow-hidden">
+                    <div className="p-10 border-b border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-8">
+                        <div className="space-y-2">
+                            <h3 className="text-xl font-headline font-black text-white uppercase tracking-tighter italic leading-none">Transaction <span className="text-stone-700 italic">Log</span></h3>
+                            <p className="text-[9px] font-black text-stone-700 uppercase tracking-[0.4em]">Detailed Transaction Telemetry / Real-time Sync Hub</p>
+                        </div>
+                        <div className="flex gap-4">
+                            <button className="w-14 h-14 bg-zinc-950 border border-zinc-800 rounded-2xl flex items-center justify-center hover:text-primary transition-all text-stone-700">
+                                <span className="material-symbols-outlined">filter_list</span>
+                            </button>
+                            <button className="w-14 h-14 bg-zinc-950 border border-zinc-800 rounded-2xl flex items-center justify-center hover:text-primary transition-all text-stone-700">
+                                <span className="material-symbols-outlined">file_download</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left">
+                            <thead>
+                                <tr className="bg-zinc-950/30 font-black text-[10px] text-stone-700 uppercase tracking-[0.4em]">
+                                    <th className="px-10 py-6 border-b border-zinc-800">Transaction ID</th>
+                                    <th className="px-10 py-6 border-b border-zinc-800">Customer Entity</th>
+                                    <th className="px-10 py-6 border-b border-zinc-800">Product Line</th>
+                                    <th className="px-10 py-6 border-b border-zinc-800">Sales Rep</th>
+                                    <th className="px-10 py-6 border-b border-zinc-800">Date Stamp</th>
+                                    <th className="px-10 py-6 border-b border-zinc-800 text-right">Revenue (USD)</th>
+                                    <th className="px-10 py-6 border-b border-zinc-800 text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-zinc-800/50">
+                                {transactions.map((tx, i) => (
+                                    <tr key={i} className="hover:bg-zinc-950 transition-colors group">
+                                        <td className="px-10 py-8 font-mono text-[10px] text-primary tracking-[0.2em] font-bold uppercase">{tx.id}</td>
+                                        <td className="px-10 py-8 text-sm font-headline font-black text-white uppercase tracking-tighter italic">{tx.customer}</td>
+                                        <td className="px-10 py-8 text-[9px] font-black text-stone-700 uppercase tracking-widest">{tx.product}</td>
+                                        <td className="px-10 py-8 text-[9px] font-black text-white uppercase tracking-widest italic">{tx.rep}</td>
+                                        <td className="px-10 py-8 text-[9px] font-black text-stone-800 uppercase tracking-[0.1em]">{tx.date}</td>
+                                        <td className="px-10 py-8 text-right font-headline font-black text-white text-lg tracking-tighter italic group-hover:text-primary transition-colors">{tx.rev}</td>
+                                        <td className="px-10 py-8 text-center">
+                                            <span className={`px-4 py-1.5 rounded-full border text-[9px] font-black uppercase tracking-[0.3em] ${tx.status === 'Settled' ? 'bg-primary/10 text-primary border-primary/20' : 'bg-zinc-950 text-stone-700 border-zinc-800'}`}>
+                                                {tx.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                {/* Industrial Footer */}
+                <footer className="mt-20 pt-16 border-t border-zinc-900 flex flex-col xl:flex-row justify-between items-center gap-16 px-4">
+                    <div className="flex flex-col gap-4">
+                        <span className="text-white font-headline font-black tracking-[0.5em] text-2xl uppercase leading-none italic">FORGE REPORTING SUITE</span>
+                        <span className="text-stone-800 font-headline text-[10px] font-black uppercase tracking-[0.6em]">Annual Performance Audit Registry</span>
+                    </div>
+                    <div className="flex items-center gap-10 text-[9px] font-black uppercase tracking-[0.4em] text-stone-700">
+                        <span>ENTRIES: 2,841</span>
+                        <div className="h-5 w-px bg-zinc-900"></div>
+                        <span>STATUS: <span className="text-primary italic uppercase">All Nodes Sync</span></span>
+                    </div>
+                    <div className="bg-zinc-950 px-10 py-5 rounded-full border border-outline-variant/10 shadow-2xl skew-x-[-4deg]">
+                         <span className="text-[10px] font-black text-stone-600 uppercase tracking-[0.6em]">Revision: <span className="text-primary italic">2024.04.DOC</span></span>
+                    </div>
+                </footer>
+            </div>
+
+            <style dangerouslySetInnerHTML={{ __html: `
+                .bg-industrial-mesh {
+                    background-image: radial-gradient(rgba(154, 205, 50, 0.1) 1px, transparent 1px);
+                    background-size: 30px 30px;
+                }
+            `}} />
+        </AuthenticatedLayout>
     );
-};
+}

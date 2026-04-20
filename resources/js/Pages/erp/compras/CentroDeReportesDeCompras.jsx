@@ -1,340 +1,246 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function CentroDeReportesDeCompras() {
-    return (
-        <div className="bg-zinc-950 font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col items-center justify-center p-6 bg-industrial-mesh">
-            
-{/* Comentario remanente */}
-<div className="flex min-h-screen">
-{/* Comentario remanente */}
-<aside className="hidden md:flex flex-col h-screen w-64 docked left-0 border-r-0 bg-stone-50 dark:bg-stone-900 shadow-[4px_0_24px_rgba(0,0,0,0.04)] fixed z-40">
-<div className="flex flex-col h-full py-8 gap-2">
-<div className="px-6 mb-8">
-<h2 className="text-lg font-black text-stone-800 dark:text-stone-100 font-headline tracking-tight uppercase">REPORTING SUITE</h2>
-<p className="text-[10px] font-bold text-lime-600 dark:text-lime-400 tracking-widest opacity-80 uppercase">V2.4 Precision Engine</p>
-</div>
-<nav className="flex-1 space-y-1">
-{/* Comentario remanente */}
-<a className="flex items-center px-6 py-3 gap-4 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150" href="#">
-<span className="material-symbols-outlined text-xl">inventory_2</span>
-<span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Inventory</span>
-</a>
-<a className="flex items-center px-6 py-3 gap-4 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150" href="#">
-<span className="material-symbols-outlined text-xl">trending_up</span>
-<span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Sales</span>
-</a>
-{/* Comentario remanente */}
-<a className="flex items-center px-6 py-3 gap-4 bg-lime-500/10 text-lime-700 dark:text-lime-400 border-r-4 border-lime-600 transition-transform ease-in-out duration-150" href="#">
-<span className="material-symbols-outlined text-xl" >shopping_cart</span>
-<span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Purchases</span>
-</a>
-<a className="flex items-center px-6 py-3 gap-4 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150" href="#">
-<span className="material-symbols-outlined text-xl">payments</span>
-<span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Finance</span>
-</a>
-<a className="flex items-center px-6 py-3 gap-4 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150" href="#">
-<span className="material-symbols-outlined text-xl">account_balance</span>
-<span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">Accounting</span>
-</a>
-<a className="flex items-center px-6 py-3 gap-4 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 hover:translate-x-1 transition-transform ease-in-out duration-150" href="#">
-<span className="material-symbols-outlined text-xl">groups</span>
-<span className="font-['Inter'] font-semibold tracking-wide text-xs uppercase">HR</span>
-</a>
-</nav>
-<div className="px-6 mt-auto space-y-4">
-<button className="w-full py-3 bg-primary text-on-primary font-headline text-xs font-bold tracking-widest hover:brightness-110 transition-all uppercase">
-                        EXPORT ALL DATA
-                    </button>
-<div className="pt-4 border-t border-stone-200 dark:border-stone-800">
-<a className="flex items-center py-2 gap-3 text-stone-500 dark:text-stone-400 text-xs font-semibold uppercase" href="#">
-<span className="material-symbols-outlined text-sm">support_agent</span>
-                            Support
-                        </a>
-<a className="flex items-center py-2 gap-3 text-stone-500 dark:text-stone-400 text-xs font-semibold uppercase" href="#">
-<span className="material-symbols-outlined text-sm">history_edu</span>
-                            Logs
-                        </a>
-</div>
-</div>
-</div>
-</aside>
-{/* Comentario remanente */}
-<main className="flex-1 md:ml-64 min-h-screen flex flex-col relative bg-surface">
-{/* Comentario remanente */}
-<header className="sticky top-0 z-50 bg-surface dark:bg-stone-950/80 backdrop-blur-xl tonal-shift-no-borders bg-stone-100 dark:bg-stone-900 w-full px-6 py-4 mx-auto flex justify-between items-center h-16">
-<div className="flex items-center gap-8">
-<span className="text-xl font-bold tracking-tighter text-stone-900 dark:text-stone-50 font-headline uppercase">INDUSTRIAL FORGE ERP</span>
-<nav className="hidden lg:flex items-center gap-6">
-<a className="font-['Space_Grotesk'] uppercase tracking-tight text-stone-500 dark:text-stone-400 text-xs hover:text-lime-500 dark:hover:text-lime-300 transition-colors" href="#">Dashboard</a>
-<a className="font-['Space_Grotesk'] uppercase tracking-tight text-stone-500 dark:text-stone-400 text-xs hover:text-lime-500 dark:hover:text-lime-300 transition-colors" href="#">Analytics</a>
-<a className="font-['Space_Grotesk'] uppercase tracking-tight text-lime-600 dark:text-lime-400 border-b-2 border-lime-600 dark:border-lime-400 pb-1 text-xs" href="#">Reports</a>
-<a className="font-['Space_Grotesk'] uppercase tracking-tight text-stone-500 dark:text-stone-400 text-xs hover:text-lime-500 dark:hover:text-lime-300 transition-colors" href="#">Settings</a>
-</nav>
-</div>
-<div className="flex items-center gap-4">
-<div className="relative hidden sm:block">
-<span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">search</span>
-<input className="bg-surface-container-high border-none rounded-none text-[10px] font-bold tracking-widest py-2 pl-9 pr-4 w-48 focus:ring-1 focus:ring-lime-500 transition-all uppercase" placeholder="SEARCH SYSTEM..." type="text"/>
-</div>
-<button className="material-symbols-outlined text-stone-500 hover:text-lime-600 transition-colors">notifications</button>
-<button className="material-symbols-outlined text-stone-500 hover:text-lime-600 transition-colors">help_outline</button>
-<div className="w-8 h-8 rounded-full bg-stone-200 overflow-hidden ring-1 ring-lime-500/20">
-<img alt="User Profile Avatar" className="w-full h-full object-cover" data-alt="professional portrait of a high-level industrial operations manager wearing a safety vest in a modern factory setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0MwdhcSguLzHZ9oSSQBmIzf9y-FcgTp_JnVoRfgd5sduKv-UuQRa1VnhMuwALhL0tsXfKRBDKELX3KATfHxLgt0sArrv3StZfV_MuqAaRsT5X-1Ue0A0n4sM4hW3Z9_uM9fgPrNAUECw8HXrwvTigRDDg_tdAaqrspUWtBxI2ocUNJ2ekmB3uCQu_blm28woMfS2JoD-pUTacUVAbt7YHCboJZWfH7IzJFXltJhzPpmP4yP3htqzT9NZZmyPi3sH5AajLJJ9tnJ4"/>
-</div>
-</div>
-</header>
-{/* Comentario remanente */}
-<div className="p-8 space-y-8">
-{/* Comentario remanente */}
-<div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-outline-variant/20 pb-8">
-<div>
-<span className="text-primary font-headline font-bold text-xs tracking-[0.3em] uppercase mb-2 block">Procurement Intelligence</span>
-<h1 className="text-5xl font-headline font-black tracking-tighter uppercase leading-none text-on-surface">PURCHASES REPORTING<br/><span className="text-primary">CENTER</span></h1>
-</div>
-<div className="flex gap-4">
-<div className="bg-surface-container-low px-6 py-4 flex flex-col items-end">
-<span className="text-[10px] font-bold text-secondary uppercase tracking-widest">Total Monthly Spend</span>
-<span className="text-2xl font-headline font-bold text-on-surface">$1,420,890.00</span>
-</div>
-<div className="bg-primary px-6 py-4 flex flex-col items-end text-on-primary">
-<span className="text-[10px] font-bold uppercase tracking-widest opacity-80">Pending Orders</span>
-<span className="text-2xl font-headline font-bold">142 UNIT</span>
-</div>
-</div>
-</div>
-{/* Comentario remanente */}
-<div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-{/* Comentario remanente */}
-<section className="md:col-span-8 bg-surface-container-lowest p-8 relative overflow-hidden flex flex-col gap-8">
-<div className="flex justify-between items-start">
-<div className="flex gap-2 items-center">
-<div className="w-2 h-8 bg-primary"></div>
-<h3 className="text-xl font-headline font-black uppercase tracking-tight">Supplier Performance Index</h3>
-</div>
-<button className="text-[10px] font-bold text-primary tracking-widest uppercase border-b border-primary hover:pb-1 transition-all">Deep Analysis</button>
-</div>
-<div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-<div className="space-y-2">
-<span className="text-[10px] font-bold text-secondary uppercase tracking-widest">Precision Machining Co.</span>
-<div className="h-1 bg-surface-container-highest w-full">
-<div className="h-1 bg-primary w-[98%]"></div>
-</div>
-<div className="flex justify-between items-center">
-<span className="text-xs font-bold font-headline uppercase tracking-tighter">98.2% Uptime</span>
-<span className="material-symbols-outlined text-primary text-sm">trending_up</span>
-</div>
-</div>
-<div className="space-y-2">
-<span className="text-[10px] font-bold text-secondary uppercase tracking-widest">Alloy Steel Foundry Ltd.</span>
-<div className="h-1 bg-surface-container-highest w-full">
-<div className="h-1 bg-primary w-[84%]"></div>
-</div>
-<div className="flex justify-between items-center">
-<span className="text-xs font-bold font-headline uppercase tracking-tighter">84.5% Uptime</span>
-<span className="material-symbols-outlined text-error text-sm">trending_down</span>
-</div>
-</div>
-<div className="space-y-2">
-<span className="text-[10px] font-bold text-secondary uppercase tracking-widest">Hydraulic Systems Inc.</span>
-<div className="h-1 bg-surface-container-highest w-full">
-<div className="h-1 bg-primary w-[92%]"></div>
-</div>
-<div className="flex justify-between items-center">
-<span className="text-xs font-bold font-headline uppercase tracking-tighter">92.0% Uptime</span>
-<span className="material-symbols-outlined text-primary text-sm">trending_up</span>
-</div>
-</div>
-</div>
-{/* Comentario remanente */}
-<div className="h-48 bg-stone-100 flex relative items-center justify-center grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-<img className="absolute inset-0 w-full h-full object-cover" data-alt="abstract satellite view of a shipping network with glowing lime green nodes connecting global industrial ports" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmn_pQWVBiQ__f820JcLdg4inaYp8sszJJ7cyeP_RszhyeAHvr3kp3cFNLytpeEeam7wAnjFRmVHmJp88O_tmrIxX7UbTutC2cNKjxVgznK9Bq9Z88KP5Lg4nAwqdc1j3NuAYNXc6DruD54Bu9B_wTsC9dUiUMdRgCj3lYIP0Os-YKFRnzq1KuHZZjWkmuadFzncURyxq804cxOlAsShtkoP5HiKuLC3Z7gu_KM3fQSyyzqmmtJoB0ndZeca27DERuYSlWDX6VZ7I"/>
-<div className="relative z-10 bg-surface/90 backdrop-blur-md p-4 text-center border-l-4 border-primary">
-<p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Global Logistics Status</p>
-<p className="text-sm font-headline font-black uppercase">3 Active Shipments En Route</p>
-</div>
-</div>
-</section>
-{/* Comentario remanente */}
-<section className="md:col-span-4 bg-inverse-surface text-on-primary-fixed p-8 flex flex-col justify-between">
-<div className="space-y-6">
-<h3 className="text-xl font-headline font-black uppercase tracking-tight text-white">AP Aging Summary</h3>
-<div className="space-y-4">
-<div className="flex justify-between items-end border-b border-white/10 pb-2">
-<span className="text-[10px] font-bold uppercase tracking-widest opacity-60">Current</span>
-<span className="text-lg font-headline font-bold text-primary-fixed">$412.5K</span>
-</div>
-<div className="flex justify-between items-end border-b border-white/10 pb-2">
-<span className="text-[10px] font-bold uppercase tracking-widest opacity-60">1-30 Days</span>
-<span className="text-lg font-headline font-bold">$128.2K</span>
-</div>
-<div className="flex justify-between items-end border-b border-white/10 pb-2">
-<span className="text-[10px] font-bold uppercase tracking-widest opacity-60">31-60 Days</span>
-<span className="text-lg font-headline font-bold">$45.0K</span>
-</div>
-<div className="flex justify-between items-end border-b border-white/10 pb-2">
-<span className="text-[10px] font-bold uppercase tracking-widest opacity-60">60+ Days</span>
-<span className="text-lg font-headline font-bold text-error">CRITICAL: $12.4K</span>
-</div>
-</div>
-</div>
-<div className="mt-8 pt-6 border-t border-white/10">
-<p className="text-[10px] leading-relaxed opacity-50 uppercase font-bold tracking-widest mb-4">Urgent Attention Required for Vendor ID #8812 - Logistics Net 60</p>
-<button className="w-full py-4 bg-primary-fixed text-on-primary-fixed font-headline font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all">Process Settlements</button>
-</div>
-</section>
-{/* Comentario remanente */}
-<section className="md:col-span-5 bg-surface-container p-8 flex flex-col gap-6">
-<div className="flex items-center gap-3">
-<span className="material-symbols-outlined text-primary">analytics</span>
-<h3 className="text-lg font-headline font-bold uppercase tracking-tight">Cost Variance Trend</h3>
-</div>
-<div className="flex-1 flex items-end gap-1 min-h-[160px]">
-<div className="bg-primary/20 w-full hover:bg-primary transition-colors cursor-help group relative h-[40%]">
-<span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity">JAN</span>
-</div>
-<div className="bg-primary/20 w-full hover:bg-primary transition-colors cursor-help group relative h-[55%]"></div>
-<div className="bg-primary/20 w-full hover:bg-primary transition-colors cursor-help group relative h-[45%]"></div>
-<div className="bg-primary/40 w-full hover:bg-primary transition-colors cursor-help group relative h-[75%]"></div>
-<div className="bg-primary/60 w-full hover:bg-primary transition-colors cursor-help group relative h-[90%]"></div>
-<div className="bg-primary w-full group relative h-[100%]">
-<span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary">JUN</span>
-</div>
-</div>
-<div className="bg-white/50 p-4">
-<div className="flex justify-between items-center">
-<span className="text-[10px] font-bold uppercase tracking-widest">Average Part Cost</span>
-<span className="text-sm font-headline font-black">+14.2% YoY</span>
-</div>
-<p className="text-[10px] text-secondary mt-2">Primary driver: Raw material surcharge in Cast Alloy segment.</p>
-</div>
-</section>
-{/* Comentario remanente */}
-<section className="md:col-span-7 bg-surface-container-lowest p-0 flex flex-col overflow-hidden">
-<div className="p-8 pb-4">
-<h3 className="text-lg font-headline font-bold uppercase tracking-tight">Purchase Categorization</h3>
-</div>
-<div className="overflow-x-auto">
-<table className="w-full text-left border-collapse">
-<thead className="bg-surface-container-low">
-<tr>
-<th className="px-8 py-3 text-[10px] font-bold uppercase tracking-widest text-secondary">Asset Category</th>
-<th className="px-8 py-3 text-[10px] font-bold uppercase tracking-widest text-secondary">Volume</th>
-<th className="px-8 py-3 text-[10px] font-bold uppercase tracking-widest text-secondary">Total Value</th>
-<th className="px-8 py-3 text-[10px] font-bold uppercase tracking-widest text-secondary">Status</th>
-</tr>
-</thead>
-<tbody className="text-xs divide-y divide-surface-container">
-<tr className="hover:bg-primary/5 transition-colors">
-<td className="px-8 py-4 font-bold uppercase font-headline">Raw Metallurgy</td>
-<td className="px-8 py-4">42.5 Tons</td>
-<td className="px-8 py-4">$642,000</td>
-<td className="px-8 py-4"><span className="px-2 py-0.5 bg-lime-100 text-lime-800 text-[9px] font-bold uppercase">Stable</span></td>
-</tr>
-<tr className="bg-surface-container-low/30 hover:bg-primary/5 transition-colors">
-<td className="px-8 py-4 font-bold uppercase font-headline">Precision Tooling</td>
-<td className="px-8 py-4">840 Units</td>
-<td className="px-8 py-4">$285,120</td>
-<td className="px-8 py-4"><span className="px-2 py-0.5 bg-error-container text-on-error-container text-[9px] font-bold uppercase">Escalating</span></td>
-</tr>
-<tr className="hover:bg-primary/5 transition-colors">
-<td className="px-8 py-4 font-bold uppercase font-headline">Hydraulic Components</td>
-<td className="px-8 py-4">122 Assemblies</td>
-<td className="px-8 py-4">$154,200</td>
-<td className="px-8 py-4"><span className="px-2 py-0.5 bg-stone-200 text-stone-600 text-[9px] font-bold uppercase">Contracted</span></td>
-</tr>
-<tr className="bg-surface-container-low/30 hover:bg-primary/5 transition-colors">
-<td className="px-8 py-4 font-bold uppercase font-headline">Abrasives &amp; Finishing</td>
-<td className="px-8 py-4">12 Pallets</td>
-<td className="px-8 py-4">$45,800</td>
-<td className="px-8 py-4"><span className="px-2 py-0.5 bg-lime-100 text-lime-800 text-[9px] font-bold uppercase">Stable</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</div>
-{/* Comentario remanente */}
-<div className="relative bg-surface-container-highest p-8 md:p-12 overflow-hidden">
-{/* Comentario remanente */}
-<div className="absolute -right-4 top-0 opacity-5 select-none pointer-events-none">
-<span className="text-[12rem] font-black leading-none font-headline tracking-tighter">FORGE</span>
-</div>
-<div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
-<div>
-<span className="material-symbols-outlined text-4xl text-primary mb-4">precision_manufacturing</span>
-<h2 className="text-3xl font-headline font-black uppercase tracking-tight mb-4">Pending Purchase<br/>Orders Status</h2>
-<p className="text-xs text-secondary leading-relaxed font-medium">Real-time telemetry of all currently open requisition cycles from RFQ to final dock arrival. 14 orders currently flagged for "Fast Track" priority.</p>
-</div>
-<div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div className="bg-white p-6 flex items-center justify-between group hover:bg-primary transition-all duration-300">
-<div>
-<p className="text-[10px] font-bold text-secondary group-hover:text-on-primary/70 uppercase tracking-widest">In Transit (Overseas)</p>
-<h4 className="text-2xl font-headline font-bold group-hover:text-on-primary">PO-88219-B</h4>
-</div>
-<div className="text-right">
-<p className="text-[10px] font-bold text-primary group-hover:text-on-primary uppercase">ETA: 48H</p>
-<span className="material-symbols-outlined group-hover:text-on-primary">sailing</span>
-</div>
-</div>
-<div className="bg-white p-6 flex items-center justify-between group hover:bg-primary transition-all duration-300">
-<div>
-<p className="text-[10px] font-bold text-secondary group-hover:text-on-primary/70 uppercase tracking-widest">Awaiting QC Sign-off</p>
-<h4 className="text-2xl font-headline font-bold group-hover:text-on-primary">PO-89100-D</h4>
-</div>
-<div className="text-right">
-<p className="text-[10px] font-bold text-secondary group-hover:text-on-primary uppercase">STATION 4</p>
-<span className="material-symbols-outlined group-hover:text-on-primary text-error">emergency</span>
-</div>
-</div>
-<div className="bg-white p-6 flex items-center justify-between group hover:bg-primary transition-all duration-300">
-<div>
-<p className="text-[10px] font-bold text-secondary group-hover:text-on-primary/70 uppercase tracking-widest">Released for Pickup</p>
-<h4 className="text-2xl font-headline font-bold group-hover:text-on-primary">PO-88542-C</h4>
-</div>
-<div className="text-right">
-<p className="text-[10px] font-bold text-primary group-hover:text-on-primary uppercase">READY</p>
-<span className="material-symbols-outlined group-hover:text-on-primary">local_shipping</span>
-</div>
-</div>
-<div className="bg-white p-6 flex items-center justify-between group hover:bg-primary transition-all duration-300">
-<div>
-<p className="text-[10px] font-bold text-secondary group-hover:text-on-primary/70 uppercase tracking-widest">Manufacturing Phase</p>
-<h4 className="text-2xl font-headline font-bold group-hover:text-on-primary">PO-90012-A</h4>
-</div>
-<div className="text-right">
-<p className="text-[10px] font-bold text-secondary group-hover:text-on-primary uppercase">65% COMP</p>
-<span className="material-symbols-outlined group-hover:text-on-primary">settings_backup_restore</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-{/* Comentario remanente */}
-<footer className="md:hidden sticky bottom-0 z-50 bg-surface border-t border-surface-container-highest">
-<nav className="flex justify-around items-center h-16">
-<button className="flex flex-col items-center gap-1 text-stone-500">
-<span className="material-symbols-outlined">dashboard</span>
-<span className="text-[10px] font-bold uppercase">Home</span>
-</button>
-<button className="flex flex-col items-center gap-1 text-stone-500">
-<span className="material-symbols-outlined">analytics</span>
-<span className="text-[10px] font-bold uppercase">Metrics</span>
-</button>
-<button className="flex flex-col items-center gap-1 text-lime-600">
-<span className="material-symbols-outlined" >shopping_cart</span>
-<span className="text-[10px] font-bold uppercase">Purchases</span>
-</button>
-<button className="flex flex-col items-center gap-1 text-stone-500">
-<span className="material-symbols-outlined">account_circle</span>
-<span className="text-[10px] font-bold uppercase">Me</span>
-</button>
-</nav>
-</footer>
-</main>
-</div>
+    const supplierPerformance = [
+        { name: 'Precision Machining Co.', uptime: '98.2%', trend: 'up', color: 'primary' },
+        { name: 'Alloy Steel Foundry Ltd.', uptime: '84.5%', trend: 'down', color: 'error' },
+        { name: 'Hydraulic Systems Inc.', uptime: '92.0%', trend: 'up', color: 'primary' }
+    ];
 
-        </div>
+    const apAging = [
+        { label: 'Current', value: '$412.5K', color: 'text-primary' },
+        { label: '1-30 Days', value: '$128.2K', color: 'text-white' },
+        { label: '31-60 Days', value: '$45.0K', color: 'text-white' },
+        { label: '60+ Days', value: 'CRITICAL: $12.4K', color: 'text-error' }
+    ];
+
+    const categories = [
+        { name: 'Raw Metallurgy', vol: '42.5 Tons', val: '$642,000', status: 'Stable', sColor: 'bg-lime-500/10 text-lime-500' },
+        { name: 'Precision Tooling', vol: '840 Units', val: '$285,120', status: 'Escalating', sColor: 'bg-error/10 text-error' },
+        { name: 'Hydraulic Components', vol: '122 Assemblies', val: '$154,200', status: 'Contracted', sColor: 'bg-zinc-800 text-stone-400' },
+        { name: 'Abrasives & Finishing', vol: '12 Pallets', val: '$45,800', status: 'Stable', sColor: 'bg-lime-500/10 text-lime-500' }
+    ];
+
+    const pendingOrders = [
+        { id: 'PO-88219-B', status: 'In Transit (Overseas)', eta: '48H', icon: 'sailing' },
+        { id: 'PO-89100-D', status: 'Awaiting QC Sign-off', eta: 'STATION 4', icon: 'emergency', error: true },
+        { id: 'PO-88542-C', status: 'Released for Pickup', eta: 'READY', icon: 'local_shipping', active: true },
+        { id: 'PO-90012-A', status: 'Manufacturing Phase', eta: '65% COMP', icon: 'settings_backup_restore' }
+    ];
+
+    return (
+        <AuthenticatedLayout
+            header={
+                <div className="flex items-center gap-2 text-primary font-headline text-sm uppercase tracking-widest">
+                    <span className="material-symbols-outlined text-lg font-black">analytics</span>
+                    <span>Compras <span className="text-white/60 mx-2">|</span> Centro de Reportes</span>
+                </div>
+            }
+        >
+            <Head title="Centro de Reportes de Compras - Industrial Forge" />
+
+            <div className="space-y-12 pb-20 px-4">
+                {/* Protocol Header */}
+                <header className="relative flex flex-col md:flex-row md:items-end justify-between gap-10 mt-8 border-b border-zinc-900 pb-12">
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                            <span className="bg-primary/20 text-primary text-[9px] font-black px-4 py-1.5 rounded-full tracking-[0.4em] uppercase border border-primary/10 italic">Procurement Intelligence</span>
+                            <div className="h-px w-12 bg-outline-variant/10"></div>
+                            <span className="text-[10px] font-black text-stone-500 uppercase tracking-widest leading-none tracking-[0.3em]">V2.4 Precision Engine</span>
+                        </div>
+                        <h1 className="text-5xl md:text-8xl font-headline font-black uppercase tracking-tighter leading-[0.85] text-white">Purchases <br/> <span className="text-primary italic">Reporting</span></h1>
+                    </div>
+                    
+                    <div className="flex gap-4">
+                        <div className="bg-zinc-900/50 p-8 rounded-[40px] border border-zinc-800 flex flex-col items-end min-w-[240px]">
+                            <span className="text-[10px] font-black text-stone-700 uppercase tracking-widest italic mb-2">Total Monthly Spend</span>
+                            <span className="text-3xl font-headline font-black text-white italic tracking-tighter leading-none">$1,420,890.00</span>
+                        </div>
+                        <div className="bg-primary p-8 rounded-[40px] shadow-2xl shadow-primary/10 flex flex-col items-end min-w-[200px]">
+                            <span className="text-[10px] font-black text-black uppercase tracking-widest italic mb-2">Pending Orders</span>
+                            <span className="text-3xl font-headline font-black text-black italic tracking-tighter leading-none">142 UNIT</span>
+                        </div>
+                    </div>
+                </header>
+
+                {/* Bento Grid Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+                    {/* Supplier Performance Metrics */}
+                    <section className="md:col-span-8 bg-zinc-900 rounded-[56px] border border-outline-variant/10 shadow-3xl p-12 flex flex-col gap-10 group overflow-hidden relative">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-20 translate-x-20 blur-3xl"></div>
+                        
+                        <div className="flex justify-between items-start relative z-10">
+                            <div className="flex gap-4 items-center">
+                                <div className="w-2 h-10 bg-primary"></div>
+                                <h3 className="text-2xl font-headline font-black uppercase tracking-tighter italic text-white leading-none">Supplier <span className="text-stone-700 italic">Performance Index</span></h3>
+                            </div>
+                            <button className="text-[10px] font-black text-primary tracking-[0.4em] uppercase border-b border-primary italic hover:pb-1 transition-all">Deep Analysis</button>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 relative z-10">
+                            {supplierPerformance.map((s, i) => (
+                                <div key={i} className="space-y-4">
+                                    <span className="text-[9px] font-black text-stone-600 uppercase tracking-widest block h-8">{s.name}</span>
+                                    <div className="h-1.5 bg-zinc-950 rounded-full w-full overflow-hidden">
+                                        <div className={`h-full rounded-full transition-all duration-[2s] ${s.color === 'primary' ? 'bg-primary' : 'bg-error'}`} style={{ width: s.uptime }}></div>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-xs font-headline font-black uppercase tracking-tighter text-white italic">{s.uptime} Uptime</span>
+                                        <span className={`material-symbols-outlined text-lg font-black italic ${s.trend === 'up' ? 'text-primary' : 'text-error'}`}>{s.trend === 'up' ? 'trending_up' : 'trending_down'}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Mini Map Visual */}
+                        <div className="h-64 bg-zinc-950 rounded-[40px] relative items-center justify-center overflow-hidden group/map border border-zinc-900">
+                            <img className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 group-hover/map:grayscale-0 group-hover/map:opacity-100 transition-all duration-1000 scale-110" src="https://images.unsplash.com/photo-1544717305-27a734ef1904?auto=format&fit=crop&q=80&w=1200" alt="Global logistics network visualization" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
+                            <div className="absolute bottom-8 left-8 right-8 z-10 bg-zinc-900/90 backdrop-blur-xl p-8 rounded-3xl border-l-[6px] border-primary flex justify-between items-center">
+                                <div className="space-y-1">
+                                    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-stone-500 italic">Core Logistics Status</p>
+                                    <p className="text-xl font-headline font-black uppercase text-white tracking-widest italic leading-none">3 Active Shipments En Route</p>
+                                </div>
+                                <span className="material-symbols-outlined text-primary text-3xl font-black animate-pulse">sailing</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* AP Aging Summary */}
+                    <section className="md:col-span-4 bg-zinc-900 rounded-[56px] border border-outline-variant/10 shadow-3xl p-12 flex flex-col justify-between relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-full h-full border-2 border-primary/5 rounded-[56px] scale-95 group-hover:scale-100 transition-transform duration-700"></div>
+                        
+                        <div className="space-y-10 relative z-10">
+                            <h3 className="text-2xl font-headline font-black uppercase tracking-tighter italic text-white leading-none">AP Aging <br/> <span className="text-stone-700 italic">Summary</span></h3>
+                            <div className="space-y-6">
+                                {apAging.map((age, i) => (
+                                    <div key={i} className="flex justify-between items-end border-b border-zinc-800 pb-4 group/item hover:border-zinc-500 transition-colors">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 italic">{age.label}</span>
+                                        <span className={`text-xl font-headline font-black italic tracking-tighter text-white ${age.color}`}>{age.value}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        <div className="mt-12 pt-10 border-t border-zinc-800 relative z-10 space-y-8">
+                            <div className="flex gap-4 items-center">
+                                <div className="w-1.5 h-1.5 rounded-full bg-error animate-ping"></div>
+                                <p className="text-[9px] font-black text-stone-700 uppercase tracking-widest leading-relaxed">Urgent Attention: Vendor ID #8812 - Logistics Net 60 Contract Violation Detected</p>
+                            </div>
+                            <button className="w-full py-6 bg-primary text-black font-black font-headline text-xs uppercase tracking-[0.4em] rounded-3xl hover:scale-[1.02] active:scale-95 transition-all italic shadow-2xl shadow-primary/20">Process Settlements</button>
+                        </div>
+                    </section>
+
+                    {/* Cost Variation Analysis */}
+                    <section className="md:col-span-5 bg-zinc-900 rounded-[56px] border border-outline-variant/10 shadow-3xl p-12 flex flex-col gap-10 group overflow-hidden">
+                        <div className="flex items-center gap-4">
+                            <span className="material-symbols-outlined text-primary text-2xl font-black italic">analytics</span>
+                            <h3 className="text-xl font-headline font-black uppercase tracking-tighter italic text-white leading-none">Cost <span className="text-stone-700 italic">Variance Trend</span></h3>
+                        </div>
+                        
+                        <div className="flex-1 flex items-end gap-2 min-h-[200px]">
+                            {[40, 55, 45, 75, 90, 100].map((h, i) => (
+                                <div key={i} className="w-full relative group/vitem h-full flex flex-col justify-end">
+                                    <div className={`w-full rounded-t-xl transition-all duration-700 ${i === 5 ? 'bg-primary shadow-[0_0_20px_rgba(154,205,50,0.3)]' : 'bg-zinc-800 group-hover/vitem:bg-zinc-700'}`} style={{ height: `${h}%` }}></div>
+                                    <span className={`absolute -top-8 left-1/2 -translate-x-1/2 text-[9px] font-black uppercase tracking-widest transition-opacity duration-300 opacity-0 group-hover/vitem:opacity-100 ${i === 5 ? 'text-primary' : 'text-stone-600'}`}>
+                                        {['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN'][i]}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="bg-zinc-950 p-8 rounded-[32px] border border-zinc-900 space-y-4">
+                            <div className="flex justify-between items-center">
+                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-500 italic font-headline">Avg. Part Cost Impact</span>
+                                <span className="text-xl font-headline font-black text-white italic">+14.2% YoY</span>
+                            </div>
+                            <p className="text-[9px] font-black text-stone-700 uppercase leading-relaxed tracking-widest italic">Primary driver: Raw material surcharge in Cast Alloy segment detected by node ALPHA-04.</p>
+                        </div>
+                    </section>
+
+                    {/* Purchase History by Category */}
+                    <section className="md:col-span-7 bg-zinc-900 rounded-[56px] border border-outline-variant/10 shadow-3xl overflow-hidden flex flex-col">
+                        <div className="p-12 pb-6">
+                            <h3 className="text-xl font-headline font-black uppercase tracking-tighter italic text-white leading-none">Purchase <span className="text-stone-700 italic">Categorization</span></h3>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left">
+                                <thead>
+                                    <tr className="bg-zinc-950/30 text-[9px] font-black uppercase tracking-[0.4em] text-stone-700">
+                                        <th className="px-12 py-6">Asset Category</th>
+                                        <th className="px-12 py-6 text-center">Batch Volume</th>
+                                        <th className="px-12 py-6 text-right">Manifest Value</th>
+                                        <th className="px-12 py-6 text-right">Protocol Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-zinc-800/50">
+                                    {categories.map((c, i) => (
+                                        <tr key={i} className="hover:bg-zinc-950/50 transition-colors group">
+                                            <td className="px-12 py-8 font-headline font-black uppercase italic text-stone-400 group-hover:text-white transition-colors">{c.name}</td>
+                                            <td className="px-12 py-8 text-center text-[11px] font-black text-white italic tracking-widest">{c.vol}</td>
+                                            <td className="px-12 py-8 text-right font-headline font-black text-white text-xl tracking-tighter italic group-hover:text-primary transition-colors">{c.val}</td>
+                                            <td className="px-12 py-8 text-right">
+                                                <span className={`px-4 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.2em] border border-current italic ${c.sColor}`}>{c.status}</span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+                {/* Pending Orders Status Block */}
+                <section className="bg-zinc-900 rounded-[64px] border border-outline-variant/10 shadow-3xl p-16 overflow-hidden relative group">
+                    <div className="absolute -right-20 top-0 opacity-[0.03] select-none pointer-events-none scale-150 rotate-[-15deg] group-hover:opacity-[0.05] transition-opacity duration-1000">
+                        <span className="text-[20rem] font-black leading-none font-headline tracking-tighter text-white uppercase italic">FORGE</span>
+                    </div>
+                    
+                    <div className="relative z-10 grid grid-cols-1 xl:grid-cols-3 gap-20 items-center">
+                        <div className="space-y-10">
+                            <span className="material-symbols-outlined text-6xl text-primary font-black italic">precision_manufacturing</span>
+                            <div className="space-y-4">
+                                <h2 className="text-4xl font-headline font-black uppercase tracking-tighter italic text-white leading-[0.9]">Pending Purchase <br/> <span className="text-primary italic">Order Streams</span></h2>
+                                <p className="text-[11px] font-black text-stone-700 uppercase tracking-widest leading-relaxed italic max-w-sm">Real-time telemetry of all currently open requisition cycles from RFQ to final dock arrival. 14 orders currently flagged for "Fast Track" priority node Alpha.</p>
+                            </div>
+                        </div>
+
+                        <div className="xl:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            {pendingOrders.map((ord, i) => (
+                                <div key={i} className={`p-8 rounded-[40px] border flex flex-col justify-between h-48 group/card transition-all duration-500 cursor-pointer ${ord.active ? 'bg-primary border-primary' : 'bg-zinc-950 border-zinc-900 hover:border-zinc-700'}`}>
+                                    <div className="flex justify-between items-start">
+                                        <div className="space-y-1">
+                                            <p className={`text-[9px] font-black uppercase tracking-[0.3em] italic ${ord.active ? 'text-black/60' : 'text-stone-700'}`}>{ord.status}</p>
+                                            <h4 className={`text-2xl font-headline font-black italic tracking-tighter uppercase ${ord.active ? 'text-black' : 'text-white group-hover/card:text-primary'}`}>{ord.id}</h4>
+                                        </div>
+                                        <span className={`material-symbols-outlined text-3xl font-black italic transition-transform group-hover/card:rotate-12 ${ord.active ? 'text-black' : ord.error ? 'text-error' : 'text-zinc-800 group-hover/card:text-primary'}`}>{ord.icon}</span>
+                                    </div>
+                                    <div className="flex justify-between items-end">
+                                        <span className={`text-[10px] font-black uppercase tracking-[0.4em] italic ${ord.active ? 'text-black' : 'text-stone-600'}`}>{ord.eta}</span>
+                                        <div className={`w-12 h-0.5 rounded-full ${ord.active ? 'bg-black/20' : 'bg-zinc-900'}`}></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Industrial Footer */}
+                <footer className="mt-20 pt-16 border-t border-zinc-900 flex flex-col xl:flex-row justify-between items-center gap-16 px-4">
+                    <div className="flex gap-12 items-center">
+                        <div className="flex flex-col gap-2">
+                             <span className="text-[10px] font-black text-stone-800 uppercase tracking-[0.6em] italic">Server Core Access Nodes</span>
+                             <div className="flex gap-4">
+                                <span className="text-primary text-[10px] font-black uppercase tracking-[0.2em] italic">ALPHA-01: OPTIMIZED</span>
+                                <span className="text-stone-800 text-[10px] font-black uppercase tracking-[0.2em] italic">BETA_SYNC: 99.9%</span>
+                             </div>
+                        </div>
+                    </div>
+                    <span className="text-stone-900 font-headline text-[10px] font-black uppercase tracking-[1em] italic">FORGE REPORTING SUITE V2.4-A</span>
+                </footer>
+            </div>
+        </AuthenticatedLayout>
     );
-};
+}
