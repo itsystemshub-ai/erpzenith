@@ -182,7 +182,7 @@ export default function BalanceGeneral() {
                                             <tr className="hover:bg-zinc-900 transition-colors group/row">
                                                 <td className="py-5 text-stone-800 group-hover/row:text-stone-400 uppercase tracking-tight">Préstamos Bancarios Largo Plazo</td>
                                                 <td className="py-5 text-right font-mono tracking-widest text-stone-300">200.000,00</td>
-                                            </div>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

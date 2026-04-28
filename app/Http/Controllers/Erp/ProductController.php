@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Erp;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Brand;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -11,21 +15,12 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = DB::table('products')
-            ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
-            ->leftJoin('brands', 'products.brand_id', '=', 'brands.id')
-            ->leftJoin('currencies', 'products.currency_id', '=', 'currencies.id')
-            ->select(
-                'products.*', 
-                'categories.name as category_name', 
-                'brands.name as brand_name',
-                'currencies.code as currency_code'
-            )
+        $products = Product::with(['category', 'brand', 'currency'])
             ->get();
 
-        $categories = DB::table('categories')->get();
-        $brands = DB::table('brands')->get();
-        $currencies = DB::table('currencies')->get();
+        $categories = Category::all();
+        $brands = Brand::all();
+        $currencies = Currency::all();
 
         return Inertia::render('Erp/Products/Index', [
             'products' => $products,
@@ -48,7 +43,7 @@ class ProductController extends Controller
             'type' => 'required|in:physical,digital,service'
         ]);
 
-        DB::table('products')->insert([
+        Product::create([
             'name' => $request->name,
             'slug' => $request->slug,
             'description' => $request->description,
@@ -58,10 +53,33 @@ class ProductController extends Controller
             'currency_id' => $request->currency_id,
             'type' => $request->type,
             'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
         return redirect()->back()->with('success', 'Producto registrado al catálogo.');
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:products,slug,'.$product->id,
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
+            'currency_id' => 'required|exists:currencies,id',
+            'type' => 'required|in:physical,digital,service'
+        ]);
+
+        $product->update($request->validated());
+
+        return redirect()->back()->with('success', 'Producto actualizado correctamente.');
+    }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return redirect()->back()->with('success', 'Producto eliminado correctamente.');
     }
 }
